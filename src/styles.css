@@ -1,1 +1,487 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+/* @import url('https://unpkg.com/bootstrap@4.5.0/dist/css/bootstrap.min.css'); */
+
+
+/* @import '~angular-tree-component/dist/angular-tree-component.css'; */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: "Google Sans", Arial, sans-serif;
+    max-width: 100%;
+    /* overflow-x: hidden; */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+
+/** Layout */
+
+.bt-page {
+    margin-top: 70px;
+}
+
+.tiffin {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tiffin>* {
+    flex: 1 1 160px;
+}
+
+.flex-horizontal {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.border-box {
+    box-sizing: border-box;
+}
+
+.align-center {
+    align-items: center;
+    align-content: center;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.no-wrap {
+    flex-wrap: nowrap;
+}
+
+.flex-vertical {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bt-text-light {
+    color: #5f6368;
+}
+
+.span2 {
+    background-color: #437ae9;
+    height: 30px;
+}
+
+.span10 {
+    background-color: #212529;
+    height: 30px;
+}
+
+.text-primary {
+    color: #ff4747;
+}
+
+.text-secondary {
+    color: #ff9a00;
+}
+
+.bg-primary {
+    background-color: #ff4747;
+    color: #f2f2f2;
+}
+
+.bg-secondary {
+    background-color: #ff9a00;
+    color: #f2f2f2;
+}
+
+.border-primary {
+    border: 1px solid #ff4747;
+}
+
+.border-secondary {
+    border: 1px solid #ff9a00;
+}
+
+ol,
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.width-200 {
+    width: 200px;
+}
+
+.width-300 {
+    width: 300px;
+}
+
+.border-standard {
+    border: 2px solid #ff4747;
+    color: #f2f2f2;
+}
+
+.font-size-small {
+    font-size: 12px;
+}
+
+.font-size-medium {
+    font-size: medium;
+}
+
+.font-size-large {
+    font-size: x-large;
+}
+
+.navbar {
+    height: 40px;
+    font-size: large;
+}
+
+.curved {
+    border-radius: 4px;
+}
+
+.box-shadow {
+    box-shadow: 0 0 3px grey;
+}
+
+.tip {
+    font-size: 12px;
+}
+
+.credit-card {
+    height: 200px;
+    width: 350px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.card-name {
+    position: relative;
+    top: 10px;
+    right: 6px;
+    font-size: large;
+}
+
+.bt-radius-t {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.bt-radius-tr {
+    border-top-right-radius: 8px;
+}
+
+.bt-radius-tl {
+    border-top-left-radius: 8px;
+}
+
+.bt-radius-b {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.bt-radius-bl {
+    border-bottom-left-radius: 8px;
+}
+
+.bt-radius-br {
+    border-bottom-right-radius: 8px;
+}
+
+.bt-radius {
+    border-radius: 8px;
+}
+
+.bt-border-primary {
+    border: 1px solid #ff4747;
+}
+
+.bt-border {
+    border: 1px solid #ececec;
+}
+
+.bt-border-y {
+    border-top: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+}
+
+.bt-border-x {
+    border-left: 1px solid #ececec;
+    border-right: 1px solid #ececec;
+}
+
+.bt-border-r {
+    border-right: 1px solid #ececec;
+}
+
+.bt-border-b {
+    border-bottom: 1px solid #ececec;
+}
+
+.bt-border-t {
+    border-top: 1px solid #ececec;
+}
+
+.bt-border-l {
+    border-left: 1px solid #ececec;
+}
+
+.bt-item {
+    padding: 10px;
+    background-color: #FAFAFA;
+}
+
+.bt-input,
+.btn-input-large {
+    width: 40px;
+    height: 24px;
+    border-radius: 8px;
+    border: 1px solid #5f6368;
+}
+
+.btn-input-large {
+    width: 300px;
+}
+
+.bt-btn-primary {
+    border: none;
+    background-color: #1a73e8;
+    color: #f2f2f2;
+    border-radius: 25px;
+}
+
+.bt-btn-primary:hover {
+    background: #f03030;
+    color: #fff;
+}
+
+.bt-btn,
+.bt-btn-outline {
+    border-radius: 30px;
+    border-color: #ADB1B8 #A2A6AC #8D9096;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 3px 5px;
+    text-align: center;
+    text-decoration: none!important;
+    vertical-align: middle;
+}
+
+.bt-btn-outline {
+    background: #e7e9ec;
+}
+
+.bt-btn:hover {
+    background: #d7d9db;
+}
+
+.bt-btn-outline:hover {
+    background: #fdfdfd;
+    box-shadow: 0 0 4px grey;
+}
+
+.btn-group-xs>.btn,
+.btn-xs {
+    padding: .5rem .2rem;
+    font-size: .875rem;
+    line-height: .5;
+}
+
+.bt-link {
+    border: 0 solid transparent;
+    border-radius: 16px;
+    color: #423f3f;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    padding: 8px 12px;
+}
+
+.bt-link:hover {
+    cursor: pointer;
+    box-shadow: 0 1px 4px 0 rgba(5, 5, 5, 0.15);
+}
+
+.bt-font-medium {
+    font-size: 20px;
+}
+
+.input-small {
+    height: 21px;
+    line-height: 21px;
+}
+
+.text-right-align {
+    text-align: right;
+}
+
+.bt-bg-light {
+    background-color: #ececec;
+}
+
+.list-group-item {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+}
+
+.ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+}
+
+.delivery-address-container {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    align-items: center;
+}
+
+.previous-address-container {
+    width: 600px;
+    height: 100px;
+}
+
+.address-container {
+    width: 600px;
+    height: 600px;
+}
+
+.price {
+    white-space: nowrap;
+    font-size: 13px;
+    color: #b12704;
+}
+
+.input-small {
+    width: 50px;
+}
+
+
+/* The custom check */
+
+.bt-check {
+    display: block;
+    position: relative;
+    padding-left: 28px;
+    margin-top: -5px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+/* Hide the browser's default checkbox */
+
+.bt-check input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+
+/* Create a custom checkbox */
+
+.tick {
+    position: absolute;
+    top: 1px;
+    left: 0;
+    height: 23px;
+    width: 23px;
+    background-color: #fff;
+    border: 1px solid #a8a8a8;
+    border-radius: 50% !important;
+}
+
+
+/* On mouse-over, add a border color */
+
+.bt-check:hover input~.tick {
+    border: 1px solid #ff4747;
+}
+
+
+/* When the checkbox is checked, set background */
+
+.bt-check input:checked~.tick {
+    border: 1px solid #ff4747;
+    background-color: #ff4747;
+}
+
+
+/* Create the tick/indicator (hidden when not checked) */
+
+.tick:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+
+/* Show the tick when checked */
+
+.bt-check input:checked~.tick:after {
+    display: block;
+}
+
+
+/* Style the tick/indicator */
+
+.bt-check .tick:after {
+    left: 8px;
+    top: 2px;
+    width: 7px;
+    height: 13px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.bt-grid {
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    margin-top: 150px;
+    display: grid;
+    grid-gap: 0.5rem;
+}
+
+.bt-card {
+    padding: 1rem;
+    height: 4rem;
+    align-content: center;
+}
+
+@media (max-width: 991.98px) .bd-navbar {
+    padding-right: .5rem;
+    padding-left: .5rem;
+}
+
+@media (min-width: 600px) {
+    .bt-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 900px) {
+    .bt-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

@@ -1,0 +1,33 @@
+<div class=" basket-page">
+    <div *ngIf="basket.items.length == 0; then thenBlock else elseBlock"></div>
+    <ng-template #thenBlock>
+        <span class="basket-no-items">
+            Oh no! Your basket is empty. Time to go shopping!
+        </span>
+    </ng-template>
+    <ng-template #elseBlock>
+        <div class="d-flex justify-content-between ">
+            <h4>Your shopping basket</h4>
+            <a href="/">
+                <button type="button" class="btn btn-link">Continue Shopping</button>
+            </a>
+        </div>
+        <hr class="mb-4">
+        <div class="basket-container">
+            <ul class="product-list">
+                <li *ngFor="let item of basket.items">
+                    <app-basket-item [item]=item></app-basket-item>
+                </li>
+            </ul>
+            <div class="d-flex flex-column bt-border py-5 px-3 box-shadow curved">
+                <div class="basket-total-section bt-border-b mb-4 pb-4">
+                    <span class="basket-total-label">Subtotal</span>:
+                    <span class="basket-total">{{ getBasketTotal() | currency: 'GBP' }} </span>
+                </div>
+                <button type="button" class="bt-btn-primary px-3 py-2" (click)="proceedToCheckout()">Check out</button>
+                <small class="text-muted pl-2 py-1">Delivery costs will be calculated at checkout.</small>
+            </div>
+
+        </div>
+    </ng-template>
+</div>

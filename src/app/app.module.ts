@@ -1,18 +1,70 @@
+/** Modules */
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TreeModule } from 'angular-tree-component'
+
+/** Components */
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './component/header/header.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { DetailComponent } from './component/detail/detail.component';
+import { HomeComponent } from './component/home/home.component';
+import { BasketComponent } from './component/basket/basket.component';
+import { LoginComponent } from './component/login/login.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BasketItemComponent } from './component/basket/basket-item/basket-item.component';
+import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
+import { SwipperTestComponent } from './component/swipper-test/swipper-test.component';
+import { AddressComponent } from './component/forms/address/address.component';
+import { CheckoutComponent } from './component/checkout/checkout.component';
+import { CheckoutItemComponent } from './component/checkout/checkout-item/checkout-item.component';
+import { PaymentCardComponent } from './component/forms/payment-card/payment-card.component';
+import { AppToastComponent } from './component/common/app-toast/app-toast.component';
+import { AppToastService } from './service/AppToastService';
+import { ItemComponent } from './component/home/item/item.component';
+import { RegisterComponent } from './component/register/register.component';
+import { AlertComponent } from './component/alert/alert.component';
+import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    DetailComponent,
+    HomeComponent,
+    BasketComponent,
+    LoginComponent,
+    BasketItemComponent,
+    PlaceOrderComponent,
+    SwipperTestComponent,
+    AddressComponent,
+    CheckoutComponent,
+    CheckoutItemComponent,
+    PaymentCardComponent,
+    AppToastComponent,
+    ItemComponent,
+    RegisterComponent,
+    AlertComponent,
+    OrderConfirmationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    TreeModule.forRoot()
   ],
-  providers: [],
+  providers: [AppToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

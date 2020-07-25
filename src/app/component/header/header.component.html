@@ -1,0 +1,31 @@
+<div class="container-fluid mb-2 sticky">
+    <div class="row">
+        <div class="col-2" routerLink="/">
+            <img src=" /assets/icons/sale-logo.png " alt=" " loading="lazy " class="top-nav-logo">
+        </div>
+
+        <div class="col  top-nav-search-section mt-1">
+            <input type="text" style="border:none;height: 26px; width: 100%" class="top-nav-search-input my-2" placeholder="Im looking for...">
+            <img src="/assets/icons/search.png " alt=" " loading="lazy " class="top-nav-search-icon my-1 ">
+        </div>
+
+        <div class="col-1 top-nav-right-section">
+            <div class="dropdown show">
+                <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="/assets/icons/top-nav-user-icon.png " alt=" " loading="lazy " class="top-nav-user-icon">
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <span class="dropdown-item top-nav-logout" (click)="logout()" *ngIf="isUserLoggedIn()==true">Logout</span>
+                    <span class="dropdown-item top-nav-logout" (click)="login()" *ngIf="isUserLoggedIn() == false">Login</span>
+                    <span class="dropdown-item top-nav-logout" (click)="logout()">Profile</span>
+                    <span class="dropdown-item top-nav-logout" (click)="logout()">Orders</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-2 " routerLink="/basket" class="top-nav-right-section">
+            <img src="/assets/icons/purchase.png " alt=" " loading="lazy " class="top-nav-basket-icon mx-2 ">
+            <span class="text-center top-nav-basket-count">{{ itemCount }}</span>
+        </div>
+    </div>
+</div>

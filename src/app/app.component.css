@@ -1,0 +1,10 @@
+.brand{
+    font-size: 35px;
+}
+.header{
+    width: 100%;
+    display: block;
+    position: absolute;
+    height: 60px;
+    background-color: aliceblue;
+}

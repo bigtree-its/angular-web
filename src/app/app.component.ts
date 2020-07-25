@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService } from './service/account.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'fe-angular';
+  title = 'BigSale';
+
+  constructor(
+    private router: Router,
+    private accountService: AccountService
+  ) {
+    // redirect to home if already logged in
+    if (this.accountService.userValue) {
+      this.router.navigate(['/']);
+    }
+  }
+
 }

@@ -1,0 +1,82 @@
+<div class="d-block">
+    <form #f="ngForm" (ngSubmit)=(onSubmit(f))>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="firstName">First name</label>
+                <input type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName" placeholder="" value="" name="firstName" #firstName="ngModel" required>
+                <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+                    First name is required
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="lastName">Last name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="" required [(ngModel)]="address.lastName" name="lastName" #lastName="ngModel">
+                <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+                    Last name is required
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@</span>
+                    </div>
+                    <input type="text" class="form-control" id="email" placeholder="you@example.com" required [(ngModel)]="address.email" name="email" #email="ngModel">
+                    <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                        Please enter a valid email address for shipping updates.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="mobile">Mobile <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="address1">Address</label>
+            <input type="text" class="form-control" id="address1" placeholder="1234, Main St" required [(ngModel)]="address.address1" name="address1" #address1="ngModel">
+            <div [hidden]="address1.valid || address1.pristine" class="alert alert-danger">
+                Please enter a valid address line.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="address2" placeholder="Apartment or suite" [(ngModel)]="address.address2" value="" name="address2" #address2="ngModel">
+        </div>
+
+        <div class="row">
+            <div class="col-md-5 mb-3">
+                <label for="city">City/Town</label>
+                <input type="text" class="form-control" id="city" placeholder="Glasgow" required [(ngModel)]="address.city" name="city" #city="ngModel">
+                <div [hidden]="city.valid || city.pristine" class="alert alert-danger">
+                    Please enter a valid City/Town.
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="country">Country</label>
+                <select class="custom-select d-block w-100" id="country" required [(ngModel)]="address.country" name="country" #country="ngModel">
+                    <option value="">Select...</option>
+                    <option>United Kingdom</option>
+                    <option>United States</option>
+                    <option>United India</option>
+                </select>
+                <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
+                    Please select a Country.
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="postcode">Post/Zip code</label>
+                <input type="text" class="form-control" id="postcode" placeholder="" required [(ngModel)]="address.postcode" name="postcode" #postcode="ngModel">
+                <div [hidden]="postcode.valid || postcode.pristine" class="alert alert-danger">
+                    Please enter a valid Postal/Zip/Pin Code.
+                </div>
+            </div>
+        </div>
+        <button type="submit " class="btn btn-success" [disabled]="!f.form.valid">Submit</button>
+    </form>
+</div>

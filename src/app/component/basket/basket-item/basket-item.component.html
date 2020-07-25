@@ -1,0 +1,26 @@
+<div class="basket-item">
+    <div class="basket-item-image-section">
+        <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
+    </div>
+    <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
+    <div class="basket-item-price-section">
+        <span class="basket-item-price">{{ getPrettyPrintPrice(item.price)  | currency :'GBP'}}</span>
+    </div>
+    <div class="basket-item-qty-section">
+        <div class="basket-item-qty">
+            <span class="basket-item-qty-down" (click)="decreaseQuantity()">-</span>
+        </div>
+        <div class="basket-item-qty">
+            <span>{{quantity}}</span>
+        </div>
+        <div class="basket-item-qty">
+            <span class="basket-item-qty-up" (click)="increaseQuantity()">+</span>
+        </div>
+    </div>
+    <div class="basket-item-subtotal">
+        <span class="basket-item-price">{{ getSubTotal() | currency : 'GBP'}}</span>
+    </div>
+    <div class="basket-item-action-section">
+        <button class="btn btn-link btn-xs" (click)="removeProduct(item._id)">Remove</button>
+    </div>
+</div>

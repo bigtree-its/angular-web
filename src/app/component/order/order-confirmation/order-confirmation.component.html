@@ -1,0 +1,16 @@
+<div class="order-confirmation-page">
+    <span class="order-confirmation-page-title">Order Confirmation</span> Hey <span class="customer-name">{{ customerName }}</span>,
+    <p>
+        <img src="/assets/icons/check.png" alt=" " loading="lazy " class="order-confirmation-icon">
+        <span class="success-message"></span>Your order is confirmed!
+    </p>
+    <p>
+        Thanks for shopping! Your order <span class="bt-link">{{ firstItem }}</span> and <span>{{ totalItems }}</span> has been successfully placed. You will receive an email with full order summary
+    </p>
+    <div class="order-confirmation-summary-section">
+        <p>
+            <strong>Your order reference number</strong>
+            <strong class="order-reference-number">{{ orderReferenceNumber}}</strong>
+        </p>
+    </div>
+</div>

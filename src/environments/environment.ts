@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  SERVER_URL: 'http://localhost:8080/',
+  ACCOUNT_SERVICE_URL: 'http://localhost:5000',
+  AUTH_LOGIN_PATH: '/auth/login',
+  AUTH_REGISTER_PATH: '/auth/register',
+  ORDER_SERVICE_HOST: 'http://localhost:5000',
+  ORDERS: '/orders'
 };
 
 /*

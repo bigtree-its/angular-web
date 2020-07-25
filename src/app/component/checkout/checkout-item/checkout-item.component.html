@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-between bt-border-b py-1">
+    <div class="col-7 d-flex flex-column">
+        <span class="my-0">{{item.name.length> 30 ? item.name.substr(0,30)+ "...": item.name}}</span>
+        <small class="text-muted">{{ item.brand?.name }}</small>
+    </div>
+    <span class="col-3 text-muted text-right-align checkout-item-price-n-qty">{{item.qty}}@{{item.price | currency: 'GBP'}}</span>
+    <div class="text-muted checkout-item-subtotal">
+        <span class="basket-item-price">{{item.price * item.qty | currency: 'GBP'}}</span>
+    </div>
+</div>
