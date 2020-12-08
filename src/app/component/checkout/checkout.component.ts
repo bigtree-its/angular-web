@@ -10,6 +10,7 @@ import { faCcMastercard } from '@fortawesome/free-brands-svg-icons';
 import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { Router } from '@angular/router';
+import { BasketService } from 'src/app/service/basket.service';
 
 @Component({
   selector: 'app-checkout',
@@ -24,10 +25,10 @@ export class CheckoutComponent implements OnInit {
   fabPaypal = faPaypal;
 
   basket: Basket;
-  address: Address = new Address('', '', '', '', '', '', '', '');
+  address: Address = new Address();
   addressList: Address[] = [];
   paymentMethodList: PaymentCard[] = [];
-  card: PaymentCard = new PaymentCard('', 'Credit', '', '', '', '');
+  card: PaymentCard = new PaymentCard();
 
   shipAddressSameAsBilling: boolean;
   saveAddress: boolean;
@@ -36,28 +37,39 @@ export class CheckoutComponent implements OnInit {
   showCardSection: boolean;
   type: String = 'Credit';
 
+  expirationMonth: number = 1;
+  expirationYear: number = new Date().getFullYear();
+  yearsOptions: number[] = [];
+  monthsOptions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
+
   constructor(
     private router: Router,
-    private messengerService: MessengerService
+    private messengerService: MessengerService,
+    private basketService: BasketService
   ) { }
 
   ngOnInit(): void {
     this.showCardSection = true;
+    this.expirationMonth = 1;
+    this.yearsOptions.push(this.expirationYear);
 
-    this.messengerService.subject$.subscribe(basket => {
+    for (let i = 1; i < 10; i++) {
+      this.yearsOptions.push(this.expirationYear + i);
+    }
+    this.basketService.subject$.subscribe(basket => {
       this.basket = basket
     });
 
-    this.messengerService.deliveryAddressSubject$.subscribe(address=>{
-      if ( address !== undefined){
+    this.messengerService.deliveryAddressSubject$.subscribe(address => {
+      if (address !== undefined) {
         this.address = address;
         this.hideAddressForm = true;
         this.updateAddressList();
       }
     })
 
-    this.messengerService.paymentCardSubject$.subscribe(paymentCard=>{
-      if ( paymentCard !== undefined){
+    this.messengerService.paymentCardSubject$.subscribe(paymentCard => {
+      if (paymentCard !== undefined) {
         this.card = paymentCard;
         this.hidePaymentForm = true;
         this.updatePaymentList();
@@ -66,13 +78,13 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-  reviewOrder(){
+  reviewOrder() {
     this.router.navigate(['/review']).then();
   }
 
   onSubmitAddress(f: NgForm) {
     if (f.valid) {
-      if (this.address.address1 === undefined) {
+      if (this.address.lineNumber1 === undefined) {
         this.hideAddressForm = false;
       } else {
         this.hideAddressForm = true;
@@ -83,6 +95,8 @@ export class CheckoutComponent implements OnInit {
 
   onSubmitPaymentMethod(f: NgForm) {
     this.card.cardType = this.type;
+    this.card.expiryMonth = this.expirationMonth;
+    this.card.expiryYear = this.expirationYear;
     if (this.card.cardNumber === undefined) {
       this.hidePaymentForm = false;
     } else {
@@ -100,7 +114,8 @@ export class CheckoutComponent implements OnInit {
     else {
       existing.cardNumber = this.card.cardNumber;
       existing.nameOnCard = this.card.nameOnCard;
-      existing.expiry = this.card.expiry;
+      existing.expiryMonth = this.card.expiryMonth;
+      existing.expiryYear = this.card.expiryYear;
       existing.cvv = this.card.cvv;
       existing.cardType = this.card.cardType;
     }
@@ -116,20 +131,20 @@ export class CheckoutComponent implements OnInit {
       existing.lastName = this.address.lastName;
       existing.email = this.address.email;
       existing.mobile = this.address.mobile;
-      existing.address1 = this.address.address1;
-      existing.address2 = this.address.address2;
+      existing.lineNumber1 = this.address.lineNumber1;
+      existing.lineNumber2 = this.address.lineNumber2;
       existing.city = this.address.city;
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
     }
   }
 
-  selectType(e: String){
+  selectType(e: String) {
     this.type = e;
     this.card.cardType = this.type;
-    if ( this.type === 'Paypal'){
+    if (this.type === 'Paypal') {
       this.showCardSection = false;
-    }else{
+    } else {
       this.showCardSection = true;
     }
   }
@@ -140,25 +155,25 @@ export class CheckoutComponent implements OnInit {
   cancelPaymentForm() {
     this.hidePaymentForm = true;
   }
-  
+
   addNewAddress() {
     alert('Adding new address');
     this.hideAddressForm = false;
-    this.address = new Address('', '', '', '', '', '', '', '');
+    this.address = new Address();
 
   }
-  selectAddress(a:Address, e:any){
+  selectAddress(a: Address, e: any) {
     for (let i = 0; i < this.addressList.length; i++) {
       let add: Address = this.addressList[i];
       if (this.addressList[i].postcode === a.postcode) {
         add.selected = e.target.checked;
-      } else if ( e.target.checked) {
+      } else if (e.target.checked) {
         add.selected = false;
       }
     }
 
-    this.addressList.forEach(a=> {
-      if (a.selected){
+    this.addressList.forEach(a => {
+      if (a.selected) {
         this.messengerService.submitBillingAddress(a);
       }
     });
@@ -177,16 +192,21 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  
-
   addNewPaymentMethod() {
     this.hidePaymentForm = false;
-    this.card = new PaymentCard('', '', '', '', '', '');
+    this.card = new PaymentCard();
 
   }
   editPaymentMethod(p: PaymentCard) {
     this.hidePaymentForm = false;
-    this.card = new PaymentCard(p._id, p.cardType, p.nameOnCard,p.cardNumber,p.expiry, p.cvv);
+    this.card = new PaymentCard();
+    this.card._id = p._id;
+    this.card.cardType = p.cardType;
+    this.card.nameOnCard = p.nameOnCard;
+    this.card.cardNumber = p.cardNumber;
+    this.card.expiryMonth = p.expiryMonth;
+    this.card.expiryYear = p.expiryYear;
+    this.card.cvv = p.cvv;
   }
 
   removePaymentMethod(p: PaymentCard) {

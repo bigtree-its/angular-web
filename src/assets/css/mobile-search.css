@@ -1,0 +1,26 @@
+.mobileSearch {
+    margin-top: -48px;
+    width: 100%;
+    position: relative;
+    z-index: 110;
+}
+
+ :global(#mobile-search:target) {
+    transition: margin-top 0.25s ease 0s;
+    margin-top: 0;
+}
+
+.showSearch {
+    transition: margin-top 0.25s ease 0s;
+    margin-top: 0;
+    margin-bottom: 0;
+    z-index: 20;
+}
+
+.persistentSearch {
+    margin-top: 0;
+}
+
+.hideSearch {
+    margin-top: -48px !important;
+}

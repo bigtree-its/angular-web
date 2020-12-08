@@ -13,4 +13,5 @@ export class AppToastComponent {
   
   isTemplate(toast) { return toast.textOrTpl instanceof TemplateRef; }
 
+  
 }

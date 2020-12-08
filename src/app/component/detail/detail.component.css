@@ -1,0 +1,55 @@
+.product-details-section {
+    width: 40%;
+}
+
+.product-review-section {
+    background: #ebf3ff;
+    border: 1px solid #ebf3ff;
+    border-radius: 3px;
+    padding: 15px;
+    clear: both;
+}
+
+.product-price-section {
+    width: 20%;
+    background: #f8f8f7;
+    border: 1px solid #f5f6f7;
+    border-radius: 3px;
+    padding: 15px;
+    clear: both;
+}
+
+.amount-section {
+    padding: 0 20px 0 0;
+    text-align: left;
+    margin-bottom: 0px !important;
+}
+
+.price-currency {
+    font-size: 15px !important;
+    float: left;
+    color: #111 !important;
+}
+
+.price {
+    float: left;
+    text-align: left;
+    font-size: 25px !important;
+    color: #111 !important;
+    text-decoration: none;
+    position: relative;
+    line-height: normal;
+}
+
+.price-fraction {
+    position: absolute;
+    top: 10;
+    left: 4;
+    font-size: 15px;
+    color: #111 !important;
+}
+
+.main-picture {
+    width: 350px;
+    height: 350px;
+}

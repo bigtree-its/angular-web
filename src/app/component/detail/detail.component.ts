@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { ProductModel } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { BasketItem } from 'src/app/model/basket.model';
 import { MessengerService } from 'src/app/service/messenger.service';
 import Swiper from 'swiper';
+import { BasketService } from 'src/app/service/basket.service';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-detail',
@@ -17,14 +18,17 @@ export class DetailComponent implements OnInit {
 
   faPlus = faPlus;
   faMinus = faMinus;
+  faStar = faStar;
 
   product: ProductModel = undefined;
   quantity: number = 1;
+  mainPicture: String;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private messengerService: MessengerService,
+    private basketService: BasketService,
     private _location: Location
   ) { }
 
@@ -40,29 +44,20 @@ export class DetailComponent implements OnInit {
     }
   }
 
-  addToCart(product: ProductModel) {
-    if (product.stock < 1){
+  addToCart() {
+    if (this.product.stock < 1) {
       return;
     }
     if (this.quantity === 0) {
       return;
     }
-    let basketItem: BasketItem = {
-      _id: product._id,
-      name: product.name,
-      brand: product.brand,
-      image: product.picture.thumbnail,
-      price: product.salePrice,
-      qty: this.quantity
-    };
-    console.log('Sending notification to messenger : ' + JSON.stringify(basketItem));
-    this.messengerService.sendMessage(basketItem);
+    this.basketService.addItemToBasket(this.product);
   }
 
   getFraction(): string {
     var salePrice = String(this.product.salePrice);
     var fraction: string = salePrice.split('.')[1];
-    console.log('The fraction: '+ fraction);
+    console.log('The fraction: ' + fraction);
     if (fraction === undefined) {
       fraction = '00';
     } else if (fraction.length === 1) {
@@ -74,10 +69,10 @@ export class DetailComponent implements OnInit {
   getAmount(): string {
     var salePrice = String(this.product.salePrice);
     var amount: string = salePrice.split('.')[0];
-    console.log('The amount: '+ amount);
+    console.log('The amount: ' + amount);
     if (amount === undefined) {
       amount = '00';
-    } 
+    }
     return amount;
   }
 
@@ -93,6 +88,7 @@ export class DetailComponent implements OnInit {
       console.log(`Product Id: ${params['id']}`);
       this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
         this.product = product;
+        this.mainPicture = this.product.picture.thumbnail;
         this.product.picture.additional.forEach(element => {
           slider.appendSlide([
             '<div class="swiper-slide">  <img src="' + element + '" alt="" class="product-details-image"> </div>'
@@ -100,6 +96,10 @@ export class DetailComponent implements OnInit {
         });
       });
     })
+  }
+
+  setMainPicture(url: String){
+    this.mainPicture = url;
   }
 
 

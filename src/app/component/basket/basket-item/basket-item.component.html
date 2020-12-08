@@ -1,6 +1,7 @@
-<div class="basket-item">
+<div class="basket-item bt-border-b">
     <div class="basket-item-image-section">
-        <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
+        <!-- <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)"> -->
+        <img src="/assets/icons/product-image.png" alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
     </div>
     <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
     <div class="basket-item-price-section">

@@ -4,6 +4,7 @@ export interface ProductModel{
     categories: Category[],
     brand: Brand,
     type: string,
+    slug: string,
     description: string[],
     stock: number,
     salePrice: number,

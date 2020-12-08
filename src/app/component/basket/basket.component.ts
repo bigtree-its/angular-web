@@ -3,6 +3,7 @@ import { Basket, BasketItem } from 'src/app/model/basket.model';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
+import { BasketService } from 'src/app/service/basket.service';
 
 
 
@@ -18,10 +19,11 @@ export class BasketComponent implements OnInit {
   constructor(
     private messengerService: MessengerService,
     private accountService: AccountService,
+    private basketService: BasketService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.messengerService.subject$.subscribe(basket => { 
+    this.basketService.subject$.subscribe(basket => { 
       this.basket = basket
       this.basket.total = 0; 
       this.calculateBasketTotal();

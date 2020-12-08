@@ -1,0 +1,92 @@
+/* used in conjunction with focusManager.js */
+
+.siteWide {
+    background: #fff;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 11;
+}
+
+.siteWide:after {
+    content: '';
+    clear: both;
+    display: table;
+}
+
+@media only screen and (min-width: 768px) {
+    .siteWide {
+        position: relative;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .headerContainer {
+        background: #fff;
+    }
+}
+
+.header-siteWide--2450f {
+    background: #fff;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 11;
+}
+
+.leftCol {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: calc(33.33333% - 16px);
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+@media only screen and (min-width: 768px) {
+    .leftCol {
+        width: calc(33.33333% - 24px);
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}
+
+.rightCol {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: calc(66.66667% - 16px);
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+    .rightCol {
+        width: calc(66.66667% - 24px);
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}
+
+.right {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -8px;
+    margin-right: -8px;
+}
+
+@media only screen and (min-width: 768px) {
+    .right {
+        margin-left: -12px;
+        margin-right: -12px;
+    }
+}
+
+.search {
+    display: block;
+    flex-grow: 2;
+    margin-right: 104px;
+}
+
+.basket {
+    padding-right: -1px;
+}

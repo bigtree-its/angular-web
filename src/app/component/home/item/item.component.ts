@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
 import { ProductModel } from 'src/app/model/product.model';
-import { BasketItem } from 'src/app/model/basket.model';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -20,7 +19,7 @@ export class ItemComponent implements OnInit {
   @Input() product: ProductModel;
 
   constructor(
-    private messengerService: MessengerService,
+    private basketService: BasketService,
     private router: Router
   ) { }
 
@@ -52,26 +51,14 @@ export class ItemComponent implements OnInit {
   }
 
   basketQty(): number {
-    return this.messengerService.getBasketQty(this.product._id);
+    return this.basketService.getBasketQty(this.product._id);
   }
 
   addToCart() {
-
     if (this.product.stock === 0) {
       return;
     }
-
-    let basketItem: BasketItem = {
-      _id: this.product._id,
-      name: this.product.name,
-      image: this.product.picture.thumbnail,
-      price: this.product.salePrice,
-      brand: this.product.brand,
-      qty: this.selectedValue,
-      subtotal: +(this.selectedValue * this.product.salePrice).toFixed(2)
-    };
-    this.messengerService.sendMessage(basketItem);
-
+    this.basketService.addItemToBasket(this.product);
   }
 
 }

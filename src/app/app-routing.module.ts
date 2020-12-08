@@ -7,6 +7,7 @@ import { LoginComponent } from './component/login/login.component';
 import { CheckoutComponent } from './component/checkout/checkout.component';
 import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
 import { RegisterComponent } from './component/register/register.component';
+import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: 'review', component: PlaceOrderComponent
+  },
+  {
+    path: 'order-confirmation', component: OrderConfirmationComponent
   }
 ];
 

@@ -3,21 +3,27 @@ import { PaymentCard } from './payment-card';
 import { User } from './user';
 
 export class Order{
-    _id: string;
-    referenceNumber: string;
+    id: number;
+    reference: string;
+    status: string;
     date: Date;
-    user: User;
+    expectedDeliveryDate: Date;
+    email: String;
+    currency: String;
     items: OrderItem[];
-    deliveryAddress: Address;
-    paymentMethod: string;
+    address: Address;
     paymentCard: PaymentCard;
-    total:number;
+    subTotal:number;
+    saleTax:number;
+    shippingCost:number;
+    totalCost:number;
 }
 
 export class OrderItem{
-    _id: string;
-    product: string;
-    qty: number;
+    id: number;
+    productId: String;
+    productName: string;
+    quantity: number;
     price: number;
-    subtotal: number;
+    total: number;
 }

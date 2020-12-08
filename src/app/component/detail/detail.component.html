@@ -1,86 +1,85 @@
-<div class="bt-page px-5">
-    <button (click)="backToResults()" class="btn btn-link">Back to results</button>
-</div>
-<div class="container-fluid">
-    <div class="tiffin">
-        <div class="col-4 flex-horizontal no-wrap">
-            <div class="d-flex flex-column m-2 ">
-                <div *ngFor="let pic of product.picture.additional" class="product-details-image-small-wrapper bt-border bt-radius my-1">
-                    <img src={{pic}} alt="{{product.name}}" class="product-details-image-small">
-                </div>
+<div class="bt-page container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="text-dark">{{ product.name}}</h4>
+        <button (click)="backToResults()" class="btn btn-link">Back to results</button>
+    </div>
+    <hr class="mb-2">
+    <div class="row d-flex justify-content-center">
+        <div class="bt-box margin-10">
+            <div class="main-picture">
+                <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}">
             </div>
-            <div class="product-details-image-section">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image">
-                        </div>
-                    </div>
-                    <!-- If we need pagination -->
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
+            <div>
+                <div class="d-inline-block bt-border bt-radius my-1">
+                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(product.picture.thumbnail)">
+                </div>
+                <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1">
+                    <img src={{pic}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(pic)">
                 </div>
             </div>
         </div>
-
-        <div class="col px-3">
-            <h4>{{ product.name }}</h4>
-            {{ product.rating }} ratings | ({{ product.reviews }} Customer Reviews)
-            <div class="my-2">
-                <strong>Price: </strong>
-                <div class="p-item-price-section pt-2">
-                    <span class="p-item-price-currency">£</span>
-                    <span class="p-item-price">{{ getAmount() }}</span>
-                    <span class="p-item-price-fraction">{{ getFraction() }}</span>
+        <div class="margin-10 product-details-section">
+            <p>
+                {{product.description}}
+            </p>
+            <div *ngIf="product.storage">
+                <br>
+                <strong>Storage Instructions</strong>
+                <p>
+                    {{product.storage}}
+                </p>
+            </div>
+            <!-- <div *ngIf="product.reviews"> -->
+            <div>
+                <br>
+                <strong>Reviews</strong>
+                <div>
+                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                    <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
                 </div>
             </div>
-            <div>
-                <strong>Brand</strong>
-                <p><small>{{ product.brand.name }}</small> </p>
+        </div>
+        <div class="bt-box margin-10 product-price-section">
+            <strong>Today's Price: </strong>
+            <div class="d-flex justify-content-start">
+                <div class="amount-section px-1 py-2">
+                    <span class="price-currency">£</span>
+                    <span class="price">{{ getAmount() }}</span>
+                    <span class="price-fraction">{{ getFraction() }}</span>
+                </div>
             </div>
+            <div class="d-block d-flex justify-content-center my-5">
+                <button class="bt-btn bt-btn-primary" (click)="addToCart()">Add
+                    to Basket</button>
+            </div>
+        </div>
+        <div class="bt-box margin-10 product-review-section">
+            <strong>Reviews</strong>
+            <br>
+            <strong class="muted"></strong>Perfect for a 3-night stay!
+            <br>
             <div>
-                <strong>Description</strong>
                 <ul>
-                    <li *ngFor="let d of product.description">
-                        <small>{{ d }}</small>
+                    <li>
+                        Situated in the best rated area in Hua Hin, this property has an excellent location score of 9.2
+                    </li>
+                    <li>
+                        Want a great night's sleep? This property was highly rated for its very comfy beds.
                     </li>
                 </ul>
             </div>
-            <div *ngIf="product.storage.length > 0">
-                <strong>Storage Instructions</strong>
-                <p><small>{{ product.storage }}</small></p>
-            </div>
-        </div>
-
-        <div class="col-2 bt-border bt-radius pl-5 py-1 mx-4">
-            <div class="d-inline-flex flex-column">
-                <span [class.product-details-in-stock]="product.stock > 0" [class.product-details-no-stock]="product.stock < 1">
-                                {{ product.stock > 0 ? "In Stock " : "No Stock "}}
-                </span>
-                <div class="my-2">
-                    <div class="p-item-price-section pt-2 text-danger">
-                        <span class="p-item-price-currency">£</span>
-                        <span class="p-item-price text-danger">{{ getAmount() }}</span>
-                        <span class="p-item-price-fraction">{{ getFraction() }}</span>
-                    </div>
-                </div>
-                <span class="mt-5 mb-3">Quantity:</span>
-                <div class="d-flex justify-content-start">
-                    <div class="basket-item-qty">
-                        <span class="basket-item-qty-down" (click)="decreaseQuantity()">-</span>
-                    </div>
-                    <!-- <fa-icon [icon]="faMinus" class="basket-item-qty-down" size="lg" (click)="decreaseQuantity()"></fa-icon> -->
-                    <div class="basket-item-qty text-center">
-                        <span>{{quantity}}</span>
-                    </div>
-                    <div class="basket-item-qty">
-                        <span class="basket-item-qty-up" (click)="increaseQuantity()">+</span>
-                    </div>
-                    <small class="tip text-muted pl-2">{{ product.stock}} pieces available</small>
-                </div>
-                <button class="btn btn-warning my-5 self-align-start " [class.disabled]="product.stock < 1 " (click)="addToCart(product) ">Add To Basket</button>
-            </div>
+            <br>
+            <strong class="muted"></strong>Breakfast info
+            <br> Continental, Gluten-free, Asian, American, Buffet 끸 Free private parking available on-site
+            <br>
+            <strong class="muted"></strong>Activities
+            <br>
+            <p>
+                Fitness centre Golf course (within 3 km) Spa and wellness centre
+            </p>
         </div>
     </div>
 </div>

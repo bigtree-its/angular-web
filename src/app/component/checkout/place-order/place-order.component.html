@@ -1,23 +1,27 @@
-<div class="order-confirmation-page">
+<div class="review-order-page">
     <div>
         <div class="order-confirmation-address px-3">
-            <strong class="mb-3 text-center">We are sending order to</strong>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-dark">Delivery Address</h5>
+                <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editDeliveryAddress()">Change</button>
+            </div>
             <hr class="mb-4">
             <div class="d-flex flex-column">
                 <div>
                     <span>{{ address.firstName }} </span> <span>{{ address.lastName }}</span>
                 </div>
-                <span>{{ address.address1 }}</span>
-                <span>{{ address.address2 }}</span>
+                <span>{{ address.lineNumber1 }}</span>
+                <span>{{ address.lineNumber2 }}</span>
                 <span>{{ address.city }}</span>
                 <span>{{ address.country }}</span>
                 <span>{{ address.postcode }}</span>
             </div>
-            <hr class="mb-4">
-            <button type="button" class="btn btn-outline-primary align-self-center btn-sm" (click)="editDeliveryAddress()">Change</button>
         </div>
-        <div class="order-confirmation-payment px-3">
-            <strong class="mb-3 text-center">We take payment from</strong>
+        <div class="order-confirmation-payment px-3 mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-dark">Payment Method</h5>
+                <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editPaymentMethod()">Change</button>
+            </div>
             <hr class="mb-4">
             <div class="credit-card bg-light">
                 <div class="d-flex flex-row-reverse ">
@@ -31,21 +35,19 @@
                 </div>
                 <div class="d-flex ml-3 mt-5">
                     <span class="mr-2">{{ paymentCard.nameOnCard}}</span>
-                    <span class="mr-5 align-self-center pl-3">{{ paymentCard.expiry}}</span>
+                    <span class="mr-5 align-self-center pl-3">{{ paymentCard.expiryMonth}}/{{paymentCard.expiryYear}}</span>
                 </div>
             </div>
-            <hr class="mb-4">
-            <button type="button" class="btn btn-outline-primary align-self-center btn-sm" (click)="editPaymentMethod()">Change</button>
         </div>
         <div class="confirm-order-button-section">
-            <button class="btn btn-primary mb-2" type="submit" (click)="confirmPurchase()">Confirm Purchase</button>
+            <button class="bt-btn-primary mb-2" type="submit" (click)="confirmPurchase()">Confirm Purchase</button>
             <small class="text-muted">By selecting the button above, you agree to the Terms of Sale.</small>
         </div>
     </div>
     <div class="mx-2"></div>
     <div class="order-confirmation-items">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <strong class="text-dark">Your Basket</strong>
+            <h5 class="text-dark">Basket Summary</h5>
             <span class="btn btn-sm btn-outline-secondary">{{ basket.items.length }} items</span>
         </div>
         <hr class="mb-4">

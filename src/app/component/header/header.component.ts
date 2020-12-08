@@ -5,6 +5,7 @@ import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { ProductService } from 'src/app/service/product.service';
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
+import { BasketService } from 'src/app/service/basket.service';
 
 @Component({
   selector: 'app-header',
@@ -22,11 +23,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private messengerService: MessengerService,
     private accountService: AccountService,
+    private basketService: BasketService,
     private router: Router) {
   }
 
   ngOnInit(): void {
-    this.messengerService.subject$.subscribe(basket => {
+    this.basketService.subject$.subscribe(basket => {
       this.basket = basket
       console.log('Basket items : ' + basket.items.length);
       this.itemCount = basket.items.length;
@@ -44,8 +46,21 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.accountService.logout();
   }
+
   login(){
     this.router.navigate(['/login']);
+  }
+
+  register(){
+    this.router.navigate(['/register']);
+  }
+
+  profile(){
+    this.router.navigate(['/profile']);
+  }
+
+  orders(){
+    this.router.navigate(['/orders']);
   }
 
   getUserName(){

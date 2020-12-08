@@ -23,7 +23,6 @@ import { SwipperTestComponent } from './component/swipper-test/swipper-test.comp
 import { AddressComponent } from './component/forms/address/address.component';
 import { CheckoutComponent } from './component/checkout/checkout.component';
 import { CheckoutItemComponent } from './component/checkout/checkout-item/checkout-item.component';
-import { PaymentCardComponent } from './component/forms/payment-card/payment-card.component';
 import { AppToastComponent } from './component/common/app-toast/app-toast.component';
 import { AppToastService } from './service/AppToastService';
 import { ItemComponent } from './component/home/item/item.component';
@@ -46,7 +45,6 @@ import { OrderConfirmationComponent } from './component/order/order-confirmation
     AddressComponent,
     CheckoutComponent,
     CheckoutItemComponent,
-    PaymentCardComponent,
     AppToastComponent,
     ItemComponent,
     RegisterComponent,

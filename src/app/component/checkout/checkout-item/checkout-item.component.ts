@@ -2,22 +2,24 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BasketItem } from 'src/app/model/basket.model';
 import { Router } from '@angular/router';
 import { MessengerService } from 'src/app/service/messenger.service';
+import { BasketService } from 'src/app/service/basket.service';
 
 @Component({
   selector: 'app-checkout-item',
   templateUrl: './checkout-item.component.html',
-  styleUrls: ['./checkout-item.component.css']
+  styleUrls: ['./checkout-item.component.css'],
 })
 export class CheckoutItemComponent implements OnInit {
-
   @Input() item: BasketItem;
   quantity: number = 0;
   subTotal: number = 0;
-  brand: String = "";
+  brand: String = '';
 
   constructor(
     private router: Router,
-    private messengerService: MessengerService) { }
+    private messengerService: MessengerService,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     this.quantity = this.item.qty;
@@ -25,18 +27,17 @@ export class CheckoutItemComponent implements OnInit {
     this.brand = this.item.brand.name;
   }
 
-
   selectProduct(id: String) {
     this.router.navigate(['/product', id]).then();
   }
 
   removeProduct(id: String) {
-    this.messengerService.removeItem(id);
+    this.basketService.removeItem(id);
   }
 
   increaseQuantity() {
     if (this.quantity < 10) {
-      this.quantity = this.quantity + 1
+      this.quantity = this.quantity + 1;
       this.item.qty = this.quantity;
     }
     this.calculateSubTotal();
@@ -52,7 +53,7 @@ export class CheckoutItemComponent implements OnInit {
 
   private calculateSubTotal() {
     this.subTotal = +(this.quantity * this.item.price).toFixed(2);
-    this.messengerService.updateItem(this.item._id, this.item.qty);
+    this.basketService.updateItem(this.item._id, this.item.qty);
   }
 
   getFraction(n) {
@@ -77,5 +78,4 @@ export class CheckoutItemComponent implements OnInit {
   getSubTotal() {
     return this.getPrettyPrintPrice(this.subTotal);
   }
-
 }

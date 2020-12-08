@@ -9,6 +9,7 @@ import { User } from 'src/app/model/user';
 import { Router } from '@angular/router';
 import { OrderService } from 'src/app/service/order.service';
 import { Order, OrderItem } from 'src/app/model/order';
+import { BasketService } from 'src/app/service/basket.service';
 
 @Component({
   selector: 'app-place-order',
@@ -28,6 +29,7 @@ export class PlaceOrderComponent implements OnInit {
     private messengerService: MessengerService,
     private accountService: AccountService,
     private orderService: OrderService,
+    private basketService: BasketService,
     private router: Router
   ) { }
 
@@ -40,7 +42,7 @@ export class PlaceOrderComponent implements OnInit {
       this.paymentCard = paymentCard;
     })
 
-    this.messengerService.subject$.subscribe(basket => {
+    this.basketService.subject$.subscribe(basket => {
       this.basket = basket;
     })
 
@@ -73,17 +75,23 @@ export class PlaceOrderComponent implements OnInit {
     console.log('Confirming order..')
     var order: Order = new Order();
     order.date = new Date();
-    order.deliveryAddress = this.address;
+    order.address = this.address;
     order.paymentCard = this.paymentCard;
-    order.user = this.user;
-    order.total = this.basket.total;
+    order.email = this.user.email;
+    order.currency = "GCP";
+    order.subTotal = this.basket.total;
+    order.saleTax = this.basket.total;
+    order.shippingCost = this.basket.total;
+    order.totalCost = this.basket.total;
+    order.expectedDeliveryDate = new Date();
     var items: OrderItem[] = [];
     this.basket.items.map(bi => {
       var item: OrderItem = new OrderItem();
       item.price = bi.price;
-      item.product = bi._id;
-      item.qty = bi.qty;
-      item.subtotal = bi.subtotal;
+      item.productId = bi._id;
+      item.productName = bi.name;
+      item.quantity = bi.qty;
+      item.total = bi.price * bi.qty;
       items.push(item);
     });
     order.items = items;

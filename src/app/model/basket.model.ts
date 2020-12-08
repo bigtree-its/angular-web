@@ -1,17 +1,17 @@
 import { Brand } from './product.model';
 
-export interface Basket {
-   items: BasketItem[]
-   total: number
+export class Basket {
+   public items: BasketItem[];
+   public total: number;
 }
 
 
-export interface BasketItem{
-    _id: string,
-    name: string, 
-    brand: Brand, 
-    price: number,
-    qty: number,
-    subtotal:number,
-    image: string
+export class BasketItem{
+    public _id: string;
+    public name: string;
+    public brand: Brand; 
+    public price: number;
+    public qty: number;
+    public subtotal:number;
+    public image: string;
 }

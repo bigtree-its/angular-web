@@ -33,10 +33,16 @@
     background-color: #f8f8f8;
 }
 
+.navbar-brand-name {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 45px;
+}
+
 .top-nav-basket-icon {
     height: 35px;
     width: 35px;
     margin-bottom: 9px;
+    margin-right: 5px;
 }
 
 .top-nav-user-icon {
@@ -170,6 +176,8 @@
 .star-active {
     color: #ff9900;
     cursor: pointer;
+    height: 5px;
+    width: 5px;
 }
 
 .star-muted {
@@ -282,6 +290,11 @@ a:hover {
     top: 1.5rem;
 }
 
+.featured-product-image {
+    height: 400px;
+    width: 450px;
+}
+
 .nav-section {
     width: 5%;
     float: left;
@@ -316,9 +329,10 @@ a:hover {
 }
 
 .p-item {
-    max-width: 212px;
+    max-width: 272px;
     min-width: 198px;
-    height: 404px;
+    height: 324px;
+    width: 250px;
     float: left;
     text-align: center;
     position: relative;
@@ -328,7 +342,7 @@ a:hover {
 }
 
 .p-item-price-section {
-    height: 44px;
+    height: 40px;
     width: 100%;
     padding: 0 20px 0 0;
     text-align: left;
@@ -343,7 +357,7 @@ a:hover {
 
 .p-item-name {
     text-align: left;
-    font-size: 16px!important;
+    font-size: 13px!important;
     color: #111 !important;
     font-weight: 400!important;
     font-style: normal!important;
@@ -354,12 +368,13 @@ a:hover {
 .p-item-price-currency {
     font-size: 12px !important;
     float: left;
+    color: #111 !important;
 }
 
 .p-item-price {
     float: left;
     text-align: left;
-    font-size: 25px !important;
+    font-size: 20px !important;
     color: #111 !important;
     text-decoration: none;
     position: relative;
@@ -371,9 +386,8 @@ a:hover {
     top: 10;
     left: 4;
     font-size: 12px;
+    color: #111 !important;
 }
-
-.product-card:hover {}
 
 .product-card-image-section {
     position: relative;
@@ -410,23 +424,24 @@ a:hover {
     padding: 10px;
 }
 
-.product-details-image-small-wrapper {
+.product-details-image-small {
     height: 70px;
     width: 70px;
     padding: 2px;
 }
 
-.product-details-image-small-wrapper:hover {
+.product-details-image-small:hover {
     border: 1px solid #ff8000;
     cursor: pointer;
 }
 
-.product-details-image-small {
+
+/* .product-details-image-small {
     max-width: 100%;
     max-height: 100%;
     object-fit: fill;
     z-index: 0;
-}
+} */
 
 .product-details-image-section {
     flex-basis: 20%;
@@ -745,14 +760,31 @@ a:hover {
     text-align: right;
 }
 
+.address-form-col-half {
+    width: 245px;
+}
+
+.address-form-col-1-3 {
+    width: 150px;
+}
+
 
 /** ORDER CONFIRMATION PAGE */
 
-.order-confirmation-page {
+.review-order-page {
     margin-top: 70px;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+}
+
+.order-confirmation-page {
+    margin-top: 70px;
+}
+
+.order-confirmation-page-header {
+    text-align: center;
+    padding: 0 15px;
 }
 
 .order-confirmation-address {
@@ -768,9 +800,13 @@ a:hover {
 }
 
 .order-confirmation-items {
-    border: 1px solid #e7e9ec;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.order-confirmation-icon {
+    height: 30px;
+    width: 30px;
 }
 
 .confirm-order-button-section {

@@ -4,12 +4,13 @@
 
 export const environment = {
   production: false,
-  SERVER_URL: 'http://localhost:8080/',
-  ACCOUNT_SERVICE_URL: 'http://localhost:5000',
+  PRODUCT_SERVICE_URL: 'http://localhost:8081/',
+  ACCOUNT_SERVICE_URL: 'http://localhost:8080',
   AUTH_LOGIN_PATH: '/auth/login',
   AUTH_REGISTER_PATH: '/auth/register',
-  ORDER_SERVICE_HOST: 'http://localhost:5000',
-  ORDERS: '/orders'
+  ORDER_SERVICE_URL: 'http://localhost:8082',
+  ORDERS: '/orders',
+  BASKETS: '/baskets'
 };
 
 /*

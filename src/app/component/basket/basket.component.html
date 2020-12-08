@@ -1,7 +1,7 @@
-<div class=" basket-page">
+<div class="basket-page">
     <div *ngIf="basket.items.length == 0; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
-        <span class="basket-no-items">
+        <span class="basket-no-items p-5">
             Oh no! Your basket is empty. Time to go shopping!
         </span>
     </ng-template>

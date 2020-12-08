@@ -1,0 +1,65 @@
+/* used in conjunction with focusManager.js */
+
+
+/* used in conjunction with focusManager.js */
+
+.form {
+    position: relative;
+    background-color: #fff;
+}
+
+.form form {
+    margin: 0;
+}
+
+.form form :first-child {
+    width: 100%;
+    margin: 0;
+}
+
+.form label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.form button[type='submit'] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    min-width: 40px;
+    width: 40px;
+    padding: 0 8px;
+    transition: all 0.4s ease;
+}
+
+.form input[type='text'] {
+    padding-left: 16px;
+    font-weight: 400;
+    border-color: #6b6b6b;
+    border-right: 1px solid;
+}
+
+.form input[type='text']::placeholder {
+    font-weight: 200;
+    color: #6b6b6b;
+    opacity: 1;
+}
+
+.form input[type='text']:invalid {
+    box-shadow: none;
+}
+
+.form input[type='text']:focus,
+.form input[type='text']:not([disabled]):hover,
+.form input[type='text']:active {
+    border: 2px solid #000;
+    padding-left: 15px;
+}
