@@ -8,6 +8,7 @@ import { CheckoutComponent } from './component/checkout/checkout.component';
 import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
 import { RegisterComponent } from './component/register/register.component';
 import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 
 const routes: Routes = [
@@ -34,7 +35,11 @@ const routes: Routes = [
   },
   {
     path: 'order-confirmation', component: OrderConfirmationComponent
+  },
+  {
+    path: 'profile', component: ProfileComponent
   }
+
 ];
 
 @NgModule({

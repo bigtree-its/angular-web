@@ -50,14 +50,9 @@
                         ],
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
-                            "src/styles.css",
-                            "./node_modules/swiper/css/swiper.css",
-                            "./node_modules/swiper/css/swiper.min.css"
+                            "src/styles.css"
                         ],
-                        "scripts": [
-                            "./node_modules/swiper/js/swiper.js",
-                            "./node_modules/swiper/js/swiper.min.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "production": {

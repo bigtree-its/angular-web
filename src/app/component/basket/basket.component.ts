@@ -4,6 +4,7 @@ import { MessengerService } from 'src/app/service/messenger.service';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
 import { BasketService } from 'src/app/service/basket.service';
+import { Location } from '@angular/common';
 
 
 
@@ -20,6 +21,7 @@ export class BasketComponent implements OnInit {
     private messengerService: MessengerService,
     private accountService: AccountService,
     private basketService: BasketService,
+    private _location: Location,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -72,6 +74,10 @@ export class BasketComponent implements OnInit {
 
   getBasketTotal(){
     return this.getPrettyPrintPrice(this.basket.total);
+  }
+
+  backToResults() {
+    this._location.back();
   }
 
 }

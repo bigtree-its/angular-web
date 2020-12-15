@@ -5,7 +5,6 @@ import { ProductService } from 'src/app/service/product.service';
 import { ProductModel } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { MessengerService } from 'src/app/service/messenger.service';
-import Swiper from 'swiper';
 import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 
@@ -81,7 +80,6 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var slider = this.initSwiper();
 
     this.activatedRoute.params.subscribe(params => {
       const productId = params['id'];
@@ -89,11 +87,6 @@ export class DetailComponent implements OnInit {
       this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
         this.product = product;
         this.mainPicture = this.product.picture.thumbnail;
-        this.product.picture.additional.forEach(element => {
-          slider.appendSlide([
-            '<div class="swiper-slide">  <img src="' + element + '" alt="" class="product-details-image"> </div>'
-          ]);
-        });
       });
     })
   }
@@ -102,33 +95,4 @@ export class DetailComponent implements OnInit {
     this.mainPicture = url;
   }
 
-
-  private initSwiper() {
-    return new Swiper('.swiper-container', {
-      // spaceBetween: 30,
-      // centeredSlides: true,
-      effect: 'flip',
-      grabCursor: true,
-      // coverflowEffect: {
-      //   rotate: 50,
-      //   stretch: 0,
-      //   depth: 100,
-      //   modifier: 1,
-      //   slideShadows: true,
-      // },
-      // cubeEffect: {
-      //   shadow: true,
-      //   slideShadows: true,
-      //   shadowOffset: 20,
-      //   shadowScale: 0.94,
-      // },
-      pagination: {
-        el: '.swiper-pagination',
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
-  }
 }

@@ -19,7 +19,6 @@ import { LoginComponent } from './component/login/login.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BasketItemComponent } from './component/basket/basket-item/basket-item.component';
 import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
-import { SwipperTestComponent } from './component/swipper-test/swipper-test.component';
 import { AddressComponent } from './component/forms/address/address.component';
 import { CheckoutComponent } from './component/checkout/checkout.component';
 import { CheckoutItemComponent } from './component/checkout/checkout-item/checkout-item.component';
@@ -29,6 +28,7 @@ import { ItemComponent } from './component/home/item/item.component';
 import { RegisterComponent } from './component/register/register.component';
 import { AlertComponent } from './component/alert/alert.component';
 import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,6 @@ import { OrderConfirmationComponent } from './component/order/order-confirmation
     LoginComponent,
     BasketItemComponent,
     PlaceOrderComponent,
-    SwipperTestComponent,
     AddressComponent,
     CheckoutComponent,
     CheckoutItemComponent,
@@ -49,7 +48,8 @@ import { OrderConfirmationComponent } from './component/order/order-confirmation
     ItemComponent,
     RegisterComponent,
     AlertComponent,
-    OrderConfirmationComponent
+    OrderConfirmationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

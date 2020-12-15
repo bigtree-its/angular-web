@@ -53,3 +53,19 @@
     width: 350px;
     height: 350px;
 }
+
+.product-in-stock {
+    margin: 0 0 15px;
+    line-height: 1.6em;
+    font-weight: normal;
+    font-style: italic;
+    color: #009698;
+}
+
+.product-no-stock {
+    margin: 0 0 15px;
+    line-height: 1.6em;
+    font-weight: normal;
+    font-style: italic;
+    color: #b62935;
+}

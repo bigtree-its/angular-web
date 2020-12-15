@@ -903,45 +903,6 @@ a:hover {
     margin: 0;
 }
 
-
-/*=========================================================
-      13 -> RESPONSIVE
-  ===========================================================*/
-
-.swiper-container {
-    width: 400px;
-    height: 300px;
-    margin: 1px;
-}
-
-.swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-.swiper-button-next {
-    color: #2B2D42;
-}
-
-.swiper-button-prev {
-    color: #2B2D42;
-}
-
-
-/** */
-
 @media (min-width: 992px) {
     .animate {
         animation-duration: 0.3s;

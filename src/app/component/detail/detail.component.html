@@ -51,6 +51,9 @@
                     <span class="price-fraction">{{ getFraction() }}</span>
                 </div>
             </div>
+            <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
+                {{ product.stock > 0 ? "In Stock " : "No Stock "}}
+            </span>
             <div class="d-block d-flex justify-content-center my-5">
                 <button class="bt-btn bt-btn-primary" (click)="addToCart()">Add
                     to Basket</button>

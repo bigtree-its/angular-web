@@ -1,0 +1,161 @@
+<div class="bt-page container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="text-dark">Profile</h4>
+        <button class="btn btn-link">Back to results</button>
+    </div>
+    <hr class="mb-2">
+    <div class="h-flex justify-content-center wrap">
+        <div class="left-nav-section">
+            <h3>Profile</h3>
+            <hr>
+            <ul>
+                <div class="nav-item bg-light">
+                    <img src="/assets/icons/cyber-security.png" height="30px" width="30px" class="nav-item-icon">
+                    <li class="nav-item-text" (click)="openAccounts()">Login & Security
+                    </li>
+                </div>
+                <div class="nav-item bg-light">
+                    <img src="/assets/icons/pin.png" height="30px" width="30px" class="nav-item-icon">
+                    <li class="nav-item-text" (click)="openAddressForm()">Your Addresses
+                    </li>
+                </div>
+                <div class="nav-item bg-light">
+                    <img src="/assets/icons/credit-card.png" height="30px" width="30px" class="nav-item-icon">
+                    <li class="nav-item-text" (click)="openPaymentCards()">Your Payments
+                    </li>
+                </div>
+                <div class="nav-item bg-light">
+                    <img src="/assets/icons/delay.png" height="30px" width="30px" class="nav-item-icon">
+                    <li class="nav-item-text" (click)="openOrders()">Your Orders</li>
+                </div>
+            </ul>
+        </div>
+        <div class="detail-section">
+            <div class="">
+                <h4 class="text-dark">Your Addresses</h4>
+                <hr>
+                <div *ngIf="addressList.length == 0; then thenBlock else
+                    elseBlock"></div>
+                <ng-template #thenBlock>
+                    <span class="basket-no-items">
+                        You have no address registered. <button type="button"
+                            class="btn btn-sm btn-outline-primary ml-1"
+                            (click)="onAddAddress()">Add</button>
+                    </span>
+                </ng-template>
+                <ng-template #elseBlock>
+                    <div [hidden]="hideAddressSection==true">
+                        <div class="space-around" *ngFor="let a of addressList">
+                            <div class="address-item bg-light">
+                                <div>
+                                    <span>{{ a.firstName }} {{ a.lastName }}</span>
+                                </div>
+                                <span>{{ a.lineNumber1 }}</span>
+                                <span>{{ a.lineNumber2 }}</span>
+                                <span>{{ a.city }}</span>
+                                <span>{{ a.country }}</span>
+                                <span>{{ a.postcode }}</span>
+                                <div class="h-flex align-items-start wrap my-2">
+                                    <button type="button" class="btn btn-sm
+                                        btn-outline-secondary mr-1" (click)="editAddress(a)">Edit</button>
+                                    <button type="button" class="btn btn-sm
+                                        btn-outline-danger mr-1" (click)="removeAddress(a)">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="hideAddressForm==true">
+                        <form #addressForm="ngForm" (ngSubmit)=(onSubmitAddress(addressForm))>
+                            <div class="h-flex align-items-start wrap">
+                                <div class="address-form-col-half mb-3 ml-3">
+                                    <label for="firstName">First name</label>
+                                    <input type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName" placeholder="" value="" name="firstName" #firstName="ngModel" required>
+                                    <!-- <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+                                </div> -->
+                                </div>
+                                <div class="address-form-col-half mb-3 ml-3">
+                                    <label for="lastName">Last name</label>
+                                    <input type="text" class="form-control" id="lastName" placeholder="" value="" required [(ngModel)]="address.lastName" name="lastName" #lastName="ngModel">
+                                    <!-- <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+                                    Last name is required
+                                </div> -->
+                                </div>
+                            </div>
+
+                            <div class="h-flex justify-content-start wrap">
+                                <div class="address-form-col-half mb-3 ml-3">
+                                    <label for="email">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">@</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="email" placeholder="you@example.com" required [(ngModel)]="address.email" name="email" #email="ngModel">
+                                        <!-- <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                                        Please enter a valid email address for shipping updates.
+                                    </div> -->
+                                    </div>
+                                </div>
+                                <div class="address-form-col-half mb-3 ml-3">
+                                    <label for="mobile">Mobile <span
+                                            class="text-muted">(Optional)</span></label>
+                                    <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
+                                </div>
+                            </div>
+
+                            <div class="mb-3 ml-3">
+                                <label for="lineNumber1">Address</label>
+                                <input type="text" class="form-control" id="lineNumber2" placeholder="1234, Main St" required [(ngModel)]="address.lineNumber1" name="lineNumber1" #lineNumber1="ngModel">
+                                <!-- <div [hidden]="lineNumber1.valid || lineNumber1.pristine" class="alert alert-danger">
+                                Please enter a valid address line.
+                            </div> -->
+                            </div>
+
+                            <div class="mb-3 ml-3">
+                                <label for="lineNumber2">Address 2 <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control" id="lineNumber2" placeholder="Apartment or
+                                    suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2" #lineNumber2="ngModel">
+                            </div>
+
+                            <div class="h-flex justify-start wrap">
+                                <div class="address-form-col-1-3 mb-3 ml-3">
+                                    <label for="city">City/Town</label>
+                                    <input type="text" class="form-control" id="city" placeholder="Glasgow" required [(ngModel)]="address.city" name="city" #city="ngModel">
+                                    <!-- <div [hidden]="city.valid || city.pristine" class="alert alert-danger">
+                                    Please enter a valid City/Town.
+                                </div> -->
+                                </div>
+                                <div class="address-form-col-1-3 mb-3 ml-3">
+                                    <label for="country">Country</label>
+                                    <select class="custom-select d-block w-100" id="country" required [(ngModel)]="address.country" name="country" #country="ngModel">
+                                        <option value="">Select...</option>
+                                        <option>United Kingdom</option>
+                                        <option>United States</option>
+                                        <option>United India</option>
+                                    </select>
+                                    <!-- <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
+                                    Please select a Country.
+                                </div> -->
+                                </div>
+                                <div class="address-form-col-1-3 mb-3 ml-3">
+                                    <label for="postcode">Post/Zip code</label>
+                                    <input type="text" class="form-control" id="postcode" placeholder="" required [(ngModel)]="address.postcode" name="postcode" #postcode="ngModel">
+                                    <!-- <div [hidden]="postcode.valid || postcode.pristine" class="alert alert-danger">
+                                    Please enter a valid Postal/Zip/Pin Code.
+                                </div> -->
+                                </div>
+                            </div>
+                            <div class="h-flex">
+                                <button type="submit" class="btn btn-sm
+                                    btn-primary
+                                    m-1 ml-3" [disabled]="!addressForm.form.valid">Submit</button>
+                                <button class="btn btn-sm btn-secondary m-1
+                                    ml-3" (click)="closeAddressForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
