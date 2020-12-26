@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Run on local machine
 Install npm modules
 
-  npm install --save
+  `npm install --save`
 
 
 ## Development server
