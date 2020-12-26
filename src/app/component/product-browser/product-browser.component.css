@@ -1,0 +1,28 @@
+.page {
+    margin-top: 70px;
+}
+
+.nav-section {
+    width: 20%;
+    clear: both;
+    background: #ebf3ff;
+    border: 1px solid #ebf3ff;
+    margin: 10px;
+    height: 700px;
+    padding: 10px 5px;
+}
+
+.nav-section-header {
+    font-size: 24px;
+    padding: 10px;
+}
+
+.main-section {
+    width: 80%;
+    clear: both;
+    background: #ebf3ff;
+    border: 1px solid #ebf3ff;
+    margin: 10px;
+    height: 700px;
+    padding: 10px;
+}

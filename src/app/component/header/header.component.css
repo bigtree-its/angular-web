@@ -4,4 +4,24 @@
     line-height: 36px;
     font-weight: 700;
     text-decoration: none;
+    font-family: 'Poiret One', cursive;
+}
+
+.top-nav-right-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.top-nav-right-section:hover {
+    cursor: pointer;
+    background-color: #e6e4e4;
+    border-radius: 50px;
+}
+
+.top-nav-basket-icon {
+    height: 35px;
+    width: 35px;
+    margin-bottom: 9px;
+    margin-right: 5px;
 }

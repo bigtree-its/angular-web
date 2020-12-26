@@ -1,41 +1,111 @@
 <div class="bt-page container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="text-dark">Profile</h4>
-        <button class="btn btn-link">Back to results</button>
-    </div>
-    <hr class="mb-2">
     <div class="h-flex justify-content-center wrap">
         <div class="left-nav-section">
             <h3>Profile</h3>
             <hr>
             <ul>
-                <div class="nav-item bg-light">
+                <div class="nav-item " (click)="showAboutYouModule()">
+                    <img src="/assets/icons/resume.png" height="30px" width="30px" class="nav-item-icon">
+                    <li class="nav-item-text">Personal Details</li>
+                </div>
+                <div class="nav-item " (click)="showSecurityModule()">
                     <img src="/assets/icons/cyber-security.png" height="30px" width="30px" class="nav-item-icon">
-                    <li class="nav-item-text" (click)="openAccounts()">Login & Security
-                    </li>
+                    <li class="nav-item-text">Login & Security</li>
                 </div>
-                <div class="nav-item bg-light">
+                <div class="nav-item " (click)="showAddressModule()">
                     <img src="/assets/icons/pin.png" height="30px" width="30px" class="nav-item-icon">
-                    <li class="nav-item-text" (click)="openAddressForm()">Your Addresses
-                    </li>
+                    <li class="nav-item-text">Your Addresses</li>
                 </div>
-                <div class="nav-item bg-light">
+                <div class="nav-item " (click)="showPaymentsModule()">
                     <img src="/assets/icons/credit-card.png" height="30px" width="30px" class="nav-item-icon">
-                    <li class="nav-item-text" (click)="openPaymentCards()">Your Payments
-                    </li>
+                    <li class="nav-item-text">Your Payments</li>
                 </div>
-                <div class="nav-item bg-light">
+                <div class="nav-item " (click)="showOrdersModule()">
                     <img src="/assets/icons/delay.png" height="30px" width="30px" class="nav-item-icon">
-                    <li class="nav-item-text" (click)="openOrders()">Your Orders</li>
+                    <li class="nav-item-text">Your Orders</li>
                 </div>
             </ul>
         </div>
         <div class="detail-section">
-            <div class="">
-                <h4 class="text-dark">Your Addresses</h4>
-                <hr>
-                <div *ngIf="addressList.length == 0; then thenBlock else
-                    elseBlock"></div>
+            <div class="d-flex justify-content-between">
+                <h5 class="text-dark">{{moduleName}}</h5>
+                <button [disabled]="saveChangesEnabled == true && isChangeMade == true" (click)="submitProfile()" class="btn btn-sm btn-primary m-1
+                    ml-3">
+                    <span *ngIf="loading && isChangeMade ==true"
+                        class="spinner-border spinner-border-sm mr-1"></span>
+                    Save Changes
+                </button>
+            </div>
+            <hr>
+            <div *ngIf="displayAboutYouModule == true">
+                <form #personalDetailsForm="ngForm" (ngSubmit)=(onSubmitPersonalDetails(personalDetailsForm))>
+                    <div class="mb-3 ml-3">
+                        <label for="firstNamePersonalDetails">Email</label>
+                        <input type="text" class="form-control" id="emailPersonalDetails" placeholder="" required [(ngModel)]="user.email" name="emailPersonalDetails" #emailPersonalDetails="ngModel" disabled>
+                    </div>
+                    <div class="mb-3 ml-3">
+                        <label for="firstNamePersonalDetails">First name</label>
+                        <input type="text" class="form-control" id="firstNamePersonalDetails" placeholder="" required [(ngModel)]="user.firstName" name="firstNamePersonalDetails" #firstNamePersonalDetails="ngModel">
+                    </div>
+                    <div class="mb-3 ml-3">
+                        <label for="lastNamePersonalDetails">Last name</label>
+                        <input type="text" class="form-control" id="lastNamePersonalDetails" placeholder="" required [(ngModel)]="user.lastName" name="lastNamePersonalDetails" #lastNamePersonalDetails="ngModel">
+                    </div>
+                    <div class="mb-3 ml-3">
+                        <label for="mobilePersonalDetails">Mobile</label>
+                        <input type="text" class="form-control" id="mobilePersonalDetails" placeholder="" required [(ngModel)]="user.mobile" name="mobilePersonalDetails" #mobilePersonalDetails="ngModel">
+                    </div>
+                    <button [disabled]="loading" class="btn
+                        btn-primary ml-3">
+                        <span *ngIf="loading" class="spinner-border
+                            spinner-border-sm mr-1"></span>
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <div *ngIf="displaySecurityModule == true">
+                <form [formGroup]="changePasswordFormGroup" (ngSubmit)="onSubmitChangePassword()">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" formControlName="currentPassword" class="form-control" [ngClass]="{ 'is-invalid': passwordChangeSubmitted && changePasswordForm.currentPassword.errors }" />
+                        <div *ngIf="passwordChangeSubmitted && changePasswordForm.currentPassword.errors" class="invalid-feedback">
+                            <div *ngIf="changePasswordForm.currentPassword.errors.required">Your Current Password is required</div>
+                        </div>
+                        <!-- <span *ngIf="passwordChangeSubmitted && isPasswordValid()" class="passwordNotMatched mb-2">Password is not correct</span> -->
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" formControlName="newPassword" class="form-control" [ngClass]="{ 'is-invalid': passwordChangeSubmitted && changePasswordForm.newPassword.errors }" />
+                        <small class="text-muted pl-2 py-1">Password must be minimum 8 chars and contain at least a number.</small>
+                        <div *ngIf="passwordChangeSubmitted && changePasswordForm.newPassword.errors" class="invalid-feedback">
+                            <div *ngIf="changePasswordForm.newPassword.errors.required">New Password is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Repeat Password</label>
+                        <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': passwordChangeSubmitted && changePasswordForm.confirmPassword.errors }" autocomplete="off" />
+                        <div *ngIf="passwordChangeSubmitted && changePasswordForm.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="changePasswordForm.confirmPassword.errors.required">Repeat Password is required</div>
+                        </div>
+                        <span *ngIf="passwordChangeSubmitted && changePasswordForm.confirmPassword.value !== changePasswordForm.newPassword.value" class="passwordNotMatched mb-2">Password is not matched</span>
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-primary btn-load" data-loading-text="Changing Password..."> 
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Change Password
+                        </button>
+                    </div>
+                </form>
+                <div *ngIf="passwordChangeSuccessful==true" class="alert alert-success h-flex justify-content-between wrap" role="alert">
+                    Your password change successful. Remember to login back with your new password.
+                    <button class="btn btn-sm btn-info">Ok</button>
+                </div>
+            </div>
+            <div *ngIf="displayAddressModule == true">
+                <ng-container *ngIf="addressList.length == 0; then thenBlock;
+                    else
+                    elseBlock">
+                </ng-container>
                 <ng-template #thenBlock>
                     <span class="basket-no-items">
                         You have no address registered. <button type="button"
@@ -81,33 +151,14 @@
                                 </div> -->
                                 </div>
                             </div>
-
-                            <div class="h-flex justify-content-start wrap">
-                                <div class="address-form-col-half mb-3 ml-3">
-                                    <label for="email">Email</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">@</span>
-                                        </div>
-                                        <input type="text" class="form-control" id="email" placeholder="you@example.com" required [(ngModel)]="address.email" name="email" #email="ngModel">
-                                        <!-- <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                                        Please enter a valid email address for shipping updates.
-                                    </div> -->
-                                    </div>
-                                </div>
-                                <div class="address-form-col-half mb-3 ml-3">
-                                    <label for="mobile">Mobile <span
-                                            class="text-muted">(Optional)</span></label>
-                                    <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
-                                </div>
+                            <div class="mb-3 ml-3">
+                                <label for="mobile">Mobile <span
+                                        class="text-muted">(Optional)</span></label>
+                                <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
                             </div>
-
                             <div class="mb-3 ml-3">
                                 <label for="lineNumber1">Address</label>
                                 <input type="text" class="form-control" id="lineNumber2" placeholder="1234, Main St" required [(ngModel)]="address.lineNumber1" name="lineNumber1" #lineNumber1="ngModel">
-                                <!-- <div [hidden]="lineNumber1.valid || lineNumber1.pristine" class="alert alert-danger">
-                                Please enter a valid address line.
-                            </div> -->
                             </div>
 
                             <div class="mb-3 ml-3">
@@ -155,6 +206,10 @@
                         </form>
                     </div>
                 </ng-template>
+            </div>
+
+            <div *ngIf="isError" class="alert alert-warning result">
+                <p>{{message}}</p>
             </div>
         </div>
     </div>

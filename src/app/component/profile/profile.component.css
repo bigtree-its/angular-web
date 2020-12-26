@@ -4,12 +4,15 @@
     padding: 15px;
     border-radius: 3px;
     margin: 10px;
+    background: #ebf3ff;
     border: 1px solid #ebf3ff;
+    clear: both;
 }
 
 .detail-section {
-    /* background: #ebf3ff; */
+    background: #ebf3ff;
     border: 1px solid #ebf3ff;
+    clear: both;
     border-radius: 3px;
     padding: 15px;
     clear: both;
@@ -21,7 +24,6 @@
     line-height: 50px;
     flex-direction: row;
     align-items: center;
-    /* display: inline-block; */
     display: flex;
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 3px;
@@ -32,7 +34,6 @@
 
 .nav-item-icon {
     float: left;
-    /* margin: 0 2px; */
 }
 
 .nav-item-text {
@@ -41,7 +42,7 @@
 }
 
 .nav-item:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: #ebf3ff;
     cursor: pointer;
 }
 
@@ -55,6 +56,15 @@
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 3px;
     margin: 5px;
-    padding: 0 10px;
-    vertical-align: center;
+    padding: 15px;
+}
+
+.passwordNotMatched {
+    font-style: italic;
+    color: coral;
+}
+
+.result {
+    margin-top: 10px;
+    padding: 20px;
 }

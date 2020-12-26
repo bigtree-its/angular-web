@@ -1,0 +1,21 @@
+{
+    "email": "bigtree.it.services@gmail.com",
+    "firstName": "nava",
+    "lastName": "krishnan",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiaWd0cmVlLml0LnNlcnZpY2VzQGdtYWlsLmNvbSIsImlhdCI6MTYwODAzOTY4OSwiaXNzIjoicHJvamVjdC55b3VzZWxsQGdtYWlsLmNvbSIsImV4cCI6MTYwODA0MDYxOX0.W0erI7VxOTOF6ezSMHSPcSKA3PH2TL5lafPQV3qlX-E",
+    "addresses": [{
+        "_id": "5fd7b4aa8ca1030012ce3b50",
+        "lineNumber1": "28, Ellerslie Crescent",
+        "lineNumber2": "Yorker",
+        "city": "Glasgow",
+        "postcode": "G140NY",
+        "country": "Scotland"
+    }],
+    "paymentCards": [{
+        "_id": "5fd7b4aa8ca1030012ce3b51",
+        "nameOnCard": "N KANNUSAMY",
+        "cardNumber": "1234567891234567",
+        "cvv": "123",
+        "cardType": "Debit"
+    }]
+}

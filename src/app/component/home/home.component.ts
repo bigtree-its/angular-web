@@ -12,6 +12,7 @@ import { MenuItem } from 'src/app/model/menu-item';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
+import { CategoryQuery } from 'src/app/model/query';
 
 @Component({
   selector: 'app-home',
@@ -68,9 +69,6 @@ export class HomeComponent implements OnInit {
         } else {
           this.featuredProduct = result[0];
         }
-        console.log(
-          'The featured product: ' + JSON.stringify(this.featuredProduct)
-        );
       });
     this.productService.getAllProducts().subscribe((result: ProductModel[]) => {
       this.productsMaster = result;
@@ -143,16 +141,17 @@ export class HomeComponent implements OnInit {
 
   selectDepartment(d: Department) {
     this.department = d;
-    let catsByD: Category[] = this.messengerService.getCatsByDepartment(d._id);
-    if (catsByD === undefined || catsByD.length === 0) {
-      this.productService
-        .getCategoriesByDepartment(d._id)
-        .subscribe((result: Category[]) => {
-          this.handleResponseCategories(result);
-        });
-    } else {
-      this.handleResponseCategories(catsByD);
-    }
+    // let catsByD: Category[] = this.messengerService.getCatsByDepartment(d._id);
+    // if (catsByD === undefined || catsByD.length === 0) {
+    //   this.productService
+    //     .getCategoriesByDepartment(d._id)
+    //     .subscribe((result: Category[]) => {
+    //       this.handleResponseCategories(result);
+    //     });
+    // } else {
+    //   this.handleResponseCategories(catsByD);
+    // }
+    this.router.navigate(['/category-browser', this.department._id]).then();
   }
 
   private handleResponseCategories(result: Category[]) {
@@ -283,7 +282,6 @@ export class HomeComponent implements OnInit {
     let uniqBrands = _.map(_.indexBy(this.brands, '_id'), function (obj, key) {
       return obj.name;
     });
-    console.log('Brands to choose: ' + JSON.stringify(this.brands));
   }
   getFeaturedProductName() {
     if (this.featuredProduct === undefined || this.featuredProduct === null) {

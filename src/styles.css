@@ -10,7 +10,6 @@ html,
 body {
     height: 100%;
     margin: 0;
-    font-family: gdsherpa, Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5rem;
@@ -20,6 +19,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
+    font-family: Graphik Web, Helvetica Neue, Helvetica, Arial, Verdana, sans-serif;
 }
 
 *,
@@ -31,6 +31,9 @@ body {
     /* Firefox */
     -ms-user-select: none;
     /* IE10+ */
+    outline: none;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 input:focus,
@@ -40,11 +43,71 @@ select:focus {
 }
 
 .color-yellow {
-    color: #F5A023
+    color: #ffe01b
 }
 
-.background-yellow {
-    background-color: #F5A023;
+.bg-yellow {
+    background-color: #ffe01b;
+}
+
+.bg-blue {
+    background: #ebf3ff;
+    border: 1px solid #ebf3ff;
+}
+
+
+/** Font Size */
+
+.size-sm {
+    font-size: small;
+}
+
+.size-md {
+    font-size: medium;
+}
+
+.size-lg {
+    font-size: large;
+}
+
+
+/** Buttons */
+
+.ob-btn-fill {
+    background-color: #ffe01b;
+    border-radius: 5px;
+    border: none;
+}
+
+.ob-btn-fill:hover {
+    background-color: #fddb00;
+    cursor: pointer;
+}
+
+.ob-btn:hover {
+    background-color: #ffe01b;
+    cursor: pointer;
+}
+
+.ob-btn {
+    background-color: #fff;
+    border: 5px solid #ffe01b;
+}
+
+.ob-btn:hover {
+    background-color: #ffe01b;
+}
+
+.ob-btn-sm {
+    padding: 5px;
+}
+
+.ob-btn-md {
+    padding: 10px;
+}
+
+.ob-btn-lg {
+    padding: 20px;
 }
 
 
@@ -285,20 +348,6 @@ ul {
     border-left: 1px solid #ececec;
 }
 
-.bt-item {
-    padding: 10px;
-    background-color: #fff;
-    box-sizing: border-box;
-    border: 1px solid #E1E1E1;
-    border-radius: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.bt-item:hover {
-    cursor: pointer;
-}
-
 .bt-input,
 .btn-input-large {
     width: 40px;
@@ -335,17 +384,15 @@ ul {
 }
 
 .bt-btn-primary {
-    color: #fff!important;
-    background: #111!important;
-    border-color: #111!important;
-    border: none;
+    background: rgb(211, 211, 211)!important;
+    border: 4px solid rgb(2, 124, 118)!important;
     padding: 10px 30px;
     box-shadow: none;
+    border-radius: 10px;
 }
 
 .bt-btn-primary:hover {
-    background: #0a51ad;
-    color: #fff;
+    color: rgb(27, 27, 27);
 }
 
 .bt-btn,
@@ -467,6 +514,7 @@ ul {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    border-radius: 50%;
 }
 
 

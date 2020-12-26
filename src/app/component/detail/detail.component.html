@@ -1,13 +1,13 @@
 <div class="bt-page container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="text-dark">{{ product.name}}</h4>
+        <h4 class="text-dark mt-3">{{ product.name}}</h4>
         <button (click)="backToResults()" class="btn btn-link">Back to results</button>
     </div>
     <hr class="mb-2">
     <div class="row d-flex justify-content-center">
         <div class="bt-box margin-10">
-            <div class="main-picture">
-                <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}">
+            <div class="main-picture-div">
+                <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}" class="main-picture">
             </div>
             <div>
                 <div class="d-inline-block bt-border bt-radius my-1">
@@ -55,7 +55,7 @@
                 {{ product.stock > 0 ? "In Stock " : "No Stock "}}
             </span>
             <div class="d-block d-flex justify-content-center my-5">
-                <button class="bt-btn bt-btn-primary" (click)="addToCart()">Add
+                <button class="btn btn-primary btn-md" (click)="addToCart()">Add
                     to Basket</button>
             </div>
         </div>

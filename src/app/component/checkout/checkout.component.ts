@@ -11,6 +11,8 @@ import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
+import { AccountService } from 'src/app/service/account.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-checkout',
@@ -41,11 +43,13 @@ export class CheckoutComponent implements OnInit {
   expirationYear: number = new Date().getFullYear();
   yearsOptions: number[] = [];
   monthsOptions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
+  user: User;
 
   constructor(
     private router: Router,
     private messengerService: MessengerService,
-    private basketService: BasketService
+    private basketService: BasketService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -60,19 +64,18 @@ export class CheckoutComponent implements OnInit {
       this.basket = basket
     });
 
-    this.messengerService.deliveryAddressSubject$.subscribe(address => {
-      if (address !== undefined) {
-        this.address = address;
-        this.hideAddressForm = true;
-        this.updateAddressList();
-      }
-    })
+    this.accountService.userSubject.subscribe(user => {
+      this.user = user;
+      if ( this.user !== undefined){
+        this.addressList = this.user.addresses;
+        if ( this.addressList !== undefined && this.addressList.length > 0){
+          this.hideAddressForm = true;
+        }
 
-    this.messengerService.paymentCardSubject$.subscribe(paymentCard => {
-      if (paymentCard !== undefined) {
-        this.card = paymentCard;
-        this.hidePaymentForm = true;
-        this.updatePaymentList();
+        this.paymentMethodList = this.user.paymentCards;
+        if ( this.paymentMethodList !== undefined && this.paymentMethodList.length > 0){
+          this.hidePaymentForm = true;
+        }
       }
     })
   }
@@ -152,16 +155,13 @@ export class CheckoutComponent implements OnInit {
   cancelAddressForm() {
     this.hideAddressForm = true;
   }
-  cancelPaymentForm() {
-    this.hidePaymentForm = true;
-  }
-
+ 
   addNewAddress() {
-    alert('Adding new address');
     this.hideAddressForm = false;
     this.address = new Address();
 
   }
+
   selectAddress(a: Address, e: any) {
     for (let i = 0; i < this.addressList.length; i++) {
       let add: Address = this.addressList[i];
@@ -195,8 +195,14 @@ export class CheckoutComponent implements OnInit {
   addNewPaymentMethod() {
     this.hidePaymentForm = false;
     this.card = new PaymentCard();
-
   }
+
+  cancelPaymentForm() {
+    this.hidePaymentForm = true;
+    this.card  = undefined;
+  }
+
+
   editPaymentMethod(p: PaymentCard) {
     this.hidePaymentForm = false;
     this.card = new PaymentCard();

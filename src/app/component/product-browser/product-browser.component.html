@@ -1,0 +1,15 @@
+<div class="page container-fluid d-flex justify-content-center">
+    <div class="nav-section">
+        <span class="nav-section-header">{{(department !== undefined && department !== null)? department.name : ""}}</span>
+        <div class="pl-2">
+            <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
+        </div>
+    </div>
+    <div class="main-section">
+        <div class="row d-flex justify-content-start overflow-y">
+            <div class="space-around" *ngFor="let p of products">
+                <app-item [product]="p"></app-item>
+            </div>
+        </div>
+    </div>
+</div>

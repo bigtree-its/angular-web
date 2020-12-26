@@ -1,15 +1,17 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fondamento&display=swap');
+</style>
 <div class="container-fluid">
     <div class="d-flex justify-content-center bt-border-b department-bar">
-        <button class="bt-link ml-2" (click)="displayAllCategory()">All</button>
         <div *ngFor="let d of messengerService.deps">
-            <button class="ml-1 bt-link bt-text-light" (click)="selectDepartment(d)">{{ d.name }}</button>
+            <button class="ml-1 department" (click)="selectDepartment(d)">{{ d.name | uppercase }}</button>
         </div>
     </div>
-    <div class="row my-5">
+    <div class="row my-5 featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
         <div class="d-flex justify-content-center">
             <div class="content col-6">
-                <span class="featured-product-name" (click)="selectProduct()">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name | titlecase }}</span>
-                <!-- <h2>{{ getFeaturedProductName() }}</h2> -->
+                <span class="featured-product-name" (click)="selectProduct()">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
                 <br><br>
                 <p>
                     {{ getFeaturedProductDescription() }}
@@ -22,7 +24,7 @@
                     </div>
                 </div>
                 <div class="d-block">
-                    <button class="bt-btn bt-btn-primary" (click)="addToCart()">Add
+                    <button class="btn ob-btn-fill ob-btn-md" (click)="addToCart()">Add
                         to Basket</button>
                 </div>
             </div>

@@ -71,6 +71,14 @@ export class MessengerService {
     this.categories$.next({ ...this.cats });
   }
 
+  getDepartment(id: string): Department{
+    console.log('Finding department with id '+ id+ ' from list '+ JSON.stringify(this.deps));
+    let deps: Department[] = this.deps.filter(d=> d._id === id);
+    if ( deps !== undefined && deps.length > 0){
+      return deps[0];
+    }
+  }
+
   getChildCats(id:string): Category[]{
     return this.cats.filter(c=> c.parent === id);
   }

@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  loginSuccessful: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit {
         error => {
           this.alertService.error(error);
           this.loading = false;
+          this.loginSuccessful = false;
         });
   }
 

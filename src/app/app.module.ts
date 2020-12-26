@@ -29,6 +29,9 @@ import { RegisterComponent } from './component/register/register.component';
 import { AlertComponent } from './component/alert/alert.component';
 import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
+import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { ProfileComponent } from './component/profile/profile.component';
     RegisterComponent,
     AlertComponent,
     OrderConfirmationComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ProductBrowserComponent
   ],
   imports: [
     BrowserModule,

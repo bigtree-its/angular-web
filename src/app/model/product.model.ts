@@ -29,6 +29,7 @@ export interface Category{
     _id: string,
     name: string,
     parent: string,
+    children: Category[],
     department: string,
 }
 

@@ -1,4 +1,4 @@
-<div class="basket-page">
+<div class="basket-page container-fluid">
     <div *ngIf="basket.items.length == 0; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
         <span class="basket-no-items p-5">
@@ -6,28 +6,29 @@
         </span>
     </ng-template>
     <ng-template #elseBlock>
-        <div class="d-flex justify-content-between ">
+        <div class="d-flex justify-content-between mt-5">
             <h4>Your shopping basket</h4>
             <a href="/">
-                <button type="button" class="ob-btn-secondary">Continue Shopping</button>
+                <button type="button" class="btn btn-sm btn-primary">Continue Shopping</button>
             </a>
         </div>
         <hr class="mb-4">
-        <div class="basket-container">
-            <ul class="product-list">
-                <li *ngFor="let item of basket.items">
-                    <app-basket-item [item]=item></app-basket-item>
-                </li>
-            </ul>
-            <div class="d-flex flex-column bt-border py-5 px-3 box-shadow curved">
+        <div class="row d-flex justify-content-center">
+            <div class="basket-container  bt-border curved">
+                <ul class="product-list">
+                    <li *ngFor="let item of basket.items">
+                        <app-basket-item [item]=item></app-basket-item>
+                    </li>
+                </ul>
+            </div>
+            <div class="checkout-box d-flex flex-column py-5 px-3">
                 <div class="basket-total-section bt-border-b mb-4 pb-4">
                     <span class="basket-total-label">Subtotal</span>:
                     <span class="basket-total">{{ getBasketTotal() | currency: 'GBP' }} </span>
                 </div>
-                <button type="button" class="bt-btn-primary px-3 py-2" (click)="proceedToCheckout()">Check out</button>
+                <button type="button" class="btn btn-primary btn-sm px-3 py-2 size-lg" (click)="proceedToCheckout()">Check out</button>
                 <small class="text-muted pl-2 py-1">Delivery costs will be calculated at checkout.</small>
             </div>
-
         </div>
     </ng-template>
 </div>

@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   faUser = faUser;
   faShoppingBag = faShoppingCart;
 
+  userName: string;
   basket: Basket;
   itemCount: number = 0;
   basketTotal: number = 0;
@@ -34,6 +35,12 @@ export class HeaderComponent implements OnInit {
       this.itemCount = basket.items.length;
       this.basketTotal = +basket.total.toFixed(2);
     })
+    var user = this.accountService.userObject;
+    if ( user !== undefined && user !== null){
+      this.userName = user.firstName + " "+ user.lastName;
+    }else{
+      this.userName = "Hello"
+    }
   }
 
   isUserLoggedIn(): boolean {

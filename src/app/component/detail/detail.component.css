@@ -49,9 +49,15 @@
     color: #111 !important;
 }
 
+.main-picture-div {
+    width: 350px;
+    height: 350px;
+}
+
 .main-picture {
     width: 350px;
     height: 350px;
+    border-radius: 10px;
 }
 
 .product-in-stock {
@@ -69,3 +75,23 @@
     font-style: italic;
     color: #b62935;
 }
+
+.product-details-image-small {
+    height: 70px;
+    width: 70px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.product-details-image-small:hover {
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+
+/* .product-details-image-small {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: fill;
+    z-index: 0;
+} */

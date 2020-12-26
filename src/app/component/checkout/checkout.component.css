@@ -1,0 +1,43 @@
+.checkout-page {
+    margin-top: 70px;
+    margin-top: 70px;
+}
+
+.delivery-address-section {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.payment-section {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.basket-section {
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ececec;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.address-section-item {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ececec;
+}
+
+.checkout-address-action-div {
+    padding: 5px;
+}
+
+.address-card {
+    display: flex;
+    flex-direction: column;
+}

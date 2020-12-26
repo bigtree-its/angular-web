@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
 import { ProductModel, Category, Department } from '../model/product.model';
 import { MessengerService } from './messenger.service';
+import { CategoryQuery, ProductQuery } from '../model/query';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
+  
   SERVER_URL = environment.PRODUCT_SERVICE_URL;
 
   allDeps$: Observable<Department[]>;
@@ -25,10 +27,27 @@ export class ProductService {
     return this.http.get<ProductModel[]>(this.SERVER_URL + 'products');
   }
 
+  queryProducts(query: ProductQuery): Observable<ProductModel[]> {
+    // HttpParams in Immutable. Call to set returns new Object every time.
+    // So need to assign back to same variable
+    var params = new HttpParams();
+    if ( query.brands !== undefined && query.brands !== null){
+      params = params.set('brands', query.brands);
+    }
+    if ( query.department !== undefined && query.department !== null){
+      params = params.set('department', query.department);
+    }
+    if ( query.categories !== undefined && query.categories !== null){
+      params = params.set('categories', query.categories);
+    }
+    return this.http.get<ProductModel[]>(this.SERVER_URL + 'products', {params});
+  }
+
   getFeaturedProduct(): Observable<ProductModel[]> {
     console.log('Fetching featured product...');
     return this.http.get<ProductModel[]>(this.SERVER_URL + 'products/featured');
   }
+
   getAllDepartments(): void {
     console.log('Fetching all departments...');
     this.allDeps$ = this.http.get<Department[]>(
@@ -39,15 +58,15 @@ export class ProductService {
       this.messengerService.cacheDeps(d);
     });
   }
-  getAllCategories(): void {
-    console.log('Fetching all departments...');
-    this.cats$ = this.http.get<Category[]>(
-      this.SERVER_URL + 'categories'
-    ) as Observable<Category[]>;
-    // .pipe(shareReplay({ bufferSize: 1, refCount: true }))
-    this.cats$.subscribe((c) => {
-      this.messengerService.cacheCats(c);
-    });
+
+  getDepartment(departmentId: any): Observable<Department> {
+    return this.http.get<Department>(this.SERVER_URL + 'departments/'+ departmentId);
+  }
+
+  getAllCategories(): Observable<Category[]>  {
+    console.log('Fetching categories');
+    var params = new HttpParams().set('tree', "true");
+    return this.http.get<Category[]>(this.SERVER_URL + 'categories', {params}) as Observable<Category[]>;
   }
 
   getCategoriesByDepartment(id: string): Observable<Category[]> {

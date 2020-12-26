@@ -1,4 +1,7 @@
-<div class="mb-2 sticky p-2">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Bungee+Outline&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&family=Poiret+One&display=swap');
+</style>
+<div class="sticky">
     <nav class="navbar navbar-expand-lg navbar-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -6,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
                 <!-- <img src="/assets/icons/shopping-bag.png" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-                <strong class="logo-brand-text">Best Buy</strong>
+                <strong class="logo-brand-text">GLASGOW INDIANS</strong>
             </a>
         </div>
         <div class="col-1 top-nav-right-section" *ngIf="isUserLoggedIn()">
@@ -14,7 +17,7 @@
                 <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!-- <img src="/assets/icons/top-nav-user-icon.png" alt=""
                         loading="lazy" class="top-nav-user-icon"> -->
-                        My Account
+                        {{userName}}
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <span class="dropdown-item top-nav-logout" (click)="logout()" *ngIf="isUserLoggedIn() == true">Logout</span>
@@ -24,7 +27,8 @@
                 </div>
             </div>
         </div>
-        <span class="btn btn-sm btn-outline-secondary mr-1" *ngIf="isUserLoggedIn() == false" (click)="login()">Sign In</span>
+        <span class="iconify" data-icon="bx-bxl-twitter" data-inline="false"></span>
+        <span class="btn btn-sm btn-primary mr-1" *ngIf="isUserLoggedIn() == false" (click)="login()">Sign In</span>
         <span class="btn btn-sm btn-outline-secondary mr-1" *ngIf="isUserLoggedIn() == false" (click)="register()">Sign Up</span>
         <span class="col-2" routerLink="/basket" class="top-nav-right-section">
             <img src="/assets/icons/shopping-bag.png" alt="" loading="lazy" class="top-nav-basket-icon

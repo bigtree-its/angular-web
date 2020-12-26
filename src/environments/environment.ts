@@ -5,9 +5,15 @@
 export const environment = {
   production: false,
   PRODUCT_SERVICE_URL: 'http://localhost:8081/',
+  
   ACCOUNT_SERVICE_URL: 'http://localhost:8080',
   AUTH_LOGIN_PATH: '/auth/login',
   AUTH_REGISTER_PATH: '/auth/register',
+  CHANGE_PASSWORD: 'http://localhost:8080/auth/change-password',
+  FORGOT_PASSWORD: 'http://localhost:8080/auth/forgot-password',
+  RESET_PASSWORD: 'http://localhost:8080/auth/reset-password',
+  USERS: '/users',
+
   ORDER_SERVICE_URL: 'http://localhost:8082',
   ORDERS: '/orders',
   BASKETS: '/baskets'

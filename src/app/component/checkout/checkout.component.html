@@ -1,39 +1,12 @@
-<div class="checkout-page">
-    <div class="order-confirmation-items">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-dark">Your Basket</h4>
-            <span class="btn btn-sm btn-outline-secondary">{{ basket.items.length }} items</span>
-        </div>
-        <hr class="mb-4">
-        <app-checkout-item [item]="item" *ngFor="let item of basket.items"></app-checkout-item>
-        <hr class="mb-4">
-        <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                    <h6 class="my-0">Promo code</h6>
-                    <small>EXAMPLECODE</small>
-                </div>
-                <span class="text-success">-£5</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between">
-                <span>Total </span>
-                <strong>{{getBasketTotal() | currency: 'GBP'}}</strong>
-            </li>
-        </ul>
-
-        <form class="card p-2">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo code">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-secondary">Redeem</button>
-                </div>
-            </div>
-        </form>
+<div class="checkout-page container-fluid">
+    <div class="row d-flex justify-content-between container-fluid bt-border-bottom">
+        <h4 class="text-dark">Checkout</h4>
+        <button (click)="reviewOrder()" class="ob-btn-fill ob-btn-md">Buy now</button>
     </div>
-    <div class="mx-2"></div>
-    <div class="order-confirmation-items">
-        <div class="bt-border p-2 mb-3">
-            <h5 class="mb-3">Where should we send your order?</h5>
+    <hr class="mb-4">
+    <div class="d-flex justify-content-center  container-fluid mt-5 wrap">
+        <div class="delivery-address-section">
+            <h5 class="mb-3">Delivery Address</h5>
             <hr>
             <div [hidden]="hideAddressForm==true">
                 <form #f="ngForm" (ngSubmit)=(onSubmitAddress(f))>
@@ -67,7 +40,8 @@
                             </div>
                         </div>
                         <div class="address-form-col-half mb-3">
-                            <label for="mobile">Mobile <span class="text-muted">(Optional)</span></label>
+                            <label for="mobile">Mobile <span
+                                        class="text-muted">(Optional)</span></label>
                             <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
                         </div>
                     </div>
@@ -81,8 +55,10 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="lineNumber2">Address 2 <span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="lineNumber2" placeholder="Apartment or suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2" #lineNumber2="ngModel">
+                        <label for="lineNumber2">Address 2 <span
+                                    class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="lineNumber2" placeholder="Apartment or
+                                suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2" #lineNumber2="ngModel">
                     </div>
 
                     <div class="h-flex justify-between wrap">
@@ -114,7 +90,8 @@
                         </div>
                     </div>
                     <div class="h-flex">
-                        <button type="submit " class="btn btn-sm btn-primary m-1" [disabled]="!f.form.valid">Submit</button>
+                        <button type="submit" class="btn btn-sm btn-primary
+                                m-1" [disabled]="!f.form.valid">Submit</button>
                         <button class="btn btn-sm btn-secondary m-1" (click)="cancelAddressForm()">Cancel</button>
                     </div>
                 </form>
@@ -122,59 +99,70 @@
             <div *ngIf="hideAddressForm">
                 <div class="d-flex flex-space-between p-1 bt-border-b">
                     <strong class="text-muted">Choose a delivery address:</strong>
-                    <button type="button" class="btn btn-outline-warning btn-sm" (click)="addNewAddress()">Add</button>
+                    <button type="button" class="btn btn-outline-warning
+                            btn-sm" (click)="addNewAddress()">Add</button>
                 </div>
-                <div class="checkout-address-item bt-border-b mb-1 bg-light" *ngFor="let a of addressList">
-                    <div class="address-selection-check">
+                <div class="address-section-item  bg-blue" *ngFor="let a of addressList">
+                    <div class="d-flex justify-content-start align-items-center">
                         <label class="bt-check">
-                            <input type="checkbox" (change)="selectAddress(a, $event)" [checked]="a.selected">
+                            <input type="checkbox"
+                            (change)="selectAddress(a, $event)"
+                            [checked]="a.selected">
                             <span class="tick"></span>
                         </label>
-                    </div>
-                    <!-- <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!a.selected" [class.text-success]="a.selected"></fa-icon> -->
-                    <div class="address-section">
-                        <div>
-                            <span>{{ address.firstName }} {{ address.lastName }}</span>
+                        <!-- <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!a.selected" [class.text-success]="a.selected"></fa-icon> -->
+                        <div class="address-card ml-3">
+                            <div>
+                                <span>{{ a.firstName }} {{a.lastName }}</span>
+                            </div>
+                            <span>{{ a.lineNumber1 }}</span>
+                            <span>{{ a.lineNumber2 }}</span>
+                            <span>{{ a.city }}</span>
+                            <span>{{ a.country }}</span>
+                            <span>{{ a.postcode }}</span>
                         </div>
-                        <span>{{ a.lineNumber1 }}</span>
-                        <span>{{ a.lineNumber2 }}</span>
-                        <span>{{ a.city }}</span>
-                        <span>{{ a.country }}</span>
-                        <span>{{ a.postcode }}</span>
                     </div>
-                    <div class="address-action-section">
-                        <button type="button" class="btn btn-link" (click)="editAddress(a)">Edit</button>
-                        <button type="button" class="btn btn-link" (click)="removeAddress(a)">Remove</button>
+                    <hr class="mb-1">
+                    <div class="d-flex justify-content-center checkout-address-action-div">
+                        <button type="button" class="btn btn-primary btn-sm ml-1" (click)="editAddress(a)">Edit</button>
+                        <button type="button" class="btn btn-danger btn-sm ml-1" (click)="removeAddress(a)">Remove</button>
                     </div>
                 </div>
             </div>
-            <div class="bt-border mt-2 p-2">
+            <div class="mt-3">
                 <form>
-                    <label class="bt-check">My billing address is the same as my shipping address
-                        <input type="checkbox" (change)="shippingAndBillingAddress($event)">
-                        <span class="tick"></span>
-                    </label>
-                    <label class="bt-check">Save this information for next time
-                        <input type="checkbox" (change)="saveAddressForFuture($event)">
-                        <span class="tick"></span>
-                    </label>
+                    <label class="bt-check">My billing address is the same
+                            as my shipping address
+                            <input type="checkbox"
+                                (change)="shippingAndBillingAddress($event)">
+                            <span class="tick"></span>
+                        </label>
+                    <label class="bt-check">Save this information for next
+                            time
+                            <input type="checkbox"
+                                (change)="saveAddressForFuture($event)">
+                            <span class="tick"></span>
+                        </label>
                 </form>
             </div>
         </div>
-        <div class="bt-border p-2">
-            <h5 class="mb-3">How do you want to pay?</h5>
+        <div class="payment-section">
+            <h5 class="mb-3">Payment Method</h5>
             <div [hidden]="hidePaymentForm==true">
                 <form #paymentForm="ngForm" (ngSubmit)=(onSubmitPaymentMethod(paymentForm))>
-                    <div class="custom-control custom-radio ">
+                    <div class="custom-control custom-radio">
                         <div class="d-flex justify-content-between p-2">
                             <div>
                                 <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required (click)="selectType('Credit')">
                                 <label class="custom-control-label" for="credit">Credit Card</label>
                             </div>
                             <div>
-                                <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg">
-                                <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg">
-                                <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg">
+                                <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1
+                                        border-box px-2 rounded-lg">
+                                <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1
+                                        border-box px-2 rounded-lg">
+                                <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1
+                                        border-box px-2 rounded-lg">
                             </div>
                         </div>
                     </div>
@@ -185,7 +173,8 @@
                                 <label class="custom-control-label" for="paypal">Paypal</label>
                             </div>
                             <div>
-                                <img src="/assets/icons/paypal.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg">
+                                <img src="/assets/icons/paypal.png" width="50px" height="32px" class="mr-1
+                                        border-box px-2 rounded-lg">
                             </div>
                         </div>
                     </div>
@@ -194,12 +183,14 @@
                             <div class="col-md-6 mb-3">
                                 <label for="cardName">Name on card</label>
                                 <input type="text" class="form-control" id="cardName" placeholder="" required [(ngModel)]="card.nameOnCard" name="cardName" #cardName="ngModel">
-                                <small class="text-muted">Full name as displayed on card</small>
+                                <small class="text-muted">Full name as
+                                        displayed on card</small>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="cardNumber">Card number</label>
                                 <input type="text" class="form-control" id="cardNumber" placeholder="" required [(ngModel)]="card.cardNumber" name="cardNumber" #cardNumber="ngModel">
-                                <small class="text-muted">16 digit number without gap</small>
+                                <small class="text-muted">16 digit number
+                                        without gap</small>
                             </div>
                         </div>
                         <div class="row">
@@ -207,11 +198,13 @@
                                 <label for="expiration">Expiration Date</label>
                                 <div class="h-flex justify-between">
                                     <select [(ngModel)]="expirationMonth" name="expiration" required class="form-control mr-1" id="expiration">
-                                        <option *ngFor="let m of monthsOptions" [ngValue]="m">{{m}}</option>
-                                    </select>
+                                            <option *ngFor="let m of
+                                                monthsOptions" [ngValue]="m">{{m}}</option>
+                                        </select>
                                     <select [(ngModel)]="expirationYear" name="expiration" required class="form-control" id="expiration">
-                                        <option *ngFor="let y of yearsOptions" [ngValue]="y">{{y}}</option>
-                                    </select>
+                                            <option *ngFor="let y of
+                                                yearsOptions" [ngValue]="y">{{y}}</option>
+                                        </select>
                                 </div>
                                 <!-- <input type="text" class="form-control" id="expiration" placeholder="DD/YY" required [(ngModel)]="card.expiry" name="expiration" #expiration="ngModel"> -->
                             </div>
@@ -221,7 +214,8 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-start">
-                            <button type="submit " class="btn btn-sm btn-primary m-1" [disabled]="!paymentForm.form.valid">Submit</button>
+                            <button type="submit" class="btn btn-sm
+                                    btn-primary m-1" [disabled]="!paymentForm.form.valid">Submit</button>
                             <button class="btn btn-sm btn-secondary m-1" (click)="cancelPaymentForm()">Cancel</button>
                         </div>
                     </div>
@@ -231,31 +225,69 @@
             <div *ngIf="hidePaymentForm">
                 <div class="d-flex flex-space-between p-2">
                     <strong class="text-muted">Choose a payment method</strong>
-                    <button type="button" class="btn btn-outline-warning btn-sm" (click)="addNewPaymentMethod()">Add a New Payment Method</button>
+                    <button type="button" class="btn btn-outline-warning
+                            btn-sm" (click)="addNewPaymentMethod()">Add a New
+                            Payment Method</button>
                 </div>
                 <div class="d-flex flex-space-between bg-light mt-2 p-2" *ngFor="let p of paymentMethodList">
                     <div class="d-flex">
-                        <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
-                        <span class="mr-5 align-self-center">{{ p.cardNumber}}</span>
-                        <span class="mr-5 align-self-center">{{ p.expiryMonth}} / {{p.expiryYear}}</span>
+                        <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1
+                                border-box px-2 rounded-lg align-self-center">
+                        <span class="mr-5 align-self-center">{{
+                                p.cardNumber}}</span>
+                        <span class="mr-5 align-self-center">{{
+                                p.expiryMonth}} / {{p.expiryYear}}</span>
                     </div>
                     <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!p.selected" [class.text-success]="p.selected"></fa-icon>
-                    <div class="d-flex justify-content-start m-1 btn-group-justified">
+                    <div class="d-flex justify-content-start m-1
+                            btn-group-justified">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-outline-success btn-xs mr-1" (click)="usePaymentMethod(p)">Use</button>
+                            <button type="button" class="btn
+                                    btn-outline-success btn-xs mr-1" (click)="usePaymentMethod(p)">Use</button>
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-outline-secondary  btn-xs mr-1" (click)="editPaymentMethod(p)">Edit</button>
+                            <button type="button" class="btn
+                                    btn-outline-secondary btn-xs mr-1" (click)="editPaymentMethod(p)">Edit</button>
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-outline-danger  btn-xs mr-1" (click)="removePaymentMethod(p)">Remove</button>
+                            <button type="button" class="btn
+                                    btn-outline-danger btn-xs mr-1" (click)="removePaymentMethod(p)">Remove</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="basket-section">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Review Items</h5>
+                <span class="btn btn-sm btn-outline-secondary">{{
+                    basket.items.length }} items</span>
+            </div>
+            <hr class="mb-3">
+            <app-checkout-item [item]="item" *ngFor="let item of basket.items"></app-checkout-item>
+            <hr class="mb-4">
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between
+                    bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">-£5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total </span>
+                    <strong>{{getBasketTotal() | currency: 'GBP'}}</strong>
+                </li>
+            </ul>
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Promo code">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div class="d-flex justify-content-center my-3">
-    <button class="bt-btn-primary" (click)="reviewOrder()">Review Your Order</button>
-</div>
