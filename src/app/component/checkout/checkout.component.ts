@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
 import { AccountService } from 'src/app/service/account.service';
 import { User } from 'src/app/model/user';
+import { Order, OrderItem } from 'src/app/model/order';
+import { OrderService } from 'src/app/service/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -49,7 +51,7 @@ export class CheckoutComponent implements OnInit {
   user: User;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private orderService: OrderService,
     private router: Router,
     private messengerService: MessengerService,
     private basketService: BasketService,
@@ -82,6 +84,8 @@ export class CheckoutComponent implements OnInit {
         console.log('Payment Methods :'+ JSON.stringify(this.paymentMethodList));
         if ( this.paymentMethodList !== undefined && this.paymentMethodList.length > 0){
           this.hidePaymentForm = true;
+        }else{
+          this.addNewPaymentMethod();
         }
       }
     })
@@ -120,6 +124,8 @@ export class CheckoutComponent implements OnInit {
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
     }
+    this.accountService.userValue.addresses = this.addressList;
+    this.updateCurrentUser();
   }
 
   selectType(e: String) {
@@ -168,7 +174,12 @@ export class CheckoutComponent implements OnInit {
     for (let i = 0; i < this.addressList.length; i++) {
       if (this.addressList[i].postcode === a.postcode) {
         this.addressList.splice(i, 1);
+        this.accountService.userValue.addresses = this.addressList;
+        this.updateCurrentUser();
       }
+    }
+    if ( this.addressList.length === 0){
+      this.addNewAddress();
     }
   }
 
@@ -176,7 +187,6 @@ export class CheckoutComponent implements OnInit {
   addNewPaymentMethod() {
     this.hidePaymentForm = false;
     this.card = new PaymentCard();
-    window.alert('Add card: '+ JSON.stringify(this.card));
   }
 
   cancelPaymentForm() {
@@ -224,11 +234,11 @@ export class CheckoutComponent implements OnInit {
     console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
     console.log('Form card: '+ JSON.stringify(this.card));
     var card: PaymentCard = new PaymentCard();
-    if ( this.paymentMethodList.length > 0){
       if ( this.card._id !== undefined && this.card._id !== null){
         let existing: PaymentCard = this.paymentMethodList.find( (card) => card._id === this.card._id);
         if (existing) {
           /** Update card */
+          console.log('Card found already: '+ JSON.stringify(existing));
           existing.cardNumber= this.card.cardNumber;
           existing.nameOnCard= this.card.nameOnCard;
           existing.expiryMonth= this.card.expiryMonth;
@@ -236,8 +246,7 @@ export class CheckoutComponent implements OnInit {
           existing.cvv= this.card.cvv;
           existing.cardType = CardType.Debit;
         }
-      }
-    }else{
+      } else{
       /** New Card */
       card.cardNumber= this.card.cardNumber;
       card.nameOnCard= this.card.nameOnCard;
@@ -251,13 +260,13 @@ export class CheckoutComponent implements OnInit {
     /** Debug Only */
     console.log('Form card: '+ JSON.stringify(this.card));
     console.log('Added card: '+ JSON.stringify(card));
-    console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
     
     this.accountService.userValue.paymentCards = this.paymentMethodList;
+    console.log('Card List: '+ JSON.stringify(this.accountService.userValue.paymentCards));
     this.updateCurrentUser();
 
     /** Reset the form Model */
-    this.card = new PaymentCard();
+    // this.card = new PaymentCard();
   }
 
   getMaskedCardNumber(card: PaymentCard): string {
@@ -294,4 +303,30 @@ export class CheckoutComponent implements OnInit {
     return this.basket.total;
   }
 
+  confirmPurchase() {
+    console.log('Confirming order..')
+    var order: Order = new Order();
+    order.date = new Date();
+    order.address = this.address;
+    order.paymentCard = this.card;
+    order.email = this.user.email;
+    order.currency = "GCP";
+    order.subTotal = this.basket.total;
+    order.saleTax = this.basket.total;
+    order.shippingCost = this.basket.total;
+    order.totalCost = this.basket.total;
+    order.expectedDeliveryDate = new Date();
+    var items: OrderItem[] = [];
+    this.basket.items.map(bi => {
+      var item: OrderItem = new OrderItem();
+      item.price = bi.price;
+      item.productId = bi._id;
+      item.productName = bi.name;
+      item.quantity = bi.qty;
+      item.total = bi.price * bi.qty;
+      items.push(item);
+    });
+    order.items = items;
+    this.orderService.placeOrder(order);
+  }
 }

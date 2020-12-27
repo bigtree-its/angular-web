@@ -18,13 +18,11 @@
     padding: 5px 20px;
     border: 2px solid #fff;
     background: none;
-    /* border: 1px solid #ffe01b; */
-    border-radius: 12px;
 }
 
 .department:hover {
     cursor: pointer;
-    background-color: #ebebeb;
+    background-color: #a8f7f8!important;
 }
 
 .featured-product-image {

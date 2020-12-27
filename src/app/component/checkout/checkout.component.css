@@ -42,12 +42,26 @@
     flex-direction: column;
 }
 
+.circle {
+    border: 1px solid #ececec;
+    border-radius: 50%;
+    padding: 4px;
+    height: 30px;
+    width: 30px;
+    margin-right: 2px;
+}
+
+.circle:hover {
+    cursor: pointer;
+    background-color: #ececec;
+}
+
 .payment-card {
     color: #111;
     height: 130px;
     padding: 10px;
-    background: #ececec;
     border-radius: 12px;
+    margin-bottom: 5px;
 }
 
 .payment-card-details {
@@ -57,11 +71,11 @@
 }
 
 .expiry-input {
-    width: 50px;
+    width: 60px;
     margin-right: 5px;
 }
 
 .cvv-input {
-    width: 50px;
+    width: 70px;
     margin-right: 5px;
 }
