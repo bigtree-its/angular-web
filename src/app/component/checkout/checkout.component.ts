@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Basket } from 'src/app/model/basket.model';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { Address } from 'src/app/model/address';
-import { NgForm } from '@angular/forms';
-import { PaymentCard } from 'src/app/model/payment-card';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { CardType, PaymentCard } from 'src/app/model/payment-card';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
+import { first } from 'rxjs/operators';
 import { faCcMastercard } from '@fortawesome/free-brands-svg-icons';
 import { faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import { faPaypal } from '@fortawesome/free-brands-svg-icons';
@@ -21,6 +21,8 @@ import { User } from 'src/app/model/user';
 })
 export class CheckoutComponent implements OnInit {
 
+  addressForm: FormGroup;
+
   faSelected = faCheckCircle;
   fabMasterCard = faCcMastercard;
   fabVisa = faCcVisa;
@@ -29,8 +31,9 @@ export class CheckoutComponent implements OnInit {
   basket: Basket;
   address: Address = new Address();
   addressList: Address[] = [];
-  paymentMethodList: PaymentCard[] = [];
+  
   card: PaymentCard = new PaymentCard();
+  paymentMethodList: PaymentCard[] = [];
 
   shipAddressSameAsBilling: boolean;
   saveAddress: boolean;
@@ -46,20 +49,23 @@ export class CheckoutComponent implements OnInit {
   user: User;
 
   constructor(
+    private formBuilder: FormBuilder,
     private router: Router,
     private messengerService: MessengerService,
     private basketService: BasketService,
     private accountService: AccountService
-  ) { }
-
-  ngOnInit(): void {
-    this.showCardSection = true;
+  ) {
     this.expirationMonth = 1;
     this.yearsOptions.push(this.expirationYear);
 
     for (let i = 1; i < 10; i++) {
       this.yearsOptions.push(this.expirationYear + i);
     }
+   }
+
+  ngOnInit(): void {
+    this.showCardSection = true;
+    
     this.basketService.subject$.subscribe(basket => {
       this.basket = basket
     });
@@ -73,6 +79,7 @@ export class CheckoutComponent implements OnInit {
         }
 
         this.paymentMethodList = this.user.paymentCards;
+        console.log('Payment Methods :'+ JSON.stringify(this.paymentMethodList));
         if ( this.paymentMethodList !== undefined && this.paymentMethodList.length > 0){
           this.hidePaymentForm = true;
         }
@@ -96,34 +103,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  onSubmitPaymentMethod(f: NgForm) {
-    this.card.cardType = this.type;
-    this.card.expiryMonth = this.expirationMonth;
-    this.card.expiryYear = this.expirationYear;
-    if (this.card.cardNumber === undefined) {
-      this.hidePaymentForm = false;
-    } else {
-      this.hidePaymentForm = true;
-      this.updatePaymentList();
-    }
-    this.messengerService.submitPaymentCard(this.card);
-  }
-
-  private updatePaymentList() {
-    let existing: PaymentCard = this.paymentMethodList.find(a => a.cardNumber === this.card.cardNumber);
-    if (!existing) {
-      this.paymentMethodList.push(this.card);
-    }
-    else {
-      existing.cardNumber = this.card.cardNumber;
-      existing.nameOnCard = this.card.nameOnCard;
-      existing.expiryMonth = this.card.expiryMonth;
-      existing.expiryYear = this.card.expiryYear;
-      existing.cvv = this.card.cvv;
-      existing.cardType = this.card.cardType;
-    }
-  }
-
+  
   private updateAddressList() {
     let existing: Address = this.addressList.find(a => a.postcode === this.address.postcode);
     if (!existing) {
@@ -144,7 +124,7 @@ export class CheckoutComponent implements OnInit {
 
   selectType(e: String) {
     this.type = e;
-    this.card.cardType = this.type;
+    // this.card.cardType = this.type;
     if (this.type === 'Paypal') {
       this.showCardSection = false;
     } else {
@@ -192,27 +172,22 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+
   addNewPaymentMethod() {
     this.hidePaymentForm = false;
     this.card = new PaymentCard();
+    window.alert('Add card: '+ JSON.stringify(this.card));
   }
 
   cancelPaymentForm() {
     this.hidePaymentForm = true;
-    this.card  = undefined;
+    this.card = new PaymentCard();
   }
 
 
   editPaymentMethod(p: PaymentCard) {
     this.hidePaymentForm = false;
-    this.card = new PaymentCard();
-    this.card._id = p._id;
-    this.card.cardType = p.cardType;
-    this.card.nameOnCard = p.nameOnCard;
-    this.card.cardNumber = p.cardNumber;
-    this.card.expiryMonth = p.expiryMonth;
-    this.card.expiryYear = p.expiryYear;
-    this.card.cvv = p.cvv;
+    this.card = p;
   }
 
   removePaymentMethod(p: PaymentCard) {
@@ -221,6 +196,9 @@ export class CheckoutComponent implements OnInit {
         this.paymentMethodList.splice(i, 1);
       }
     }
+    this.accountService.userValue.paymentCards = this.paymentMethodList;
+    console.log(`Payment cards `+ JSON.stringify(this.paymentMethodList));
+    this.updateCurrentUser();
   }
 
   usePaymentMethod(p: PaymentCard) {
@@ -228,12 +206,82 @@ export class CheckoutComponent implements OnInit {
       let pay: PaymentCard = this.paymentMethodList[i];
       if (this.paymentMethodList[i].cardNumber === p.cardNumber) {
         pay.selected = true;
-        this.messengerService.submitPaymentCard(pay);
       } else {
         pay.selected = false;
       }
     }
   }
+
+  onSubmitPaymentMethod(f: NgForm) {
+    console.log('Submitting card: '+ JSON.stringify(this.card));
+    if (f.valid){
+      this.updatePaymentList();
+      this.hidePaymentForm = true;
+    }
+  }
+
+  private updatePaymentList() {
+    console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
+    console.log('Form card: '+ JSON.stringify(this.card));
+    var card: PaymentCard = new PaymentCard();
+    if ( this.paymentMethodList.length > 0){
+      if ( this.card._id !== undefined && this.card._id !== null){
+        let existing: PaymentCard = this.paymentMethodList.find( (card) => card._id === this.card._id);
+        if (existing) {
+          /** Update card */
+          existing.cardNumber= this.card.cardNumber;
+          existing.nameOnCard= this.card.nameOnCard;
+          existing.expiryMonth= this.card.expiryMonth;
+          existing.expiryYear= this.card.expiryYear;
+          existing.cvv= this.card.cvv;
+          existing.cardType = CardType.Debit;
+        }
+      }
+    }else{
+      /** New Card */
+      card.cardNumber= this.card.cardNumber;
+      card.nameOnCard= this.card.nameOnCard;
+      card.expiryMonth= this.card.expiryMonth;
+      card.expiryYear= this.card.expiryYear;
+      card.cvv= this.card.cvv;
+      card.cardType = CardType.Debit;
+      this.paymentMethodList.push(card);
+    }
+    
+    /** Debug Only */
+    console.log('Form card: '+ JSON.stringify(this.card));
+    console.log('Added card: '+ JSON.stringify(card));
+    console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
+    
+    this.accountService.userValue.paymentCards = this.paymentMethodList;
+    this.updateCurrentUser();
+
+    /** Reset the form Model */
+    this.card = new PaymentCard();
+  }
+
+  getMaskedCardNumber(card: PaymentCard): string {
+    if (card !== undefined && card.cardNumber !== undefined && card.cardNumber.length === 16) {
+      var masked = "**** " + card.cardNumber.substr(11, 4);
+      return masked;
+    }
+    return 'XXXX';
+  }
+
+  private updateCurrentUser() {
+    this.accountService
+      .updateCurrentUser()
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          console.log('Updated user response. ' + JSON.stringify(data));
+        },
+        (error) => {
+          console.log('Update user resulted in error.' + JSON.stringify(error));
+        }
+      );
+  }
+  
   shippingAndBillingAddress(e) {
     this.shipAddressSameAsBilling = e.target.checked;
   }

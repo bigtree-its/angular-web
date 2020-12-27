@@ -303,7 +303,7 @@ export class ProfileComponent implements OnInit {
         user.paymentCards = this.paymentCardList;
       }
       this.accountService
-        .updateU(user)
+        .updateUser(user)
         .pipe(first())
         .subscribe(
           (data) => {

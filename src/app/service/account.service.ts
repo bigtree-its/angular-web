@@ -97,19 +97,19 @@ export class AccountService {
       })
       .pipe(
         map((response) => {
-          localStorage.setItem('user', JSON.stringify(response));
-          this.userSubject.next(response);
+          this.updateUserOnStorage(response);
           return response;
         })
       );
   }
 
+  
+
   register(user: User): Observable<User> {
     console.log('Register User: ' + JSON.stringify(user));
     return this.http.post<User>(this.REGISTER_URL, user).pipe(
       map((response) => {
-        localStorage.setItem('user', JSON.stringify(response));
-        this.userSubject.next(response);
+        this.updateUserOnStorage(response);
         return response;
       })
     );
@@ -122,18 +122,25 @@ export class AccountService {
     this.router.navigate(['/']);
   }
 
-  updateU(user: User): Observable<User> {
+  updateCurrentUser(): Observable<User> {
+    return this.updateUser(this.userValue);
+  }
+
+  updateUser(user: User): Observable<User> {
     httpOptions.headers = httpOptions.headers.set(
       'Authorization',
       this.getToken()
     );
-    const apiURL = this.USERS_URL + user._id;
-    console.log(
-      'Updating User: ' + JSON.stringify(user) + '. Endpoint: ' + apiURL
-    );
-    return this.http
-      .put<User>(apiURL, JSON.stringify(user), httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
+    const apiURL = this.USERS_URL + "/" + user._id;
+    console.log('Updating User @:  ' + apiURL);
+    console.log('Updating User Data: ' + JSON.stringify(user) );
+    return this.http.put<User>(apiURL, user, httpOptions).pipe(
+      map((response) => {
+        this.updateUserOnStorage(response);
+        return response;
+      }),
+      retry(1), 
+      catchError(this.handleError));
   }
 
   changePassword(
@@ -152,7 +159,13 @@ export class AccountService {
     };
     return this.http
       .put<User>(apiURL, req, httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
+      .pipe(
+        map((response) => {
+          this.updateUserOnStorage(response);
+          return response;
+        }),
+        retry(1),
+        catchError(this.handleError));
   }
 
   forgotPassword(email: string) : Observable<void>{
@@ -193,5 +206,10 @@ export class AccountService {
       }
     }
     return throwError(errorMessage);
+  }
+
+  private updateUserOnStorage(response: User) {
+    localStorage.setItem('user', JSON.stringify(response));
+    this.userSubject.next(response);
   }
 }

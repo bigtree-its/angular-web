@@ -217,7 +217,7 @@ select:focus {
 }
 
 .text-primary {
-    color: #ff4747;
+    color: #00a4a6!important;
 }
 
 .text-secondary {
@@ -268,13 +268,6 @@ ul {
 
 .tip {
     font-size: 12px;
-}
-
-.credit-card {
-    height: 200px;
-    width: 350px;
-    border-radius: 10px;
-    padding: 10px;
 }
 
 .card-name {

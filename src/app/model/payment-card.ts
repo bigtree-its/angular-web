@@ -10,3 +10,8 @@ export class PaymentCard {
     public selected?: Boolean;
 
 }
+
+export enum CardType{
+    Debit = "Debit",
+    Credit = "Credit"
+}

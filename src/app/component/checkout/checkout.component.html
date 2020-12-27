@@ -10,43 +10,38 @@
             <hr>
             <div [hidden]="hideAddressForm==true">
                 <form #f="ngForm" (ngSubmit)=(onSubmitAddress(f))>
-                    <div class="h-flex justify-between wrap">
-                        <div class="address-form-col-half mb-3">
-                            <label for="firstName">First name</label>
-                            <input type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName" placeholder="" value="" name="firstName" #firstName="ngModel" required>
-                            <!-- <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
-                            </div> -->
-                        </div>
-                        <div class="address-form-col-half mb-3">
-                            <label for="lastName">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="" value="" required [(ngModel)]="address.lastName" name="lastName" #lastName="ngModel">
-                            <!-- <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
-                                Last name is required
-                            </div> -->
-                        </div>
+                    <div class="col mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" class="form-control" id="firstName" [(ngModel)]="address.firstName" placeholder="" value="" name="firstName" #firstName="ngModel" required>
+                        <!-- <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger">
+                        </div> -->
                     </div>
-
-                    <div class="h-flex justify-between wrap">
-                        <div class="address-form-col-half mb-3">
-                            <label for="email">Email</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">@</span>
-                                </div>
-                                <input type="text" class="form-control" id="email" placeholder="you@example.com" required [(ngModel)]="address.email" name="email" #email="ngModel">
-                                <!-- <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
-                                    Please enter a valid email address for shipping updates.
-                                </div> -->
+                    <div class="col mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="" value="" required [(ngModel)]="address.lastName" name="lastName" #lastName="ngModel">
+                        <!-- <div [hidden]="lastName.valid || lastName.pristine" class="alert alert-danger">
+                            Last name is required
+                        </div> -->
+                    </div>
+                    <div class="col mb-3">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">@</span>
                             </div>
-                        </div>
-                        <div class="address-form-col-half mb-3">
-                            <label for="mobile">Mobile <span
-                                        class="text-muted">(Optional)</span></label>
-                            <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
+                            <input type="text" class="form-control" id="email" placeholder="you@example.com" required [(ngModel)]="address.email" name="email" #email="ngModel">
+                            <!-- <div [hidden]="email.valid || email.pristine" class="alert alert-danger">
+                                Please enter a valid email address for shipping updates.
+                            </div> -->
                         </div>
                     </div>
+                    <div class="col mb-3">
+                        <label for="mobile">Mobile <span
+                                    class="text-muted">(Optional)</span></label>
+                        <input type="text" class="form-control" id="mobile" placeholder="" value="" required [(ngModel)]="address.mobile" name="mobile" #mobile="ngModel">
+                    </div>
 
-                    <div class="mb-3">
+                    <div class="col mb-3">
                         <label for="lineNumber1">Address</label>
                         <input type="text" class="form-control" id="lineNumber2" placeholder="1234, Main St" required [(ngModel)]="address.lineNumber1" name="lineNumber1" #lineNumber1="ngModel">
                         <!-- <div [hidden]="lineNumber1.valid || lineNumber1.pristine" class="alert alert-danger">
@@ -54,44 +49,42 @@
                         </div> -->
                     </div>
 
-                    <div class="mb-3">
+                    <div class="col mb-3">
                         <label for="lineNumber2">Address 2 <span
                                     class="text-muted">(Optional)</span></label>
                         <input type="text" class="form-control" id="lineNumber2" placeholder="Apartment or
                                 suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2" #lineNumber2="ngModel">
                     </div>
 
-                    <div class="h-flex justify-between wrap">
-                        <div class="address-form-col-1-3 mb-3">
-                            <label for="city">City/Town</label>
-                            <input type="text" class="form-control" id="city" placeholder="Glasgow" required [(ngModel)]="address.city" name="city" #city="ngModel">
-                            <!-- <div [hidden]="city.valid || city.pristine" class="alert alert-danger">
+                    <div class="col mb-3">
+                        <label for="city">City/Town</label>
+                        <input type="text" class="form-control" id="city" placeholder="Glasgow" required [(ngModel)]="address.city" name="city" #city="ngModel">
+                        <!-- <div [hidden]="city.valid || city.pristine" class="alert alert-danger">
                                 Please enter a valid City/Town.
                             </div> -->
-                        </div>
-                        <div class="address-form-col-1-3 mb-3">
-                            <label for="country">Country</label>
-                            <select class="custom-select d-block w-100" id="country" required [(ngModel)]="address.country" name="country" #country="ngModel">
+                    </div>
+                    <div class="col mb-3">
+                        <label for="country">Country</label>
+                        <select class="custom-select d-block w-100" id="country" required [(ngModel)]="address.country" name="country" #country="ngModel">
                                     <option value="">Select...</option>
                                     <option>United Kingdom</option>
                                     <option>United States</option>
                                     <option>United India</option>
                                 </select>
-                            <!-- <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
+                        <!-- <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
                                 Please select a Country.
                             </div> -->
-                        </div>
-                        <div class="address-form-col-1-3mb-3">
-                            <label for="postcode">Post/Zip code</label>
-                            <input type="text" class="form-control" id="postcode" placeholder="" required [(ngModel)]="address.postcode" name="postcode" #postcode="ngModel">
-                            <!-- <div [hidden]="postcode.valid || postcode.pristine" class="alert alert-danger">
+                    </div>
+                    <div class="col mb-3">
+                        <label for="postcode">Post/Zip code</label>
+                        <input type="text" class="form-control" id="postcode" placeholder="" required [(ngModel)]="address.postcode" name="postcode" #postcode="ngModel">
+                        <!-- <div [hidden]="postcode.valid || postcode.pristine" class="alert alert-danger">
                                 Please enter a valid Postal/Zip/Pin Code.
                             </div> -->
-                        </div>
                     </div>
-                    <div class="h-flex">
+                    <div class="col h-flex mb-3">
                         <button type="submit" class="btn btn-sm btn-primary
-                                m-1" [disabled]="!f.form.valid">Submit</button>
+                        m-1" [disabled]="!f.form.valid">Submit</button>
                         <button class="btn btn-sm btn-secondary m-1" (click)="cancelAddressForm()">Cancel</button>
                     </div>
                 </form>
@@ -131,14 +124,12 @@
             </div>
             <div class="mt-3">
                 <form>
-                    <label class="bt-check">My billing address is the same
-                            as my shipping address
+                    <label class="bt-check">My Delivery address same as Billing Address
                             <input type="checkbox"
                                 (change)="shippingAndBillingAddress($event)">
                             <span class="tick"></span>
                         </label>
-                    <label class="bt-check">Save this information for next
-                            time
+                    <label class="bt-check">Save for future
                             <input type="checkbox"
                                 (change)="saveAddressForFuture($event)">
                             <span class="tick"></span>
@@ -179,43 +170,37 @@
                         </div>
                     </div>
                     <div *ngIf="showCardSection">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="cardName">Name on card</label>
-                                <input type="text" class="form-control" id="cardName" placeholder="" required [(ngModel)]="card.nameOnCard" name="cardName" #cardName="ngModel">
-                                <small class="text-muted">Full name as
-                                        displayed on card</small>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="cardNumber">Card number</label>
-                                <input type="text" class="form-control" id="cardNumber" placeholder="" required [(ngModel)]="card.cardNumber" name="cardNumber" #cardNumber="ngModel">
-                                <small class="text-muted">16 digit number
-                                        without gap</small>
-                            </div>
+                        <div class="col mb-3">
+                            <label for="nameOnCard">Name on card</label>
+                            <input type="text" class="form-control" id="nameOnCard" placeholder="" required [(ngModel)]="card.nameOnCard" name="nameOnCard" #nameOnCard="ngModel">
+                            <small class="text-muted">Full name as displayed on card</small>
                         </div>
-                        <div class="row">
-                            <div class="col mb-3 form-group">
+                        <div class="col mb-3">
+                            <label for="cardNumber">Card number</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="" required [(ngModel)]="card.cardNumber" name="cardNumber" #cardNumber="ngModel">
+                            <small class="text-muted">16 digit number without gap</small>
+                        </div>
+                        <div class="d-flex justify-content-between  px-3">
+                            <div class="mb-3 form-group">
                                 <label for="expiration">Expiration Date</label>
-                                <div class="h-flex justify-between">
-                                    <select [(ngModel)]="expirationMonth" name="expiration" required class="form-control mr-1" id="expiration">
-                                            <option *ngFor="let m of
-                                                monthsOptions" [ngValue]="m">{{m}}</option>
-                                        </select>
-                                    <select [(ngModel)]="expirationYear" name="expiration" required class="form-control" id="expiration">
-                                            <option *ngFor="let y of
-                                                yearsOptions" [ngValue]="y">{{y}}</option>
-                                        </select>
+                                <div class="h-flex justify-content-start">
+                                    <!-- <select [(ngModel)]="expirationMonth" name="expiration" required class="form-control mr-1" id="expiration">
+                                            <option *ngFor="let m of monthsOptions" [ngValue]="m">{{m}}</option>
+                                    </select> -->
+                                    <input type="text" length="2" class="form-control expiry-input" id="expiryMonth" placeholder="DD" required [(ngModel)]="card.expiryMonth" name="expiryMonth" #expiryMonth="ngModel">
+                                    <!-- <select [(ngModel)]="expirationYear" name="expiration" required class="form-control" id="expiration">
+                                            <option *ngFor="let y of yearsOptions" [ngValue]="y">{{y}}</option>
+                                    </select> -->
+                                    <input type="text" length="2" class="form-control expiry-input" id="expiryYear" placeholder="YY" required [(ngModel)]="card.expiryYear" name="expiryYear" #expiryYear="ngModel">
                                 </div>
-                                <!-- <input type="text" class="form-control" id="expiration" placeholder="DD/YY" required [(ngModel)]="card.expiry" name="expiration" #expiration="ngModel"> -->
                             </div>
-                            <div class="col mb-3">
+                            <div class="mb-3">
                                 <label for="cvv">CVV</label>
-                                <input type="text" class="form-control" id="cvv" placeholder="" required [(ngModel)]="card.cvv" name="cvv" #cvv="ngModel">
+                                <input type="text" class="form-control cvv-input" id="cvv" placeholder="" required [(ngModel)]="card.cvv" name="cvv" #cvv="ngModel">
                             </div>
                         </div>
-                        <div class="d-flex justify-content-start">
-                            <button type="submit" class="btn btn-sm
-                                    btn-primary m-1" [disabled]="!paymentForm.form.valid">Submit</button>
+                        <div class="d-flex justify-content-start  px-3">
+                            <button type="submit" class="btn btn-sm btn-primary m-1" [disabled]="!paymentForm.form.valid">Submit</button>
                             <button class="btn btn-sm btn-secondary m-1" (click)="cancelPaymentForm()">Cancel</button>
                         </div>
                     </div>
@@ -223,36 +208,42 @@
             </div>
             <hr class="mb-4">
             <div *ngIf="hidePaymentForm">
-                <div class="d-flex flex-space-between p-2">
+                <div class="d-flex justify-content-between p-2">
                     <strong class="text-muted">Choose a payment method</strong>
-                    <button type="button" class="btn btn-outline-warning
-                            btn-sm" (click)="addNewPaymentMethod()">Add a New
-                            Payment Method</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="addNewPaymentMethod()">
+                        <img src="/assets/icons/plus.png" height="20px" width="20px">
+                    </button>
                 </div>
-                <div class="d-flex flex-space-between bg-light mt-2 p-2" *ngFor="let p of paymentMethodList">
-                    <div class="d-flex">
-                        <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1
-                                border-box px-2 rounded-lg align-self-center">
-                        <span class="mr-5 align-self-center">{{
-                                p.cardNumber}}</span>
-                        <span class="mr-5 align-self-center">{{
-                                p.expiryMonth}} / {{p.expiryYear}}</span>
-                    </div>
-                    <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!p.selected" [class.text-success]="p.selected"></fa-icon>
-                    <div class="d-flex justify-content-start m-1
-                            btn-group-justified">
-                        <div class="btn-group">
-                            <button type="button" class="btn
-                                    btn-outline-success btn-xs mr-1" (click)="usePaymentMethod(p)">Use</button>
+                <div class="d-flex justify-content-start payment-card" *ngFor="let p of paymentMethodList">
+                    <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
+                    <!-- Payment Item -->
+                    <div class="payment-card-details">
+                        <div class="d-flex justify-content-start">
+                            <strong>Card Ending</strong>
+                            <span class="pl-2">{{ getMaskedCardNumber(p) }}</span>
                         </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn
-                                    btn-outline-secondary btn-xs mr-1" (click)="editPaymentMethod(p)">Edit</button>
+                        <div class="">
+                            <span class="mr-2">{{ p.nameOnCard}}</span>
+                            <span class="">{{ p.expiryMonth}}/{{p.expiryYear}}</span>
                         </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn
-                                    btn-outline-danger btn-xs mr-1" (click)="removePaymentMethod(p)">Remove</button>
+                        <div class="d-flex justify-content-start mt-3 btn-group-justified">
+                            <div class="btn-group">
+                                <button type="button" class="btn  btn-outline-success btn-xs mr-1" (click)="usePaymentMethod(p)">
+                                    <img src="/assets/icons/tick.png" height="20px" width="20px">
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary btn-xs mr-1" (click)="editPaymentMethod(p)">
+                                    <img src="/assets/icons/pencil.png" height="20px" width="20px">
+                                </button>
+                            </div>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline-danger btn-xs mr-1" (click)="removePaymentMethod(p)">
+                                    <img src="/assets/icons/delete.png" height="20px" width="20px">
+                                </button>
+                            </div>
                         </div>
+                        <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!p.selected" [class.text-success]="p.selected"></fa-icon>
                     </div>
                 </div>
             </div>
