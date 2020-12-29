@@ -1,27 +1,18 @@
 <div class="basket-item">
-    <div class="basket-item-image-section">
-        <!-- <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)"> -->
-        <img src="/assets/icons/product-image.png" alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
-    </div>
-    <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
-    <div class="basket-item-price-section">
+    <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
+    <!-- <div class="basket-item-image-section">
+        <!-- <img src="/assets/icons/product-image.png" alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)"> -->
+    <div class="basket-item-content">
+        <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
         <span class="basket-item-price">{{ getPrettyPrintPrice(item.price)  | currency :'GBP'}}</span>
     </div>
     <div class="basket-item-qty-section">
-        <div class="basket-item-qty">
-            <span class="basket-item-qty-down" (click)="decreaseQuantity()">-</span>
-        </div>
-        <div class="basket-item-qty">
-            <span>{{quantity}}</span>
-        </div>
-        <div class="basket-item-qty">
-            <span class="basket-item-qty-up" (click)="increaseQuantity()">+</span>
-        </div>
+        <img src="/assets/icons/up-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
+        border-box px-2 rounded-lg" (click)="increaseQuantity()">
+        <span class="basket-item-qty">{{quantity}}</span>
+        <img src="/assets/icons/down-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
+            border-box px-2 rounded-lg" (click)="decreaseQuantity()">
     </div>
-    <div class="basket-item-subtotal">
-        <span class="basket-item-price">{{ getSubTotal() | currency : 'GBP'}}</span>
-    </div>
-    <div class="basket-item-action-section">
-        <button class="btn btn-link btn-xs" (click)="removeProduct(item._id)">Remove</button>
-    </div>
+    <span class="basket-item-subtotal">{{ getSubTotal() | currency : 'GBP'}}</span>
+    <button class="btn btn-link btn-xs basket-item-action-section" (click)="removeProduct(item._id)">Remove</button>
 </div>

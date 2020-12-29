@@ -2,18 +2,23 @@
     width: 40%;
 }
 
-.product-review-section {
-    background: #ebf3ff;
-    border: 1px solid #ebf3ff;
-    border-radius: 3px;
+.details-right-column {
+    width: 20%;
     padding: 15px;
     clear: both;
 }
 
 .product-price-section {
-    width: 20%;
     background: #f8f8f7;
     border: 1px solid #f5f6f7;
+    border-radius: 3px;
+    padding: 15px;
+    clear: both;
+}
+
+.product-review-section {
+    background: #ebf3ff;
+    border: 1px solid #ebf3ff;
     border-radius: 3px;
     padding: 15px;
     clear: both;

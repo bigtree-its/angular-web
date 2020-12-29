@@ -6,6 +6,8 @@ export interface ProductModel{
     type: string,
     slug: string,
     description: string[],
+    qa: NameValue[],
+    nutritionalInformation: NameValue[],
     stock: number,
     salePrice: number,
     rating: number,
@@ -23,6 +25,12 @@ export interface Picture{
 export interface Brand{
     _id: string,
     name: string
+}
+
+export interface NameValue{
+    _id: string,
+    name: string
+    value: string
 }
 
 export interface Category{

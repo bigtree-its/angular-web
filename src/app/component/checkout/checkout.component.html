@@ -5,7 +5,7 @@
     </div>
     <hr class="mb-4">
     <div class="d-flex justify-content-center  container-fluid mt-5 wrap">
-        <div class="delivery-address-section">
+        <div class="delivery-address-section box-shadow">
             <h5 class="mb-3">Delivery Address</h5>
             <hr>
             <div [hidden]="hideAddressForm==true">
@@ -92,7 +92,7 @@
             <div *ngIf="hideAddressForm">
                 <div class="d-flex flex-space-between p-1 bt-border-b">
                     <strong class="text-muted">Choose a delivery address:</strong>
-                    <button type="button" class="btn btn-outline-warning btn-sm" (click)="addNewAddress()">Add</button>
+                    <img src="/assets/icons/plus.png" class="icon bt-border mr-1 border-box px-2 py-1 rounded-lg" width="40px" height="30px" (click)="addNewAddress()">
                 </div>
                 <div class="address-section-item" *ngFor="let a of addressList">
                     <div class="d-flex justify-content-start align-items-center">
@@ -134,7 +134,7 @@
                 </form>
             </div>
         </div>
-        <div class="payment-section">
+        <div class="payment-section  box-shadow">
             <h5 class="mb-3">Payment Method</h5>
             <div [hidden]="hidePaymentForm==true">
                 <form #paymentForm="ngForm" (ngSubmit)=(onSubmitPaymentMethod(paymentForm))>
@@ -207,9 +207,7 @@
             <div *ngIf="hidePaymentForm">
                 <div class="d-flex justify-content-between p-2">
                     <strong class="text-muted">Choose a payment method</strong>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="addNewPaymentMethod()">
-                        <img src="/assets/icons/plus.png" height="20px" width="20px">
-                    </button>
+                    <img src="/assets/icons/plus.png" class="icon bt-border mr-1 border-box px-2 py-1 rounded-lg" width="40px" height="30px" (click)="addNewPaymentMethod()">
                 </div>
                 <div class="d-flex justify-content-between payment-card bt-border" *ngFor="let p of paymentMethodList">
                     <div class="d-flex justify-content-start">
@@ -242,7 +240,7 @@
             </div>
         </div>
 
-        <div class="basket-section">
+        <div class="basket-section  box-shadow">
             <div class="d-flex justify-content-between align-items-center">
                 <h5>Review Items</h5>
                 <span class="btn btn-sm btn-outline-secondary">{{

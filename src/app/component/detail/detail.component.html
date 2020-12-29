@@ -4,7 +4,7 @@
         <button (click)="backToResults()" class="btn btn-link">Back to results</button>
     </div>
     <hr class="mb-2">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center wrap">
         <div class="bt-box margin-10">
             <div class="main-picture-div">
                 <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}" class="main-picture">
@@ -19,70 +19,99 @@
             </div>
         </div>
         <div class="margin-10 product-details-section">
-            <p>
-                {{product.description}}
-            </p>
+            <ul>
+                <li *ngFor="let d of product.description" class="d-inline-block bg-light bt-radius my-1">
+                    <p>
+                        {{d}}
+                    </p>
+                </li>
+            </ul>
+
             <div *ngIf="product.storage">
                 <br>
-                <strong>Storage Instructions</strong>
+                <h4>Storage Instructions</h4>
+                <br>
                 <p>
                     {{product.storage}}
                 </p>
             </div>
-            <!-- <div *ngIf="product.reviews"> -->
-            <div>
+            <div *ngIf="product.nutritionalInformation">
                 <br>
-                <strong>Reviews</strong>
-                <div>
-                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                    <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                    <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
-                </div>
-            </div>
-        </div>
-        <div class="bt-box margin-10 product-price-section">
-            <strong>Today's Price: </strong>
-            <div class="d-flex justify-content-start">
-                <div class="amount-section px-1 py-2">
-                    <span class="price-currency">£</span>
-                    <span class="price">{{ getAmount() }}</span>
-                    <span class="price-fraction">{{ getFraction() }}</span>
-                </div>
-            </div>
-            <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
-                {{ product.stock > 0 ? "In Stock " : "No Stock "}}
-            </span>
-            <div class="d-block d-flex justify-content-center my-5">
-                <button class="btn btn-primary btn-md" (click)="addToCart()">Add
-                    to Basket</button>
-            </div>
-        </div>
-        <div class="bt-box margin-10 product-review-section">
-            <strong>Reviews</strong>
-            <br>
-            <strong class="muted"></strong>Perfect for a 3-night stay!
-            <br>
-            <div>
+                <h4 class="my-1">Nutritional Information</h4>
+                <br>
                 <ul>
-                    <li>
-                        Situated in the best rated area in Hua Hin, this property has an excellent location score of 9.2
-                    </li>
-                    <li>
-                        Want a great night's sleep? This property was highly rated for its very comfy beds.
+                    <li *ngFor="let ni of product.nutritionalInformation" class="bg-light my-1">
+                        <strong>{{ni.name}}</strong> : {{ni.value}}
                     </li>
                 </ul>
             </div>
-            <br>
-            <strong class="muted"></strong>Breakfast info
-            <br> Continental, Gluten-free, Asian, American, Buffet 끸 Free private parking available on-site
-            <br>
-            <strong class="muted"></strong>Activities
-            <br>
-            <p>
-                Fitness centre Golf course (within 3 km) Spa and wellness centre
-            </p>
+            <div *ngIf="product.qa">
+                <br>
+                <h4 class="my-1">Questions & Answers</h4>
+                <br>
+                <ul>
+                    <li *ngFor="let qa of product.qa" class="bg-light my-1">
+                        <strong>{{qa.name}}</strong> : {{qa.value}}
+                    </li>
+                </ul>
+            </div>
+
+            <!-- <div *ngIf="product.reviews"> -->
+
         </div>
+        <div class="bt-box margin-10 details-right-column">
+            <div class="mb-3 product-price-section">
+                <strong>Today's Price: </strong>
+                <div class="d-flex justify-content-start">
+                    <div class="amount-section px-1 py-2">
+                        <span class="price-currency">£</span>
+                        <span class="price">{{ getAmount() }}</span>
+                        <span class="price-fraction">{{ getFraction() }}</span>
+                    </div>
+                </div>
+                <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
+                {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
+                <div class="d-block d-flex justify-content-center my-5">
+                    <button class="btn btn-primary btn-md" (click)="addToCart()">Add
+                    to Basket</button>
+                </div>
+            </div>
+            <div class="mb-3 product-review-section">
+                <div>
+                    <br>
+                    <strong>Reviews</strong>
+                    <div>
+                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                        <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
+                    </div>
+                </div>
+                <br>
+                <strong class="muted"></strong>Perfect for a 3-night stay!
+                <br>
+                <div>
+                    <ul>
+                        <li>
+                            Situated in the best rated area in Hua Hin, this property has an excellent location score of 9.2
+                        </li>
+                        <li>
+                            Want a great night's sleep? This property was highly rated for its very comfy beds.
+                        </li>
+                    </ul>
+                </div>
+                <br>
+                <strong class="muted">Breakfast info</strong>
+                <br> Continental, Gluten-free, Asian, American, Buffet 끸 Free private parking available on-site
+                <br>
+                <strong class="muted"></strong>Activities
+                <br>
+                <p>
+                    Fitness centre Golf course (within 3 km) Spa and wellness centre
+                </p>
+            </div>
+        </div>
+
     </div>
 </div>

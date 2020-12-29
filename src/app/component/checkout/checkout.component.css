@@ -79,3 +79,12 @@
     width: 70px;
     margin-right: 5px;
 }
+
+.icon {
+    background-color: #fff;
+}
+
+.icon:hover {
+    background-color: #e7e9ec;
+    cursor: pointer;
+}

@@ -1,7 +1,7 @@
-<div class="page container-fluid d-flex justify-content-center">
+<div class="page container-fluid d-flex justify-content-start wrap">
     <div class="nav-section">
         <span class="nav-section-header">{{(department !== undefined && department !== null)? department.name : ""}}</span>
-        <div class="pl-2">
+        <div class="pl-2 mb-3">
             <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
         </div>
     </div>

@@ -13,13 +13,11 @@
             </a>
         </div>
         <hr class="mb-4">
-        <div class="row d-flex justify-content-center">
-            <div class="basket-container  bt-border curved">
-                <ul class="product-list">
-                    <li *ngFor="let item of basket.items">
-                        <app-basket-item [item]=item></app-basket-item>
-                    </li>
-                </ul>
+        <div class="d-flex justify-content-center container-fluid mt-5 wrap">
+            <div class="basket-container curved">
+                <div *ngFor="let item of basket.items">
+                    <app-basket-item [item]=item></app-basket-item>
+                </div>
             </div>
             <div class="checkout-box d-flex flex-column py-5 px-3">
                 <div class="basket-total-section bt-border-b mb-4 pb-4">

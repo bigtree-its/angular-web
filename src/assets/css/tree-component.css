@@ -13,10 +13,10 @@
 }
 
 .node-drop-slot.is-dragging-over {
-    /* background: #ddffee; */
+    background: #ddffee;
     color: #ff4747;
     height: 20px;
-    /* border: 2px dotted #888; */
+    border: 2px dotted #888;
 }
 
 .toggle-children-wrapper-expanded .toggle-children {
@@ -122,7 +122,7 @@ tree-viewport {
     display: inline-block;
     cursor: pointer;
     /* font-size: 14px; */
-    font-size: 14px!important;
+    font-size: 15px!important;
     color: #111!important;
     -webkit-touch-callout: none;
     /* iOS Safari */
