@@ -10,10 +10,10 @@
                 <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}" class="main-picture">
             </div>
             <div>
-                <div class="d-inline-block bt-border bt-radius my-1">
-                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(product.picture.thumbnail)">
+                <div class="d-inline-block bt-border bt-radius my-1 mr-1">
+                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small " (click)="setMainPicture(product.picture.thumbnail)">
                 </div>
-                <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1">
+                <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1 mr-1">
                     <img src={{pic}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(pic)">
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     {{product.storage}}
                 </p>
             </div>
-            <div *ngIf="product.nutritionalInformation">
+            <div *ngIf="product.nutritionalInformation.length>0">
                 <br>
                 <h4 class="my-1">Nutritional Information</h4>
                 <br>
@@ -45,7 +45,7 @@
                     </li>
                 </ul>
             </div>
-            <div *ngIf="product.qa">
+            <div *ngIf="product.qa.length > 0">
                 <br>
                 <h4 class="my-1">Questions & Answers</h4>
                 <br>
@@ -77,41 +77,35 @@
                 </div>
             </div>
             <div class="mb-3 product-review-section">
-                <div>
+                <br>
+                <strong>Reviews</strong><span class="muted ml-3">{{reviews.length}} reviews</span>
+                <br>
+                <div *ngIf="reviews === undefined || reviews.length === 0">
+                    <span>No Reviews Yet</span>
+                </div>
+                <div *ngIf="reviews !== undefined && reviews.length > 0">
                     <br>
-                    <strong>Reviews</strong>
-                    <div>
-                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                        <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                        <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
+                    <div *ngFor="let r of reviews" class="review-box">
+                        <div>
+                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
+                            <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
+                        </div>
+                        <div class="d-flex justify-content-start">
+                            <strong class="text-dark">{{(r.userName === undefined || r.userName === null)? "Anonymous" : r.userName}}</strong>
+                            <span class="text-muted ml-2 font-italic ">{{r.date | dateAgo }}</span>
+                        </div>
+                        <br>
+                        <strong class="text-dark">{{r.title}}</strong>
+                        <br>
+                        <p>
+                            {{r.content}}
+                        </p>
                     </div>
                 </div>
-                <br>
-                <strong class="muted"></strong>Perfect for a 3-night stay!
-                <br>
-                <div>
-                    <ul>
-                        <li>
-                            Situated in the best rated area in Hua Hin, this property has an excellent location score of 9.2
-                        </li>
-                        <li>
-                            Want a great night's sleep? This property was highly rated for its very comfy beds.
-                        </li>
-                    </ul>
-                </div>
-                <br>
-                <strong class="muted">Breakfast info</strong>
-                <br> Continental, Gluten-free, Asian, American, Buffet 끸 Free private parking available on-site
-                <br>
-                <strong class="muted"></strong>Activities
-                <br>
-                <p>
-                    Fitness centre Golf course (within 3 km) Spa and wellness centre
-                </p>
             </div>
         </div>
-
     </div>
 </div>

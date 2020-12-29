@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
-import { ProductModel, Category, Department } from '../model/product.model';
+import { ProductModel, Category, Department, Review } from '../model/product.model';
 import { MessengerService } from './messenger.service';
 import { CategoryQuery, ProductQuery } from '../model/query';
 
@@ -41,6 +41,11 @@ export class ProductService {
       params = params.set('categories', query.categories);
     }
     return this.http.get<ProductModel[]>(this.SERVER_URL + 'products', {params});
+  }
+
+  getReviews(productId: string) : Observable<Review[]> {
+    var params = new HttpParams().set("product", productId);
+    return this.http.get<Review[]>(this.SERVER_URL + 'reviews', {params});
   }
 
   getFeaturedProduct(): Observable<ProductModel[]> {

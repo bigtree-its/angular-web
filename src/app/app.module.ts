@@ -32,6 +32,7 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ProductBrowserComponent } from './component/product-browser/product-bro
     ProfileComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ProductBrowserComponent
+    ProductBrowserComponent,
+    DateAgoPipe
   ],
   imports: [
     BrowserModule,

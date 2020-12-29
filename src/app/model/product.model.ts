@@ -22,6 +22,16 @@ export interface Picture{
     additional:string[]
 }
 
+export interface Review{
+    _id: string,
+    title: string,
+    content: string,
+    starts:number,
+    userEmail: string,
+    userName: string,
+    date: Date
+}
+
 export interface Brand{
     _id: string,
     name: string

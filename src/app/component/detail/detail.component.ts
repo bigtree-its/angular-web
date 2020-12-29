@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel } from 'src/app/model/product.model';
+import { ProductModel, Review } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
@@ -22,6 +22,7 @@ export class DetailComponent implements OnInit {
   product: ProductModel = undefined;
   quantity: number = 1;
   mainPicture: String;
+  reviews: Review[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -87,6 +88,9 @@ export class DetailComponent implements OnInit {
       this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
         this.product = product;
         this.mainPicture = this.product.picture.thumbnail;
+      });
+      this.productService.getReviews(productId).subscribe((reviews: Review[]) => {
+        this.reviews = reviews;
       });
     })
   }

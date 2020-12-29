@@ -93,6 +93,10 @@
     cursor: pointer;
 }
 
+.review-box {
+    border-bottom: 1px solid #fff;
+}
+
 
 /* .product-details-image-small {
     max-width: 100%;
