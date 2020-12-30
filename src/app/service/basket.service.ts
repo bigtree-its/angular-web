@@ -9,7 +9,12 @@ import { ProductModel } from '../model/product.model';
 export class BasketService {
   basket: Basket = {
     items: [],
-    total: 0,
+    subTotal: 0,
+    tax: 0,
+    deliveryCost: 0,
+    discount: 0,
+    address: null,
+    paymentCard: null,
   };
   subject$ = new BehaviorSubject<Basket>(this.basket);
 
@@ -25,7 +30,12 @@ export class BasketService {
     localStorage.removeItem('basket');
     let basket: Basket = {
       items: [],
-      total: 0,
+      subTotal: 0,
+      tax: 0,
+      deliveryCost: 0,
+      discount: 0,
+      address: null,
+      paymentCard: null,
     };
     this.basket = basket;
     console.log('Removing basket: ' + JSON.stringify(this.basket));
@@ -48,10 +58,15 @@ export class BasketService {
 
   addItemToBasket(product: ProductModel) {
     console.log(`Adding product to basket: ` + JSON.stringify(product));
-    if ( this.basket === null || this.basket === undefined){
+    if (this.basket === null || this.basket === undefined) {
       this.basket = {
         items: [],
-        total: 0,
+        subTotal: 0,
+        tax: 0,
+        deliveryCost: 0,
+        discount: 0,
+        address: null,
+        paymentCard: null
       };
     }
     //Find if the product already exist in the basket
@@ -87,8 +102,8 @@ export class BasketService {
     this.basket.items.forEach((item) => {
       total = total + item.qty * item.price;
     });
-    this.basket.total = total;
-    this.basket.total = +(+this.basket.total).toFixed(2);
+    this.basket.subTotal = total;
+    this.basket.subTotal = +(+this.basket.subTotal).toFixed(2);
   }
 
   updateItem(id: string, qty: number) {

@@ -63,7 +63,7 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   getBasketTotal() {
-    return this.basket.total;
+    return this.basket.subTotal;
   }
 
   confirmPurchase() {
@@ -73,11 +73,11 @@ export class PlaceOrderComponent implements OnInit {
     order.address = this.address;
     order.paymentCard = this.paymentCard;
     order.email = this.user.email;
-    order.currency = "GCP";
-    order.subTotal = this.basket.total;
-    order.saleTax = this.basket.total;
-    order.shippingCost = this.basket.total;
-    order.totalCost = this.basket.total;
+    order.currency = "GBP";
+    order.subTotal = this.basket.subTotal;
+    order.saleTax = this.basket.tax;
+    order.shippingCost = this.basket.deliveryCost;
+    order.totalCost = + (+this.basket.subTotal + this.basket.tax +this.basket.deliveryCost ).toFixed(2);
     order.expectedDeliveryDate = new Date();
     var items: OrderItem[] = [];
     this.basket.items.map(bi => {
