@@ -49,6 +49,8 @@ export class CheckoutComponent implements OnInit {
   yearsOptions: number[] = [];
   monthsOptions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   user: User;
+  isError: boolean = false;
+  message: String;
 
   constructor(
     private orderService: OrderService,
@@ -67,7 +69,9 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.showCardSection = true;
-    
+    this.isError = false;
+    this.message = "";
+
     this.basketService.subject$.subscribe(basket => {
       this.basket = basket
     });
@@ -93,7 +97,19 @@ export class CheckoutComponent implements OnInit {
 
 
   reviewOrder() {
-    this.router.navigate(['/review']).then();
+    this.isError = false;
+    this.message = "";
+    if ( this.basket.address === undefined || this.basket.address === null){
+      this.isError = true;
+      this.message = "Select delivery address";
+    }
+    if ( this.basket.paymentCard === undefined || this.basket.paymentCard === null){
+      this.isError = true;
+      this.message = "Select Payment Card";
+    }
+    if (!this.isError){
+      this.router.navigate(['/review']).then();
+    }
   }
 
   onSubmitAddress(f: NgForm) {
@@ -107,13 +123,13 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  
   private updateAddressList() {
-    let existing: Address = this.addressList.find(a => a.postcode === this.address.postcode);
+    let existing: Address = this.addressList.find(
+      (a) => a._id === this.address._id
+    );
     if (!existing) {
       this.addressList.push(this.address);
-    }
-    else {
+    } else {
       existing.firstName = this.address.firstName;
       existing.lastName = this.address.lastName;
       existing.email = this.address.email;
@@ -123,9 +139,9 @@ export class CheckoutComponent implements OnInit {
       existing.city = this.address.city;
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
+      this.accountService.userValue.addresses = this.addressList;
+      this.updateCurrentUser();
     }
-    this.accountService.userValue.addresses = this.addressList;
-    this.updateCurrentUser();
   }
 
   selectType(e: String) {
@@ -160,7 +176,7 @@ export class CheckoutComponent implements OnInit {
 
     this.addressList.forEach(a => {
       if (a.selected) {
-        this.messengerService.submitBillingAddress(a);
+        this.basket.address = a;
       }
     });
 
@@ -214,8 +230,9 @@ export class CheckoutComponent implements OnInit {
   usePaymentMethod(p: PaymentCard) {
     for (let i = 0; i < this.paymentMethodList.length; i++) {
       let pay: PaymentCard = this.paymentMethodList[i];
-      if (this.paymentMethodList[i].cardNumber === p.cardNumber) {
+      if (pay.cardNumber === p.cardNumber) {
         pay.selected = true;
+        this.basket.paymentCard = pay;
       } else {
         pay.selected = false;
       }
@@ -223,7 +240,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmitPaymentMethod(f: NgForm) {
-    console.log('Submitting card: '+ JSON.stringify(this.card));
     if (f.valid){
       this.updatePaymentList();
       this.hidePaymentForm = true;
@@ -300,33 +316,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   getBasketTotal() {
-    return this.basket.total;
+    return this.basket.subTotal;
   }
 
-  confirmPurchase() {
-    console.log('Confirming order..')
-    var order: Order = new Order();
-    order.date = new Date();
-    order.address = this.address;
-    order.paymentCard = this.card;
-    order.email = this.user.email;
-    order.currency = "GCP";
-    order.subTotal = this.basket.total;
-    order.saleTax = this.basket.total;
-    order.shippingCost = this.basket.total;
-    order.totalCost = this.basket.total;
-    order.expectedDeliveryDate = new Date();
-    var items: OrderItem[] = [];
-    this.basket.items.map(bi => {
-      var item: OrderItem = new OrderItem();
-      item.price = bi.price;
-      item.productId = bi._id;
-      item.productName = bi.name;
-      item.quantity = bi.qty;
-      item.total = bi.price * bi.qty;
-      items.push(item);
-    });
-    order.items = items;
-    this.orderService.placeOrder(order);
-  }
+  
 }

@@ -2,14 +2,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Fondamento&display=swap');
 </style>
-<div class="container-fluid">
+<div class="container-fluid home">
     <div class="d-flex justify-content-center bt-border-b department-bar">
         <div *ngFor="let d of messengerService.deps">
-            <button class="ml-1 button1" (click)="selectDepartment(d)">{{ d.name | uppercase }}</button>
+            <button class="ml-1 button1" (click)="selectDepartment(d)">{{ d.name }}</button>
         </div>
     </div>
-    <div class="row my-5 featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
-        <div class="d-flex justify-content-center">
+    <div class="row my-5 bg-light featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
+        <span class="featured-tag  box-shadow">Featured</span>
+        <div class="d-flex justify-content-center featured-product-inner">
             <div class="featured-product-left">
                 <span class="featured-product-name" (click)="selectProduct()">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
                 <br><br>
@@ -33,25 +34,11 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-            <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
-                <div class="my-3 py-3">
-                    <h2 class="display-5">Another headline</h2>
-                    <p class="lead">And an even wittier subheading.</p>
-                </div>
-                <div class="bg-light box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-
-                </div>
-            </div>
-            <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
-                <div class="my-3 p-3">
-                    <h2 class="display-5">Another headline</h2>
-                    <p class="lead">And an even wittier subheading.</p>
-                </div>
-                <div class="bg-dark box-shadow mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;">
-                    <img src={{featuredProduct.picture.thumbnail}} alt="" loading="lazy" class="boxed-product-image" (click)="selectProduct()">
-                </div>
+    <span class="featured-tag box-shadow">New Arrivals</span>
+    <div class="row bg-light featured-product">
+        <div class="d-flex justify-content-center featured-product-inner">
+            <div class="space-around" *ngFor="let p of products">
+                <app-item [product]="p"></app-item>
             </div>
         </div>
     </div>
@@ -68,33 +55,6 @@
                 <span class="dropdown-item top-nav-logout" (click)="highToLow()">Highest
                     First</span>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="d-flex">
-            <div *ngIf="department !== undefined && categories.length> 0">
-                <strong class="d-block text-left my-3 pl-2">Related Categories</strong>
-            </div>
-            <div class="pl-2">
-                <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
-            </div>
-
-        </div>
-    </div>
-    <div *ngIf="brands.length> 0" class="row px-4 d-flex justify-content-center">
-        <strong class="text-left mr-3">Brands:</strong>
-        <ul class="ml-3">
-            <div class="d-inline-block mr-3 bg-light px-4 pt-2" *ngFor="let b of brands">
-                <label class="bt-check">{{ b.name }}
-                    <input type="checkbox" (change)="selectBrand(b._id,$event)">
-                    <span class="tick"></span>
-                </label>
-            </div>
-        </ul>
-    </div>
-    <div class="row d-flex justify-content-center py-2 overflow-y bt-1">
-        <div class="space-around" *ngFor="let p of products">
-            <app-item [product]="p"></app-item>
         </div>
     </div>
 </div>

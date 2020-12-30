@@ -104,7 +104,6 @@ export class MessengerService {
   }
 
   submitBillingAddress(address: Address) {
-    alert('Submitting address: '+ JSON.stringify(address));
     this.deliveryAddress = address;
     localStorage.setItem('deliveryAddress', JSON.stringify(this.deliveryAddress));
     this.deliveryAddressSubject$.next({ ...this.deliveryAddress });

@@ -29,7 +29,8 @@ export class RegisterComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
@@ -44,6 +45,9 @@ export class RegisterComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.form.invalid) {
+      return;
+    }
+    if ( this.f.password.value !== this.f.confirmPassword.value){
       return;
     }
 

@@ -154,4 +154,67 @@ export class ProductBrowserComponent implements OnInit {
       return obj.name;
     });
   }
+
+  selectBrand(id: String, e: any) {
+    console.log('Selected category: ' + JSON.stringify(this.selectedCategory));
+    let b: Brand = this.brands.find((b) => b._id === id);
+
+    if (e.target.checked) {
+      this.selectedBrands.push(b);
+    } else {
+      for (var i = 0; i < this.selectedBrands.length; i++) {
+        if (this.selectedBrands[i]._id === id) {
+          this.selectedBrands.splice(i, 1);
+        }
+      }
+    }
+    console.log('Chosen Brands: ' + JSON.stringify(this.selectedBrands));
+    if (this.selectedBrands.length > 0) {
+      var uniqueBrandIds: string[] = _.map(
+        _.indexBy(this.selectedBrands, '_id'),
+        function (obj, key) {
+          return key;
+        }
+      );
+      var tempList: ProductModel[] = [];
+      if (this.selectedCategory !== undefined) {
+        this.filterProductsByCat(this.selectedCategory._id, false);
+      }
+      this.products.forEach((p) => {
+        if (uniqueBrandIds.indexOf(p.brand._id) !== -1) {
+          tempList.push(p);
+        }
+      });
+      this.products = tempList;
+    } else {
+      if (this.selectedType !== undefined) {
+        this.selectType(this.selectedType._id);
+      } else if (this.selectedCategory !== undefined) {
+        this.filterProductsByCat(this.selectedCategory._id, true);
+      } else {
+        this.displayAllCategory();
+      }
+    }
+  }
+  selectType(id: string) {
+    this.selectedType = this.categories.find((c) => c._id === id);
+    this.filterProductsByType(id, true);
+  }
+
+  displayAllCategory() {
+    this.products = this.productsMaster;
+  }
+
+  filterProductsByType(id: string, displayBrands: boolean) {
+    var tempList: ProductModel[] = [];
+    this.productsMaster
+      .filter((p) => p.type === id)
+      .forEach((item) => tempList.push(item));
+    this.products = tempList;
+    if (displayBrands) {
+      this.displayBrands();
+    }
+  }
+
+
 }

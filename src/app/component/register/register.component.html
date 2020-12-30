@@ -1,5 +1,5 @@
-<div class="create-account-page container-fluid justify-content-center">
-    <div class="logo">Create new account</div>
+<div class="create-account-page container-fluid justify-content-center bg-light">
+    <div class="logo">Join us</div>
     <div class="card-body">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
@@ -30,6 +30,15 @@
                     <div *ngIf="f.password.errors.required">Password is required</div>
                     <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                    <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
+                    <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
+                </div>
+                <span *ngIf="submitted && f.confirmPassword.value !== f.password.value" class="passwordNotMatched mb-2">Password is not matched</span>
             </div>
             <div class="form-group h-flex ">
                 <button [disabled]="loading" class="btn btn-primary mr-3">

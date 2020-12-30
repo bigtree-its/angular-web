@@ -29,12 +29,6 @@
         <div class="detail-section">
             <div class="d-flex justify-content-between">
                 <h5 class="text-dark">{{moduleName}}</h5>
-                <button [disabled]="saveChangesEnabled == true && isChangeMade == true" (click)="submitProfile()" class="btn btn-sm btn-primary m-1
-                    ml-3">
-                    <span *ngIf="loading && isChangeMade ==true"
-                        class="spinner-border spinner-border-sm mr-1"></span>
-                    Save Changes
-                </button>
             </div>
             <hr>
             <div *ngIf="displayAboutYouModule == true">
@@ -118,7 +112,7 @@
                         <div class="space-around" *ngFor="let a of addressList">
                             <div class="address-item bg-light">
                                 <div>
-                                    <span>{{ a.firstName }} {{ a.lastName }}</span>
+                                    <strong>{{ a.firstName }} {{ a.lastName }}</strong>
                                 </div>
                                 <span>{{ a.lineNumber1 }}</span>
                                 <span>{{ a.lineNumber2 }}</span>
@@ -127,9 +121,9 @@
                                 <span>{{ a.postcode }}</span>
                                 <div class="h-flex align-items-start wrap my-2">
                                     <button type="button" class="btn btn-sm
-                                        btn-outline-secondary mr-1" (click)="editAddress(a)">Edit</button>
+                                        btn-outline-secondary mr-1 box-shadow" (click)="editAddress(a)">Edit this address</button>
                                     <button type="button" class="btn btn-sm
-                                        btn-outline-danger mr-1" (click)="removeAddress(a)">Remove</button>
+                                        btn-outline-danger mr-1 box-shadow" (click)="removeAddress(a)">Remove this</button>
                                 </div>
                             </div>
                         </div>
@@ -206,6 +200,94 @@
                         </form>
                     </div>
                 </ng-template>
+            </div>
+            <div *ngIf="displayPaymentsModule == true">
+                <div [hidden]="hidePaymentForm==true">
+                    <form #paymentForm="ngForm" (ngSubmit)=(onSubmitPaymentMethod(paymentForm))>
+                        <div class="custom-control custom-radio">
+                            <div class="d-flex justify-content-between p-2">
+                                <div>
+                                    <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required (click)="selectType('Credit')">
+                                    <label class="custom-control-label" for="credit">Credit Card</label>
+                                </div>
+                                <div>
+                                    <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1
+                                            border-box px-2 rounded-lg">
+                                    <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1
+                                            border-box px-2 rounded-lg">
+                                    <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1
+                                            border-box px-2 rounded-lg">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="nameOnCard">Name on card</label>
+                            <input type="text" class="form-control" id="nameOnCard" placeholder="" required [(ngModel)]="paymentCard.nameOnCard" name="nameOnCard" #nameOnCard="ngModel">
+                            <small class="text-muted">Full name as displayed on card</small>
+                        </div>
+                        <div class="col mb-3">
+                            <label for="cardNumber">Card number</label>
+                            <input type="text" maxlength="16" class="form-control" id="cardNumber" placeholder="" required [(ngModel)]="paymentCard.cardNumber" name="cardNumber" #cardNumber="ngModel">
+                            <small class="text-muted">16 digit number without gap</small>
+                        </div>
+                        <div class="d-flex justify-content-between  px-3">
+                            <div class="mb-3 form-group">
+                                <label for="expiration">Expiration Date</label>
+                                <div class="h-flex justify-content-start">
+                                    <!-- <select [(ngModel)]="expirationMonth" name="expiration" required class="form-control mr-1" id="expiration">
+                                                <option *ngFor="let m of monthsOptions" [ngValue]="m">{{m}}</option>
+                                        </select> -->
+                                    <input type="text" maxlength="2" class="form-control expiry-input" id="expiryMonth" placeholder="DD" required [(ngModel)]="paymentCard.expiryMonth" name="expiryMonth" #expiryMonth="ngModel">
+                                    <!-- <select [(ngModel)]="expirationYear" name="expiration" required class="form-control" id="expiration">
+                                                <option *ngFor="let y of yearsOptions" [ngValue]="y">{{y}}</option>
+                                        </select> -->
+                                    <input type="text" maxlength="2" class="form-control expiry-input" id="expiryYear" placeholder="YY" required [(ngModel)]="paymentCard.expiryYear" name="expiryYear" #expiryYear="ngModel">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="cvv">CVV</label>
+                                <input type="text" maxlength="3" class="form-control cvv-input" id="cvv" placeholder="" required [(ngModel)]="paymentCard.cvv" name="cvv" #cvv="ngModel">
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-start  px-3">
+                            <button type="submit" class="btn btn-sm btn-primary m-1" [disabled]="!paymentForm.form.valid">Submit</button>
+                            <button class="btn btn-sm btn-secondary m-1" (click)="cancelPaymentForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <div *ngIf="hidePaymentForm">
+                    <div class="d-flex justify-content-between p-2">
+                        <button type="button" class="btn btn-sm
+                                        btn-outline-secondary mr-1 box-shadow" (click)="addNewPaymentMethod()">Add a payment card</button>
+                    </div>
+                    <div class="d-flex justify-content-between payment-card bt-border my-2" *ngFor="let p of paymentCardList">
+                        <div class="d-flex justify-content-start">
+                            <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
+                            <!-- Payment Item -->
+                            <div class="payment-card-details">
+                                <div class="d-flex justify-content-start">
+                                    <strong>Card Ending</strong>
+                                    <span class="pl-2">{{ getMaskedCardNumber(p) }}</span>
+                                </div>
+                                <div class="">
+                                    <span class="mr-2">{{ p.nameOnCard}}</span>
+                                    <span class="">{{ p.expiryMonth}}/{{p.expiryYear}}</span>
+                                </div>
+                                <div class="d-flex justify-content-start mt-3 btn-group-justified">
+                                    <div class="btn-group ">
+                                        <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="usePaymentMethod(p)">Set as default</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="editPaymentMethod(p)">Edit details</button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="removePaymentMethod(p)">Remove this</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div *ngIf="isError" class="alert alert-warning result">

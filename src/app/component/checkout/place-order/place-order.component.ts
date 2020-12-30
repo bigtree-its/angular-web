@@ -34,16 +34,11 @@ export class PlaceOrderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.messengerService.deliveryAddressSubject$.subscribe(address => {
-      this.address = address;
-    })
-
-    this.messengerService.paymentCardSubject$.subscribe(paymentCard => {
-      this.paymentCard = paymentCard;
-    })
 
     this.basketService.subject$.subscribe(basket => {
       this.basket = basket;
+      this.address = basket.address;
+      this.paymentCard = basket.paymentCard;
     })
 
     this.user = this.accountService.userValue;

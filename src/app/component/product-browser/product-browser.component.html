@@ -5,7 +5,19 @@
             <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
         </div>
     </div>
+
     <div class="main-section">
+        <div *ngIf="brands.length> 0" class="row px-4 d-flex justify-content-center">
+            <strong class="text-left mr-3">Brands:</strong>
+            <ul class="ml-3">
+                <div class="d-inline-block mr-3 bg-light px-4 pt-2" *ngFor="let b of brands">
+                    <label class="bt-check">{{ b.name }}
+                        <input type="checkbox" (change)="selectBrand(b._id,$event)">
+                        <span class="tick"></span>
+                    </label>
+                </div>
+            </ul>
+        </div>
         <div class="row d-flex justify-content-start overflow-y">
             <div class="space-around" *ngFor="let p of products">
                 <app-item [product]="p"></app-item>

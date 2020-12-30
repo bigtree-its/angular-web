@@ -88,3 +88,10 @@
     background-color: #e7e9ec;
     cursor: pointer;
 }
+
+.banner {
+    display: block;
+    margin: 0 20px;
+    clear: both;
+    width: 100%;
+}

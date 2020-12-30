@@ -1,4 +1,18 @@
+.home {
+    margin-top: 10px;
+}
+
 .featured-product {
+    margin: 0 10px;
+}
+
+.featured-tag {
+    background-color: #aebec7;
+    padding: 10px;
+    font-family: 'Fondamento', cursive;
+}
+
+.featured-product-inner {
     padding: 20px;
 }
 
@@ -18,7 +32,7 @@
 
 .department-bar {
     padding-bottom: 10px;
-    margin-top: 70px;
+    margin-top: 80px;
 }
 
 .department {
@@ -29,7 +43,7 @@
 
 .department:hover {
     cursor: pointer;
-    background-color: #a8f7f8!important;
+    background-color: #aebec7;
 }
 
 .featured-product-image {
@@ -41,13 +55,14 @@
 .button1 {
     display: inline-block;
     padding: 0.35em 1.2em;
-    border: 0.1em solid #818080;
+    border: none;
+    border-bottom: 0.1em solid #fff;
     margin: 0 0.3em 0.3em 0;
     border-radius: 0.12em;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     text-decoration: none;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+    /* font-family: 'Roboto', sans-serif; */
+    /* font-weight: 300; */
     text-align: center;
     transition: all 0.2s;
     background-color: #FFFFFF;
@@ -55,8 +70,9 @@
 
 .button1:hover {
     color: #000000;
-    border: 0.1em solid #4564c7;
-    background-color: #c9e0fd;
+    border-bottom: 0.1em solid #333;
+    /* border: 0.1em solid #4564c7; */
+    /* background-color: #aebec7; */
 }
 
 @media all and (max-width:30em) {

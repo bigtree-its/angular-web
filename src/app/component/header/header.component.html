@@ -2,19 +2,19 @@
     @import url('https://fonts.googleapis.com/css2?family=Fondamento&family=Waiting+for+the+Sunrise&display=swap');
 </style>
 <div class="sticky">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light header">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse mt-4" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
                 <img src="/assets/icons/monkey.png" width="30" height="30" class="d-inline-block mb-2" alt="">
-                <strong class="logo-brand-text">CircusMonkey</strong>
+                <strong class="logo-brand-text">Native Food Store</strong>
             </a>
         </div>
         <div class="col-1 top-nav-right-section" *ngIf="isUserLoggedIn()">
             <div class="dropdown show">
-                <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dropdown-toggle profile-name" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!-- <img src="/assets/icons/top-nav-user-icon.png" alt=""
                         loading="lazy" class="top-nav-user-icon"> -->
                         {{userName}}
