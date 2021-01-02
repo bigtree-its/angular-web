@@ -9,6 +9,7 @@ import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/service/account.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-detail',
@@ -35,7 +36,7 @@ export class DetailComponent implements OnInit {
   quantity: number = 1;
   mainPicture: String;
   reviews: Review[];
-  user: import("/Users/maan/projects/yousell/fe-angular/src/app/model/user").User;
+  user: User = new User();
 
   constructor(
     private activatedRoute: ActivatedRoute,
