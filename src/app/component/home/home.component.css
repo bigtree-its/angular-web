@@ -1,13 +1,14 @@
 .home {
-    margin-top: 10px;
+    margin-top: 80px;
 }
 
 .featured-product {
     margin: 0 10px;
+    background-color: #f8fafd;
 }
 
 .featured-tag {
-    background-color: #aebec7;
+    background-color: #f8bd3d;
     padding: 10px;
     font-family: 'Fondamento', cursive;
 }
@@ -31,24 +32,25 @@
 }
 
 .department-bar {
-    padding-bottom: 10px;
-    margin-top: 80px;
+    background-color: rgb(255, 255, 255);
 }
 
 .department {
     padding: 5px 20px;
-    border: 2px solid #fff;
+    border: none;
     background: none;
+    color: rgb(65, 65, 65);
+    font-weight: bold;
 }
 
 .department:hover {
     cursor: pointer;
-    background-color: #aebec7;
+    color: rgb(255, 109, 93);
 }
 
 .featured-product-image {
-    height: 400px;
-    width: 450px;
+    height: 300px;
+    width: 350px;
     border-radius: 12px;
 }
 
@@ -86,4 +88,43 @@
     box-sizing: border-box;
     max-width: 100%;
     height: 300px;
+}
+
+.scroll-container {
+    padding: 30px 10px;
+    align-items: center;
+    border: 1px solid #eeeeee;
+    margin: 0 10px 30px 10px;
+    /* height: 500px; */
+}
+
+.custom-slider-main {
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.scroll-right {
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+    opacity: 0.6;
+}
+
+.scroll-right:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.scroll-left {
+    height: 40px;
+    width: 40px;
+    margin: 10px;
+    opacity: 0.6;
+}
+
+.scroll-left:hover {
+    cursor: pointer;
+    opacity: 1;
 }

@@ -22,6 +22,8 @@
     border-radius: 3px;
     padding: 15px;
     clear: both;
+    height: 1000px;
+    overflow-y: hidden;
 }
 
 .amount-section {
@@ -95,6 +97,11 @@
 
 .review-box {
     border-bottom: 1px solid #fff;
+}
+
+.customer-question-section {
+    display: flex;
+    flex-direction: column;
 }
 
 

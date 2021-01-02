@@ -10,9 +10,6 @@ export class BasketService {
   basket: Basket = {
     items: [],
     subTotal: 0,
-    tax: 0,
-    deliveryCost: 0,
-    discount: 0,
     address: null,
     paymentCard: null,
   };
@@ -31,14 +28,15 @@ export class BasketService {
     let basket: Basket = {
       items: [],
       subTotal: 0,
-      tax: 0,
-      deliveryCost: 0,
-      discount: 0,
       address: null,
       paymentCard: null,
     };
     this.basket = basket;
-    console.log('Removing basket: ' + JSON.stringify(this.basket));
+    this.subject$.next({ ...this.basket });
+  }
+
+  updateBasket(basket: Basket){
+    this.basket = basket;
     this.subject$.next({ ...this.basket });
   }
 
@@ -62,9 +60,6 @@ export class BasketService {
       this.basket = {
         items: [],
         subTotal: 0,
-        tax: 0,
-        deliveryCost: 0,
-        discount: 0,
         address: null,
         paymentCard: null
       };

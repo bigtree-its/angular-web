@@ -46,6 +46,9 @@ export class ProductBrowserComponent implements OnInit {
   department: Department;
   departmentId: any;
 
+  orderL2H: boolean = false;
+  orderH2L: boolean = false;
+
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
@@ -216,5 +219,20 @@ export class ProductBrowserComponent implements OnInit {
     }
   }
 
+  lowToHigh() {
+    this.products = this.products.sort((p1: ProductModel, p2: ProductModel) => {
+      return p1.salePrice - p2.salePrice;
+    });
+    this.orderL2H = true;
+    this.orderH2L = false;
+  }
+
+  highToLow() {
+    this.products = this.products.sort((p1: ProductModel, p2: ProductModel) => {
+      return p2.salePrice - p1.salePrice;
+    });
+    this.orderL2H = false;
+    this.orderH2L = true;
+  }
 
 }

@@ -7,6 +7,8 @@ import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/service/account.service';
 
 @Component({
   selector: 'app-detail',
@@ -14,6 +16,16 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
+
+  /** Questions */
+  form: FormGroup;
+  loading = false;
+  submitted = false;
+
+  /** Review Form */
+  reviewForm: FormGroup;
+  submittedReview: boolean;
+
 
   faPlus = faPlus;
   faMinus = faMinus;
@@ -23,14 +35,44 @@ export class DetailComponent implements OnInit {
   quantity: number = 1;
   mainPicture: String;
   reviews: Review[];
+  user: import("/Users/maan/projects/yousell/fe-angular/src/app/model/user").User;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private messengerService: MessengerService,
+    private accountService: AccountService,
+    private formBuilder: FormBuilder,
     private basketService: BasketService,
     private _location: Location
   ) { }
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      question: ['', Validators.required]
+    });
+
+    this.reviewForm = this.formBuilder.group({
+      headline: [''],
+      content: ['', Validators.required]
+    });
+
+    this.activatedRoute.params.subscribe(params => {
+      const productId = params['id'];
+      console.log(`Product Id: ${params['id']}`);
+      this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
+        this.product = product;
+        this.product.amount = this.getAmount();
+        this.product.fraction = this.getFraction();
+        this.mainPicture = this.product.picture.thumbnail;
+      });
+      this.productService.getReviews(productId).subscribe((reviews: Review[]) => {
+        this.reviews = reviews;
+      });
+    })
+
+    this.user = this.accountService.userValue;
+    console.log('User on detail page: '+ this.user)
+  }
 
   increaseQuantity() {
     if (this.quantity < 10) {
@@ -68,7 +110,7 @@ export class DetailComponent implements OnInit {
 
   getAmount(): string {
     var salePrice = String(this.product.salePrice);
-    var amount: string = salePrice.split('.')[0];
+    var amount = salePrice.split('.')[0];
     console.log('The amount: ' + amount);
     if (amount === undefined) {
       amount = '00';
@@ -80,21 +122,38 @@ export class DetailComponent implements OnInit {
     this._location.back();
   }
 
-  ngOnInit(): void {
+  
 
-    this.activatedRoute.params.subscribe(params => {
-      const productId = params['id'];
-      console.log(`Product Id: ${params['id']}`);
-      this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
-        this.product = product;
-        this.mainPicture = this.product.picture.thumbnail;
-      });
-      this.productService.getReviews(productId).subscribe((reviews: Review[]) => {
-        this.reviews = reviews;
-      });
-    })
+  // convenience getter for easy access to form fields
+  get f() { return this.form.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+    console.log('Question: '+ this.f.question.value);
+    // console.log('Question Email: '+ this.f.email.value);
+
+    this.loading = true;
+    
   }
 
+  onSubmitReview() {
+    this.submittedReview = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
+    }
+    console.log('Question: '+ this.f.question.value);
+    // console.log('Question Email: '+ this.f.email.value);
+
+    this.loading = true;
+    
+  }
   setMainPicture(url: String){
     this.mainPicture = url;
   }

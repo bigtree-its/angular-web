@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
 import {
   ProductModel,
@@ -20,6 +20,9 @@ import { CategoryQuery } from 'src/app/model/query';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
+
+  @ViewChild('widgetsContent') widgetsContent: ElementRef;
+
   products: ProductModel[] = [];
   productsMaster: ProductModel[] = [];
   categories: Category[] = [];
@@ -29,8 +32,7 @@ export class HomeComponent implements OnInit {
   brands: Brand[] = [];
   selectedBrands: Brand[] = [];
   selectedCategory: Category;
-  orderL2H: boolean = false;
-  orderH2L: boolean = false;
+  
   selectedType: Category;
 
   menuItems: MenuItem[] = [];
@@ -158,23 +160,17 @@ export class HomeComponent implements OnInit {
     return this.featuredProduct.picture.thumbnail;
   }
 
-  lowToHigh() {
-    this.products = this.products.sort((p1: ProductModel, p2: ProductModel) => {
-      return p1.salePrice - p2.salePrice;
-    });
-    this.orderL2H = true;
-    this.orderH2L = false;
-  }
-
-  highToLow() {
-    this.products = this.products.sort((p1: ProductModel, p2: ProductModel) => {
-      return p2.salePrice - p1.salePrice;
-    });
-    this.orderL2H = false;
-    this.orderH2L = true;
-  }
+  
 
   addToCart() {
     this.basketService.addItemToBasket(this.featuredProduct);
+  }
+
+  scrollLeft(){
+    this.widgetsContent.nativeElement.scrollLeft -= 150;
+  }
+
+  scrollRight(){
+    this.widgetsContent.nativeElement.scrollLeft += 150;
   }
 }

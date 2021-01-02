@@ -3,12 +3,12 @@
     @import url('https://fonts.googleapis.com/css2?family=Fondamento&display=swap');
 </style>
 <div class="container-fluid home">
-    <div class="d-flex justify-content-center bt-border-b department-bar">
+    <div class="d-flex justify-content-center department-bar">
         <div *ngFor="let d of messengerService.deps">
-            <button class="ml-1 button1" (click)="selectDepartment(d)">{{ d.name }}</button>
+            <button class="ml-1 department" (click)="selectDepartment(d)">{{ d.name }}</button>
         </div>
     </div>
-    <div class="row my-5 bg-light featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
+    <div class="row my-5 featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
         <span class="featured-tag  box-shadow">Featured</span>
         <div class="d-flex justify-content-center featured-product-inner">
             <div class="featured-product-left">
@@ -35,27 +35,24 @@
         </div>
     </div>
     <span class="featured-tag box-shadow">New Arrivals</span>
-    <div class="row bg-light featured-product">
-        <div class="d-flex justify-content-center featured-product-inner">
+    <!-- <div class="row featured-product">
+        <div class="d-flex justify-content-center wrap featured-product-inner">
             <div class="space-around" *ngFor="let p of products">
                 <app-item [product]="p"></app-item>
             </div>
         </div>
-    </div>
+    </div> -->
+    <div class="scroll-container d-flex justify-content-start">
 
-    <div class="d-flex justify-content-end pt-1">
-        <div class="dropdown show sort-section">
-            <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <!-- <img src="/assets/icons/sort.svg" alt=" " loading="lazy " class="sort-icon"> -->
-                Sort by
-            </span>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <span class="dropdown-item top-nav-logout" (click)="lowToHigh()">Lowest
-                    First</span>
-                <span class="dropdown-item top-nav-logout" (click)="highToLow()">Highest
-                    First</span>
+        <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+
+        <div #widgetsContent class="custom-slider-main">
+            <div class="space-around" *ngFor="let p of products">
+                <app-item [product]="p"></app-item>
             </div>
         </div>
+
+        <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
     </div>
 </div>
 <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast>

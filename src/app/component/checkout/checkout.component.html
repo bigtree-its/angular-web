@@ -1,13 +1,16 @@
 <div class="checkout-page container-fluid">
     <div class="row d-flex justify-content-between container-fluid bt-border-bottom">
         <h4 class="text-dark">Checkout</h4>
-        <button (click)="reviewOrder()" class="ob-btn-fill ob-btn-md">Buy now</button>
+        <button (click)="reviewOrder()" class="ob-btn-fill ob-btn-md">Next</button>
     </div>
-    <hr class="mb-4">
+    <hr class="mb-1">
+    <div *ngIf="isError" class="alert alert-warning banner">
+        <span>{{message}}</span>
+    </div>
     <div class="d-flex justify-content-center  container-fluid mt-5 wrap">
-        <div class="delivery-address-section box-shadow">
+        <div class="delivery-address-section">
             <h5 class="mb-3">Delivery Address</h5>
-            <hr>
+            <hr class="mb-2">
             <div [hidden]="hideAddressForm==true">
                 <form #f="ngForm" (ngSubmit)=(onSubmitAddress(f))>
                     <div class="col mb-3">
@@ -90,19 +93,18 @@
                 </form>
             </div>
             <div *ngIf="hideAddressForm">
-                <div class="d-flex flex-space-between p-1 bt-border-b">
+                <div class="d-flex flex-space-between p-1 mb-2">
                     <strong class="text-muted">Choose a delivery address:</strong>
-                    <img src="/assets/icons/plus.png" class="icon bt-border mr-1 border-box px-2 py-1 rounded-lg" width="40px" height="30px" (click)="addNewAddress()">
+                    <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="addNewAddress()">Add</button>
                 </div>
-                <div class="address-section-item" *ngFor="let a of addressList">
+                <div class="address-section-item bg-light" *ngFor="let a of addressList" [class.text-success]="a.selected">
                     <div class="d-flex justify-content-start align-items-center">
-                        <label class="bt-check">
+                        <!-- <label class="bt-check">
                             <input type="checkbox"
                             (change)="selectAddress(a, $event)"
                             [checked]="a.selected">
                             <span class="tick"></span>
-                        </label>
-                        <!-- <fa-icon class="align-self-center" [icon]="faSelected" [hidden]="!a.selected" [class.text-success]="a.selected"></fa-icon> -->
+                        </label> -->
                         <div class="address-card ml-3">
                             <div>
                                 <span>{{ a.firstName }} {{a.lastName }}</span>
@@ -116,8 +118,9 @@
                     </div>
                     <hr class="mb-1">
                     <div class="d-flex justify-content-center checkout-address-action-div">
-                        <button type="button" class="btn btn-primary btn-sm ml-1" (click)="editAddress(a)">Edit</button>
-                        <button type="button" class="btn btn-danger btn-sm ml-1" (click)="removeAddress(a)">Remove</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="selectAddress(a)">Deliver to this address</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="editAddress(a)">Edit</button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="removeAddress(a)">Remove</button>
                     </div>
                 </div>
             </div>
@@ -134,8 +137,9 @@
                 </form>
             </div>
         </div>
-        <div class="payment-section  box-shadow">
+        <div class="payment-section">
             <h5 class="mb-3">Payment Method</h5>
+            <hr class="mb-2">
             <div [hidden]="hidePaymentForm==true">
                 <form #paymentForm="ngForm" (ngSubmit)=(onSubmitPaymentMethod(paymentForm))>
                     <div class="custom-control custom-radio">
@@ -203,13 +207,13 @@
                     </div>
                 </form>
             </div>
-            <hr class="mb-4">
+
             <div *ngIf="hidePaymentForm">
-                <div class="d-flex justify-content-between p-2">
+                <div class="d-flex flex-space-between p-1 mb-2">
                     <strong class="text-muted">Choose a payment method</strong>
-                    <img src="/assets/icons/plus.png" class="icon bt-border mr-1 border-box px-2 py-1 rounded-lg" width="40px" height="30px" (click)="addNewPaymentMethod()">
+                    <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="addNewPaymentMethod()">Add</button>
                 </div>
-                <div class="d-flex justify-content-between payment-card bt-border" *ngFor="let p of paymentMethodList" [class.text-success]="p.selected">
+                <div class="d-flex justify-content-between payment-card bt-border bg-light" *ngFor="let p of paymentMethodList" [class.text-success]="p.selected">
                     <div class="d-flex justify-content-start">
                         <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
                         <!-- Payment Item -->
@@ -224,13 +228,13 @@
                             </div>
                             <div class="d-flex justify-content-start mt-3 btn-group-justified">
                                 <div class="btn-group ">
-                                    <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="usePaymentMethod(p)">Use this card</button>
+                                    <button class="btn btn-outline-secondary btn-sm mr-1" (click)="usePaymentMethod(p)">Use this card</button>
                                 </div>
                                 <div class="btn-group">
-                                    <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="editPaymentMethod(p)">Edit details</button>
+                                    <button class="btn btn-outline-secondary btn-sm mr-1" (click)="editPaymentMethod(p)">Edit details</button>
                                 </div>
                                 <div class="btn-group">
-                                    <button class="btn btn-outline-secondary btn-sm mr-1 box-shadow" (click)="removePaymentMethod(p)">Remove this</button>
+                                    <button class="btn btn-outline-secondary btn-sm mr-1" (click)="removePaymentMethod(p)">Remove this</button>
                                 </div>
                             </div>
                         </div>
@@ -271,8 +275,5 @@
                 </div>
             </form>
         </div>
-    </div>
-    <div *ngIf="isError" class="alert alert-warning banner">
-        <span>{{message}}</span>
     </div>
 </div>

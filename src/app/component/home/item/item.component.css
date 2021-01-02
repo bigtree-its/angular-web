@@ -3,8 +3,7 @@
     background-color: #fff;
     box-sizing: border-box;
     border-radius: 12px;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px 6px 10px;
 }
 
 .product-item:hover {
@@ -14,14 +13,12 @@
 .p-item {
     max-width: 272px;
     min-width: 198px;
-    height: 324px;
+    height: 377px;
     width: 250px;
     float: left;
     text-align: center;
     position: relative;
-    padding: 0 2px 0 0 !important;
-    margin-right: 6px;
-    margin-bottom: 6px;
+    border: 1px solid salmon;
 }
 
 .product-card-image-section {
@@ -39,3 +36,19 @@
     cursor: pointer;
     border-radius: 12px;
 }
+
+.p-item-name {
+    font-size: 13px!important;
+    font-weight: bold;
+}
+
+
+/* .p-item-name {
+    text-align: left;
+    font-size: 13px!important;
+    color: #111 !important;
+    font-weight: 400!important;
+    font-style: normal!important;
+    text-transform: none!important;
+    text-decoration: none!important;
+} */

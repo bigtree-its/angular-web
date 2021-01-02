@@ -5,9 +5,6 @@ import { Brand } from './product.model';
 export class Basket {
    public items: BasketItem[];
    public subTotal: number;
-   public tax: number;
-   public deliveryCost: number;
-   public discount: number;
    public address: Address;
    public paymentCard: PaymentCard;
 }

@@ -55,7 +55,6 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private router: Router,
-    private messengerService: MessengerService,
     private basketService: BasketService,
     private accountService: AccountService
   ) {
@@ -161,10 +160,9 @@ export class CheckoutComponent implements OnInit {
   addNewAddress() {
     this.hideAddressForm = false;
     this.address = new Address();
-
   }
 
-  selectAddress(a: Address, e: any) {
+  selectAddressCheckBox(a: Address, e: any) {
     for (let i = 0; i < this.addressList.length; i++) {
       let add: Address = this.addressList[i];
       if (this.addressList[i].postcode === a.postcode) {
@@ -173,13 +171,25 @@ export class CheckoutComponent implements OnInit {
         add.selected = false;
       }
     }
-
     this.addressList.forEach(a => {
       if (a.selected) {
         this.basket.address = a;
       }
     });
 
+  }
+
+  selectAddress(a: Address) {
+    for (let i = 0; i < this.addressList.length; i++) {
+      let add: Address = this.addressList[i];
+      if (add.postcode === a.postcode) {
+        add.selected = true;
+        this.basket.address = add;
+        this.basketService.updateBasket(this.basket);
+      } else {
+        add.selected = false;
+      }
+    }
   }
   editAddress(a: Address) {
     this.address = a;
@@ -233,6 +243,7 @@ export class CheckoutComponent implements OnInit {
       if (pay.cardNumber === p.cardNumber) {
         pay.selected = true;
         this.basket.paymentCard = pay;
+        this.basketService.updateBasket(this.basket);
       } else {
         pay.selected = false;
       }
@@ -247,8 +258,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   private updatePaymentList() {
-    console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
-    console.log('Form card: '+ JSON.stringify(this.card));
     var card: PaymentCard = new PaymentCard();
       if ( this.card._id !== undefined && this.card._id !== null){
         let existing: PaymentCard = this.paymentMethodList.find( (card) => card._id === this.card._id);
