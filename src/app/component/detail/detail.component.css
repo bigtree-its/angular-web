@@ -16,6 +16,19 @@
     clear: both;
 }
 
+.write-review-section {
+    background: #ebf3ff;
+    border-radius: 3px;
+    padding: 15px;
+    clear: both;
+}
+
+.review-response-section {
+    margin-top: 5px;
+    padding: 8px;
+    border-radius: 6px;
+}
+
 .product-review-section {
     background: #ebf3ff;
     border: 1px solid #ebf3ff;

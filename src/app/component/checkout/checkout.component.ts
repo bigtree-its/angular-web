@@ -81,12 +81,25 @@ export class CheckoutComponent implements OnInit {
         this.addressList = this.user.addresses;
         if ( this.addressList !== undefined && this.addressList.length > 0){
           this.hideAddressForm = true;
+          if ( this.addressList.length == 1){
+            var add: Address = this.addressList[0];
+            add.selected = true;
+            this.basket.address = add;
+            this.basketService.updateBasket(this.basket);
+          }
+        }else{
+          this.addNewAddress();
         }
 
         this.paymentMethodList = this.user.paymentCards;
-        console.log('Payment Methods :'+ JSON.stringify(this.paymentMethodList));
         if ( this.paymentMethodList !== undefined && this.paymentMethodList.length > 0){
           this.hidePaymentForm = true;
+          if ( this.paymentMethodList.length == 1){
+            var pay: PaymentCard = this.paymentMethodList[0];
+            pay.selected = true;
+            this.basket.paymentCard = pay;
+            this.basketService.updateBasket(this.basket);
+          }
         }else{
           this.addNewPaymentMethod();
         }
@@ -270,6 +283,7 @@ export class CheckoutComponent implements OnInit {
           existing.expiryYear= this.card.expiryYear;
           existing.cvv= this.card.cvv;
           existing.cardType = CardType.Debit;
+          this.usePaymentMethod(existing);
         }
       } else{
       /** New Card */
@@ -280,14 +294,11 @@ export class CheckoutComponent implements OnInit {
       card.cvv= this.card.cvv;
       card.cardType = CardType.Debit;
       this.paymentMethodList.push(card);
+      this.usePaymentMethod(card);
     }
     
     /** Debug Only */
-    console.log('Form card: '+ JSON.stringify(this.card));
-    console.log('Added card: '+ JSON.stringify(card));
-    
     this.accountService.userValue.paymentCards = this.paymentMethodList;
-    console.log('Card List: '+ JSON.stringify(this.accountService.userValue.paymentCards));
     this.updateCurrentUser();
 
     /** Reset the form Model */

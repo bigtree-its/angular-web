@@ -8,8 +8,9 @@
             <button class="ml-1 department" (click)="selectDepartment(d)">{{ d.name }}</button>
         </div>
     </div>
-    <div class="row my-5 featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
-        <span class="featured-tag  box-shadow">Featured</span>
+    <hr>
+    <div class="row my-3 featured-product" *ngIf="featuredProduct !== undefined && featuredProduct !== null">
+        <span class="featured-tag  box-shadow">Sponsored</span>
         <div class="d-flex justify-content-center featured-product-inner">
             <div class="featured-product-left">
                 <span class="featured-product-name" (click)="selectProduct()">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
@@ -25,7 +26,7 @@
                     </div>
                 </div>
                 <div class="d-block">
-                    <button class="btn ob-btn-fill ob-btn-md" (click)="addToCart()">Add
+                    <button class="btn btn-warning btn-md" (click)="addToCart()">Add
                         to Basket</button>
                 </div>
             </div>
@@ -34,25 +35,17 @@
             </div>
         </div>
     </div>
-    <span class="featured-tag box-shadow">New Arrivals</span>
-    <!-- <div class="row featured-product">
-        <div class="d-flex justify-content-center wrap featured-product-inner">
-            <div class="space-around" *ngFor="let p of products">
-                <app-item [product]="p"></app-item>
-            </div>
-        </div>
-    </div> -->
+    <h3 class="ml-3">New Arrivals</h3>
+    <hr>
     <div class="scroll-container d-flex justify-content-start">
-
         <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
-
         <div #widgetsContent class="custom-slider-main">
             <div class="space-around" *ngFor="let p of products">
                 <app-item [product]="p"></app-item>
             </div>
         </div>
-
         <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
     </div>
+    <hr>
 </div>
 <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast>

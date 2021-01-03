@@ -10,12 +10,13 @@ html,
 body {
     height: 100%;
     margin: 0;
+    padding: 0;
     /* position: absolute; */
     /* top: 0; */
     /* bottom: 0; */
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5rem;
+    /* font-size: 1rem; */
+    /* font-weight: 400; */
+    /* line-height: 1.5rem; */
     color: #111;
     text-align: left;
     background-color: #fff;
@@ -43,6 +44,10 @@ input:focus,
 textarea:focus,
 select:focus {
     outline: none;
+}
+
+input {
+    border: 1px solid #b3b3b3;
 }
 
 .color-yellow {
@@ -343,6 +348,10 @@ ul {
 
 .bt-border-l {
     border-left: 1px solid #ececec;
+}
+
+.ob-text-field {
+    border: 1px solid #b3b3b3;
 }
 
 .bt-input,

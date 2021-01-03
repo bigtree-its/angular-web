@@ -32,25 +32,6 @@ export interface QuestionAnswer{
     question: string,
     answers: string[]
 }
-export interface Review{
-    question: string,
-    title: string,
-    content: string,
-    starts:number,
-    userEmail: string,
-    userName: string,
-    date: Date
-}
-
-export interface Review{
-    _id: string,
-    title: string,
-    content: string,
-    starts:number,
-    userEmail: string,
-    userName: string,
-    date: Date
-}
 
 export interface Brand{
     _id: string,

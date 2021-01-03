@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel, Review } from 'src/app/model/product.model';
+import { ProductModel } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
@@ -10,6 +10,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/service/account.service';
 import { User } from 'src/app/model/user';
+import { ReviewService } from 'src/app/service/review.service';
+import { Review } from 'src/app/model/review';
+import { first } from 'rxjs/operators';
+import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 
 @Component({
   selector: 'app-detail',
@@ -25,8 +29,13 @@ export class DetailComponent implements OnInit {
 
   /** Review Form */
   reviewForm: FormGroup;
-  submittedReview: boolean;
-
+  submittedReview: boolean = false;
+  submittedResponse: string = "";
+  openReviewForm: boolean = false;
+  rating: number = 0;
+  reviewResponse: ServerResponse = new ServerResponse();
+  errorResponse:ResponseType = ResponseType.Error;
+  successResponse:ResponseType = ResponseType.Success;
 
   faPlus = faPlus;
   faMinus = faMinus;
@@ -42,6 +51,7 @@ export class DetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private accountService: AccountService,
+    private reviewService: ReviewService,
     private formBuilder: FormBuilder,
     private basketService: BasketService,
     private _location: Location
@@ -49,12 +59,12 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      question: ['', Validators.required]
+      question: ['']
     });
 
     this.reviewForm = this.formBuilder.group({
       headline: [''],
-      content: ['', Validators.required]
+      content: ['']
     });
 
     this.activatedRoute.params.subscribe(params => {
@@ -66,7 +76,7 @@ export class DetailComponent implements OnInit {
         this.product.fraction = this.getFraction();
         this.mainPicture = this.product.picture.thumbnail;
       });
-      this.productService.getReviews(productId).subscribe((reviews: Review[]) => {
+      this.reviewService.getReviews(productId).subscribe((reviews: Review[]) => {
         this.reviews = reviews;
       });
     })
@@ -97,6 +107,26 @@ export class DetailComponent implements OnInit {
     this.basketService.addItemToBasket(this.product);
   }
 
+  writeReview(){
+    this.openReviewForm = true;
+    this.submittedReview = false;
+    this.rating = 0;
+    this.reviewFormControls.headline.setValue("");
+    this.reviewFormControls.content.setValue("");
+  }
+
+  cancelReview(){
+    this.openReviewForm = false;
+    this.submittedReview = false;
+    this.rating = 0;
+    this.reviewFormControls.headline.setValue("");
+    this.reviewFormControls.content.setValue("");
+  }
+
+  overallRating(star: number){
+    this.rating = star;
+  }
+
   getFraction(): string {
     var salePrice = String(this.product.salePrice);
     var fraction: string = salePrice.split('.')[1];
@@ -123,8 +153,6 @@ export class DetailComponent implements OnInit {
     this._location.back();
   }
 
-  
-
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
@@ -142,18 +170,42 @@ export class DetailComponent implements OnInit {
     
   }
 
-  onSubmitReview() {
-    this.submittedReview = true;
+  // convenience getter for easy access to form fields
+  get reviewFormControls() { return this.reviewForm.controls; }
 
+  onSubmitReview() {
+    
     // stop here if form is invalid
-    if (this.form.invalid) {
+    if (this.reviewForm.invalid) {
       return;
     }
-    console.log('Question: '+ this.f.question.value);
-    // console.log('Question Email: '+ this.f.email.value);
-
-    this.loading = true;
-    
+    window.alert('Headline: '+ this.reviewFormControls.headline.value)
+    if ( this.reviewFormControls.headline.value === undefined || this.reviewFormControls.headline.value === null || this.reviewFormControls.headline.value === ""){
+      return;
+    }
+    this.submittedReview = true;
+    var review: Review = new Review();
+    review.headline = this.reviewFormControls.headline.value;
+    review.content = this.reviewFormControls.content.value;
+    review.rating = this.rating;
+    review.date = new Date();
+    review.product = this.product._id;
+    review.userEmail = this.accountService.userValue.email;
+    review.userName = this.accountService.userValue.firstName + this.accountService.userValue.lastName;
+    this.reviewService
+    .createReview(review)
+    .pipe(first())
+    .subscribe(
+      (data) => {
+        this.reviewResponse.message = "We are processing your review. This may take several days, so we appreciate your patience. We will notify you when this is complete.";
+        this.reviewResponse.type = ResponseType.Success;
+        this.openReviewForm = false;
+      },
+      (error) => {
+        this.reviewResponse.message = error;
+        this.reviewResponse.type = ResponseType.Error;
+      }
+    );
   }
   setMainPicture(url: String){
     this.mainPicture = url;
