@@ -1,0 +1,21 @@
+.order-confirmation-page {
+    margin-top: 70px;
+    width: 60%;
+    margin: auto;
+}
+
+.order-confirmation-page-header {
+    text-align: center;
+    padding: 0 15px;
+}
+
+.order-confirmation-address {
+    border: 1px solid #e7e9ec;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.order-confirmation-icon {
+    height: 30px;
+    width: 30px;
+}

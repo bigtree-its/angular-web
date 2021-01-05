@@ -6,35 +6,35 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse mt-4" id="navbarTogglerDemo01">
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
                 <img src="/assets/icons/coconut.png" width="30" height="30" class="d-inline-block mb-3" alt="">
                 <strong class="logo-brand-text">Open Basket</strong>
             </a>
         </div>
-        <div class="col-1 top-nav-right-section" *ngIf="isUserLoggedIn()">
-            <div class="dropdown show">
-                <span class="dropdown-toggle profile-name" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="col-1 d-flex justify-content-end account-section" *ngIf="isUserLoggedIn()">
+            <div class="dropdown">
+                <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <fa-icon [icon]="faUser" size="lg" class="account-icon"></fa-icon>
                     <!-- <img src="/assets/icons/top-nav-user-icon.png" alt=""
-                        loading="lazy" class="top-nav-user-icon"> -->
-                        {{userName}}
+                        loading="lazy" class="account-icon"> -->
+                        <!-- {{userName}} -->
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <span class="dropdown-item top-nav-logout" (click)="logout()" *ngIf="isUserLoggedIn() == true">Logout</span>
-                    <span class="dropdown-item top-nav-logout" (click)="login()" *ngIf="isUserLoggedIn() == false">Login</span>
-                    <span class="dropdown-item top-nav-logout" (click)="profile()">Profile</span>
-                    <span class="dropdown-item top-nav-logout" (click)="orders()">Orders</span>
+                    <span class="dropdown-item " (click)="logout()" *ngIf="isUserLoggedIn() == true">Logout</span>
+                    <span class="dropdown-item " (click)="login()" *ngIf="isUserLoggedIn() == false">Login</span>
+                    <span class="dropdown-item " (click)="profile()">Profile</span>
+                    <span class="dropdown-item " (click)="orders()">Orders</span>
                 </div>
             </div>
         </div>
-        <span class="iconify" data-icon="bx-bxl-twitter" data-inline="false"></span>
         <span class="btn btn-sm btn-primary mr-1" *ngIf="isUserLoggedIn() == false" (click)="login()">Sign In</span>
         <span class="btn btn-sm btn-outline-secondary mr-1" *ngIf="isUserLoggedIn() == false" (click)="register()">Sign Up</span>
-        <span class="col-2" routerLink="/basket" class="top-nav-right-section">
-            <img src="/assets/icons/delivery.png" alt="" loading="lazy" class="top-nav-basket-icon
-                mx-2">
-            <span class="text-center top-nav-basket-count">{{ itemCount
-                }}</span>
+        <span class="col-2" routerLink="/basket" class=" d-flex justify-content-end">
+            <fa-icon [icon]="faShoppingBag" size="lg" class="top-nav-basket-icon"></fa-icon>
+            <!-- <img src="/assets/icons/delivery.png" alt="" loading="lazy" class="top-nav-basket-icon
+                mx-2"> -->
+            <span class="text-center top-nav-basket-count">{{ itemCount }}</span>
         </span>
     </nav>
 </div>

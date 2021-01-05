@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MessengerService } from 'src/app/service/messenger.service';
 import { Basket } from 'src/app/model/basket.model';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { ProductService } from 'src/app/service/product.service';
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
@@ -22,7 +20,7 @@ export class HeaderComponent implements OnInit {
   itemCount: number = 0;
   basketTotal: number = 0;
 
-  constructor(private messengerService: MessengerService,
+  constructor(
     private accountService: AccountService,
     private basketService: BasketService,
     private router: Router) {
