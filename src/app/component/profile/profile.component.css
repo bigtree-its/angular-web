@@ -4,14 +4,10 @@
     padding: 15px;
     border-radius: 3px;
     margin: 10px;
-    background: #ebf3ff;
-    border: 1px solid #ebf3ff;
     clear: both;
 }
 
 .detail-section {
-    background: #ebf3ff;
-    border: 1px solid #ebf3ff;
     clear: both;
     border-radius: 3px;
     padding: 15px;
@@ -27,7 +23,7 @@
     display: flex;
     border: 1px solid rgba(0, 0, 0, .1);
     border-radius: 3px;
-    margin: 5px;
+    margin: 15px 5px;
     padding: 0 10px;
     vertical-align: center;
 }
@@ -44,6 +40,8 @@
 .nav-item:hover {
     background-color: #ebf3ff;
     cursor: pointer;
+    -webkit-box-shadow: 0 12px 12px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 12px 12px 0 rgba(0, 0, 0, .1);
 }
 
 
@@ -59,6 +57,14 @@
     padding: 15px;
 }
 
+
+/** Payment */
+
+.payment-card {
+    margin: 10px;
+    padding: 10px;
+}
+
 .passwordNotMatched {
     font-style: italic;
     color: coral;
@@ -67,4 +73,8 @@
 .result {
     margin-top: 10px;
     padding: 20px;
+}
+
+.ob-text-field {
+    border: 1px solid #b3b3b3;
 }

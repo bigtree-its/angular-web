@@ -1,5 +1,5 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fondamento&family=Waiting+for+the+Sunrise&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
 </style>
 <div class="sticky">
     <nav class="navbar navbar-expand-lg navbar-light">
@@ -8,13 +8,13 @@
         </button>
         <div class="collapse navbar-collapse mt-4" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
-                <img src="/assets/icons/monkey.png" width="30" height="30" class="d-inline-block mb-2" alt="">
-                <strong class="logo-brand-text">CircusMonkey</strong>
+                <img src="/assets/icons/coconut.png" width="30" height="30" class="d-inline-block mb-3" alt="">
+                <strong class="logo-brand-text">Open Basket</strong>
             </a>
         </div>
         <div class="col-1 top-nav-right-section" *ngIf="isUserLoggedIn()">
             <div class="dropdown show">
-                <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="dropdown-toggle profile-name" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <!-- <img src="/assets/icons/top-nav-user-icon.png" alt=""
                         loading="lazy" class="top-nav-user-icon"> -->
                         {{userName}}
@@ -31,7 +31,7 @@
         <span class="btn btn-sm btn-primary mr-1" *ngIf="isUserLoggedIn() == false" (click)="login()">Sign In</span>
         <span class="btn btn-sm btn-outline-secondary mr-1" *ngIf="isUserLoggedIn() == false" (click)="register()">Sign Up</span>
         <span class="col-2" routerLink="/basket" class="top-nav-right-section">
-            <img src="/assets/icons/shopping-bag.png" alt="" loading="lazy" class="top-nav-basket-icon
+            <img src="/assets/icons/delivery.png" alt="" loading="lazy" class="top-nav-basket-icon
                 mx-2">
             <span class="text-center top-nav-basket-count">{{ itemCount
                 }}</span>

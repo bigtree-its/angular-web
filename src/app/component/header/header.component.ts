@@ -33,9 +33,9 @@ export class HeaderComponent implements OnInit {
       this.basket = basket
       console.log('Basket items : ' + basket.items.length);
       this.itemCount = basket.items.length;
-      this.basketTotal = +basket.total.toFixed(2);
+      this.basketTotal = +basket.subTotal.toFixed(2);
     })
-    var user = this.accountService.userObject;
+    var user = this.accountService.userValue;
     if ( user !== undefined && user !== null){
       this.userName = user.firstName + " "+ user.lastName;
     }else{

@@ -49,11 +49,12 @@ export class CheckoutComponent implements OnInit {
   yearsOptions: number[] = [];
   monthsOptions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
   user: User;
+  isError: boolean = false;
+  message: String;
 
   constructor(
     private orderService: OrderService,
     private router: Router,
-    private messengerService: MessengerService,
     private basketService: BasketService,
     private accountService: AccountService
   ) {
@@ -67,7 +68,9 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.showCardSection = true;
-    
+    this.isError = false;
+    this.message = "";
+
     this.basketService.subject$.subscribe(basket => {
       this.basket = basket
     });
@@ -78,12 +81,25 @@ export class CheckoutComponent implements OnInit {
         this.addressList = this.user.addresses;
         if ( this.addressList !== undefined && this.addressList.length > 0){
           this.hideAddressForm = true;
+          if ( this.addressList.length == 1){
+            var add: Address = this.addressList[0];
+            add.selected = true;
+            this.basket.address = add;
+            this.basketService.updateBasket(this.basket);
+          }
+        }else{
+          this.addNewAddress();
         }
 
         this.paymentMethodList = this.user.paymentCards;
-        console.log('Payment Methods :'+ JSON.stringify(this.paymentMethodList));
         if ( this.paymentMethodList !== undefined && this.paymentMethodList.length > 0){
           this.hidePaymentForm = true;
+          if ( this.paymentMethodList.length == 1){
+            var pay: PaymentCard = this.paymentMethodList[0];
+            pay.selected = true;
+            this.basket.paymentCard = pay;
+            this.basketService.updateBasket(this.basket);
+          }
         }else{
           this.addNewPaymentMethod();
         }
@@ -93,7 +109,19 @@ export class CheckoutComponent implements OnInit {
 
 
   reviewOrder() {
-    this.router.navigate(['/review']).then();
+    this.isError = false;
+    this.message = "";
+    if ( this.basket.address === undefined || this.basket.address === null){
+      this.isError = true;
+      this.message = "Select delivery address";
+    }
+    if ( this.basket.paymentCard === undefined || this.basket.paymentCard === null){
+      this.isError = true;
+      this.message = "Select Payment Card";
+    }
+    if (!this.isError){
+      this.router.navigate(['/review']).then();
+    }
   }
 
   onSubmitAddress(f: NgForm) {
@@ -107,13 +135,13 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  
   private updateAddressList() {
-    let existing: Address = this.addressList.find(a => a.postcode === this.address.postcode);
+    let existing: Address = this.addressList.find(
+      (a) => a._id === this.address._id
+    );
     if (!existing) {
       this.addressList.push(this.address);
-    }
-    else {
+    } else {
       existing.firstName = this.address.firstName;
       existing.lastName = this.address.lastName;
       existing.email = this.address.email;
@@ -123,9 +151,9 @@ export class CheckoutComponent implements OnInit {
       existing.city = this.address.city;
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
+      this.accountService.userValue.addresses = this.addressList;
+      this.updateCurrentUser();
     }
-    this.accountService.userValue.addresses = this.addressList;
-    this.updateCurrentUser();
   }
 
   selectType(e: String) {
@@ -145,10 +173,9 @@ export class CheckoutComponent implements OnInit {
   addNewAddress() {
     this.hideAddressForm = false;
     this.address = new Address();
-
   }
 
-  selectAddress(a: Address, e: any) {
+  selectAddressCheckBox(a: Address, e: any) {
     for (let i = 0; i < this.addressList.length; i++) {
       let add: Address = this.addressList[i];
       if (this.addressList[i].postcode === a.postcode) {
@@ -157,13 +184,25 @@ export class CheckoutComponent implements OnInit {
         add.selected = false;
       }
     }
-
     this.addressList.forEach(a => {
       if (a.selected) {
-        this.messengerService.submitBillingAddress(a);
+        this.basket.address = a;
       }
     });
 
+  }
+
+  selectAddress(a: Address) {
+    for (let i = 0; i < this.addressList.length; i++) {
+      let add: Address = this.addressList[i];
+      if (add.postcode === a.postcode) {
+        add.selected = true;
+        this.basket.address = add;
+        this.basketService.updateBasket(this.basket);
+      } else {
+        add.selected = false;
+      }
+    }
   }
   editAddress(a: Address) {
     this.address = a;
@@ -214,8 +253,10 @@ export class CheckoutComponent implements OnInit {
   usePaymentMethod(p: PaymentCard) {
     for (let i = 0; i < this.paymentMethodList.length; i++) {
       let pay: PaymentCard = this.paymentMethodList[i];
-      if (this.paymentMethodList[i].cardNumber === p.cardNumber) {
+      if (pay.cardNumber === p.cardNumber) {
         pay.selected = true;
+        this.basket.paymentCard = pay;
+        this.basketService.updateBasket(this.basket);
       } else {
         pay.selected = false;
       }
@@ -223,7 +264,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmitPaymentMethod(f: NgForm) {
-    console.log('Submitting card: '+ JSON.stringify(this.card));
     if (f.valid){
       this.updatePaymentList();
       this.hidePaymentForm = true;
@@ -231,8 +271,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   private updatePaymentList() {
-    console.log('Card List: '+ JSON.stringify(this.paymentMethodList));
-    console.log('Form card: '+ JSON.stringify(this.card));
     var card: PaymentCard = new PaymentCard();
       if ( this.card._id !== undefined && this.card._id !== null){
         let existing: PaymentCard = this.paymentMethodList.find( (card) => card._id === this.card._id);
@@ -245,6 +283,7 @@ export class CheckoutComponent implements OnInit {
           existing.expiryYear= this.card.expiryYear;
           existing.cvv= this.card.cvv;
           existing.cardType = CardType.Debit;
+          this.usePaymentMethod(existing);
         }
       } else{
       /** New Card */
@@ -255,14 +294,11 @@ export class CheckoutComponent implements OnInit {
       card.cvv= this.card.cvv;
       card.cardType = CardType.Debit;
       this.paymentMethodList.push(card);
+      this.usePaymentMethod(card);
     }
     
     /** Debug Only */
-    console.log('Form card: '+ JSON.stringify(this.card));
-    console.log('Added card: '+ JSON.stringify(card));
-    
     this.accountService.userValue.paymentCards = this.paymentMethodList;
-    console.log('Card List: '+ JSON.stringify(this.accountService.userValue.paymentCards));
     this.updateCurrentUser();
 
     /** Reset the form Model */
@@ -300,33 +336,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   getBasketTotal() {
-    return this.basket.total;
+    return this.basket.subTotal;
   }
 
-  confirmPurchase() {
-    console.log('Confirming order..')
-    var order: Order = new Order();
-    order.date = new Date();
-    order.address = this.address;
-    order.paymentCard = this.card;
-    order.email = this.user.email;
-    order.currency = "GCP";
-    order.subTotal = this.basket.total;
-    order.saleTax = this.basket.total;
-    order.shippingCost = this.basket.total;
-    order.totalCost = this.basket.total;
-    order.expectedDeliveryDate = new Date();
-    var items: OrderItem[] = [];
-    this.basket.items.map(bi => {
-      var item: OrderItem = new OrderItem();
-      item.price = bi.price;
-      item.productId = bi._id;
-      item.productName = bi.name;
-      item.quantity = bi.qty;
-      item.total = bi.price * bi.qty;
-      items.push(item);
-    });
-    order.items = items;
-    this.orderService.placeOrder(order);
-  }
+  
 }

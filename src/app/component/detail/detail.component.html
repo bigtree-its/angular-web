@@ -1,6 +1,6 @@
-<div class="bt-page container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4 class="text-dark mt-3">{{ product.name}}</h4>
+<div *ngIf="product !== undefined && product !== null" class="bt-page
+    container-fluid">
+    <div class="d-flex justify-content-between align-items-center">
         <button (click)="backToResults()" class="btn btn-link">Back to results</button>
     </div>
     <hr class="mb-2">
@@ -11,16 +11,37 @@
             </div>
             <div>
                 <div class="d-inline-block bt-border bt-radius my-1 mr-1">
-                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small " (click)="setMainPicture(product.picture.thumbnail)">
+                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(product.picture.thumbnail)">
                 </div>
                 <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1 mr-1">
                     <img src={{pic}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(pic)">
                 </div>
             </div>
+            <hr>
+            <div class="customer-question-section">
+                <strong>Have a question about this product?</strong>
+                <br>
+                <div *ngIf="user === undefined || user === null">
+                    <p>You need to <a href="/login">login</a> to ask a question</p>
+                </div>
+                <form *ngIf="user !== undefined && user !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <input type="text" formControlName="question" class="form-control" placeholder="When this product available? etc" />
+                    </div>
+                    <div class="form-group">
+                        <button [disabled]="loading" class="btn btn-sm btn-primary px-5">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="margin-10 product-details-section">
+            <h4 class="text-dark mt-3">{{ product.name}}</h4>
             <ul>
-                <li *ngFor="let d of product.description" class="d-inline-block bg-light bt-radius my-1">
+                <li *ngFor="let d of product.description" class="d-inline-block
+                    bg-light bt-radius my-1">
                     <p>
                         {{d}}
                     </p>
@@ -45,7 +66,7 @@
                     </li>
                 </ul>
             </div>
-            <div *ngIf="product.qa.length > 0">
+            <div *ngIf="product.qa.length> 0">
                 <br>
                 <h4 class="my-1">Questions & Answers</h4>
                 <br>
@@ -55,50 +76,108 @@
                     </li>
                 </ul>
             </div>
-
-            <!-- <div *ngIf="product.reviews"> -->
+            <div *ngIf="product.attributes.length> 0">
+                <br>
+                <h4 class="my-1">Product Information</h4>
+                <br>
+                <ul>
+                    <li *ngFor="let att of product.attributes" class="bg-light
+                        my-1">
+                        <strong>{{att.name}}</strong> : <span>
+                            {{att.value}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
 
         </div>
         <div class="bt-box margin-10 details-right-column">
+
+            <!-- Price Section -->
             <div class="mb-3 product-price-section">
                 <strong>Today's Price: </strong>
                 <div class="d-flex justify-content-start">
                     <div class="amount-section px-1 py-2">
                         <span class="price-currency">£</span>
-                        <span class="price">{{ getAmount() }}</span>
-                        <span class="price-fraction">{{ getFraction() }}</span>
+                        <span class="price">{{ product.amount }}</span>
+                        <span class="price-fraction">{{ product.fraction}}</span>
                     </div>
                 </div>
                 <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
-                {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
+                        {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
                 <div class="d-block d-flex justify-content-center my-5">
-                    <button class="btn btn-primary btn-md" (click)="addToCart()">Add
-                    to Basket</button>
+                    <button class="btn btn-warning btn-md" (click)="addToCart()">Add
+                            to Basket</button>
+                </div>
+            </div>
+
+            <!-- Review Section -->
+            <div class="write-review-section bt-border bg-light mb-3">
+                <div *ngIf="(user === undefined || user === null); then thenBlock else elseBlock"></div>
+                <ng-template #thenBlock>
+                    <span>You need to <a href="/login">login</a> to write a review</span>
+                </ng-template>
+                <ng-template #elseBlock>
+                    <div class="d-flex justify-content-between" *ngIf="openReviewForm==false">
+                        <span>Want to review ?</span>
+                        <button class="btn btn-primary btn-sm" (click)="writeReview()">Write Review</button>
+                    </div>
+                </ng-template>
+                <form *ngIf="openReviewForm===true" [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()" novalidate>
+                    <strong>Overall rating</strong>
+                    <div>
+                        <fa-icon [icon]="faStar" size="md" [class.star-active]="rating>0" [class.star-muted]="rating < 1" (click)="overallRating(1)"></fa-icon>
+                        <fa-icon [icon]="faStar" size="md" [class.star-active]="rating>1" [class.star-muted]="rating < 2" (click)="overallRating(2)"></fa-icon>
+                        <fa-icon [icon]="faStar" size="md" [class.star-active]="rating>2" [class.star-muted]="rating < 3" (click)="overallRating(3)"></fa-icon>
+                        <fa-icon [icon]="faStar" size="md" [class.star-active]="rating>3" [class.star-muted]="rating < 4" (click)="overallRating(4)"></fa-icon>
+                        <fa-icon [icon]="faStar" size="md" [class.star-active]="rating>4" [class.star-muted]="rating < 5" (click)="overallRating(5)"></fa-icon>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <strong for="headline">Add a headline</strong>
+                        <input type="text" formControlName="headline" class="form-control" placeholder="What's your thought on this?" />
+                        <div *ngIf=" reviewFormControls.headline.value === undefined || reviewFormControls.headline.value.length === 0" class="invalid-feedback">Password is required
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <strong for="content">Add a written review</strong>
+                        <textarea formControlName="content" class="form-control" placeholder="What did you like or dislike?" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex justify-content-start">
+                            <button [disabled]="loading" class="btn btn-sm btn-primary px-1 mx-2">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Submit
+                            </button>
+                            <button class="btn btn-sm btn-secondary px-1" (click)="cancelReview()">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <div *ngIf="submittedReview" class="review-response-section" [class.alert-success]="reviewResponse.type === successResponse" [class.alert-warning]="reviewResponse.type === errorResponse">
+                    <span>{{ reviewResponse.message}}</span>
                 </div>
             </div>
             <div class="mb-3 product-review-section">
-                <br>
                 <strong>Reviews</strong><span class="muted ml-3">{{reviews.length}} reviews</span>
                 <br>
                 <div *ngIf="reviews === undefined || reviews.length === 0">
                     <span>No Reviews Yet</span>
                 </div>
-                <div *ngIf="reviews !== undefined && reviews.length > 0">
+                <div *ngIf="reviews !== undefined && reviews.length> 0">
                     <br>
                     <div *ngFor="let r of reviews" class="review-box">
                         <div>
-                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                            <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                            <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
+                            <fa-icon [icon]="faStar" size="md" [class.star-active]="r.rating>0" [class.star-muted]="r.rating < 1" (click)="overallRating(1)"></fa-icon>
+                            <fa-icon [icon]="faStar" size="md" [class.star-active]="r.rating>1" [class.star-muted]="r.rating < 2" (click)="overallRating(2)"></fa-icon>
+                            <fa-icon [icon]="faStar" size="md" [class.star-active]="r.rating>2" [class.star-muted]="r.rating < 3" (click)="overallRating(3)"></fa-icon>
+                            <fa-icon [icon]="faStar" size="md" [class.star-active]="r.rating>3" [class.star-muted]="r.rating < 4" (click)="overallRating(4)"></fa-icon>
+                            <fa-icon [icon]="faStar" size="md" [class.star-active]="r.rating>4" [class.star-muted]="r.rating < 5" (click)="overallRating(5)"></fa-icon>
                         </div>
-                        <div class="d-flex justify-content-start">
-                            <strong class="text-dark">{{(r.userName === undefined || r.userName === null)? "Anonymous" : r.userName}}</strong>
-                            <span class="text-muted ml-2 font-italic ">{{r.date | dateAgo }}</span>
-                        </div>
+                        <strong class="text-dark">{{(r.userName ===undefined || r.userName === null)?"Anonymous" : r.userName}}</strong>
                         <br>
-                        <strong class="text-dark">{{r.title}}</strong>
+                        <span class="text-muted">{{r.date| dateAgo }}</span>
+                        <br>
+                        <strong class="text-dark">{{r.headline}}</strong>
                         <br>
                         <p>
                             {{r.content}}

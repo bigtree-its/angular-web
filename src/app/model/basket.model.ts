@@ -1,8 +1,12 @@
+import { Address } from './address';
+import { PaymentCard } from './payment-card';
 import { Brand } from './product.model';
 
 export class Basket {
    public items: BasketItem[];
-   public total: number;
+   public subTotal: number;
+   public address: Address;
+   public paymentCard: PaymentCard;
 }
 
 

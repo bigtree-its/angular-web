@@ -1,15 +1,25 @@
+.sticky {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #f7f7f7;
+    transition: background-color 1s ease 0s;
+}
+
 .logo-brand-text {
-    font-size: 25px;
+    font-size: 30px;
     line-height: 25px;
-    font-weight: 700;
-    text-decoration: none;
-    font-family: 'Fondamento', cursive;
-    /* font-family: 'Waiting for the Sunrise', cursive; */
-    text-shadow: 2px 2px #fefefe;
+    font-family: 'Kaushan Script', cursive;
+    /* font-weight: lighter; */
+    /* font-weight: 700; */
+    /* text-decoration: none; */
+    /* text-shadow: 2px 2px rgb(189, 186, 186); */
     /* color: #1d46ce; */
-    border-radius: 12px;
-    padding: 0 20px 0 1px;
-    margin-top: 15px;
+    /* border-radius: 12px; */
+    padding: 5px 20px 0 0;
     /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
     /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
 }
@@ -27,8 +37,11 @@
 }
 
 .top-nav-basket-icon {
-    height: 35px;
-    width: 35px;
-    margin-bottom: 9px;
-    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    margin: 5px 5px 9px 0;
+}
+
+.profile-name {
+    font-size: medium;
 }

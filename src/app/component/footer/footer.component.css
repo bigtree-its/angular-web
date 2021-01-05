@@ -1,0 +1,22 @@
+.sticky-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 5px 10px;
+    color: #111;
+    text-align: center;
+    background-color: rgb(212, 212, 212);
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 10px;
+    color: #111;
+    text-align: center;
+    background-color: #f8fafd;
+    font-size: small;
+}

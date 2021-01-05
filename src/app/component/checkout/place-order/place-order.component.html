@@ -1,21 +1,19 @@
-<div class="review-order-page">
-    <div>
-        <div class="order-confirmation-address px-3">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="text-dark">Delivery Address</h5>
-                <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editDeliveryAddress()">Change</button>
+<div class="review-order-page d-flex justify-content-center wrap">
+    <!-- <div class="details-section">
+        <div class="d-flex justify-content-between align-items-center mb-3 order-confirmation-address ">
+            <h5 class="text-dark">Delivery Address</h5>
+            <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editDeliveryAddress()">Change</button>
+        </div>
+        <hr class="mb-4">
+        <div class="d-flex flex-column">
+            <div>
+                <span>{{ address.firstName }} </span> <span>{{ address.lastName }}</span>
             </div>
-            <hr class="mb-4">
-            <div class="d-flex flex-column">
-                <div>
-                    <span>{{ address.firstName }} </span> <span>{{ address.lastName }}</span>
-                </div>
-                <span>{{ address.lineNumber1 }}</span>
-                <span>{{ address.lineNumber2 }}</span>
-                <span>{{ address.city }}</span>
-                <span>{{ address.country }}</span>
-                <span>{{ address.postcode }}</span>
-            </div>
+            <span>{{ address.lineNumber1 }}</span>
+            <span>{{ address.lineNumber2 }}</span>
+            <span>{{ address.city }}</span>
+            <span>{{ address.country }}</span>
+            <span>{{ address.postcode }}</span>
         </div>
         <div class="order-confirmation-payment px-3 mt-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -39,13 +37,8 @@
                 </div>
             </div>
         </div>
-        <div class="confirm-order-button-section">
-            <button class="bt-btn-primary mb-2" type="submit" (click)="confirmPurchase()">Confirm Purchase</button>
-            <small class="text-muted">By selecting the button above, you agree to the Terms of Sale.</small>
-        </div>
     </div>
-    <div class="mx-2"></div>
-    <div class="order-confirmation-items">
+    <div class="bt-box margin-10">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h5 class="text-dark">Basket Summary</h5>
             <span class="btn btn-sm btn-outline-secondary">{{ basket.items.length }} items</span>
@@ -76,6 +69,120 @@
             </div>
         </form>
     </div>
+    <div class="confirm-order-button-section">
+        <button class="bt-btn-primary mb-2" type="submit" (click)="confirmPurchase()">Confirm Purchase</button>
+        <small class="text-muted">By selecting the button above, you agree to the Terms of Sale.</small>
+    </div> -->
 
+    <div class="details-section">
+        <div class="order-confirmation-payment mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-dark">Delivery Address</h5>
+                <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editDeliveryAddress()">Change</button>
+            </div>
+            <hr class="mb-4">
+            <div class="address-card bg-light">
+                <div class="d-flex flex-column">
+                    <div>
+                        <span>{{ address.firstName }} </span> <span>{{ address.lastName }}</span>
+                    </div>
+                    <span>{{ address.lineNumber1 }}</span>
+                    <span>{{ address.lineNumber2 }}</span>
+                    <span>{{ address.city }}</span>
+                    <span>{{ address.country }}</span>
+                    <span>{{ address.postcode }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="order-confirmation-payment mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-dark">Payment Method</h5>
+                <button type="button" class="btn btn-outline-secondary align-self-center btn-sm" (click)="editPaymentMethod()">Change</button>
+            </div>
+            <hr class="mb-4">
+            <div class="credit-card bg-light">
+                <div class="d-flex flex-row-reverse ">
+                    <span class="self-align-end mr-3">Card</span>
+                </div>
+                <div class="d-flex mt-5">
+                    <div class="d-flex card-number-section">
+                        <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
+                        <span class="mr-5 align-self-center pl-2">{{ getMaskedCardNumber() }}</span>
+                    </div>
+                </div>
+                <div class="d-flex ml-3 mt-5">
+                    <span class="mr-2">{{ paymentCard.nameOnCard}}</span>
+                    <span class="mr-5 align-self-center pl-3">{{ paymentCard.expiryMonth}}/{{paymentCard.expiryYear}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="details-section  mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="text-dark">Basket Summary</h5>
+            <span class="btn btn-sm btn-outline-secondary">{{ basket.items.length }} items</span>
+        </div>
+        <hr class="mb-4">
+        <app-checkout-item [item]="item" *ngFor="let item of basket.items"></app-checkout-item>
+        <hr class="mb-4">
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                </div>
+                <span class="text-success">-£5</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Total </span>
+                <strong>{{getBasketTotal() | currency: 'GBP'}}</strong>
+            </li>
+        </ul>
 
+        <form class="card p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Promo code">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="details-section">
+        <div class="confirm-order-button-section">
+            <button class="btn btn-warning btn-lg mb-2" type="submit" (click)="confirmPurchase()">Confirm Purchase</button>
+            <small class="text-muted">By selecting the button above, you agree to the Terms of Sale.</small>
+            <div class="order-summary-section mt-1">
+                <strong class="py-1">Order Summary</strong>
+                <div class="d-flex justify-content-between">
+                    <span>Items: </span>
+                    <span>{{basket.subTotal | currency: 'GBP'}}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Tax: </span>
+                    <span>{{order.saleTax  | currency: 'GBP'}}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span>Delivery fee: </span>
+                    <span>{{order.shippingCost  | currency: 'GBP'}}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <span>Discount: </span>
+                    <span>{{order.discount  | currency: 'GBP'}}</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Order Total: </strong>
+                    <strong>{{order.totalCost  | currency: 'GBP'}}</strong>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <small class="text-muted">You've saved today:</small>
+                    <strong>{{order.discount | currency: 'GBP'}}</strong>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

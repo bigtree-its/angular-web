@@ -7,9 +7,12 @@ export interface ProductModel{
     slug: string,
     description: string[],
     qa: NameValue[],
+    attributes: Attribute[],
     nutritionalInformation: NameValue[],
     stock: number,
     salePrice: number,
+    amount: string,
+    fraction: string,
     rating: number,
     reviews: number,
     storage: string,
@@ -22,14 +25,12 @@ export interface Picture{
     additional:string[]
 }
 
-export interface Review{
-    _id: string,
-    title: string,
-    content: string,
-    starts:number,
-    userEmail: string,
-    userName: string,
-    date: Date
+export interface QuestionAnswer{
+    product: string,
+    email: string,
+    username: string,
+    question: string,
+    answers: string[]
 }
 
 export interface Brand{
@@ -41,6 +42,11 @@ export interface NameValue{
     _id: string,
     name: string
     value: string
+}
+export interface  Attribute {
+    _id: String,
+    name: String,
+    value: [String]
 }
 
 export interface Category{

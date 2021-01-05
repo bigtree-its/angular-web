@@ -1,11 +1,10 @@
 .create-account-page {
-    margin-top: 70px;
     padding: 30px;
     border-radius: 5px;
-    width: 40%;
-    background: #ebf3ff;
-    border: 1px solid #ebf3ff;
-    clear: both;
+    width: 600px;
+    height: 650px;
+    background-color: #f7f7f7;
+    margin: 100px auto;
 }
 
 .logo {
@@ -15,4 +14,8 @@
     text-align: center;
     align-items: center;
     display: block;
+}
+
+.ob-text-field {
+    border: 1px solid #b3b3b3;
 }

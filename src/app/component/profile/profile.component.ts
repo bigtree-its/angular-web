@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Address } from 'src/app/model/address';
-import { PaymentCard } from 'src/app/model/payment-card';
+import { CardType, PaymentCard } from 'src/app/model/payment-card';
 import { User } from 'src/app/model/user';
 import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
@@ -49,10 +49,10 @@ export class ProfileComponent implements OnInit {
   addressList: Address[] = [];
 
   /** Payments */
-  hidePaymentSection: boolean;
   hidePaymentForm: boolean;
-  paymentCard: PaymentCard;
+  paymentCard: PaymentCard = new PaymentCard();;
   paymentCardList: PaymentCard[] = [];
+  type: String = 'Credit';
 
   /** Display Controls */
   displayAboutYouModule: boolean = true;
@@ -63,7 +63,6 @@ export class ProfileComponent implements OnInit {
 
   /** Change Flag */
   changeMadeOnAddress: boolean = false;
-  changeMadeOnPaymentCards: boolean = false;
   changeMadeOnPersonalDetails: boolean = false;
   changeMadeOnSecurityDetails: boolean = false;
 
@@ -78,6 +77,7 @@ export class ProfileComponent implements OnInit {
       this.addressList = this.accountService.userValue.addresses;
       this.paymentCardList = this.accountService.userValue.paymentCards;
       console.log('Address list for user ' + JSON.stringify(this.addressList));
+      console.log('Payment Card list for user ' + JSON.stringify(this.paymentCardList));
       if (this.addressList === undefined || this.addressList.length == 0) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
@@ -98,7 +98,6 @@ export class ProfileComponent implements OnInit {
     this.showAboutYouModule();
     this.saveChangesEnabled = true;
     this.changeMadeOnAddress = false;
-    this.changeMadeOnPaymentCards = false;
     this.changeMadeOnPersonalDetails = false;
     this.saveChangesEnabled = false;
     this.isError = false;
@@ -141,6 +140,11 @@ export class ProfileComponent implements OnInit {
     this.displayOrdersModule = false;
     this.displaySecurityModule = false;
     this.saveChangesEnabled = true;
+    if (this.paymentCardList === undefined || this.paymentCardList.length == 0) {
+      this.hidePaymentForm = false;
+    } else {
+      this.hidePaymentForm = true;
+    }
   }
   showOrdersModule() {
     this.moduleName = 'Your Orders';
@@ -162,9 +166,11 @@ export class ProfileComponent implements OnInit {
     if (personalDetailsForm.invalid) {
       return;
     }
-    this.changeMadeOnPersonalDetails = true;
-    this.isChangeMade = true;
-    console.log('Updated user details are : ' + JSON.stringify(this.user));
+    this.accountService.userValue.email = this.user.email;
+    this.accountService.userValue.firstName = this.user.firstName;
+    this.accountService.userValue.lastName = this.user.lastName;
+    this.accountService.userValue.mobile = this.user.mobile;
+    this.updateCurrentUser();
   }
 
   onSubmitChangePassword() {
@@ -247,7 +253,8 @@ export class ProfileComponent implements OnInit {
     for (let i = 0; i < this.addressList.length; i++) {
       if (this.addressList[i]._id === address._id) {
         this.addressList.splice(i, 1);
-        this.changeMadeOnAddress = true;
+        this.accountService.userValue.addresses = this.addressList;
+        this.updateCurrentUser();
         break;
       }
     }
@@ -266,6 +273,8 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+  
+
   private updateAddressList() {
     let existing: Address = this.addressList.find(
       (a) => a._id === this.address._id
@@ -282,44 +291,112 @@ export class ProfileComponent implements OnInit {
       existing.city = this.address.city;
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
-      console.log('Updated address: ' + JSON.stringify(existing));
+      this.accountService.userValue.addresses = this.addressList;
+      this.updateCurrentUser();
     }
   }
 
-  openPaymentCards() {}
-  editPaymentCard(card: PaymentCard) {}
-  removePaymentCard(card: PaymentCard) {}
+  addNewPaymentMethod() {
+    this.hidePaymentForm = false;
+    this.paymentCard = new PaymentCard();
+  }
+
+  cancelPaymentForm() {
+    this.hidePaymentForm = true;
+    this.paymentCard = new PaymentCard();
+  }
+
+
+  editPaymentMethod(p: PaymentCard) {
+    this.hidePaymentForm = false;
+    this.paymentCard = p;
+  }
+
+  removePaymentMethod(p: PaymentCard) {
+    for (let i = 0; i < this.paymentCardList.length; i++) {
+      if (this.paymentCardList[i].cardNumber === p.cardNumber) {
+        this.paymentCardList.splice(i, 1);
+      }
+    }
+    this.accountService.userValue.paymentCards = this.paymentCardList;
+    console.log(`Payment cards `+ JSON.stringify(this.paymentCardList));
+    this.updateCurrentUser();
+  }
+
+  usePaymentMethod(p: PaymentCard) {
+    for (let i = 0; i < this.paymentCardList.length; i++) {
+      let pay: PaymentCard = this.paymentCardList[i];
+      if (this.paymentCardList[i].cardNumber === p.cardNumber) {
+        pay.selected = true;
+      } else {
+        pay.selected = false;
+      }
+    }
+  }
+
+  onSubmitPaymentMethod(f: NgForm) {
+    console.log('Submitting card: '+ JSON.stringify(this.paymentCard));
+    if (f.valid){
+      this.updatePaymentList();
+      this.hidePaymentForm = true;
+    }
+  }
+
+
+  selectType(e: String) {
+    this.type = e;
+    // this.card.cardType = this.type;
+    
+  }
+
+  private updatePaymentList() {
+    console.log('Card List: '+ JSON.stringify(this.paymentCardList));
+    console.log('Form card: '+ JSON.stringify(this.paymentCard));
+    var card: PaymentCard = new PaymentCard();
+      if ( this.paymentCard._id !== undefined && this.paymentCard._id !== null){
+        let existing: PaymentCard = this.paymentCardList.find( (card) => card._id === this.paymentCard._id);
+        if (existing) {
+          /** Update card */
+          console.log('Card found already: '+ JSON.stringify(existing));
+          existing.cardNumber= this.paymentCard.cardNumber;
+          existing.nameOnCard= this.paymentCard.nameOnCard;
+          existing.expiryMonth= this.paymentCard.expiryMonth;
+          existing.expiryYear= this.paymentCard.expiryYear;
+          existing.cvv= this.paymentCard.cvv;
+          existing.cardType = CardType.Debit;
+        }
+      } else{
+      /** New Card */
+      card.cardNumber= this.paymentCard.cardNumber;
+      card.nameOnCard= this.paymentCard.nameOnCard;
+      card.expiryMonth= this.paymentCard.expiryMonth;
+      card.expiryYear= this.paymentCard.expiryYear;
+      card.cvv= this.paymentCard.cvv;
+      card.cardType = CardType.Debit;
+      this.paymentCardList.push(card);
+    }
+    
+    /** Debug Only */
+    console.log('Form card: '+ JSON.stringify(this.paymentCard));
+    console.log('Added card: '+ JSON.stringify(card));
+    
+    this.accountService.userValue.paymentCards = this.paymentCardList;
+    console.log('Card List: '+ JSON.stringify(this.accountService.userValue.paymentCards));
+    this.updateCurrentUser();
+
+    /** Reset the form Model */
+    // this.card = new PaymentCard();
+  }
+
+  getMaskedCardNumber(card: PaymentCard): string {
+    if (card !== undefined && card.cardNumber !== undefined && card.cardNumber.length === 16) {
+      var masked = "**** " + card.cardNumber.substr(11, 4);
+      return masked;
+    }
+    return 'XXXX';
+  }
 
   openOrders() {}
-
-  submitProfile() {
-    this.loading = true;
-    let user: User = this.accountService.userValue;
-    if (user !== undefined) {
-      if (this.changeMadeOnAddress) {
-        user.addresses = this.addressList;
-      }
-      if (this.changeMadeOnPaymentCards) {
-        user.paymentCards = this.paymentCardList;
-      }
-      this.accountService
-        .updateUser(user)
-        .pipe(first())
-        .subscribe(
-          (data) => {
-            console.log('Update user response. ' + JSON.stringify(data));
-            // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-            // this.router.navigate(['/']);
-            // this.router.navigate(['/'], { relativeTo: this.route });
-            this.loading = false;
-          },
-          (error) => {
-            this.loading = false;
-            console.log('Update user error response. ' + JSON.stringify(error));
-          }
-        );
-    }
-  }
 
   isPasswordChanged() {
     if (
@@ -331,5 +408,19 @@ export class ProfileComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  private updateCurrentUser() {
+    this.accountService
+      .updateCurrentUser()
+      .pipe(first())
+      .subscribe(
+        (data) => {
+          console.log('Updated user response. ' + JSON.stringify(data));
+        },
+        (error) => {
+          console.log('Update user resulted in error.' + JSON.stringify(error));
+        }
+      );
   }
 }

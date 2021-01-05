@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Address } from 'src/app/model/address';
 import { PaymentCard } from 'src/app/model/payment-card';
-import { MessengerService } from 'src/app/service/messenger.service';
 import { Basket } from 'src/app/model/basket.model';
 import { Location } from '@angular/common';
 import { AccountService } from 'src/app/service/account.service';
@@ -19,14 +18,14 @@ import { BasketService } from 'src/app/service/basket.service';
 export class PlaceOrderComponent implements OnInit {
 
 
-  address: Address;
-  paymentCard: PaymentCard;
-  basket: Basket;
-  user: User;
+  address: Address = new Address();
+  paymentCard: PaymentCard = new PaymentCard();
+  basket: Basket = new Basket();
+  user: User = new User();
+  order: Order = new Order();
 
   constructor(
     private _location: Location,
-    private messengerService: MessengerService,
     private accountService: AccountService,
     private orderService: OrderService,
     private basketService: BasketService,
@@ -34,16 +33,14 @@ export class PlaceOrderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.messengerService.deliveryAddressSubject$.subscribe(address => {
-      this.address = address;
-    })
-
-    this.messengerService.paymentCardSubject$.subscribe(paymentCard => {
-      this.paymentCard = paymentCard;
-    })
 
     this.basketService.subject$.subscribe(basket => {
       this.basket = basket;
+      this.address = basket.address;
+      this.paymentCard = basket.paymentCard;
+      if ( this.basket !== undefined ){
+        this.createOrder();
+      }
     })
 
     this.user = this.accountService.userValue;
@@ -68,22 +65,25 @@ export class PlaceOrderComponent implements OnInit {
   }
 
   getBasketTotal() {
-    return this.basket.total;
+    return this.basket.subTotal;
   }
 
-  confirmPurchase() {
-    console.log('Confirming order..')
-    var order: Order = new Order();
-    order.date = new Date();
-    order.address = this.address;
-    order.paymentCard = this.paymentCard;
-    order.email = this.user.email;
-    order.currency = "GCP";
-    order.subTotal = this.basket.total;
-    order.saleTax = this.basket.total;
-    order.shippingCost = this.basket.total;
-    order.totalCost = this.basket.total;
-    order.expectedDeliveryDate = new Date();
+  createOrder(){
+    var deliveryCost  = this.deliveryCost(this.basket.subTotal);
+    var saleTax = this.percentage(this.basket.subTotal, 20);
+    console.log('Delivery Cost: '+ deliveryCost);
+    console.log('Sale Tax: '+ saleTax);
+    this.order = new Order();
+    this.order.date = new Date();
+    this.order.address = this.address;
+    this.order.paymentCard = this.paymentCard;
+    this.order.email = this.user.email;
+    this.order.currency = "GBP";
+    this.order.subTotal = this.basket.subTotal;
+    this.order.saleTax = saleTax;
+    this.order.shippingCost = deliveryCost;
+    this.order.totalCost = + (+this.basket.subTotal + saleTax + deliveryCost ).toFixed(2);
+    this.order.expectedDeliveryDate = new Date();
     var items: OrderItem[] = [];
     this.basket.items.map(bi => {
       var item: OrderItem = new OrderItem();
@@ -94,7 +94,23 @@ export class PlaceOrderComponent implements OnInit {
       item.total = bi.price * bi.qty;
       items.push(item);
     });
-    order.items = items;
-    this.orderService.placeOrder(order);
+    this.order.items = items;
+  }
+
+   percentage(num, per)
+  {
+    return (num/100)*per;
+  }
+
+  deliveryCost(total: number)
+  {
+    if ( total < 40){
+      return this.percentage(total, 2);
+    }
+    return 0;
+  }
+  confirmPurchase() {
+    console.log('Confirming order..')
+    this.orderService.placeOrder(this.order);
   }
 }

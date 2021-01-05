@@ -8,7 +8,7 @@ import { AccountService } from './service/account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'BigSale';
+  title = 'OpenBasket';
 
   constructor(
     private router: Router,
