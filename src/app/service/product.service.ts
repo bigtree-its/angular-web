@@ -27,6 +27,11 @@ export class ProductService {
     return this.http.get<ProductModel[]>(this.SERVER_URL + 'products');
   }
 
+  getDepartments(): Observable<Department[]> {
+    console.log('Fetching all departments...');
+    return this.http.get<Department[]>(this.SERVER_URL + 'departments');
+  }
+
   queryProducts(query: ProductQuery): Observable<ProductModel[]> {
     // HttpParams in Immutable. Call to set returns new Object every time.
     // So need to assign back to same variable

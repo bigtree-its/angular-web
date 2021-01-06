@@ -33,6 +33,7 @@ import { ForgotPasswordComponent } from './component/forgot-password/forgot-pass
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ProductBrowserComponent,
-    DateAgoPipe
+    DateAgoPipe,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,

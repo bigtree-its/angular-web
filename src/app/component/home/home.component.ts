@@ -4,7 +4,6 @@ import {
   ProductModel,
   Category,
   Brand,
-  Department,
 } from 'src/app/model/product.model';
 import { ITreeOptions, TreeComponent } from 'angular-tree-component';
 import * as _ from 'underscore';
@@ -12,7 +11,6 @@ import { MenuItem } from 'src/app/model/menu-item';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
-import { CategoryQuery } from 'src/app/model/query';
 
 @Component({
   selector: 'app-home',
@@ -45,8 +43,6 @@ export class HomeComponent implements OnInit {
   private tree: TreeComponent;
 
   allCats: Category[];
-  department: Department;
-  departments: Department[];
   featuredProducts: ProductModel[];
   featuredProduct: ProductModel;
 
@@ -77,12 +73,8 @@ export class HomeComponent implements OnInit {
       this.products = result;
     });
 
-    this.productService.getAllDepartments();
     this.productService.getAllCategories();
     this.selectedBrands = [];
-    this.messengerService.departments$.subscribe((d) => {
-      this.departments = d;
-    });
   }
 
   selectProduct() {
@@ -132,11 +124,6 @@ export class HomeComponent implements OnInit {
       amount = '0';
     }
     return amount;
-  }
-
-  selectDepartment(d: Department) {
-    this.department = d;
-    this.router.navigate(['/category-browser', this.department._id]).then();
   }
 
   getFeaturedProductName() {
