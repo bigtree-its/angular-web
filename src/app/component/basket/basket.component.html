@@ -1,11 +1,10 @@
-<div class="basket-page container-fluid">
-    <div class="row d-flex justify-content-between container-fluid">
-        <h4 class="text-dark">Shopping Basket</h4>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between container-fluid header">
+        <h4 class="text-dark">Your Basket</h4>
         <a href="/">
             <button type="button" class="btn btn-link">Continue Shopping</button>
         </a>
     </div>
-    <hr class="mb-1">
     <div *ngIf="basket.items.length == 0; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
         <span class="basket-no-items p-5">
@@ -13,7 +12,7 @@
         </span>
     </ng-template>
     <ng-template #elseBlock>
-        <div class="d-flex justify-content-center container-fluid mt-5 wrap">
+        <div class="d-flex justify-content-center container-fluid mt-2 wrap">
             <div class="basket-container curved">
                 <div *ngFor="let item of basket.items">
                     <app-basket-item [item]=item></app-basket-item>
