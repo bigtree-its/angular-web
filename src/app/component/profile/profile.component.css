@@ -78,3 +78,7 @@
 .ob-text-field {
     border: 1px solid #b3b3b3;
 }
+
+.selected {
+    border: 1px sold springgreen;
+}

@@ -1,9 +1,10 @@
 export class ProductQuery{
 
     brands: string;
-    categories: string;
     department: string;
-
+    featured: boolean;
+    bestSeller: boolean;
+    category: string;
 }
 
 export class CategoryQuery{

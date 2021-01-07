@@ -267,17 +267,18 @@
 }
 
 .star-active {
-    border: 1px solid rgb(184, 184, 184);
-    padding: 2;
-    color: #37c070;
+    /* border: 1px solid rgb(184, 184, 184); */
+    padding: 3px;
+    color: #fff;
+    background-color: #37c070;
     cursor: pointer;
     margin: 0 3px 0 0;
 }
 
 .star-muted {
-    border: 1px solid rgb(168, 166, 166);
-    padding: 2;
-    color: #cacbcf;
+    color: #fff;
+    background-color: #b4b3b3;
+    padding: 3px;
     cursor: pointer;
     margin: 0 3px 0 0;
 }
@@ -621,13 +622,6 @@ a:hover {
 
 
 /** CHECKOUT PAGE */
-
-.checkout-page {
-    margin-top: 70px;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
 
 .checkout-container {
     display: inline-block;

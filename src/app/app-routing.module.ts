@@ -17,7 +17,7 @@ import { ProductBrowserComponent } from './component/product-browser/product-bro
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent, canActivate : [AuthGuard]
+    path: '', component: HomeComponent
   },
   {
     path: 'product/:id', component: DetailComponent
@@ -32,16 +32,16 @@ const routes: Routes = [
     path: 'register', component: RegisterComponent
   },
   {
-    path: 'checkout', component: CheckoutComponent
+    path: 'checkout', component: CheckoutComponent, canActivate : [AuthGuard]
   },
   {
-    path: 'review', component: PlaceOrderComponent
+    path: 'review', component: PlaceOrderComponent, canActivate : [AuthGuard]
   },
   {
-    path: 'order-confirmation', component: OrderConfirmationComponent
+    path: 'order-confirmation', component: OrderConfirmationComponent, canActivate : [AuthGuard]
   },
   {
-    path: 'profile', component: ProfileComponent
+    path: 'profile', component: ProfileComponent, canActivate : [AuthGuard]
   },
   {
     path: 'forgot-password', component: ForgotPasswordComponent

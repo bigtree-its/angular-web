@@ -7,7 +7,7 @@ export class PaymentCard {
     public expiryMonth: number;
     public expiryYear: number;
     public cvv: String;
-    public selected?: Boolean;
+    public defaultMethod?: Boolean;
 
 }
 

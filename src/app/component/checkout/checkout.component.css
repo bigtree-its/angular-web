@@ -1,8 +1,16 @@
 .checkout-page {
-    margin-top: 59px;
     overflow-y: auto;
     overflow: auto;
-    margin-bottom: 100px;
+}
+
+.header {
+    width: 1030px;
+    height: 50px;
+    margin: auto;
+    margin-top: 10px;
+    background-color: rgb(239, 248, 248);
+    justify-content: center;
+    align-items: center;
 }
 
 .delivery-address-section {
@@ -11,6 +19,8 @@
     margin: 10px;
     padding: 15px;
     background-color: rgb(240, 240, 240);
+    clear: both;
+    height: auto;
 }
 
 .payment-section {
@@ -107,6 +117,6 @@
     border: 1px solid #b3b3b3;
 }
 
-.brand-new-primary-darkgreen-dark {
-    border: 1px solid #333;
+.item-selected {
+    border: 1px solid rgb(41, 170, 51);
 }

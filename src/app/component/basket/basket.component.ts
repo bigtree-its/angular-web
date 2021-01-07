@@ -34,11 +34,12 @@ export class BasketComponent implements OnInit {
   proceedToCheckout(){
     console.log(JSON.stringify(this.accountService.userValue));
 
-    if ( this.accountService.userValue === undefined || this.accountService.userValue === null){
-      this.router.navigate(['/login']).then();
-    }else{
-      this.router.navigate(['/checkout']).then();
-    }
+    // if ( this.accountService.userValue === undefined || this.accountService.userValue === null){
+    //   this.router.navigate(['/login']).then();
+    // }else{
+    //   this.router.navigate(['/checkout']).then();
+    // }
+    this.router.navigate(['/checkout']).then();
   }
 
   selectProduct(id: String) {

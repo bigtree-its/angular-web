@@ -23,7 +23,6 @@ export class ProductBrowserComponent implements OnInit {
 
   products: ProductModel[] = [];
   productsMaster: ProductModel[] = [];
-
   brands: Brand[] = [];
   selectedBrands: Brand[] = [];
 
@@ -81,6 +80,7 @@ export class ProductBrowserComponent implements OnInit {
           });
       }
     });
+    this.selectedBrands = [];
   }
 
   onEvent = ($event) => this.selectCategory($event.node.id);

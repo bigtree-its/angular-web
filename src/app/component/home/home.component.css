@@ -11,6 +11,10 @@
     height: 400px;
     background-color: rgb(243, 245, 245);
     margin: 20px 10px;
+    border: 1px solid springgreen;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
 }
 
 .sponsored-section-title {
@@ -31,18 +35,30 @@
 .sponsored-section-first {
     display: flex;
     flex-direction: column;
-    width: 70%;
+    width: 60%;
+    height: 100%;
     padding: 20px;
+    clear: both;
+    border: 1px solid #f8bd3d;
 }
 
 .sponsored-section-second {
-    width: 40%;
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 100%;
+    padding: 20px;
+    clear: both;
+    border: 1px solid blueviolet;
 }
 
 .sponsored-product-currency {
-    font-size: 22px !important;
-    float: left;
+    position: relative;
+    left: -32px;
+    top: 10px;
+    /* top: 10; */
+    /* left: 3; */
+    font-size: 22px;
     color: #111 !important;
 }
 
@@ -109,7 +125,7 @@
 
 .new-arrival-section {
     clear: both;
-    width: 70%;
+    width: 90%;
     height: 450px;
     background-color: beige;
     margin: 20px 10px;
@@ -144,18 +160,23 @@
     align-self: center;
 }
 
+.featured-product-image {
+    background-color: #FFF;
+    /* width: 100%; */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
 .featured-product-details-section {
     display: flex;
     flex-direction: column;
     padding: 10px;
     width: 35%;
     clear: both;
-}
-
-.featured-product-image {
-    height: 300px;
-    width: 350px;
-    border-radius: 12px;
 }
 
 @media all and (max-width:30em) {

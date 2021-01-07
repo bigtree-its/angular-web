@@ -109,7 +109,7 @@
                 </ng-template>
                 <ng-template #elseBlock>
                     <div [hidden]="hideAddressSection==true">
-                        <div class="space-around" *ngFor="let a of addressList">
+                        <div class="space-around" *ngFor="let a of addressList" [class.selected]="a.selected">
                             <div class="address-item bg-light">
                                 <div>
                                     <strong>{{ a.firstName }} {{ a.lastName }}</strong>
@@ -260,7 +260,7 @@
                         <button type="button" class="btn btn-sm
                                         btn-outline-secondary mr-1 box-shadow" (click)="addNewPaymentMethod()">Add a payment card</button>
                     </div>
-                    <div class="d-flex justify-content-between payment-card bt-border my-2" *ngFor="let p of paymentCardList">
+                    <div class="d-flex justify-content-between payment-card bt-border my-2" *ngFor="let p of paymentCardList" [class.selected]="p.defaultMethod">
                         <div class="d-flex justify-content-start">
                             <img src="/assets/icons/credit-card.png" width="50px" height="32px" class="mr-1 border-box px-2 rounded-lg align-self-center">
                             <!-- Payment Item -->

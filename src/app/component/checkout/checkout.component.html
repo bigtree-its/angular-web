@@ -1,9 +1,8 @@
 <div class="checkout-page container-fluid">
-    <div class="row d-flex justify-content-between container-fluid bt-border-bottom">
+    <div class="row d-flex justify-content-between container-fluid header">
         <h4 class="text-dark">Checkout</h4>
-        <button (click)="reviewOrder()" class="ob-btn-fill ob-btn-md">Next</button>
+        <button (click)="reviewOrder()" class="btn btn-warning px-5" style="font-weight: bold;">Next</button>
     </div>
-    <hr class="mb-1">
     <div *ngIf="isError" class="alert alert-warning banner">
         <span>{{message}}</span>
     </div>
@@ -96,7 +95,7 @@
                     <strong class="text-muted">Choose a delivery address:</strong>
                     <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="addNewAddress()">Add</button>
                 </div>
-                <div class="address-section-item" *ngFor="let a of addressList" [class.text-success]="a.selected">
+                <div class="address-section-item" *ngFor="let a of addressList" [class.item-selected]="a.selected">
                     <div class="d-flex justify-content-start align-items-center">
                         <!-- <label class="bt-check">
                             <input type="checkbox"
@@ -208,7 +207,7 @@
                     <strong class="text-muted">Choose a payment method</strong>
                     <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="addNewPaymentMethod()">Add</button>
                 </div>
-                <div class="d-flex justify-content-between payment-card" *ngFor="let p of paymentMethodList" [class.brand-new-primary-darkgreen-dark]="p.selected">
+                <div class="d-flex justify-content-between payment-card" *ngFor="let p of paymentMethodList" [class.item-selected]="p.defaultMethod">
                     <div class="d-flex justify-content-start" (click)="usePaymentMethod(p)">
                         <!-- Payment Item -->
                         <div class="payment-card-details">
@@ -273,7 +272,8 @@
             </form>
         </div>
     </div>
-    <div class="d-flex justify-content-end row container-fluid">
-        <button (click)="reviewOrder()" class="ob-btn-fill ob-btn-md" style="float: right;">Next</button>
+    <div class="row d-flex justify-content-end container-fluid header">
+        <button (click)="reviewOrder()" class="btn btn-warning px-5" style="font-weight: bold;">Next</button>
     </div>
+    <div style="height: 100px;" class="container-fluid"></div>
 </div>

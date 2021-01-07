@@ -1,16 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
-import {
-  ProductModel,
-  Category,
-  Brand,
-} from 'src/app/model/product.model';
+import { ProductModel, Category, Brand } from 'src/app/model/product.model';
 import { ITreeOptions, TreeComponent } from 'angular-tree-component';
 import * as _ from 'underscore';
 import { MenuItem } from 'src/app/model/menu-item';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
+import { ProductQuery } from 'src/app/model/query';
 
 @Component({
   selector: 'app-home',
@@ -18,33 +15,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
 
   products: ProductModel[] = [];
   productsMaster: ProductModel[] = [];
-  categories: Category[] = [];
-  subCategories: Category[] = [];
-  subCategoriesMap = new Map();
-  categoriesMap = new Map();
-  brands: Brand[] = [];
-  selectedBrands: Brand[] = [];
-  selectedCategory: Category;
-  
-  selectedType: Category;
-
-  menuItems: MenuItem[] = [];
-  nodes = [{ name: 'node' }];
-  options: ITreeOptions = {
-    animateExpand: false,
-  };
-
-  @ViewChild(TreeComponent)
-  private tree: TreeComponent;
-
-  allCats: Category[];
   featuredProducts: ProductModel[];
   featuredProduct: ProductModel;
+  bestSeller: ProductModel[];
+  bestSellerProduct: any;
 
   constructor(
     private productService: ProductService,
@@ -66,65 +44,63 @@ export class HomeComponent implements OnInit {
           this.featuredProduct = null;
         } else {
           this.featuredProduct = result[0];
+          this.setAmountAndFraction(this.featuredProduct);
+        }
+      });
+    var query = new ProductQuery();
+    query.bestSeller = true;
+    this.productService
+      .queryProducts(query)
+      .subscribe((result: ProductModel[]) => {
+        this.bestSeller = result;
+        if (
+          this.bestSeller === null ||
+          this.bestSeller === undefined ||
+          this.bestSeller.length == 0
+        ) {
+          this.bestSellerProduct = null;
+        } else {
+          this.bestSellerProduct = result[0];
+          this.setAmountAndFraction(this.bestSellerProduct);
         }
       });
     this.productService.getAllProducts().subscribe((result: ProductModel[]) => {
       this.productsMaster = result;
       this.products = result;
+      if (
+        this.products !== null &&
+        this.products !== undefined &&
+        this.products.length > 0
+      ) {
+       this.products.forEach( (p)=>{this.setAmountAndFraction(p);});
+      } 
     });
 
     this.productService.getAllCategories();
-    this.selectedBrands = [];
   }
 
-  selectProduct() {
-    this.router.navigate(['/product', this.featuredProduct._id]).then();
+  selectProduct(p: ProductModel) {
+    this.router.navigate(['/product', p._id]).then();
   }
 
-  getSubCategories(): void {
-    this.categories.forEach((c) => {
-      this.productService
-        .getSubCategories(c)
-        .subscribe((result: Category[]) => {
-          this.subCategoriesMap.set(c._id, result);
-          var menu: MenuItem = this.menuItems.find((m) => m.id == c._id);
-          if (menu !== undefined) {
-            var children: MenuItem[] = [];
-            result.forEach((c) => {
-              children.push({ id: c._id, name: c.name });
-            });
-            menu.children = children;
-            this.tree.treeModel.update();
-          }
-        });
-    });
+  setAmountAndFraction(product: ProductModel) {
+    if (product !== null && product !== undefined) {
+      var price = String(product.salePrice);
+      var amount: string = price.split('.')[0];
+      if (amount === undefined) {
+        amount = '0';
+      }
+      var fraction: string = price.split('.')[1];
+      if (fraction === undefined) {
+        fraction = '00';
+      } else if (fraction.length === 1) {
+        fraction = fraction + '0';
+      }
+      product.amount = amount;
+      product.fraction = fraction;
+    }
   }
 
-  getFraction(): string {
-    if (this.featuredProduct === null || this.featuredProduct === undefined) {
-      return '00';
-    }
-    var salePrice = String(this.featuredProduct.salePrice);
-    var fraction: string = salePrice.split('.')[1];
-    if (fraction === undefined) {
-      fraction = '00';
-    } else if (fraction.length === 1) {
-      fraction = fraction + '0';
-    }
-    return fraction;
-  }
-
-  getAmount(): string {
-    if (this.featuredProduct === null || this.featuredProduct === undefined) {
-      return '00';
-    }
-    var salePrice = String(this.featuredProduct.salePrice);
-    var amount: string = salePrice.split('.')[0];
-    if (amount === undefined) {
-      amount = '0';
-    }
-    return amount;
-  }
 
   getFeaturedProductName() {
     if (this.featuredProduct === undefined || this.featuredProduct === null) {
@@ -147,17 +123,15 @@ export class HomeComponent implements OnInit {
     return this.featuredProduct.picture.thumbnail;
   }
 
-  
-
-  addToCart() {
-    this.basketService.addItemToBasket(this.featuredProduct);
+  addToCart(p: ProductModel) {
+    this.basketService.addItemToBasket(p);
   }
 
-  scrollLeft(){
+  scrollLeft() {
     this.widgetsContent.nativeElement.scrollLeft -= 150;
   }
 
-  scrollRight(){
+  scrollRight() {
     this.widgetsContent.nativeElement.scrollLeft += 150;
   }
 }

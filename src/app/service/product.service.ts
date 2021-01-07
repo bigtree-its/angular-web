@@ -42,8 +42,14 @@ export class ProductService {
     if ( query.department !== undefined && query.department !== null){
       params = params.set('department', query.department);
     }
-    if ( query.categories !== undefined && query.categories !== null){
-      params = params.set('categories', query.categories);
+    if ( query.featured !== undefined && query.featured !== null){
+      params = params.set('featured', "true");
+    }
+    if ( query.bestSeller !== undefined && query.bestSeller !== null){
+      params = params.set('bestseller', "true");
+    }
+    if ( query.category !== undefined && query.category !== null){
+      params = params.set('categories', query.category);
     }
     return this.http.get<ProductModel[]>(this.SERVER_URL + 'products', {params});
   }

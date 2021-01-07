@@ -96,7 +96,7 @@ export class CheckoutComponent implements OnInit {
           this.hidePaymentForm = true;
           if ( this.paymentMethodList.length == 1){
             var pay: PaymentCard = this.paymentMethodList[0];
-            pay.selected = true;
+            pay.defaultMethod = true;
             this.basket.paymentCard = pay;
             this.basketService.updateBasket(this.basket);
           }
@@ -254,11 +254,11 @@ export class CheckoutComponent implements OnInit {
     for (let i = 0; i < this.paymentMethodList.length; i++) {
       let pay: PaymentCard = this.paymentMethodList[i];
       if (pay.cardNumber === p.cardNumber) {
-        pay.selected = true;
+        pay.defaultMethod = true;
         this.basket.paymentCard = pay;
         this.basketService.updateBasket(this.basket);
       } else {
-        pay.selected = false;
+        pay.defaultMethod = false;
       }
     }
   }

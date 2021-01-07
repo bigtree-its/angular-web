@@ -327,9 +327,9 @@ export class ProfileComponent implements OnInit {
     for (let i = 0; i < this.paymentCardList.length; i++) {
       let pay: PaymentCard = this.paymentCardList[i];
       if (this.paymentCardList[i].cardNumber === p.cardNumber) {
-        pay.selected = true;
+        pay.defaultMethod = true;
       } else {
-        pay.selected = false;
+        pay.defaultMethod = false;
       }
     }
   }
