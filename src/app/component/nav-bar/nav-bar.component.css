@@ -1,19 +1,54 @@
-.nav-bar {
-    margin-top: 59px;
-    background-color: #232f3e;
+/* menuBar container */
+
+.menuBar {
+    overflow: hidden;
+    background-color: #f3e959;
+    font-family: Arial;
+    display: flex;
+    justify-content: center;
 }
 
-.department {
-    padding: 1px 20px;
-    border: none;
-    background: none;
+
+/* Links inside the menuBar */
+
+.menuBar a {
+    float: left;
+    font-size: 16px;
     color: white;
-    border: 1px solid #232f3e;
-    border-radius: 4px;
-    margin: 2px;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-.department:hover {
-    cursor: pointer;
-    border: 1px solid white;
+
+/* The dropdown container */
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: #333;
+    padding: 14px 16px;
+    background-color: inherit;
+    font: inherit;
+    /* Important for vertical align on mobile phones */
+    margin: 0;
+    /* Important for vertical align on mobile phones */
+}
+
+
+/* Add a red background color to menuBar links on hover */
+
+.menuBar a:hover,
+.dropdown:hover .dropbtn {
+    background-color: #fff;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

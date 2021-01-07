@@ -1,26 +1,34 @@
 .sticky {
-    position: fixed;
+    /* position: fixed; */
     z-index: 9999;
     top: 0;
     left: 0;
     right: 0;
-    padding: 10px;
+    padding: 5px;
     background-color: #1b1b1b;
     transition: background-color 1s ease 0s;
     color: white;
 }
 
 .logo-brand-text {
-    color: white;
-    font-size: 25px;
-    font-family: 'Big Shoulders Stencil Display', cursive;
+    color: #1b1b1b;
+    /* font-size: 25px; */
     /* text-decoration: none; */
     /* text-shadow: 2px 2px rgb(189, 186, 186); */
     /* color: #1d46ce; */
     /* border-radius: 12px; */
-    padding: 0 20px 0 0;
     /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
     /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
+}
+
+.navbar-brand {
+    display: inline-block;
+    /* padding-top: .3125rem; */
+    /* padding-bottom: .3125rem; */
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
 }
 
 .account-section {
@@ -46,20 +54,58 @@
     color: rgb(0, 187, 115);
 }
 
-.account-name {
-    width: 300px;
-    background-color: black;
+.my-account {
+    margin: 0;
+    height: 100%;
+    padding: 0 10px;
 }
 
 .top-nav-basket-icon {
     height: 30px;
     width: 30px;
-    margin: 16px 5px 9px 0;
+    margin: 10px 5px 0px 0;
+    align-items: center;
 }
 
 .top-nav-basket-icon:hover {
     cursor: pointer;
     color: rgb(0, 187, 115);
+}
+
+.top-nav-basket-count {
+    background-color: #1a73e8;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 11px;
+    font-weight: bold;
+    height: 26px;
+    width: 26px;
+    line-height: 22px;
+    margin-left: -14px;
+    margin-bottom: 13px;
+    text-align: center;
+    visibility: visible;
+}
+
+.right-button {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    /* padding: 0 16px; */
+    background-color: inherit;
+    /* font: inherit; */
+    /* Important for vertical align on mobile phones */
+    margin: 0;
+    /* Important for vertical align on mobile phones */
+}
+
+.right-button:hover {
+    cursor: pointer;
+    background-color: #f3f3f3;
 }
 
 .profile-name {

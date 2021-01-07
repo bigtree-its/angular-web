@@ -12,9 +12,11 @@
             <div style="display: flex;justify-content: space-between; padding: 10px;">
                 <div style="display: flex; flex-direction: column;width: 60%;">
                     <div class="sponsored-section-product-price pt-2">
-                        <span style="position: relative;left: -48px;top: 10px;font-size: 22px;color: #111 !important;">£</span>
-                        <span class="sponsored-product-price">{{ featuredProduct.amount }}</span>
-                        <span class="sponsored-product-fraction">{{ featuredProduct.fraction }}</span>
+                        <div class="p-item-price-section pt-1">
+                            <span class="product-price-currency">£</span>
+                            <span class="product-price">{{ featuredProduct.amount  }}</span>
+                            <span class="product-price-fraction">{{ featuredProduct.fraction }}</span>
+                        </div>
                     </div>
                     <div class="d-block mt-3">
                         <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button>
@@ -46,9 +48,9 @@
             <div style="display: flex;justify-content: space-between; padding: 10px;">
                 <div style="display: flex; flex-direction: column;width: 60%;">
                     <div class="sponsored-section-product-price pt-2">
-                        <span class="sponsored-product-currency">£</span>
-                        <span class="sponsored-product-price">{{ bestSellerProduct.amount }}</span>
-                        <span class="sponsored-product-fraction">{{ bestSellerProduct.fraction }}</span>
+                        <span class="product-price-currency">£</span>
+                        <span class="product-price">{{ bestSellerProduct.amount }}</span>
+                        <span class="product-price-fraction">{{ bestSellerProduct.fraction }}</span>
                     </div>
                     <div class="d-block mt-3">
                         <button class="sponsored-product-add-btn" (click)="addToCart(bestSellerProduct)">Add to Basket</button>

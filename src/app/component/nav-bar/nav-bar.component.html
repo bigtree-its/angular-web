@@ -1,11 +1,5 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
-</style>
-<div class="container-fluid nav-bar">
-    <div class="d-flex justify-content-center department-bar container-fluid ">
-        <div *ngFor="let d of departments">
-            <button class="department" (click)="selectDepartment(d)">{{ d.name }}</button>
-        </div>
+<div class="container-fluid menuBar">
+    <div *ngFor="let d of departments" class="dropdown">
+        <button class="dropbtn" (click)="selectDepartment(d)">{{ d.name }}</button>
     </div>
 </div>

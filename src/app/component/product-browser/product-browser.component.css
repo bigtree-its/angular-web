@@ -1,6 +1,4 @@
-.page {
-    margin-top: 70px;
-}
+.page {}
 
 .nav-section {
     /* width: 250px;
@@ -16,7 +14,7 @@
     width: 250px;
     padding: 10px;
     border-radius: 10px;
-    margin: 10px;
+    margin: 0 10px;
     clear: both;
     background-color: #f8fafd;
 }

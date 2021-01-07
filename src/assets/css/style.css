@@ -196,26 +196,6 @@
     cursor: pointer;
 }
 
-.top-nav-basket-count {
-    background-color: #1a73e8;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 2px solid #fff;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    color: #fff;
-    font-size: 11px;
-    font-weight: bold;
-    height: 26px;
-    width: 26px;
-    line-height: 22px;
-    margin-left: -14px;
-    margin-bottom: 13px;
-    text-align: center;
-    /* width: 22px; */
-    visibility: visible;
-}
-
 .top-nav-basket-total {
     font-size: 16px;
     color: #424443;
