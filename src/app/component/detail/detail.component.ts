@@ -92,7 +92,7 @@ export class DetailComponent implements OnInit {
   }
 
   decreaseQuantity() {
-    if (this.quantity > 0) {
+    if (this.quantity > 1) {
       this.quantity = this.quantity - 1;
     }
   }
