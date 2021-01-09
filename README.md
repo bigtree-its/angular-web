@@ -6,6 +6,37 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Install npm modules
 
   `npm install --save`
+## Tips to fix npm related issues
+
+### To Upgrade all dependencies
+To update to a new major version all the packages, install the npm-check-updates package globally:
+`npm install -g npm-check-updates`
+
+then run it
+`ncu -u`
+
+this will upgrade all the version hints in the package.json file, to dependencies and devDependencies, so npm can install the new major version.
+
+You are now ready to run the update:
+`npm update`
+
+If you just downloaded the project without the node_modules dependencies and you want to install the shiny new versions first, just run
+`npm install --save`
+
+### How to install specific typescript verision. e.g In this project we currently use 4.0.5
+`npm install -g typescript@4.0.5`
+Check ng version
+`ng --version`
+
+### How to upgrade Angular version for your computer/project
+`ng update @angular/cli @angular/core`
+
+### How to install latest typescript
+`npm install -g typescript@latest`
+
+### How to check outdated dependencies in your project
+`npm outdated`
+
 
 
 ## Development server
