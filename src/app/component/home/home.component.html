@@ -3,7 +3,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
 </style>
 <div class="container-fluid home">
-    <div class="container-fluid d-flex justify-content-center wrap">
+    <div class="container-fluid d-flex justify-content-center wrap" *ngIf="featuredProduct!==undefined && featuredProduct !== null">
         <div style="display: flex; flex-direction: column; background-color: #efefef; width: 60%;height: 400px;margin: 10px;">
             <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
             <div class="d-block" style="width: 100%;">
@@ -36,7 +36,7 @@
             <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
         </div>
     </div>
-    <div class="container-fluid d-flex justify-content-center wrap py-2">
+    <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
         <div style="display: flex; flex-direction: column; background-color: #e4f6fa; width: 30%;height: 400px; margin: 10px;">
             <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
         </div>

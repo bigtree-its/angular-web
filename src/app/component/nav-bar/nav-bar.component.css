@@ -2,7 +2,8 @@
 
 .menuBar {
     overflow: hidden;
-    background-color: #f3e959;
+    /* background-color: #f3e959; */
+    background-color: #444444;
     font-family: Arial;
     display: flex;
     justify-content: center;
@@ -16,7 +17,7 @@
     font-size: 16px;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 10px 12px;
     text-decoration: none;
 }
 
@@ -32,10 +33,11 @@
     font-size: 16px;
     border: none;
     outline: none;
-    color: #333;
-    padding: 14px 16px;
+    color: rgb(0, 162, 202);
+    padding: 10px 12px;
     background-color: inherit;
     font: inherit;
+    font-weight: bold;
     /* Important for vertical align on mobile phones */
     margin: 0;
     /* Important for vertical align on mobile phones */

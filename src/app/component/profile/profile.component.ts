@@ -327,11 +327,13 @@ export class ProfileComponent implements OnInit {
     for (let i = 0; i < this.paymentCardList.length; i++) {
       let pay: PaymentCard = this.paymentCardList[i];
       if (this.paymentCardList[i].cardNumber === p.cardNumber) {
-        pay.defaultMethod = true;
+        pay.selected = true;
       } else {
-        pay.defaultMethod = false;
+        pay.selected = false;
       }
     }
+    this.accountService.userValue.paymentCards = this.paymentCardList;
+    this.updateCurrentUser();
   }
 
   onSubmitPaymentMethod(f: NgForm) {
@@ -364,6 +366,7 @@ export class ProfileComponent implements OnInit {
           existing.expiryYear= this.paymentCard.expiryYear;
           existing.cvv= this.paymentCard.cvv;
           existing.cardType = CardType.Debit;
+          this.usePaymentMethod(existing);
         }
       } else{
       /** New Card */
@@ -374,18 +377,8 @@ export class ProfileComponent implements OnInit {
       card.cvv= this.paymentCard.cvv;
       card.cardType = CardType.Debit;
       this.paymentCardList.push(card);
+      this.usePaymentMethod(card);
     }
-    
-    /** Debug Only */
-    console.log('Form card: '+ JSON.stringify(this.paymentCard));
-    console.log('Added card: '+ JSON.stringify(card));
-    
-    this.accountService.userValue.paymentCards = this.paymentCardList;
-    console.log('Card List: '+ JSON.stringify(this.accountService.userValue.paymentCards));
-    this.updateCurrentUser();
-
-    /** Reset the form Model */
-    // this.card = new PaymentCard();
   }
 
   getMaskedCardNumber(card: PaymentCard): string {

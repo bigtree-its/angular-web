@@ -104,7 +104,7 @@ export class DetailComponent implements OnInit {
     if (this.quantity === 0) {
       return;
     }
-    this.basketService.addItemToBasket(this.product);
+    this.basketService.addItemToBasket(this.product, this.quantity);
   }
 
   writeReview(){

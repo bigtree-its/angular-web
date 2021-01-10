@@ -58,7 +58,7 @@ export class ItemComponent implements OnInit {
     if (this.product.stock === 0) {
       return;
     }
-    this.basketService.addItemToBasket(this.product);
+    this.basketService.addItemToBasket(this.product, 1);
   }
 
 }

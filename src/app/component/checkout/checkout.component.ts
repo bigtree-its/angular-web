@@ -15,6 +15,7 @@ import { AccountService } from 'src/app/service/account.service';
 import { User } from 'src/app/model/user';
 import { Order, OrderItem } from 'src/app/model/order';
 import { OrderService } from 'src/app/service/order.service';
+import { CardValidator } from 'src/app/helpers/card-validator';
 
 @Component({
   selector: 'app-checkout',
@@ -36,6 +37,7 @@ export class CheckoutComponent implements OnInit {
   
   card: PaymentCard = new PaymentCard();
   paymentMethodList: PaymentCard[] = [];
+  cardValidator: CardValidator = new CardValidator();
 
   shipAddressSameAsBilling: boolean;
   saveAddress: boolean;
@@ -51,6 +53,7 @@ export class CheckoutComponent implements OnInit {
   user: User;
   isError: boolean = false;
   message: String;
+  cardTpe: string = "";
 
   constructor(
     private orderService: OrderService,
@@ -96,7 +99,7 @@ export class CheckoutComponent implements OnInit {
           this.hidePaymentForm = true;
           if ( this.paymentMethodList.length == 1){
             var pay: PaymentCard = this.paymentMethodList[0];
-            pay.defaultMethod = true;
+            pay.selected = true;
             this.basket.paymentCard = pay;
             this.basketService.updateBasket(this.basket);
           }
@@ -254,13 +257,15 @@ export class CheckoutComponent implements OnInit {
     for (let i = 0; i < this.paymentMethodList.length; i++) {
       let pay: PaymentCard = this.paymentMethodList[i];
       if (pay.cardNumber === p.cardNumber) {
-        pay.defaultMethod = true;
+        pay.selected = true;
         this.basket.paymentCard = pay;
         this.basketService.updateBasket(this.basket);
       } else {
-        pay.defaultMethod = false;
+        pay.selected = false;
       }
     }
+    this.accountService.userValue.paymentCards = this.paymentMethodList;
+    this.updateCurrentUser();
   }
 
   onSubmitPaymentMethod(f: NgForm) {
@@ -269,6 +274,16 @@ export class CheckoutComponent implements OnInit {
       this.hidePaymentForm = true;
     }
   }
+
+  onKeypressCardNumberEvent(event: any){
+    var cardNumber: string  = event.target.value;
+    if(cardNumber !== undefined && cardNumber.length > 3){
+      var cardTpe = this.cardValidator.cardType(cardNumber);
+      if (this.card !== undefined && this.card !== null){
+        this.card.cardType = cardTpe;
+      }
+    }
+ }
 
   private updatePaymentList() {
     var card: PaymentCard = new PaymentCard();
@@ -282,7 +297,6 @@ export class CheckoutComponent implements OnInit {
           existing.expiryMonth= this.card.expiryMonth;
           existing.expiryYear= this.card.expiryYear;
           existing.cvv= this.card.cvv;
-          existing.cardType = CardType.Debit;
           this.usePaymentMethod(existing);
         }
       } else{
@@ -292,22 +306,16 @@ export class CheckoutComponent implements OnInit {
       card.expiryMonth= this.card.expiryMonth;
       card.expiryYear= this.card.expiryYear;
       card.cvv= this.card.cvv;
-      card.cardType = CardType.Debit;
       this.paymentMethodList.push(card);
       this.usePaymentMethod(card);
     }
     
-    /** Debug Only */
-    this.accountService.userValue.paymentCards = this.paymentMethodList;
-    this.updateCurrentUser();
-
-    /** Reset the form Model */
-    // this.card = new PaymentCard();
+   
   }
 
   getMaskedCardNumber(card: PaymentCard): string {
-    if (card !== undefined && card.cardNumber !== undefined && card.cardNumber.length === 16) {
-      var masked = "**** " + card.cardNumber.substr(11, 4);
+    if (card !== undefined && card.cardNumber !== undefined && card.cardNumber.length > 14) {
+      var masked = "**** " + card.cardNumber.substr(card.cardNumber.length-4, card.cardNumber.length-1);
       return masked;
     }
     return 'XXXX';

@@ -25,12 +25,13 @@
                 </div>
                 <form *ngIf="user !== undefined && user !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <input type="text" formControlName="question" class="form-control" placeholder="When this product available? etc" />
+                        <input type="text" formControlName="question" class="form-control" placeholder="e.g When this product available? etc" />
+                        <small>Your question may be answered by sellers, manufacturers or customers who bought this product</small>
                     </div>
                     <div class="form-group">
                         <button [disabled]="loading" class="btn btn-sm btn-primary px-5">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                            Submit
+                            Post
                         </button>
                     </div>
                 </form>
@@ -103,16 +104,16 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-start mt-2" style="align-items: center;">
+                <div>
                     <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
                         {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
-                    <div class="ml-2 d-flex justify-content-start">
-                        <button class="dec-btn" style="font-size: 30px;" (click)="decreaseQuantity()">-</button>
-                        <span class="qty-value">{{quantity}}</span>
-                        <button class="inc-btn" style="font-size: 30px;" (click)="increaseQuantity()">+</button>
-                    </div>
                 </div>
-                <div class="d-block d-flex justify-content-center my-5">
+                <div class="mt-4 d-flex justify-content-start">
+                    <button class="dec-btn" style="font-size: 30px;" (click)="decreaseQuantity()">-</button>
+                    <span class="qty-value">{{quantity}}</span>
+                    <button class="inc-btn" style="font-size: 30px;" (click)="increaseQuantity()">+</button>
+                </div>
+                <div class="d-block d-flex justify-content-center my-3">
                     <button class="btn btn-warning btn-md" (click)="addToCart()">Add
                             to Basket</button>
                 </div>
@@ -168,7 +169,7 @@
                 <strong style="font-size: larger;">Reviews</strong><span class="muted ml-3">{{reviews.length}} reviews</span>
                 <br>
                 <div *ngIf="reviews === undefined || reviews.length === 0">
-                    <span>No Reviews Yet</span>
+                    <span>No Reviews Have Been Submitted Yet</span>
                 </div>
                 <div *ngIf="reviews !== undefined && reviews.length> 0">
                     <br>

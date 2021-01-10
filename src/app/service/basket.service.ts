@@ -54,8 +54,7 @@ export class BasketService {
     return 0;
   }
 
-  addItemToBasket(product: ProductModel) {
-    console.log(`Adding product to basket: ` + JSON.stringify(product));
+  addItemToBasket(product: ProductModel, qty: number) {
     if (this.basket === null || this.basket === undefined) {
       this.basket = {
         items: [],
@@ -64,30 +63,33 @@ export class BasketService {
         paymentCard: null
       };
     }
+    if ( qty === 0){
+      qty = 1;
+    }
     //Find if the product already exist in the basket
     let exist: BasketItem = this.basket.items.find(
       (element) => element._id === product._id
     );
     if (exist) {
-      exist.qty = exist.qty + 1;
+      exist.qty = exist.qty + qty;
       exist.subtotal = exist.qty * product.salePrice;
       exist.subtotal = +(+exist.subtotal).toFixed(2);
     } else {
-      this.addNewItem(product);
+      this.addNewItem(product, qty);
     }
     this.publishBasket();
     // this.toastService.show(basketItem.name + ' added to Basket', { classname: 'bg-success text-light', delay: 5000 });
   }
 
-  private addNewItem(product: ProductModel) {
+  private addNewItem(product: ProductModel, qty: number) {
     let basketItem: BasketItem = {
       _id: product._id,
       name: product.name,
       image: product.picture.thumbnail,
       price: product.salePrice,
       brand: product.brand,
-      qty: 1,
-      subtotal: +(1 * product.salePrice).toFixed(2),
+      qty: qty,
+      subtotal: +(qty * product.salePrice).toFixed(2),
     };
     this.basket.items.push(basketItem);
   }

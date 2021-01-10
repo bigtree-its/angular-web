@@ -124,7 +124,7 @@ export class HomeComponent implements OnInit {
   }
 
   addToCart(p: ProductModel) {
-    this.basketService.addItemToBasket(p);
+    this.basketService.addItemToBasket(p, 1);
   }
 
   scrollLeft() {

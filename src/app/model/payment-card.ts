@@ -1,13 +1,13 @@
 export class PaymentCard {
 
     public _id: String;
-    public cardType: String;
+    public cardType: string;
     public nameOnCard: String;
     public cardNumber: String;
     public expiryMonth: number;
     public expiryYear: number;
     public cvv: String;
-    public defaultMethod?: Boolean;
+    public selected?: boolean;
 
 }
 
