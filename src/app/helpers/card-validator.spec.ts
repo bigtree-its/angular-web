@@ -9,7 +9,7 @@ describe('CardValidator', () => {
     service = TestBed.inject(CardValidator);
   });
 
-  it('Can test the CardType for the given card number', () => {
+  it('Can detect the CardType for the given card number', () => {
     expect(service).toBeTruthy();
     expect(service.cardType("5355220548174790")).toEqual("mastercard");
     expect(service.cardType("5355 2205 4817 4790")).toEqual("mastercard");

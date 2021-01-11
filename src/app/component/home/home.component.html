@@ -34,6 +34,11 @@
         </div>
         <div style="display: flex; flex-direction: column; background-color: #fccdcd; width: 30%;height: 400px; margin: 10px;">
             <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
+            <!-- <div class="scroll-container d-flex justify-content-start py-1"> -->
+            <div class="d-flex justify-content-start wrap" style="align-items: center; align-self: center;">
+                <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
+            </div>
+            <!-- </div> -->
         </div>
     </div>
     <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">

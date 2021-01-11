@@ -34,6 +34,7 @@ import { ResetPasswordComponent } from './component/reset-password/reset-passwor
 import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+import { SmallItemComponent } from './component/home/small-item/small-item.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NavBarComponent } from './component/nav-bar/nav-bar.component';
     ResetPasswordComponent,
     ProductBrowserComponent,
     DateAgoPipe,
-    NavBarComponent
+    NavBarComponent,
+    SmallItemComponent
   ],
   imports: [
     BrowserModule,
