@@ -74,9 +74,10 @@
 }
 
 .sponsored-product-add-btn {
-    background-color: #232f3e;
+    background-color: #19acac;
     color: white;
     padding: 10px 20px;
+    border: none;
 }
 
 .sponsored-product-add-btn:hover {
@@ -200,8 +201,8 @@
 }
 
 .scroll-right {
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     margin: 10px;
     opacity: 0.6;
 }
@@ -212,8 +213,8 @@
 }
 
 .scroll-left {
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     margin: 10px;
     opacity: 0.6;
 }
@@ -221,4 +222,9 @@
 .scroll-left:hover {
     cursor: pointer;
     opacity: 1;
+}
+
+.a-cardui {
+    overflow: hidden;
+    padding: 5px 0 5px 0;
 }

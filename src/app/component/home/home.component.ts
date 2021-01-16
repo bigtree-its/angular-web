@@ -1,9 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel, Category, Brand } from 'src/app/model/product.model';
-import { ITreeOptions, TreeComponent } from 'angular-tree-component';
+import { ProductModel } from 'src/app/model/product.model';
 import * as _ from 'underscore';
-import { MenuItem } from 'src/app/model/menu-item';
 import { MessengerService } from 'src/app/service/messenger.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
@@ -29,7 +27,7 @@ export class HomeComponent implements OnInit {
     private basketService: BasketService,
     public messengerService: MessengerService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.productService
@@ -47,23 +45,16 @@ export class HomeComponent implements OnInit {
           this.setAmountAndFraction(this.featuredProduct);
         }
       });
-    var query = new ProductQuery();
-    query.bestSeller = true;
-    this.productService
-      .queryProducts(query)
-      .subscribe((result: ProductModel[]) => {
-        this.bestSeller = result;
-        if (
-          this.bestSeller === null ||
-          this.bestSeller === undefined ||
-          this.bestSeller.length == 0
-        ) {
-          this.bestSellerProduct = null;
-        } else {
-          this.bestSellerProduct = result[0];
-          this.setAmountAndFraction(this.bestSellerProduct);
-        }
-      });
+
+
+    var bestSellerQuery = new ProductQuery();
+    bestSellerQuery.bestSeller = true;
+    this.queryProducts(bestSellerQuery);
+
+    var featuredProductQuery = new ProductQuery();
+    featuredProductQuery.featured = true;
+    this.queryProducts(featuredProductQuery);
+
     this.productService.getAllProducts().subscribe((result: ProductModel[]) => {
       this.productsMaster = result;
       this.products = result;
@@ -72,18 +63,33 @@ export class HomeComponent implements OnInit {
         this.products !== undefined &&
         this.products.length > 0
       ) {
-       this.products.forEach( (p)=>{this.setAmountAndFraction(p);});
-      } 
+        this.products.forEach((p) => { this.setAmountAndFraction(p); });
+      }
     });
 
-    this.productService.getAllCategories();
+  }
+
+  private queryProducts(query: ProductQuery) {
+    this.productService
+      .queryProducts(query)
+      .subscribe((result: ProductModel[]) => {
+        this.bestSeller = result;
+        if (this.bestSeller === null ||
+          this.bestSeller === undefined ||
+          this.bestSeller.length == 0) {
+          this.bestSellerProduct = null;
+        } else {
+          this.bestSellerProduct = result[0];
+          this.setAmountAndFraction(this.bestSellerProduct);
+        }
+      });
   }
 
   selectProduct(p: ProductModel) {
     this.router.navigate(['/product', p._id]).then();
   }
 
-  setAmountAndFraction(product: ProductModel) {
+  private setAmountAndFraction(product: ProductModel) {
     if (product !== null && product !== undefined) {
       var price = String(product.salePrice);
       var amount: string = price.split('.')[0];
@@ -102,21 +108,21 @@ export class HomeComponent implements OnInit {
   }
 
 
-  getFeaturedProductName() {
+  private getFeaturedProductName() {
     if (this.featuredProduct === undefined || this.featuredProduct === null) {
       return '';
     }
     return this.featuredProduct.name;
   }
 
-  getFeaturedProductDescription() {
+  private getFeaturedProductDescription() {
     if (this.featuredProduct === undefined || this.featuredProduct === null) {
       return '';
     }
     return this.featuredProduct.description;
   }
 
-  getFeaturedProductPicture(): String {
+  private getFeaturedProductPicture(): String {
     if (this.featuredProduct === undefined || this.featuredProduct === null) {
       return '/assets/icons/featured-product.png';
     }

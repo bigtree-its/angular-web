@@ -1,92 +1,113 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+
 </style>
 <div class="container-fluid home">
-    <div class="container-fluid d-flex justify-content-center wrap" *ngIf="featuredProduct!==undefined && featuredProduct !== null">
-        <div style="display: flex; flex-direction: column; background-color: #efefef; width: 60%;height: 400px;margin: 10px;">
-            <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
-            <div class="d-block" style="width: 100%;">
-                <span class="d-block sponsored-section-title" (click)="selectProduct(featuredProduct)">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
+  <div class="container-fluid d-flex justify-content-center wrap"
+    *ngIf="featuredProduct!==undefined && featuredProduct !== null">
+    <div
+      style="display: flex; flex-direction: column; background-color: #dafdfd; width: 60%;height: 400px;margin: 10px;">
+      <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
+      <div class="d-block" style="width: 100%;">
+        <span class="d-block sponsored-section-title"
+          (click)="selectProduct(featuredProduct)">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
+      </div>
+      <div style="display: flex;justify-content: space-between; padding: 10px;">
+        <div style="display: flex; flex-direction: column;width: 60%;">
+          <div class="sponsored-section-product-price pt-2">
+            <div class="p-item-price-section pt-1">
+              <span class="product-price-currency">£</span>
+              <span class="product-price">{{ featuredProduct.amount  }}</span>
+              <span class="product-price-fraction">{{ featuredProduct.fraction }}</span>
             </div>
-            <div style="display: flex;justify-content: space-between; padding: 10px;">
-                <div style="display: flex; flex-direction: column;width: 60%;">
-                    <div class="sponsored-section-product-price pt-2">
-                        <div class="p-item-price-section pt-1">
-                            <span class="product-price-currency">£</span>
-                            <span class="product-price">{{ featuredProduct.amount  }}</span>
-                            <span class="product-price-fraction">{{ featuredProduct.fraction }}</span>
-                        </div>
-                    </div>
-                    <div class="d-block mt-3">
-                        <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button>
-                    </div>
-                    <div class="mt-4">
-                        {{ featuredProduct.description }}
-                    </div>
-                </div>
-                <div style="width: 40%;display: flex; justify-content: center;">
-                    <div style="height: 250px; width: 250px;">
-                        <img src={{featuredProduct.picture.thumbnail}} alt="" loading="lazy" (click)="selectProduct(featuredProduct)" class="featured-product-image">
-                    </div>
-                </div>
-            </div>
+          </div>
+          <div class="d-block mt-3">
+            <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button>
+          </div>
+          <div class="mt-4">
+            {{ featuredProduct.description }}
+          </div>
         </div>
-        <div style="display: flex; flex-direction: column; background-color: #fccdcd; width: 30%;height: 400px; margin: 10px;">
-            <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
-            <!-- <div class="scroll-container d-flex justify-content-start py-1"> -->
-            <div class="d-flex justify-content-start wrap" style="align-items: center; align-self: center;">
-                <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
-            </div>
-            <!-- </div> -->
+        <div style="width: 40%;display: flex; justify-content: center;">
+          <div style="height: 250px; width: 250px;">
+            <img src={{featuredProduct.picture.thumbnail}} alt="" loading="lazy"
+              (click)="selectProduct(featuredProduct)" class="featured-product-image">
+          </div>
         </div>
+      </div>
     </div>
-    <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
-        <div style="display: flex; flex-direction: column; background-color: #e4f6fa; width: 30%;height: 400px; margin: 10px;">
-            <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
+    <div
+      style="display: flex; flex-direction: column; width: 30%;height: 400px; margin: 10px;">
+      <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
+      <div class="a-cardui">
+        <div class=" d-flex wrap justify-content-center">
+          <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
         </div>
-        <div style="display: flex; flex-direction: column; background-color: #fffde7; width: 60%;height: 400px;margin: 10px;">
-            <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
-            <div class="d-block" style="width: 100%;">
-                <span class="d-block sponsored-section-title" (click)="selectProduct(bestSellerProduct)">{{ bestSellerProduct.name.length > 50 ? bestSellerProduct.name.substr(0,50): bestSellerProduct.name }}</span>
-            </div>
-            <div style="display: flex;justify-content: space-between; padding: 10px;">
-                <div style="display: flex; flex-direction: column;width: 60%;">
-                    <div class="sponsored-section-product-price pt-2">
-                        <span class="product-price-currency">£</span>
-                        <span class="product-price">{{ bestSellerProduct.amount }}</span>
-                        <span class="product-price-fraction">{{ bestSellerProduct.fraction }}</span>
-                    </div>
-                    <div class="d-block mt-3">
-                        <button class="sponsored-product-add-btn" (click)="addToCart(bestSellerProduct)">Add to Basket</button>
-                    </div>
-                    <div class="mt-4">
-                        {{ bestSellerProduct.description }}
-                    </div>
-                </div>
-                <div style="width: 40%;display: flex; justify-content: center;">
-                    <div style="height: 250px; width: 250px;">
-                        <img src={{bestSellerProduct.picture.thumbnail}} alt="" loading="lazy" (click)="selectProduct(bestSellerProduct)" class="featured-product-image">
-                    </div>
-                </div>
-            </div>
+        <div class="a-cardui-footer">
+            <a href="/offers">See more</a>
         </div>
+      </div>
     </div>
-
-    <div class="container-fluid d-flex justify-content-center wrap">
-        <div class="new-arrival-section">
-            <span class="recently-viewed-tag  box-shadow">New Arrivals</span>
-            <div class="scroll-container d-flex justify-content-start py-1">
-                <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
-                <div #widgetsContent class="custom-slider-main">
-                    <div class="space-around" *ngFor="let p of products">
-                        <app-item [product]="p"></app-item>
-                    </div>
-                </div>
-                <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
-            </div>
+  </div>
+  <div class="container-fluid d-flex justify-content-center wrap py-2"
+    *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
+    <div
+      style="display: flex; flex-direction: column; width: 30%;height: 400px; margin: 10px;">
+      <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
+      <div class="a-cardui">
+        <div class=" d-flex wrap justify-content-center">
+          <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
         </div>
+        <div class="a-cardui-footer">
+            <a href="/offers">See more</a>
+        </div>
+      </div>
     </div>
-    <div style="height: 100px;"></div>
+    <div
+      style="display: flex; flex-direction: column; background-color: #fffde7; width: 60%;height: 400px;margin: 10px;">
+      <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
+      <div class="d-block" style="width: 100%;">
+        <span class="d-block sponsored-section-title"
+          (click)="selectProduct(bestSellerProduct)">{{ bestSellerProduct.name.length > 50 ? bestSellerProduct.name.substr(0,50): bestSellerProduct.name }}</span>
+      </div>
+      <div style="display: flex;justify-content: space-between; padding: 10px;">
+        <div style="display: flex; flex-direction: column;width: 60%;">
+          <div class="sponsored-section-product-price pt-2">
+            <span class="product-price-currency">£</span>
+            <span class="product-price">{{ bestSellerProduct.amount }}</span>
+            <span class="product-price-fraction">{{ bestSellerProduct.fraction }}</span>
+          </div>
+          <div class="d-block mt-3">
+            <button class="sponsored-product-add-btn" (click)="addToCart(bestSellerProduct)">Add to Basket</button>
+          </div>
+          <div class="mt-4">
+            {{ bestSellerProduct.description }}
+          </div>
+        </div>
+        <div style="width: 40%;display: flex; justify-content: center;">
+          <div style="height: 250px; width: 250px;">
+            <img src={{bestSellerProduct.picture.thumbnail}} alt="" loading="lazy"
+              (click)="selectProduct(bestSellerProduct)" class="featured-product-image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid d-flex justify-content-center wrap">
+    <div class="new-arrival-section">
+      <span class="recently-viewed-tag  box-shadow">New Arrivals</span>
+      <div class="scroll-container d-flex justify-content-start py-1">
+        <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+        <div #widgetsContent class="custom-slider-main">
+          <div class="space-around" *ngFor="let p of products">
+            <app-item [product]="p"></app-item>
+          </div>
+        </div>
+        <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+      </div>
+    </div>
+  </div>
+  <div style="height: 100px;"></div>
 </div>
 <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast>
