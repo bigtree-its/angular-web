@@ -11,7 +11,6 @@ import { CardType, PaymentCard } from 'src/app/model/payment-card';
 import { User } from 'src/app/model/user';
 import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
-import { AuthService } from 'src/app/helpers/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -69,7 +68,6 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private Auth: AuthService
   ) {
     if (this.accountService.userValue !== undefined) {
       this.user = this.accountService.userValue;
@@ -179,9 +177,6 @@ export class ProfileComponent implements OnInit {
     if (this.changePasswordForm.invalid) {
       return;
     }
-    if (!this.isPasswordValid) {
-      return;
-    }
     this.accountService
       .changePassword(
         this.changePasswordForm.currentPassword.value,
@@ -210,21 +205,6 @@ export class ProfileComponent implements OnInit {
       );
   }
 
-  isPasswordValid() {
-    let password: string = this.changePasswordForm.currentPassword.value;
-    let hash = this.Auth.getHashedPassword();
-    this.Auth.compare(
-      password,
-      hash,
-      (error: string | null, match: boolean | null) => {
-        if (error) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-    );
-  }
 
   onAddAddress() {
     this.openAddress();
@@ -390,18 +370,6 @@ export class ProfileComponent implements OnInit {
   }
 
   openOrders() {}
-
-  isPasswordChanged() {
-    if (
-      this.passwordChangeSubmitted == true &&
-      !this.changePasswordForm.invalid &&
-      this.isPasswordValid
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   private updateCurrentUser() {
     this.accountService

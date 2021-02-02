@@ -1,0 +1,50 @@
+##################################################################################################
+# angular
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular
+  labels:
+    app: angular
+    service: angular
+spec:
+  ports:
+  - port: 80
+    name: http
+  selector:
+    app: angular
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: angular
+  labels:
+    account: angular
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-v1
+  labels:
+    app: angular
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: angular
+        version: v1
+    spec:
+      serviceAccountName: angular
+      containers:
+      - name: angular
+        image: gcr.io/nodal-formula-295821/openbasket/openbasket-web:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80

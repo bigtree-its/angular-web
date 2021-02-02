@@ -1,10 +1,10 @@
 {
     "name": "openbasket-web",
-    "version": "0.0.0",
+    "version": "1.0",
     "scripts": {
         "ng": "ng",
-        "start": "ng serve",
-        "build": "ng build",
+        "start": "ng serve --prod",
+        "build": "ng build --prod",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
@@ -29,7 +29,6 @@
         "@ng-bootstrap/ng-bootstrap": "^8.0.1",
         "@types/underscore": "^1.10.24",
         "angular-tree-component": "^8.5.6",
-        "bcryptjs": "^2.4.3",
         "bootstrap": "^4.5.3",
         "http-status-codes": "^2.1.4",
         "rxjs": "~6.6.3",

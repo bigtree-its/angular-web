@@ -24,7 +24,10 @@ export class OrderService {
     private http: HttpClient,
     private router: Router,
     private basketService: BasketService
-  ) { }
+  ) { 
+    console.log('OrderService.Constructor::Config');
+    console.log('Api URL: '+ this.SERVER_URL);
+  }
 
   getOrders() {
     var url = this.SERVER_URL + this.ORDERS;

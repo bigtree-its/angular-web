@@ -20,16 +20,20 @@ export class ProductService {
   constructor(
     private http: HttpClient,
     private messengerService: MessengerService
-  ) {}
+  ) {
+    console.log('ProductService.Constructor::Start');
+    console.log('Api URL: '+ this.SERVER_URL);
+    console.log('ProductService.Constructor::End');
+  }
 
   getAllProducts(): Observable<ProductModel[]> {
     console.log('Fetching all products...');
-    return this.http.get<ProductModel[]>(this.SERVER_URL + 'products');
+    return this.http.get<ProductModel[]>(this.SERVER_URL + '/products');
   }
 
   getDepartments(): Observable<Department[]> {
     console.log('Fetching all departments...');
-    return this.http.get<Department[]>(this.SERVER_URL + 'departments');
+    return this.http.get<Department[]>(this.SERVER_URL + '/departments');
   }
 
   queryProducts(query: ProductQuery): Observable<ProductModel[]> {
@@ -51,18 +55,18 @@ export class ProductService {
     if ( query.category !== undefined && query.category !== null){
       params = params.set('categories', query.category);
     }
-    return this.http.get<ProductModel[]>(this.SERVER_URL + 'products', {params});
+    return this.http.get<ProductModel[]>(this.SERVER_URL + '/products', {params});
   }
 
   getFeaturedProduct(): Observable<ProductModel[]> {
     console.log('Fetching featured product...');
-    return this.http.get<ProductModel[]>(this.SERVER_URL + 'products/featured');
+    return this.http.get<ProductModel[]>(this.SERVER_URL + '/products/featured');
   }
 
   getAllDepartments(): void {
     console.log('Fetching all departments...');
     this.allDeps$ = this.http.get<Department[]>(
-      this.SERVER_URL + 'departments'
+      this.SERVER_URL + '/departments'
     ) as Observable<Department[]>;
     // .pipe( shareReplay({ bufferSize: 1, refCount: true }))
     this.allDeps$.subscribe((d) => {
@@ -71,42 +75,42 @@ export class ProductService {
   }
 
   getDepartment(departmentId: any): Observable<Department> {
-    return this.http.get<Department>(this.SERVER_URL + 'departments/'+ departmentId);
+    return this.http.get<Department>(this.SERVER_URL + '/departments/'+ departmentId);
   }
 
   getAllCategories(): Observable<Category[]>  {
     console.log('Fetching categories');
     var params = new HttpParams().set('tree', "true");
-    return this.http.get<Category[]>(this.SERVER_URL + 'categories', {params}) as Observable<Category[]>;
+    return this.http.get<Category[]>(this.SERVER_URL + '/categories', {params}) as Observable<Category[]>;
   }
 
   getCategoriesByDepartment(id: string): Observable<Category[]> {
     return this.http.get<Category[]>(
-      this.SERVER_URL + 'categories?department=' + id
+      this.SERVER_URL + '/categories?department=' + id
     );
   }
 
   getAllTopCategories(): Observable<Category[]> {
     console.log('Fetching all categories...');
-    return this.http.get<Category[]>(this.SERVER_URL + 'categories?top=true');
+    return this.http.get<Category[]>(this.SERVER_URL + '/categories?top=true');
   }
 
   getSubCategories(c: Category): Observable<Category[]> {
     console.log('Fetching all sub categories of ' + c.name);
     return this.http.get<Category[]>(
-      this.SERVER_URL + 'categories?parent=' + c._id
+      this.SERVER_URL + '/categories?parent=' + c._id
     );
   }
 
   getSingleProduct(id: string): Observable<ProductModel> {
     console.log(`Fetching specific product: ${id}`);
-    return this.http.get<ProductModel>(this.SERVER_URL + 'products/' + id);
+    return this.http.get<ProductModel>(this.SERVER_URL + '/products/' + id);
   }
 
   getProductsByCategory(category: string): Observable<ProductModel> {
     console.log(`Fetching all products by category: ${category}`);
     return this.http.get<ProductModel>(
-      this.SERVER_URL + 'products/?category=' + category
+      this.SERVER_URL + '/products/?category=' + category
     );
   }
 }

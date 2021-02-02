@@ -53,6 +53,15 @@ export class AccountService {
     private http: HttpClient,
     private alertService: AlertService
   ) {
+    console.log('AccountService.Constructor::Config');
+    console.log('Api URL: '+ this.SERVER_URL);
+    console.log('Login URL: '+ this.LOGIN_URL);
+    console.log('Register URL: '+ this.REGISTER_URL);
+    console.log('ChangePassword URL: '+ this.CHANGE_PASSWORD_URL);
+    console.log('ForgotPassword URL: '+ this.FORGOT_PASSWORD_URL);
+    console.log('ResetPassword URL: '+ this.RESET_PASSWORD_URL);
+    console.log('Users URL: '+ this.USERS_URL);
+
     let userOnStorage = localStorage.getItem('user');
     if (userOnStorage !== undefined) {
       this.userSubject = new BehaviorSubject<User>(JSON.parse(userOnStorage));
