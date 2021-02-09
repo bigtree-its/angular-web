@@ -1,6 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { StatusCodes } from 'http-status-codes';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -11,7 +10,7 @@ import { Review } from '../model/review';
 })
 export class ReviewService {
 
-  SERVER_URL = environment.REVIEW_SERVICE_URL + "reviews";
+  SERVER_URL = environment.REVIEW_SERVICE_URL + "/reviews";
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +21,7 @@ export class ReviewService {
 
   createReview(review: Review): Observable<Review> {
     console.log('Creating review: ' + JSON.stringify(review));
-    return this.http.post<Review>(this.SERVER_URL, review)
+    return this.http.post<Review>(this.SERVER_URL, review)  
     .pipe(
       map((response) => {
         console.log('Response: '+ JSON.stringify(response));

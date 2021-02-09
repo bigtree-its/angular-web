@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { OrderService } from 'src/app/service/order.service';
 import { Order, OrderItem } from 'src/app/model/order';
 import { BasketService } from 'src/app/service/basket.service';
+import { GetAddressIOService } from 'src/app/service/get-address-io.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-place-order',
@@ -16,7 +18,6 @@ import { BasketService } from 'src/app/service/basket.service';
   styleUrls: ['./place-order.component.css']
 })
 export class PlaceOrderComponent implements OnInit {
-
 
   address: Address = new Address();
   paymentCard: PaymentCard = new PaymentCard();
@@ -29,6 +30,7 @@ export class PlaceOrderComponent implements OnInit {
     private accountService: AccountService,
     private orderService: OrderService,
     private basketService: BasketService,
+    private getAddressIOService: GetAddressIOService,
     private router: Router
   ) { }
 
@@ -38,8 +40,8 @@ export class PlaceOrderComponent implements OnInit {
       this.basket = basket;
       this.address = basket.address;
       this.paymentCard = basket.paymentCard;
-      if ( this.basket !== undefined ){
-        this.createOrder();
+      if (this.basket !== undefined) {
+        this.calculateDeliveryCost();
       }
     })
 
@@ -47,6 +49,30 @@ export class PlaceOrderComponent implements OnInit {
     if (this.user === null || this.user === undefined) {
       this.router.navigate(['/login']);
     }
+  }
+
+  calculateDeliveryCost() {
+    this.getAddressIOService.
+    getDistance(this.address.postcode)
+    .subscribe((data) =>{
+      if ( data !== null){
+        var deliveryCost = 0.00;
+        var distance: number = Math.round(Number(data.metres));
+        var distanceInKm: number = (distance/1000);
+        if ( distance > 1000 ){
+          var deliveryCost: number = distanceInKm * 0.10;
+          if ( deliveryCost > 4){
+            deliveryCost = 4.00;
+          }
+        }
+        this.createOrder(deliveryCost);
+        console.log(`Distance to delivery address: ${distanceInKm} km'. Cost: ${deliveryCost}`);
+      }
+    }, (error: HttpErrorResponse)=>{
+      console.log(`Distance to delivery address resulted with an error.{ status: ${error.status}, Message: ${error.error.Message} }`);
+      var deliveryCost = 0.50;
+      this.createOrder(deliveryCost);
+    })
   }
   getMaskedCardNumber() {
     if (this.paymentCard !== undefined) {
@@ -68,11 +94,9 @@ export class PlaceOrderComponent implements OnInit {
     return this.basket.subTotal;
   }
 
-  createOrder(){
-    var deliveryCost  = this.deliveryCost(this.basket.subTotal);
-    var saleTax = this.percentage(this.basket.subTotal, 20);
-    console.log('Delivery Cost: '+ deliveryCost);
-    console.log('Sale Tax: '+ saleTax);
+  createOrder(deliveryCost: number) {
+    var saleTax = this.percentage(this.basket.subTotal, 1);
+    console.log('Sale Tax: ' + saleTax);
     this.order = new Order();
     this.order.date = new Date();
     this.order.address = this.address;
@@ -82,7 +106,8 @@ export class PlaceOrderComponent implements OnInit {
     this.order.subTotal = this.basket.subTotal;
     this.order.saleTax = saleTax;
     this.order.shippingCost = deliveryCost;
-    this.order.totalCost = + (+this.basket.subTotal + saleTax + deliveryCost ).toFixed(2);
+    this.order.packagingCost = 0.50;
+    this.order.totalCost = + (+this.basket.subTotal + saleTax + deliveryCost + 0.50).toFixed(2);
     this.order.expectedDeliveryDate = new Date();
     var items: OrderItem[] = [];
     this.basket.items.map(bi => {
@@ -97,18 +122,11 @@ export class PlaceOrderComponent implements OnInit {
     this.order.items = items;
   }
 
-   percentage(num, per)
-  {
-    return (num/100)*per;
+  percentage(num, per) {
+    return (num / 100) * per;
   }
 
-  deliveryCost(total: number)
-  {
-    if ( total < 40){
-      return this.percentage(total, 2);
-    }
-    return 0;
-  }
+  
   confirmPurchase() {
     console.log('Confirming order..')
     this.orderService.placeOrder(this.order);

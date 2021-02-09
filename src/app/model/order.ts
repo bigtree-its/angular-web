@@ -16,6 +16,7 @@ export class Order{
     subTotal:number;
     saleTax:number;
     shippingCost:number;
+    packagingCost:number;
     discount:number;
     totalCost:number;
 }

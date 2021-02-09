@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
 
-  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8081",
-  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081",
-
-
-  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080",
-  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082",
+  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"],
+  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"],
+  // POSTCODELOOKUP_SERVICE_URL: window["env"]["postcodeLookupServiceUrl"] || "https://api.getaddress.io/find/g775sf?expand=true&api-key=VoEYLOWRyECPuAIwDnocAQ30109",
+  
+  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"],
+  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"],
   CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/auth/change-password',
   FORGOT_PASSWORD: window["env"]["userServiceUrl"] + '/auth/forgot-password',
   RESET_PASSWORD: window["env"]["userServiceUrl"] + '/auth/reset-password',
@@ -18,5 +18,11 @@ export const environment = {
    AUTH_REGISTER_PATH: '/auth/register',
    USERS: '/users',
    ORDERS: '/orders',
-   BASKETS: '/baskets'
+   BASKETS: '/baskets',
+
+   /** GetAddress.io */
+   API_KEY_GETADDRESS_IO: window["env"]["apiKeyGetAddressIO"],
+   POSTCODELOOKUP_SERVICE_URL: window["env"]["postcodeLookupServiceUrl"],
+   DISTANCE_SERVICE_URL: window["env"]["distanceServiceUrl"],
+   ORIGIN_POSTCODE: window["env"]["originPostcode"],
 };

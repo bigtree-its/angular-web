@@ -15,27 +15,27 @@
 
 .delivery-address-section {
     width: 400px;
-    border-radius: 10px;
     margin: 10px;
     padding: 15px;
-    background-color: rgb(240, 240, 240);
+    border: 3px solid #111;
+    /* background-color: rgb(240, 240, 240); */
     clear: both;
     height: auto;
 }
 
 .payment-section {
     width: 400px;
-    border-radius: 10px;
     margin: 10px;
     padding: 15px;
-    background-color: rgb(240, 240, 240);
+    /* background-color: rgb(240, 240, 240); */
+    border: 3px solid #111;
 }
 
 .basket-section {
     width: 400px;
     padding: 15px;
-    border: 1px solid #ececec;
-    border-radius: 10px;
+    /* border: 1px solid #ececec; */
+    border: 3px solid #111;
     margin: 10px;
 }
 

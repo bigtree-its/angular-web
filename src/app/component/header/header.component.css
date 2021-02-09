@@ -9,6 +9,9 @@
     transition: background-color 1s ease 0s;
     color: white;
 }
+.header{
+    transition: background-color 1s ease 0s;
+}
 
 .logo-brand-text {
     color: #1b1b1b;
@@ -73,7 +76,8 @@
 }
 
 .top-nav-basket-count {
-    background-color: #1a73e8;
+    /* background-color: #1a73e8; */
+    background-color: #384557;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border: 2px solid #fff;

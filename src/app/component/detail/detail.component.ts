@@ -179,7 +179,6 @@ export class DetailComponent implements OnInit {
     if (this.reviewForm.invalid) {
       return;
     }
-    window.alert('Headline: '+ this.reviewFormControls.headline.value)
     if ( this.reviewFormControls.headline.value === undefined || this.reviewFormControls.headline.value === null || this.reviewFormControls.headline.value === ""){
       return;
     }

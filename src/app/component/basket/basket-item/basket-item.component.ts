@@ -40,16 +40,16 @@ export class BasketItemComponent implements OnInit {
     if (this.quantity < 10) {
       this.quantity = this.quantity + 1;
       this.item.qty = this.quantity;
+      this.calculateSubTotal();
     }
-    this.calculateSubTotal();
   }
 
   decreaseQuantity() {
-    if (this.quantity > 0) {
+    if (this.quantity > 1) {
       this.quantity = this.quantity - 1;
       this.item.qty = this.quantity;
+      this.calculateSubTotal();
     }
-    this.calculateSubTotal();
   }
 
   private calculateSubTotal() {

@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
 
-  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8081",
-  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081",
+  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8081/products/v1",
+  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081/reviews/v1",
+  
 
-
-  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080",
-  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082",
+  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080/users/v1",
+  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082/orders/v1",
   CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/auth/change-password',
   FORGOT_PASSWORD: window["env"]["userServiceUrl"] + '/auth/forgot-password',
   RESET_PASSWORD: window["env"]["userServiceUrl"] + '/auth/reset-password',
@@ -22,7 +22,13 @@ export const environment = {
    AUTH_REGISTER_PATH: '/auth/register',
    USERS: '/users',
    ORDERS: '/orders',
-   BASKETS: '/baskets'
+   BASKETS: '/baskets',
+
+   /** GetAddress.io */
+   API_KEY_GETADDRESS_IO: window["env"]["apiKeyGetAddressIO"],
+   POSTCODELOOKUP_SERVICE_URL: window["env"]["postcodeLookupServiceUrl"] || "https://api.getaddress.io/find",
+   DISTANCE_SERVICE_URL: window["env"]["distanceServiceUrl"] || "https://api.getAddress.io/distance",
+   ORIGIN_POSTCODE: window["env"]["originPostcode"],
 };
 
 /*

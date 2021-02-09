@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Basket } from 'src/app/model/basket.model';
-import { MessengerService } from 'src/app/service/messenger.service';
-import { Address } from 'src/app/model/address';
+import { Address, PostcodeLookupResult, PostcodeLookupResultAddress } from 'src/app/model/address';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { CardType, PaymentCard } from 'src/app/model/payment-card';
+import {  PaymentCard } from 'src/app/model/payment-card';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { first } from 'rxjs/operators';
 import { faCcMastercard } from '@fortawesome/free-brands-svg-icons';
@@ -13,9 +12,9 @@ import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
 import { AccountService } from 'src/app/service/account.service';
 import { User } from 'src/app/model/user';
-import { Order, OrderItem } from 'src/app/model/order';
-import { OrderService } from 'src/app/service/order.service';
 import { CardValidator } from 'src/app/helpers/card-validator';
+import { GetAddressIOService } from 'src/app/service/get-address-io.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-checkout',
@@ -44,9 +43,10 @@ export class CheckoutComponent implements OnInit {
   hideAddressForm: boolean;
   hidePaymentForm: boolean;
   showCardSection: boolean;
+  hidePostcodeLoookupForm: boolean;
   type: String = 'Credit';
 
-  expirationMonth: number = 1;
+  expirationMonth: number = 12;
   expirationYear: number = new Date().getFullYear();
   yearsOptions: number[] = [];
   monthsOptions: number[] = [1,2,3,4,5,6,7,8,9,10,11,12];
@@ -54,9 +54,12 @@ export class CheckoutComponent implements OnInit {
   isError: boolean = false;
   message: String;
   cardTpe: string = "";
+  postcodeAddressList: PostcodeLookupResultAddress[];
+  selectedDeliveryAddress: PostcodeLookupResultAddress;
+  postcodeLookupResult: PostcodeLookupResult;
 
   constructor(
-    private orderService: OrderService,
+    private getAddressIOService: GetAddressIOService,
     private router: Router,
     private basketService: BasketService,
     private accountService: AccountService
@@ -83,6 +86,7 @@ export class CheckoutComponent implements OnInit {
       if ( this.user !== undefined){
         this.addressList = this.user.addresses;
         if ( this.addressList !== undefined && this.addressList.length > 0){
+          this.hidePostcodeLoookupForm = true;
           this.hideAddressForm = true;
           if ( this.addressList.length == 1){
             var add: Address = this.addressList[0];
@@ -138,17 +142,70 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  onSubmitPostcodeLookup(postcodeLoookupForm: NgForm){
+    if (postcodeLoookupForm.valid) {
+      if (this.address.postcode === undefined) {
+        this.hidePostcodeLoookupForm = false;
+      } else {
+        // this.hidePostcodeLoookupForm = true;
+        this.doPostcodeLookup(this.address.postcode);
+      }
+    }
+  }
+
+  doPostcodeLookup(postcode: String) {
+    this.getAddressIOService
+      .lookupAddresses(postcode)
+      // .pipe(first())
+      .subscribe(
+        (data: PostcodeLookupResult) => {
+          // this.postcodeAddressList =  _.sortBy(data.addresses, 'building_number');
+          this.postcodeLookupResult = data;
+          this.postcodeAddressList = data.addresses.sort(function(a, b){
+            return a.building_number-b.building_number
+        });
+          console.log('Address Lookup Response. ' + JSON.stringify(data));
+          this.selectedDeliveryAddress = this.postcodeAddressList[0];
+        },
+        (error) => {
+          console.log('Address Lookup resulted an error.' + JSON.stringify(error));
+        }
+      );
+  }
+
+  onSelectDeliveryAddress(selectAddress){
+    this.selectedDeliveryAddress = selectAddress;
+  }
+
+  onSelectExpiryMonth(expiryMonth){
+    this.expirationMonth = expiryMonth;
+    this.card.expiryMonth = expiryMonth;
+  }
+
+  onSelectExpiryYear(expiryYear){
+    this.expirationYear = expiryYear;
+    this.card.expiryYear = expiryYear;
+  }
+
+  confirmDeliveryAddress(){
+    this.hidePostcodeLoookupForm = true;
+    this.address.city = this.selectedDeliveryAddress.town_or_city
+    this.address.lineNumber1 = this.selectedDeliveryAddress.line_1
+    this.address.lineNumber2 = this.selectedDeliveryAddress.line_2
+    this.address.country = this.selectedDeliveryAddress.country
+    this.address.postcode = this.postcodeLookupResult.postcode;
+    this.updateAddressWithUserContactInfo(this.address);
+    this.updateAddressList();
+    
+  }
+
   private updateAddressList() {
     let existing: Address = this.addressList.find(
-      (a) => a._id === this.address._id
+      (a) => (a.postcode === this.address.postcode)
     );
     if (!existing) {
       this.addressList.push(this.address);
     } else {
-      existing.firstName = this.address.firstName;
-      existing.lastName = this.address.lastName;
-      existing.email = this.address.email;
-      existing.mobile = this.address.mobile;
       existing.lineNumber1 = this.address.lineNumber1;
       existing.lineNumber2 = this.address.lineNumber2;
       existing.city = this.address.city;
@@ -157,6 +214,13 @@ export class CheckoutComponent implements OnInit {
       this.accountService.userValue.addresses = this.addressList;
       this.updateCurrentUser();
     }
+  }
+
+  private updateAddressWithUserContactInfo(address: Address) {
+    address.firstName = this.accountService.userValue.firstName;
+    address.lastName = this.accountService.userValue.lastName;
+    address.email = this.accountService.userValue.email;
+    address.mobile = this.accountService.userValue.mobile;
   }
 
   selectType(e: String) {
@@ -174,7 +238,7 @@ export class CheckoutComponent implements OnInit {
   }
  
   addNewAddress() {
-    this.hideAddressForm = false;
+    this.hidePostcodeLoookupForm = false;
     this.address = new Address();
   }
 
@@ -277,11 +341,13 @@ export class CheckoutComponent implements OnInit {
 
   onKeypressCardNumberEvent(event: any){
     var cardNumber: string  = event.target.value;
-    if(cardNumber !== undefined && cardNumber.length > 3){
+    if(cardNumber !== undefined && cardNumber.length > 1){
       var cardTpe = this.cardValidator.cardType(cardNumber);
       if (this.card !== undefined && this.card !== null){
         this.card.cardType = cardTpe;
       }
+    }else{
+      this.card.cardType = undefined;
     }
  }
 
