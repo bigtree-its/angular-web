@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Basket } from 'src/app/model/basket.model';
-import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faShoppingCart, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-header',
@@ -14,14 +15,17 @@ export class HeaderComponent implements OnInit {
 
   faUser = faUser;
   faShoppingBag = faShoppingCart;
+  faMapMarkerAlt = faMapMarkerAlt;
 
   userName: string;
   basket: Basket;
   itemCount: number = 0;
   basketTotal: number = 0;
+  user: User;
+  userPostcode: string;
 
   constructor(
-    private accountService: AccountService,
+    public accountService: AccountService,
     private basketService: BasketService,
     private router: Router) {
   }
@@ -33,9 +37,12 @@ export class HeaderComponent implements OnInit {
       this.itemCount = basket.items.length;
       this.basketTotal = +basket.subTotal.toFixed(2);
     })
-    var user = this.accountService.userValue;
-    if ( user !== undefined && user !== null){
-      this.userName = user.firstName + " "+ user.lastName;
+    this.user = this.accountService.userValue;
+    if ( this.user !== undefined && this.user !== null){
+      this.userName = this.user.firstName + " "+ this.user.lastName;
+      if ( this.user.addresses !== undefined && this.user.addresses !== null && this.user.addresses.length > 0){
+        this.userPostcode = this.user.addresses[0].postcode;
+      }
     }else{
       this.userName = "Hello"
     }
@@ -50,6 +57,8 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
+    this.user = undefined;
+    this.userPostcode = undefined;
   }
 
   login(){

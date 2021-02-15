@@ -47,11 +47,12 @@
               <div class="d-flex justify-content-center checkout-address-action-div">
                 <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="confirmDeliveryAddress()">Deliver to
                   this address</button>
+                  <button class="btn btn-outline-danger btn-sm ml-1" (click)="cancelAddressLookupForm()">Cancel</button>
               </div>
           </div>
         </form>
       </div>
-      <div [hidden]="hideAddressForm==true">
+      <div [hidden]="hideAddressEditForm==true">
         <form #f="ngForm" (ngSubmit)=(onSubmitAddress(f))>
           <div class="col mb-3">
             <label for="postcode">Post/Zip code</label>
@@ -104,8 +105,7 @@
 
           <div class="col mb-3">
             <label for="lineNumber2">Address 2 <span class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control ob-text-field" id="lineNumber2" placeholder="Apartment or
-                                suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2"
+            <input type="text" class="form-control ob-text-field" id="lineNumber2" placeholder="" [(ngModel)]="address.lineNumber2" value="" name="lineNumber2"
               #lineNumber2="ngModel">
           </div>
 
@@ -119,25 +119,16 @@
           </div>
           <div class="col mb-3">
             <label for="country">Country</label>
-            <select class="custom-select d-block w-100  ob-text-field" id="country" required
-              [(ngModel)]="address.country" name="country" #country="ngModel">
-              <option value="">Select...</option>
-              <option>United Kingdom</option>
-              <option>United States</option>
-              <option>United India</option>
-            </select>
-            <!-- <div [hidden]="country.valid || country.pristine" class="alert alert-danger">
-                                Please select a Country.
-                            </div> -->
+            <input type="text" class="form-control ob-text-field" id="country" placeholder="United Kingdom" required
+              [(ngModel)]="address.country" name="country" #city="ngModel">
           </div>
           <div class="col h-flex mb-3">
-            <button type="submit" class="btn btn-sm btn-primary
-                        m-1" [disabled]="!f.form.valid">Submit</button>
-            <button class="btn btn-sm btn-secondary m-1" (click)="cancelAddressForm()">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary btn-sm ml-1" [disabled]="!f.form.valid">Submit</button>
+            <button class="btn btn-outline-danger btn-sm ml-1" (click)="cancelAddressForm()">Cancel</button>
           </div>
         </form>
       </div>
-      <div *ngIf="hidePostcodeLoookupForm">
+      <div *ngIf="hidePostcodeLoookupForm && hideAddressEditForm">
         <div class="d-flex flex-space-between p-1 mb-2">
           <strong class="text-muted">Choose a delivery address:</strong>
           <button type="button" class="btn btn-outline-secondary btn-sm ml-1" (click)="addNewAddress()">Add</button>
@@ -171,9 +162,9 @@
           </div>
         </div>
       </div>
-      <div class="mt-3">
+      <div class="mt-4">
         <form>
-          <label class="bt-check">My Delivery address same as Billing Address
+          <label class="bt-check muted"><strong class="text-muted">My Delivery address same as Billing Address</strong>
             <input type="checkbox" (change)="shippingAndBillingAddress($event)">
             <span class="tick"></span>
           </label>

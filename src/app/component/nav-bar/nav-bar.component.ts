@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Department } from 'src/app/model/product.model';
+import { AccountService } from 'src/app/service/account.service';
 import { ProductService } from 'src/app/service/product.service';
 
 @Component({
@@ -12,7 +13,9 @@ export class NavBarComponent implements OnInit {
   departments: Department[];
   department: Department;
 
-  constructor( private productService: ProductService,
+  constructor(
+    private productService: ProductService,
+    public accountService: AccountService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -24,4 +27,7 @@ export class NavBarComponent implements OnInit {
     this.department = d;
     this.router.navigate(['/category-browser', this.department._id]).then();
   }
+
+  
+
 }

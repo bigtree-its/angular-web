@@ -40,7 +40,7 @@ export class CheckoutComponent implements OnInit {
 
   shipAddressSameAsBilling: boolean;
   saveAddress: boolean;
-  hideAddressForm: boolean;
+  hideAddressEditForm: boolean;
   hidePaymentForm: boolean;
   showCardSection: boolean;
   hidePostcodeLoookupForm: boolean;
@@ -87,7 +87,7 @@ export class CheckoutComponent implements OnInit {
         this.addressList = this.user.addresses;
         if ( this.addressList !== undefined && this.addressList.length > 0){
           this.hidePostcodeLoookupForm = true;
-          this.hideAddressForm = true;
+          this.hideAddressEditForm = true;
           if ( this.addressList.length == 1){
             var add: Address = this.addressList[0];
             add.selected = true;
@@ -134,9 +134,9 @@ export class CheckoutComponent implements OnInit {
   onSubmitAddress(f: NgForm) {
     if (f.valid) {
       if (this.address.lineNumber1 === undefined) {
-        this.hideAddressForm = false;
+        this.hideAddressEditForm = false;
       } else {
-        this.hideAddressForm = true;
+        this.hideAddressEditForm = true;
         this.updateAddressList();
       }
     }
@@ -171,6 +171,10 @@ export class CheckoutComponent implements OnInit {
           console.log('Address Lookup resulted an error.' + JSON.stringify(error));
         }
       );
+  }
+
+  cancelAddressLookupForm(){
+    this.hidePostcodeLoookupForm = true;
   }
 
   onSelectDeliveryAddress(selectAddress){
@@ -234,7 +238,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   cancelAddressForm() {
-    this.hideAddressForm = true;
+    this.hideAddressEditForm = true;
   }
  
   addNewAddress() {
@@ -273,7 +277,7 @@ export class CheckoutComponent implements OnInit {
   }
   editAddress(a: Address) {
     this.address = a;
-    this.hideAddressForm = false;
+    this.hideAddressEditForm = false;
   }
 
   removeAddress(a: Address) {

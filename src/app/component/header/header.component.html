@@ -1,34 +1,56 @@
 <div class="container-fluid d-flex justify-content-between wrap header">
-    <div class="d-flex justify-content-start">
-        <a class="navbar-brand" href="#">
-            <img src="/assets/icons/sale.png" width="30" height="30" class="d-inline-block mb-3" alt="">
-            <strong class="logo-brand-text">OpenBasket</strong>
-        </a>
-    </div>
-    <div class="d-flex justify-content-end">
-        <div *ngIf="isUserLoggedIn()" class="right-button d-flex justify-content-center">
-            <div class="dropdown pt-3 px-3">
-                <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <!-- <fa-icon [icon]="faUser" size="lg" class="account-icon"></fa-icon> -->
-                        <!-- <img src="/assets/icons/top-nav-user-icon.png" alt=""
-                            loading="lazy" class="account-icon"> -->
-                            <!-- {{userName}} -->
-                            My Account
-                    </span>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <span class="dropdown-item " (click)="logout()" *ngIf="isUserLoggedIn() == true">Logout</span>
-                    <span class="dropdown-item " (click)="login()" *ngIf="isUserLoggedIn() == false">Login</span>
-                    <span class="dropdown-item " (click)="profile()">Profile</span>
-                    <span class="dropdown-item " (click)="orders()">Orders</span>
-                </div>
-            </div>
-        </div>
-        <button class="right-button mr-1" *ngIf="isUserLoggedIn() == false" (click)="login()">Sign In</button>
-        <button class="right-button mr-1" *ngIf="isUserLoggedIn() == false" (click)="register()">Sign Up</button>
-        <span routerLink="/basket" class=" right-button mr-1 d-flex justify-content-center">
-            <!-- <fa-icon [icon]=" faShoppingBag " size="md " class="top-nav-basket-icon "></fa-icon> -->
-            <img src="/assets/icons/shopping-cart.png " alt=" " loading="lazy " class="top-nav-basket-icon mx-2 ">
-            <span class="text-center top-nav-basket-count ">{{ itemCount }}</span>
+  <div class="d-flex justify-content-start ml-2">
+    <a class="navbar-brand" href="#">
+      <!-- <img src="/assets/icons/sale.png" width="30" height="30" class="d-inline-block mb-3" alt=""> -->
+      <strong class="logo-brand-text-big">O</strong>
+      <strong class="logo-brand-text-1">pen</strong>
+      <strong class="logo-brand-text-big">B</strong>
+      <strong class="logo-brand-text-1">asket</strong>
+      <strong class="logo-brand-text-2">.</strong>
+      <strong class="logo-brand-text-3">com</strong>
+    </a>
+  </div>
+  <div class="d-flex justify-content-end">
+    <div *ngIf="accountService.userValue !== undefined && accountService.userValue !== null"
+      class="d-flex justify-content-center">
+      <div class="d-flex justify-content-start location-section"
+        *ngIf="accountService.userValue.addresses !== undefined && accountService.userValue.addresses !== null && accountService.userValue.addresses.length > 0">
+        <fa-icon [icon]="faMapMarkerAlt" size="md " class="mr-3 mt-3"></fa-icon>
+        <strong class="location-postcode">{{ accountService.userValue.addresses[0].postcode }}</strong>
+      </div>
+      <div class="dropdown  px-3 right-button profile-section">
+        <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          Hello, 
+          <span class="welcomeUsername">{{accountService.userValue.firstName}}</span>
         </span>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <span class="dropdown-item " (click)="logout()" *ngIf="isUserLoggedIn() == true">Logout</span>
+          <span class="dropdown-item " (click)="login()" *ngIf="isUserLoggedIn() == false">Login</span>
+          <span class="dropdown-item " (click)="profile()">Profile</span>
+          <span class="dropdown-item " (click)="orders()">Orders</span>
+        </div>
+      </div>
     </div>
+    <div class="signin-section" *ngIf="isUserLoggedIn() == false">
+      <span class="right-section-text">Hi there,</span>
+      <button class="signin-link mr-1"  (click)="login()">Sign In</button>
+    </div>
+    <div class="signup-section" *ngIf="isUserLoggedIn() == false">
+        <button class="right-section-text"  (click)="register()">Sign Up</button>
+    </div>
+    <div class="basket-section" routerLink="/basket">
+      <span class="right-section-text">Your Basket</span>
+      <div class="d-flex justify-content-start">
+        <fa-icon [icon]=" faShoppingBag" size="md " class="mr-3"></fa-icon>
+        <span>{{ itemCount > 0 ? itemCount : "Empty" }}</span>
+      </div>
+      
+    </div>
+<!--     
+    <span routerLink="/basket" class=" right-button mr-1 d-flex justify-content-center">
+      <img src="/assets/icons/shopping-cart.png " alt=" " loading="lazy " class="top-nav-basket-icon mx-2 ">
+      <span class="text-center top-nav-basket-count ">{{ itemCount }}</span>
+    </span> -->
+  </div>
 </div>
