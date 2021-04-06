@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
 import { ProductModel } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -50,7 +50,7 @@ export class DetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
-    private accountService: AccountService,
+    private localContextService: LocalContextService,
     private reviewService: ReviewService,
     private formBuilder: FormBuilder,
     private basketService: BasketService,
@@ -81,8 +81,7 @@ export class DetailComponent implements OnInit {
       });
     })
 
-    this.user = this.accountService.userValue;
-    console.log('User on detail page: '+ this.user)
+    this.user = this.localContextService.getCustomer();
   }
 
   increaseQuantity() {
@@ -189,8 +188,8 @@ export class DetailComponent implements OnInit {
     review.rating = this.rating;
     review.date = new Date();
     review.product = this.product._id;
-    review.userEmail = this.accountService.userValue.email;
-    review.userName = this.accountService.userValue.firstName + this.accountService.userValue.lastName;
+    review.userEmail = this.user.email;
+    review.userName = this.user.firstName + this.user.lastName;
     this.reviewService
     .createReview(review)
     .pipe(first())

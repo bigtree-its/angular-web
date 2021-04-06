@@ -24,6 +24,7 @@ export class PostcodeLookupResult {
 
 }
 
+
 export class PostcodeLookupResultAddress {
     public formatted_address: string[];
     public thoroughfare: string;
@@ -53,4 +54,14 @@ export class Place {
     public postcode: string;
     public latitude: string;
     public longitude: string;
+}
+
+export class RapidApiResult {
+    public Summaries: RapidApiAddress[];
+}
+
+export class RapidApiAddress {
+    public Id: number;
+    public StreetAddress: string;
+    public Place: string;
 }

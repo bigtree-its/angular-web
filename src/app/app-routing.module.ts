@@ -4,8 +4,6 @@ import { HomeComponent } from './component/home/home.component';
 import { DetailComponent } from './component/detail/detail.component';
 import { BasketComponent } from './component/basket/basket.component';
 import { LoginComponent } from './component/login/login.component';
-import { CheckoutComponent } from './component/checkout/checkout.component';
-import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
 import { RegisterComponent } from './component/register/register.component';
 import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 import { ProfileComponent } from './component/profile/profile.component';
@@ -13,6 +11,8 @@ import { AuthGuard } from './helpers/auth-guard';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
+import { CollectDeliveryAddressComponent } from './component/checkout/collect-delivery-address/collect-delivery-address.component';
+import { CollectPaymentComponent } from './component/checkout/collect-payment/collect-payment.component';
 
 
 const routes: Routes = [
@@ -32,10 +32,10 @@ const routes: Routes = [
     path: 'register', component: RegisterComponent
   },
   {
-    path: 'checkout', component: CheckoutComponent, canActivate : [AuthGuard]
+    path: 'delivery-address', component: CollectDeliveryAddressComponent, canActivate : [AuthGuard]
   },
   {
-    path: 'review', component: PlaceOrderComponent, canActivate : [AuthGuard]
+    path: 'collect-payment', component: CollectPaymentComponent, canActivate : [AuthGuard]
   },
   {
     path: 'order-confirmation', component: OrderConfirmationComponent, canActivate : [AuthGuard]

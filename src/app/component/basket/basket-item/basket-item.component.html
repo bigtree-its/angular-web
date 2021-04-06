@@ -1,9 +1,9 @@
 <div class="basket-item">
-    <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)">
+    <img src={{item.image}} alt="{{item.productName}}" class="basket-item-image" (click)="selectProduct(item.productId)">
     <!-- <div class="basket-item-image-section">
         <!-- <img src="/assets/icons/product-image.png" alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)"> -->
     <div class="basket-item-content">
-        <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
+        <span class="basket-item-name">{{item.productName.length > 30 ? item.productName.substr(0,30) + '... ' : item.productName}}</span>
         <span class="basket-item-price">{{ getPrettyPrintPrice(item.price)  | currency :'GBP'}}</span>
     </div>
     <div class="basket-item-qty-section">
@@ -14,5 +14,5 @@
             border-box px-2 rounded-lg" (click)="decreaseQuantity()" [class.disabled]="quantity < 2">
     </div>
     <span class="basket-item-subtotal">{{ getSubTotal() | currency : 'GBP'}}</span>
-    <button class="btn btn-link btn-xs basket-item-action-section" (click)="removeProduct(item._id)">Remove</button>
+    <button class="btn btn-link btn-xs basket-item-action-section" (click)="removeProduct(item.productId)">Remove</button>
 </div>

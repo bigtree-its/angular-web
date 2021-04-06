@@ -5,8 +5,7 @@
 </style>
 <app-nav-bar></app-nav-bar>
 <div class="container-fluid home">
-  <div class="container-fluid d-flex justify-content-center wrap"
-    *ngIf="featuredProduct!==undefined && featuredProduct !== null">
+  <div class="container-fluid d-flex justify-content-center wrap" *ngIf="featuredProduct!==undefined && featuredProduct !== null">
     <div
       style="display: flex; flex-direction: column; background-color: #f6fafa; width: 60%;height: 400px;margin: 10px;">
       <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
@@ -24,6 +23,7 @@
             </div>
           </div>
           <div class="d-block mt-3">
+            <!-- <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button> -->
             <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button>
           </div>
           <div class="mt-4">
@@ -51,8 +51,7 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid d-flex justify-content-center wrap py-2"
-    *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
+  <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
     <div
       style="display: flex; flex-direction: column; width: 30%;height: 400px; margin: 10px;">
       <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
@@ -111,4 +110,4 @@
   </div>
   <div style="height: 100px;"></div>
 </div>
-<app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast>
+<!-- <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast> -->

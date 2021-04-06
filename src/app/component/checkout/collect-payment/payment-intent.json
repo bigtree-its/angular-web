@@ -1,0 +1,16 @@
+{
+  "id": "pi_1IXkUsCYSHJV743tqYRiklLb",
+  "object": "payment_intent",
+  "amount": 1000,
+  "clientSecret": "pi_1IXkUsCYSHJV743tqYRiklLb_secret_j8uaUQFRAV40lvxE9KUIcCUUK",
+  "currency": "gbp",
+  "error": false,
+  "liveMode": false,
+  "errorMessage": null,
+  "paymentMethod": "card",
+  "status": "requires_payment_method",
+  "chargesUrl": "/v1/charges?payment_intent=pi_1IXkUsCYSHJV743tqYRiklLb",
+  "metaData": {
+    "integration_check": "accept_a_payment"
+  }
+}

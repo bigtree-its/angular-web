@@ -44,7 +44,7 @@ spec:
       serviceAccountName: angular
       containers:
       - name: angular
-        image: gcr.io/nodal-formula-295821/openbasket/openbasket-web:v1
+        image: gcr.io/nodal-formula-295821/openecomm/openbasket-web:v1
         imagePullPolicy: Always
         ports:
         - containerPort: 80

@@ -4,6 +4,7 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpResponse,
+  JsonpClientBackend,
 } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, retry, catchError } from 'rxjs/operators';
@@ -18,7 +19,11 @@ import {
   getReasonPhrase,
   getStatusCode,
 } from 'http-status-codes';
+
 import { AlertService } from './alert.service';
+import { BasketService } from './basket.service';
+import { Address } from '../model/address';
+import { LocalContextService } from './localcontext.service';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -31,10 +36,8 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AccountService {
-  
-  public userSubject: BehaviorSubject<User>;
-  public user: Observable<User>;
-  public userAuthenticated: User;
+
+
   public errorMessage: String;
 
   SERVER_URL = environment.ACCOUNT_SERVICE_URL;
@@ -46,56 +49,29 @@ export class AccountService {
   USERS_URL = this.SERVER_URL + environment.USERS;
 
   jwtHelper = new JwtHelperService();
-  userObject: User;
 
   constructor(
     private router: Router,
     private http: HttpClient,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private localContextService: LocalContextService,
   ) {
-    console.log('AccountService.Constructor::Config');
-    console.log('Api URL: '+ this.SERVER_URL);
-    console.log('Login URL: '+ this.LOGIN_URL);
-    console.log('Register URL: '+ this.REGISTER_URL);
-    console.log('ChangePassword URL: '+ this.CHANGE_PASSWORD_URL);
-    console.log('ForgotPassword URL: '+ this.FORGOT_PASSWORD_URL);
-    console.log('ResetPassword URL: '+ this.RESET_PASSWORD_URL);
-    console.log('Users URL: '+ this.USERS_URL);
-
-    let userOnStorage = localStorage.getItem('user');
-    if (userOnStorage !== undefined) {
-      this.userSubject = new BehaviorSubject<User>(JSON.parse(userOnStorage));
-      this.user = this.userSubject.asObservable();
-      this.user.subscribe((u) => {
-        this.userObject = u;
-      });
-    }
   }
 
-  public get userValue(): User {
-    return this.userSubject.value;
-  }
-
-  isAuthenticated(): boolean {
-    if (
-      this.userObject === undefined ||
-      this.userObject === null || 
-      this.userObject.token === undefined ||
-      this.jwtHelper.isTokenExpired(this.userObject.token)
-    ) {
-      // token expired
-      console.log('User is not authenticated.');
-      localStorage.removeItem('user');
-      this.userSubject.next(null);
+  public isAuthenticated(): boolean {
+    var token = this.localContextService.getCustomerToken();
+    if (token === null || token === undefined || this.jwtHelper.isTokenExpired(token)) {
+      console.log('User not authenticated.');
+      this.localContextService.removeCustomer();
       return false;
     } else {
-      console.log('Authenticated user found');
+      console.log('User Authenticated');
       return true;
     }
   }
 
   getToken(): string {
-    return this.userObject.token;
+    return this.localContextService.getCustomerToken();
   }
 
   login(username: string, password: string): Observable<User> {
@@ -106,19 +82,23 @@ export class AccountService {
       })
       .pipe(
         map((response) => {
-          this.updateUserOnStorage(response);
+          var token = response.token;
+          this.localContextService.setCustomerToken(token);
+          response.token = "";
+          this.localContextService.setCustomer(response);
           return response;
         })
       );
   }
 
-  
-
   register(user: User): Observable<User> {
     console.log('Register User: ' + JSON.stringify(user));
     return this.http.post<User>(this.REGISTER_URL, user).pipe(
       map((response) => {
-        this.updateUserOnStorage(response);
+        var token = response.token;
+        this.localContextService.setCustomerToken(token);
+        response.token = "";
+        this.localContextService.setCustomer(response);
         return response;
       })
     );
@@ -126,29 +106,30 @@ export class AccountService {
 
   logout() {
     // remove user from local storage and set current user to null
-    localStorage.removeItem('user');
-    this.userSubject.next(null);
+    this.localContextService.removeCustomer();
+    this.localContextService.removeCustomerToken();
     this.router.navigate(['/']);
   }
 
-  updateCurrentUser(): Observable<User> {
-    return this.updateUser(this.userValue);
-  }
-
-  updateUser(user: User): Observable<User> {
+  updateCurrentCustomer() {
+    var customer:User = this.localContextService.getCustomer();
+    if ( customer === null || customer === undefined){
+      console.log("Cannot update customer. Customer not found");
+      return;
+    }
     httpOptions.headers = httpOptions.headers.set(
       'Authorization',
-      this.getToken()
+      this.localContextService.getCustomerToken()
     );
-    const apiURL = this.USERS_URL + "/" + user._id;
-    console.log('Updating User @:  ' + apiURL);
-    console.log('Updating User Data: ' + JSON.stringify(user) );
-    return this.http.put<User>(apiURL, user, httpOptions).pipe(
+    const apiURL = this.USERS_URL + "/" + customer._id;
+    console.log('Updating User: ' + JSON.stringify(customer));
+    return this.http.put<User>(apiURL, customer, httpOptions).pipe(
       map((response) => {
-        this.updateUserOnStorage(response);
+        response.token = "";
+        this.localContextService.setCustomer(response);
         return response;
       }),
-      retry(1), 
+      retry(1),
       catchError(this.handleError));
   }
 
@@ -156,13 +137,20 @@ export class AccountService {
     currentPassword: string,
     newPassword: string
   ): Observable<User> {
+
+    var customer:User = this.localContextService.getCustomer();
+    if ( customer === null || customer === undefined){
+      console.log("Cannot update customer. Customer not found");
+      return;
+    }
+
     httpOptions.headers = httpOptions.headers.set(
       'Authorization',
-      'Bearer ' + this.getToken()
+      'Bearer ' + this.localContextService.getCustomerToken()
     );
     const apiURL = this.CHANGE_PASSWORD_URL;
     var req = {
-      email: this.userValue.email,
+      email: customer.email,
       password: currentPassword,
       newPassword: newPassword,
     };
@@ -170,14 +158,17 @@ export class AccountService {
       .put<User>(apiURL, req, httpOptions)
       .pipe(
         map((response) => {
-          this.updateUserOnStorage(response);
+          var token = response.token;
+          this.localContextService.setCustomerToken(token);
+          response.token = "";
+          this.localContextService.setCustomer(response);
           return response;
         }),
         retry(1),
         catchError(this.handleError));
   }
 
-  forgotPassword(email: string) : Observable<void>{
+  forgotPassword(email: string): Observable<void> {
     const apiURL = this.FORGOT_PASSWORD_URL;
     var req = {
       email: email
@@ -188,7 +179,7 @@ export class AccountService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  resetPassword(request: ResetPasswordRequest) : Observable<void>{
+  resetPassword(request: ResetPasswordRequest): Observable<void> {
     const apiURL = this.RESET_PASSWORD_URL;
     return this.http
       .put<void>(apiURL, request)
@@ -217,8 +208,4 @@ export class AccountService {
     return throwError(errorMessage);
   }
 
-  private updateUserOnStorage(response: User) {
-    localStorage.setItem('user', JSON.stringify(response));
-    this.userSubject.next(response);
-  }
 }

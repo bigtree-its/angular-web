@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Address } from 'src/app/model/address';
 import { NgForm } from '@angular/forms';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 
 @Component({
   selector: 'app-address',
@@ -13,7 +13,7 @@ export class AddressComponent implements OnInit {
   name: String = '';
   @Input() address = <Address>{}
 
-  constructor(private messengerService: MessengerService) { 
+  constructor(private LocalContextService: LocalContextService) { 
   }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class AddressComponent implements OnInit {
   onSubmit(f:NgForm) {
     if ( f.valid){
       console.log('Address submitted: '+ JSON.stringify(this.address));
-      this.messengerService.submitBillingAddress(this.address);
+      this.LocalContextService.submitBillingAddress(this.address);
     }
   }
 

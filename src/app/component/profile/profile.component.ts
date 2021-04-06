@@ -8,9 +8,12 @@ import {
 } from '@angular/forms';
 import { Address } from 'src/app/model/address';
 import { CardType, PaymentCard } from 'src/app/model/payment-card';
-import { User } from 'src/app/model/user';
 import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
+import { OrderService } from 'src/app/service/order.service';
+import { Order } from 'src/app/model/order';
+import { LocalContextService } from 'src/app/service/localcontext.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-profile',
@@ -38,8 +41,8 @@ export class ProfileComponent implements OnInit {
   passwordChangeSubmitted = false;
   changePasswordFormGroup: FormGroup;
 
-  /** User */
-  user: User;
+  /** customer */
+  customer: User;
 
   /** Address */
   hideAddressSection: boolean;
@@ -49,7 +52,8 @@ export class ProfileComponent implements OnInit {
 
   /** Payments */
   hidePaymentForm: boolean;
-  paymentCard: PaymentCard = new PaymentCard();;
+  paymentCard: PaymentCard = new PaymentCard();
+  orders: Order[];
   paymentCardList: PaymentCard[] = [];
   type: String = 'Credit';
 
@@ -68,14 +72,16 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
+    private localContextService: LocalContextService,
+    private orderService: OrderService,
   ) {
-    if (this.accountService.userValue !== undefined) {
-      this.user = this.accountService.userValue;
-      console.log('User ' + JSON.stringify(this.user));
-      this.addressList = this.accountService.userValue.addresses;
-      this.paymentCardList = this.accountService.userValue.paymentCards;
-      console.log('Address list for user ' + JSON.stringify(this.addressList));
-      console.log('Payment Card list for user ' + JSON.stringify(this.paymentCardList));
+    this.customer = this.localContextService.getCustomer();
+    if (this.customer !== undefined && this.customer !== null) {
+      console.log('customer ' + JSON.stringify(this.customer));
+      this.addressList = this.customer.addresses;
+      this.paymentCardList = this.customer.paymentCards;
+      console.log('Address list for customer ' + JSON.stringify(this.addressList));
+      console.log('Payment Card list for customer ' + JSON.stringify(this.paymentCardList));
       if (this.addressList === undefined || this.addressList.length == 0) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
@@ -84,6 +90,11 @@ export class ProfileComponent implements OnInit {
         this.hideAddressForm = true;
         this.address = this.addressList[0];
       }
+
+      this.orderService.getOrders(this.customer.email).subscribe(data => {
+        this.orders = data;
+        console.log('Retrieved ' + this.orders.length + " orders for this customer");
+      });
     }
   }
 
@@ -100,7 +111,26 @@ export class ProfileComponent implements OnInit {
     this.saveChangesEnabled = false;
     this.isError = false;
     this.message = "";
-    this.isSuccess =false;
+    this.isSuccess = false;
+
+    this.customer = this.localContextService.getCustomer();
+    if (this.customer !== undefined && this.customer !== null) {
+      this.addressList = this.customer.addresses;
+      this.paymentCardList = this.customer.paymentCards;
+      if (this.addressList === undefined || this.addressList.length == 0) {
+        this.hideAddressSection = true;
+        this.hideAddressForm = false;
+      } else {
+        this.hideAddressSection = false;
+        this.hideAddressForm = true;
+        this.address = this.addressList[0];
+      }
+
+      this.orderService.getOrders(this.customer.email).subscribe(data => {
+        this.orders = data;
+        console.log('Retrieved ' + this.orders.length + " orders for this customer");
+      });
+    }
   }
 
   showAboutYouModule() {
@@ -164,11 +194,13 @@ export class ProfileComponent implements OnInit {
     if (personalDetailsForm.invalid) {
       return;
     }
-    this.accountService.userValue.email = this.user.email;
-    this.accountService.userValue.firstName = this.user.firstName;
-    this.accountService.userValue.lastName = this.user.lastName;
-    this.accountService.userValue.mobile = this.user.mobile;
-    this.updateCurrentUser();
+
+    this.customer.email = this.customer.email;
+    this.customer.firstName = this.customer.firstName;
+    this.customer.lastName = this.customer.lastName;
+    this.customer.mobile = this.customer.mobile;
+    this.localContextService.setCustomer(this.customer);
+    this.updateCurrentcustomer();
   }
 
   onSubmitChangePassword() {
@@ -200,7 +232,7 @@ export class ProfileComponent implements OnInit {
             'Your password change not successful' + JSON.stringify(error)
           );
           this.isError = true;
-          this.message = "Your password change not successful. "+ error;
+          this.message = "Your password change not successful. " + error;
         }
       );
   }
@@ -233,8 +265,10 @@ export class ProfileComponent implements OnInit {
     for (let i = 0; i < this.addressList.length; i++) {
       if (this.addressList[i]._id === address._id) {
         this.addressList.splice(i, 1);
-        this.accountService.userValue.addresses = this.addressList;
-        this.updateCurrentUser();
+
+        this.customer.addresses = this.addressList;
+        this.localContextService.setCustomer(this.customer);
+        this.updateCurrentcustomer();
         break;
       }
     }
@@ -253,7 +287,7 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
-  
+
 
   private updateAddressList() {
     let existing: Address = this.addressList.find(
@@ -271,8 +305,10 @@ export class ProfileComponent implements OnInit {
       existing.city = this.address.city;
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
-      this.accountService.userValue.addresses = this.addressList;
-      this.updateCurrentUser();
+
+      this.customer.addresses = this.addressList;
+      this.localContextService.setCustomer(this.customer);
+      this.updateCurrentcustomer();
     }
   }
 
@@ -298,9 +334,9 @@ export class ProfileComponent implements OnInit {
         this.paymentCardList.splice(i, 1);
       }
     }
-    this.accountService.userValue.paymentCards = this.paymentCardList;
-    console.log(`Payment cards `+ JSON.stringify(this.paymentCardList));
-    this.updateCurrentUser();
+    this.customer.paymentCards = this.paymentCardList;
+    this.localContextService.setCustomer(this.customer);
+    this.updateCurrentcustomer();
   }
 
   usePaymentMethod(p: PaymentCard) {
@@ -312,13 +348,14 @@ export class ProfileComponent implements OnInit {
         pay.selected = false;
       }
     }
-    this.accountService.userValue.paymentCards = this.paymentCardList;
-    this.updateCurrentUser();
+    this.customer.paymentCards = this.paymentCardList;
+    this.localContextService.setCustomer(this.customer);
+    this.updateCurrentcustomer();
   }
 
   onSubmitPaymentMethod(f: NgForm) {
-    console.log('Submitting card: '+ JSON.stringify(this.paymentCard));
-    if (f.valid){
+    console.log('Submitting card: ' + JSON.stringify(this.paymentCard));
+    if (f.valid) {
       this.updatePaymentList();
       this.hidePaymentForm = true;
     }
@@ -328,33 +365,33 @@ export class ProfileComponent implements OnInit {
   selectType(e: String) {
     this.type = e;
     // this.card.cardType = this.type;
-    
+
   }
 
   private updatePaymentList() {
-    console.log('Card List: '+ JSON.stringify(this.paymentCardList));
-    console.log('Form card: '+ JSON.stringify(this.paymentCard));
+    console.log('Card List: ' + JSON.stringify(this.paymentCardList));
+    console.log('Form card: ' + JSON.stringify(this.paymentCard));
     var card: PaymentCard = new PaymentCard();
-      if ( this.paymentCard._id !== undefined && this.paymentCard._id !== null){
-        let existing: PaymentCard = this.paymentCardList.find( (card) => card._id === this.paymentCard._id);
-        if (existing) {
-          /** Update card */
-          console.log('Card found already: '+ JSON.stringify(existing));
-          existing.cardNumber= this.paymentCard.cardNumber;
-          existing.nameOnCard= this.paymentCard.nameOnCard;
-          existing.expiryMonth= this.paymentCard.expiryMonth;
-          existing.expiryYear= this.paymentCard.expiryYear;
-          existing.cvv= this.paymentCard.cvv;
-          existing.cardType = CardType.Debit;
-          this.usePaymentMethod(existing);
-        }
-      } else{
+    if (this.paymentCard._id !== undefined && this.paymentCard._id !== null) {
+      let existing: PaymentCard = this.paymentCardList.find((card) => card._id === this.paymentCard._id);
+      if (existing) {
+        /** Update card */
+        console.log('Card found already: ' + JSON.stringify(existing));
+        existing.cardNumber = this.paymentCard.cardNumber;
+        existing.nameOnCard = this.paymentCard.nameOnCard;
+        existing.expiryMonth = this.paymentCard.expiryMonth;
+        existing.expiryYear = this.paymentCard.expiryYear;
+        existing.cvv = this.paymentCard.cvv;
+        existing.cardType = CardType.Debit;
+        this.usePaymentMethod(existing);
+      }
+    } else {
       /** New Card */
-      card.cardNumber= this.paymentCard.cardNumber;
-      card.nameOnCard= this.paymentCard.nameOnCard;
-      card.expiryMonth= this.paymentCard.expiryMonth;
-      card.expiryYear= this.paymentCard.expiryYear;
-      card.cvv= this.paymentCard.cvv;
+      card.cardNumber = this.paymentCard.cardNumber;
+      card.nameOnCard = this.paymentCard.nameOnCard;
+      card.expiryMonth = this.paymentCard.expiryMonth;
+      card.expiryYear = this.paymentCard.expiryYear;
+      card.cvv = this.paymentCard.cvv;
       card.cardType = CardType.Debit;
       this.paymentCardList.push(card);
       this.usePaymentMethod(card);
@@ -369,18 +406,18 @@ export class ProfileComponent implements OnInit {
     return 'XXXX';
   }
 
-  openOrders() {}
+  openOrders() { }
 
-  private updateCurrentUser() {
+  private updateCurrentcustomer() {
     this.accountService
-      .updateCurrentUser()
+      .updateCurrentCustomer()
       .pipe(first())
       .subscribe(
         (data) => {
-          console.log('Updated user response. ' + JSON.stringify(data));
+          console.log('Updated customer response. ' + JSON.stringify(data));
         },
         (error) => {
-          console.log('Update user resulted in error.' + JSON.stringify(error));
+          console.log('Update customer resulted in error.' + JSON.stringify(error));
         }
       );
   }

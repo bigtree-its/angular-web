@@ -1,8 +1,8 @@
-<div class="product-item p-item">
+<div class="mini-product-item bt-border">
     <div>
-        <img src={{product.picture.thumbnail}} width="100%" alt="{{product.name}}" class="product-card-image" (click)="selectProduct()">
+        <img src={{product.picture.thumbnail}} width="100%" alt="{{product.name}}" class="mini-product-item-image" (click)="selectProduct()">
     </div>
-    <span class="p-item-name" (click)="selectProduct()">{{ product.name.length > 20 ? product.name.substr(0,20): product.name | titlecase }}</span>
+    <span class="mini-product-item-name" (click)="selectProduct()">{{ product.name.length > 20 ? product.name.substr(0,20): product.name | titlecase }}</span>
     <!-- <div class="d-flex flex-column px-2">
         <div class="p-item-price-section pt-1">
             <span class="p-item-price-currency">£</span>

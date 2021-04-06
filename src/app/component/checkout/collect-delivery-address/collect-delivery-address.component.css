@@ -1,0 +1,66 @@
+.header {
+  width: 1030px;
+  height: 50px;
+  margin: auto;
+  margin-top: 10px;
+  background-color: rgb(239, 248, 248);
+  justify-content: center;
+  align-items: center;
+  color: #111;
+  font-weight: bolder;
+}
+
+.main-section {
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.delivery-address-section {
+  min-width: 400px;
+  /* align-self: center; */
+  margin: 10px;
+  padding: 40px;
+  clear: both;
+  height: auto;
+  align-self: flex-start;
+}
+
+.error-message{
+  background-color: palevioletred;
+  color: #111;
+  padding: 20px;
+  clear: both;
+}
+
+.basket-section {
+  min-width: 400px;
+  /* align-self: center; */
+  margin: 10px;
+  padding: 40px;
+  border: 1px #D5D9D9 solid;
+  border-radius: 8px;
+}
+
+.address-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.address-section-item {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ececec;
+}
+
+.checkout-address-action-div {
+  padding: 5px;
+}
+
+.address-card {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 7px 0;
+}

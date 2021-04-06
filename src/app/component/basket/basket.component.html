@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between container-fluid header">
-        <h4 class="text-dark">Your Basket</h4>
+        <h4 class="text-dark"><strong>Your Basket</strong></h4>
         <a href="/">
-            <button type="button" class="btn btn-link">Continue Shopping</button>
+            <button type="button" class="btn btn-link"><strong>Continue Shopping</strong></button>
         </a>
     </div>
-    <div *ngIf="basket.items.length == 0; then thenBlock else elseBlock"></div>
+    <div *ngIf="basket.items == null || basket.items == undefined || basket.items.length == 0; then thenBlock else elseBlock"></div>
     <ng-template #thenBlock>
         <span class="basket-no-items p-5">
             Oh no! Your basket is empty. Time to go shopping!

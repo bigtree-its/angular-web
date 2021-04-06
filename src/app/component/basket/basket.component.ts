@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Basket, BasketItem } from 'src/app/model/basket.model';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/service/account.service';
 import { BasketService } from 'src/app/service/basket.service';
@@ -18,28 +18,21 @@ export class BasketComponent implements OnInit {
   basket: Basket;
 
   constructor(
-    private messengerService: MessengerService,
+    private LocalContextService: LocalContextService,
     private accountService: AccountService,
     private basketService: BasketService,
     private _location: Location,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.basketService.subject$.subscribe(basket => { 
-      this.basket = basket
-      this.basket.subTotal = 0; 
+    this.basket  = this.LocalContextService.getBasket();
+    if ( this.basket !== null && this.basket !== undefined){
+      this.basket.total = 0; 
       this.calculateBasketTotal();
-    })
+    }
   }
   proceedToCheckout(){
-    console.log(JSON.stringify(this.accountService.userValue));
-
-    // if ( this.accountService.userValue === undefined || this.accountService.userValue === null){
-    //   this.router.navigate(['/login']).then();
-    // }else{
-    //   this.router.navigate(['/checkout']).then();
-    // }
-    this.router.navigate(['/checkout']).then();
+    this.router.navigate(['/delivery-address']).then();
   }
 
   selectProduct(id: String) {
@@ -52,13 +45,16 @@ export class BasketComponent implements OnInit {
   }
 
   calculateBasketTotal() {
-    this.basket.items.forEach(item => {
-      this.basket.subTotal = + (+this.basket.subTotal + ( +item.qty * +item.price )).toFixed(2);
-    })
+    if ( this.basket.items !== null && this.basket.items !== undefined && this.basket.items.length > 0){
+      this.basket.items.forEach(item => {
+        this.basket.total = + (+this.basket.total + ( +item.quantity * +item.price )).toFixed(2);
+      })
+    }
+  
   }
 
   remoteFromBasket(id: string) {
-    let basketItem: BasketItem = this.basket.items.find(element => element._id === id);
+    let basketItem: BasketItem = this.basket.items.find(element => element.productId === id);
     if (basketItem) {
       this.basket.items.reduce
     }
@@ -74,7 +70,7 @@ export class BasketComponent implements OnInit {
   }
 
   getBasketTotal(){
-    return this.getPrettyPrintPrice(this.basket.subTotal);
+    return this.getPrettyPrintPrice(this.basket.total);
   }
 
   backToResults() {

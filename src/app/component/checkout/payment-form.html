@@ -1,0 +1,138 @@
+<div class="payment-section">
+    <h5 class="mb-3">Payment Method</h5>
+    <hr class="mb-2">
+    <div [hidden]="hidePaymentForm==true">
+      <form #paymentForm="ngForm" (ngSubmit)=(onSubmitPaymentMethod(paymentForm))>
+        <div class="custom-control custom-radio">
+          <div class="d-flex justify-content-between p-2">
+            <div>
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required
+                (click)="selectType('Credit')">
+              <label class="custom-control-label" for="credit">Credit Card</label>
+            </div>
+            <div>
+              <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1
+                                      border-box px-2 rounded-lg">
+              <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1
+                                      border-box px-2 rounded-lg">
+              <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1
+                                      border-box px-2 rounded-lg">
+            </div>
+          </div>
+        </div>
+        <div class="custom-control custom-radio">
+          <div class="d-flex justify-content-between p-2">
+            <div>
+              <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required
+                (click)="selectType('Paypal')">
+              <label class="custom-control-label" for="paypal">Paypal</label>
+            </div>
+            <div>
+              <img src="/assets/icons/paypal.png" width="50px" height="32px" class="mr-1
+                                      border-box px-2 rounded-lg">
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showCardSection">
+          <div class="col mb-3">
+            <label for="nameOnCard">Name on card</label>
+            <input type="text" class="form-control ob-text-field" id="nameOnCard" placeholder="" required
+              [(ngModel)]="paymentCard.nameOnCard" name="nameOnCard" #nameOnCard="ngModel">
+            <small class="text-muted">Full name as displayed on card</small>
+          </div>
+          <div class="d-flex justify-content-between" style="align-items: center;align-self: center;">
+            <div class="col-6 mb-3">
+              <label for="cardNumber">Card number</label>
+              <input type="text" maxlength="16" class="form-control ob-text-field" id="cardNumber" placeholder=""
+                required [(ngModel)]="paymentCard.cardNumber" name="cardNumber" #cardNumber="ngModel"
+                (keyup)="onKeypressCardNumberEvent($event)">
+              <small class="text-muted">16 digit number without gap</small>
+            </div>
+            <div class="col-6" *ngIf="paymentCard.cardType !== undefined && paymentCard.cardType !== null">
+              <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="paymentCard.cardType === 'visa'">
+              <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="paymentCard.cardType  === 'mastercard'">
+              <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="paymentCard.cardType  === 'amex'">
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between  px-3">
+            <div class="mb-3 form-group">
+              <label for="expiration">Expiration Date</label>
+              <div class="h-flex justify-content-start">
+                <select [ngModel]="expirationMonth" (ngModelChange)="onSelectExpiryMonth($event)"
+                  name="expiryMonthSel" style="width: 50px; height: 25px;">
+                  <option [ngValue]="m" *ngFor="let m of monthsOptions">{{ m }}</option>
+                </select>
+                <select [ngModel]="expirationYear" (ngModelChange)="onSelectExpiryYear($event)" name="expiryYearSel"
+                  style="width: 60px; height: 25px; margin-left: 10px;">
+                  <option [ngValue]="y" *ngFor="let y of yearsOptions">{{ y }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="cvv">CVV</label>
+              <input type="text" maxlength="3" class="form-control cvv-input  ob-text-field" id="cvv" placeholder=""
+                required [(ngModel)]="paymentCard.cvv" name="cvv" #cvv="ngModel">
+            </div>
+          </div>
+          <div class="d-flex justify-content-start  px-3">
+            <button type="submit" class="btn btn-sm btn-primary m-1"
+              [disabled]="!paymentForm.form.valid || paymentCard.cardType === undefined || paymentCard.cardType === null">Submit</button>
+            <button class="btn btn-sm btn-secondary m-1" (click)="cancelPaymentForm()">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="hidePaymentForm">
+      <div class="d-flex flex-space-between p-1 mb-2">
+        <strong class="text-muted">Choose a payment method</strong>
+        <button type="button" class="btn btn-outline-secondary btn-sm ml-1"
+          (click)="addNewPaymentMethod()">Add</button>
+      </div>
+      <div class="d-flex justify-content-between payment-card" *ngFor="let p of paymentMethodList"
+        [class.item-selected]="p.selected">
+        <div class="d-flex justify-content-start" (click)="usePaymentMethod(p)">
+          <!-- Payment Item -->
+          <div class="payment-card-details">
+            <div class="d-flex justify-content-start ">
+              <strong style="align-items: center;align-self: center;">Card</strong>
+              <div style="align-items: center;align-self: center;">
+                <img src="/assets/icons/visa.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="p.cardType === 'visa'">
+                <img src="/assets/icons/mastercard.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="p.cardType  === 'mastercard'">
+                <img src="/assets/icons/american-express.png" width="50px" height="32px" class="mr-1
+                                          border-box px-2 rounded-lg" *ngIf="p.cardType  === 'amex'">
+              </div>
+            </div>
+            <div class="d-flex justify-content-start">
+              <strong>Ending</strong>
+              <span class="pl-2">{{ getMaskedCardNumber(p) }}</span>
+            </div>
+            <div class="">
+              <span class="mr-2">{{ p.nameOnCard}}</span>
+              <span class="">{{ p.expiryMonth}}/{{p.expiryYear}}</span>
+            </div>
+            <div class="d-flex justify-content-start mt-3 btn-group-justified">
+              <div class="btn-group ">
+                <button class="btn btn-outline-secondary btn-sm mr-1" (click)="usePaymentMethod(p)">Use this
+                  card</button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-sm mr-1" (click)="editPaymentMethod(p)">Edit
+                  details</button>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-outline-secondary btn-sm mr-1" (click)="removePaymentMethod(p)">Remove
+                  this</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

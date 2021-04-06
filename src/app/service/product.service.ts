@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
 import { ProductModel, Category, Department } from '../model/product.model';
-import { MessengerService } from './messenger.service';
+import { LocalContextService } from './localcontext.service';
 import { CategoryQuery, ProductQuery } from '../model/query';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ProductService {
 
   constructor(
     private http: HttpClient,
-    private messengerService: MessengerService
+    private LocalContextService: LocalContextService
   ) {
     console.log('ProductService.Constructor::Start');
     console.log('Api URL: '+ this.SERVER_URL);
@@ -70,7 +70,7 @@ export class ProductService {
     ) as Observable<Department[]>;
     // .pipe( shareReplay({ bufferSize: 1, refCount: true }))
     this.allDeps$.subscribe((d) => {
-      this.messengerService.cacheDeps(d);
+      this.LocalContextService.cacheDeps(d);
     });
   }
 

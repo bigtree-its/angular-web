@@ -16,13 +16,15 @@
     border-radius: 10px;
     margin: 0 10px;
     clear: both;
-    background-color: #f8fafd;
+    /* background-color: #f8fafd; */
 }
 
 .nav-section-header {
     font-size: 17px;
     padding: 10px;
     font-weight: bold;
+    border-bottom: 3px solid #111;
+    margin-bottom: 20px;
 }
 
 .main-section {
@@ -30,7 +32,7 @@
     min-width: 100%;
     margin: 0 10px;
     padding: 0 10px;
-    display: inline-block;
+    /* display: inline-block; */
 }
 
 .sort-row {

@@ -1,0 +1,65 @@
+{
+  "_id": "5fe838b5c51e2a0014f59369",
+  "firstName": "Avaneesh",
+  "lastName": "Pati Navaneetha",
+  "email": "nava.arul@gmail.com",
+  "password": "$2b$10$PZ8bmiiT7gvkVKw6h7JF1OQL0qP1xSDSxMgNn8UGrEE5pKSVV0WrK",
+  "addresses": [{
+    "_id": "6028e5ecbf5b6e4edc72a4e0",
+    "postcode": "RG21 7TN",
+    "city": "Basingstoke",
+    "lineNumber1": "57 Crown Heights",
+    "lineNumber2": "Alencon Link",
+    "country": "United Kingdom",
+    "firstName": "Avaneesh",
+    "lastName": "Navaneetha",
+    "mobile": "0123456789",
+    "updatedAt": "2021-03-27T16:11:59.057Z",
+    "createdAt": "2021-03-27T16:11:59.057Z",
+    "selected": true
+  }, {
+    "_id": "6057848ebd7d31f5fc53168b",
+    "postcode": "g775sf",
+    "firstName": "Avaneesh",
+    "lastName": "Pati Navaneetha",
+    "mobile": "123456789",
+    "updatedAt": "2021-03-27T16:11:59.057Z",
+    "createdAt": "2021-03-27T16:11:59.057Z"
+  }, {
+    "_id": "60579437bd7d31f5fc5316a3",
+    "postcode": "g775rb",
+    "city": "Glasgow",
+    "lineNumber1": "30 Burnhouse Brae",
+    "lineNumber2": "Newton Mearns Glasgow",
+    "country": "UK",
+    "firstName": "Avaneesh",
+    "lastName": "Pati Navaneetha",
+    "mobile": "123456789",
+    "updatedAt": "2021-03-27T16:11:59.057Z",
+    "createdAt": "2021-03-27T16:11:59.057Z"
+  }, {
+    "_id": "605848babd7d31f5fc5316c5",
+    "firstName": "Avaneesh",
+    "lastName": "Pati Navaneetha",
+    "mobile": "123456789",
+    "updatedAt": "2021-03-27T16:11:59.057Z",
+    "createdAt": "2021-03-27T16:11:59.057Z"
+  }],
+  "paymentCards": [{
+    "_id": "5ff6c5076ce628001ba393b3",
+    "cardNumber": "5355220548174790",
+    "nameOnCard": "Aarna Pati Navaneetha",
+    "expiryMonth": "12",
+    "expiryYear": "22",
+    "cvv": "822",
+    "cardType": "mastercard",
+    "updatedAt": "2021-03-27T16:11:59.057Z",
+    "createdAt": "2021-03-27T16:11:59.057Z",
+    "selected": true
+  }],
+  "createdAt": "2020-12-27T07:33:09.214Z",
+  "updatedAt": "2021-03-27T16:11:59.057Z",
+  "__v": 0,
+  "mobile": "123456789",
+  "passCode": "755620"
+}

@@ -1,0 +1,407 @@
+{
+  "stripe": {
+    "_listenerRegistry": {},
+    "_apiKey": "pk_test_51IL6YhCYSHJV743tS2a6P13bf69XrPbb7w63YCLHmtoILKQ0COnV4wZgNpflbHZXzOyppKC1sM3KTfWx1g0x5YLC00BgSLCZMr",
+    "_keyMode": "test",
+    "_betas": [],
+    "_locale": null,
+    "_stripeAccount": null,
+    "_isCheckout": false,
+    "_controller": {
+      "action": {},
+      "_id": "__privateStripeController2751",
+      "_stripeJsId": "029ce2ec-641a-4884-8c14-f0a11a6e4286",
+      "_apiKey": "pk_test_51IL6YhCYSHJV743tS2a6P13bf69XrPbb7w63YCLHmtoILKQ0COnV4wZgNpflbHZXzOyppKC1sM3KTfWx1g0x5YLC00BgSLCZMr",
+      "_listenerRegistry": {},
+      "_betas": [],
+      "_flags": {
+        "cl": false,
+        "clc": false
+      },
+      "_controllerFrame": {
+        "_callbacks": {
+          "load": [{}],
+          "title": [{}],
+          "mount": []
+        },
+        "action": {},
+        "type": "CONTROLLER",
+        "loaded": true,
+        "_controllerId": "__privateStripeController2751",
+        "_persistentMessages": [{
+          "message": {
+            "action": "stripe-user-createframe",
+            "payload": {
+              "newFrameId": "__privateStripeFrame2755",
+              "frameType": "CARD_ELEMENT",
+              "groupId": "elements2753"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }, {
+          "message": {
+            "action": "stripe-frame-unload",
+            "payload": {
+              "unloadedFrameId": "__privateStripeFrame2755"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }, {
+          "message": {
+            "action": "stripe-frame-load",
+            "payload": {
+              "loadedFrameId": "__privateStripeFrame2755"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }],
+        "_queuedMessages": [],
+        "_requests": {},
+        "_listenerRegistry": {},
+        "id": "__privateStripeController2751",
+        "_iframe": {},
+        "autoload": false
+      },
+      "_stripeJsLoadTimestamp": {
+        "timestampValue": 109.22500002197921
+      },
+      "_createTimestamp": {
+        "timestampValue": 193.92999995034188
+      },
+      "_loadCount": 1,
+      "_frames": {
+        "__privateStripeFrame2755": {
+          "_callbacks": {
+            "load": [{}, {}, {}, {}],
+            "title": [{}],
+            "unload": [{}],
+            "destroy": [{}],
+            "redirectfocus": [{}],
+            "focus": [{}, {}],
+            "blur": [{}, {}],
+            "submit": [{}],
+            "ready": [{}],
+            "escape": [{}],
+            "change": [{}],
+            "__privateIntegrationError": [{}],
+            "dimensions": [{}],
+            "autofill": [{}],
+            "autofill-cleared": [{}],
+            "update-outer-style": [{}]
+          },
+          "action": {},
+          "type": "CARD_ELEMENT",
+          "loaded": true,
+          "_controllerId": "__privateStripeController2751",
+          "_persistentMessages": [],
+          "_queuedMessages": [],
+          "_requests": {},
+          "_listenerRegistry": {},
+          "id": "__privateStripeFrame2755",
+          "_iframe": {}
+        }
+      },
+      "_requests": {
+        "FETCH_LOCALE2752": {},
+        "FETCH_LOCALE2754": {}
+      },
+      "_mountTimestamp": {
+        "timestampValue": 197.50999996904284
+      }
+    }
+  },
+  "card": {
+    "_callbacks": {
+      "destroy": [{}]
+    },
+    "_controller": {
+      "action": {},
+      "_id": "__privateStripeController2751",
+      "_stripeJsId": "029ce2ec-641a-4884-8c14-f0a11a6e4286",
+      "_apiKey": "pk_test_51IL6YhCYSHJV743tS2a6P13bf69XrPbb7w63YCLHmtoILKQ0COnV4wZgNpflbHZXzOyppKC1sM3KTfWx1g0x5YLC00BgSLCZMr",
+      "_listenerRegistry": {},
+      "_betas": [],
+      "_flags": {
+        "cl": false,
+        "clc": false
+      },
+      "_controllerFrame": {
+        "_callbacks": {
+          "load": [{}],
+          "title": [{}],
+          "mount": []
+        },
+        "action": {},
+        "type": "CONTROLLER",
+        "loaded": true,
+        "_controllerId": "__privateStripeController2751",
+        "_persistentMessages": [{
+          "message": {
+            "action": "stripe-user-createframe",
+            "payload": {
+              "newFrameId": "__privateStripeFrame2755",
+              "frameType": "CARD_ELEMENT",
+              "groupId": "elements2753"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }, {
+          "message": {
+            "action": "stripe-frame-unload",
+            "payload": {
+              "unloadedFrameId": "__privateStripeFrame2755"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }, {
+          "message": {
+            "action": "stripe-frame-load",
+            "payload": {
+              "loadedFrameId": "__privateStripeFrame2755"
+            }
+          },
+          "type": "outer",
+          "frameId": "__privateStripeController2751",
+          "controllerId": "__privateStripeController2751"
+        }],
+        "_queuedMessages": [],
+        "_requests": {},
+        "_listenerRegistry": {},
+        "id": "__privateStripeController2751",
+        "_iframe": {},
+        "autoload": false
+      },
+      "_stripeJsLoadTimestamp": {
+        "timestampValue": 109.22500002197921
+      },
+      "_createTimestamp": {
+        "timestampValue": 193.92999995034188
+      },
+      "_loadCount": 1,
+      "_frames": {
+        "__privateStripeFrame2755": {
+          "_callbacks": {
+            "load": [{}, {}, {}, {}],
+            "title": [{}],
+            "unload": [{}],
+            "destroy": [{}],
+            "redirectfocus": [{}],
+            "focus": [{}, {}],
+            "blur": [{}, {}],
+            "submit": [{}],
+            "ready": [{}],
+            "escape": [{}],
+            "change": [{}],
+            "__privateIntegrationError": [{}],
+            "dimensions": [{}],
+            "autofill": [{}],
+            "autofill-cleared": [{}],
+            "update-outer-style": [{}]
+          },
+          "action": {},
+          "type": "CARD_ELEMENT",
+          "loaded": true,
+          "_controllerId": "__privateStripeController2751",
+          "_persistentMessages": [],
+          "_queuedMessages": [],
+          "_requests": {},
+          "_listenerRegistry": {},
+          "id": "__privateStripeFrame2755",
+          "_iframe": {}
+        }
+      },
+      "_requests": {
+        "FETCH_LOCALE2752": {},
+        "FETCH_LOCALE2754": {}
+      },
+      "_mountTimestamp": {
+        "timestampValue": 197.50999996904284
+      }
+    },
+    "_componentName": "card",
+    "_destroyed": false,
+    "_component": {},
+    "_implementation": {
+      "_componentName": "card",
+      "_component": {},
+      "_controller": {
+        "action": {},
+        "_id": "__privateStripeController2751",
+        "_stripeJsId": "029ce2ec-641a-4884-8c14-f0a11a6e4286",
+        "_apiKey": "pk_test_51IL6YhCYSHJV743tS2a6P13bf69XrPbb7w63YCLHmtoILKQ0COnV4wZgNpflbHZXzOyppKC1sM3KTfWx1g0x5YLC00BgSLCZMr",
+        "_listenerRegistry": {},
+        "_betas": [],
+        "_flags": {
+          "cl": false,
+          "clc": false
+        },
+        "_controllerFrame": {
+          "_callbacks": {
+            "load": [{}],
+            "title": [{}],
+            "mount": []
+          },
+          "action": {},
+          "type": "CONTROLLER",
+          "loaded": true,
+          "_controllerId": "__privateStripeController2751",
+          "_persistentMessages": [{
+            "message": {
+              "action": "stripe-user-createframe",
+              "payload": {
+                "newFrameId": "__privateStripeFrame2755",
+                "frameType": "CARD_ELEMENT",
+                "groupId": "elements2753"
+              }
+            },
+            "type": "outer",
+            "frameId": "__privateStripeController2751",
+            "controllerId": "__privateStripeController2751"
+          }, {
+            "message": {
+              "action": "stripe-frame-unload",
+              "payload": {
+                "unloadedFrameId": "__privateStripeFrame2755"
+              }
+            },
+            "type": "outer",
+            "frameId": "__privateStripeController2751",
+            "controllerId": "__privateStripeController2751"
+          }, {
+            "message": {
+              "action": "stripe-frame-load",
+              "payload": {
+                "loadedFrameId": "__privateStripeFrame2755"
+              }
+            },
+            "type": "outer",
+            "frameId": "__privateStripeController2751",
+            "controllerId": "__privateStripeController2751"
+          }],
+          "_queuedMessages": [],
+          "_requests": {},
+          "_listenerRegistry": {},
+          "id": "__privateStripeController2751",
+          "_iframe": {},
+          "autoload": false
+        },
+        "_stripeJsLoadTimestamp": {
+          "timestampValue": 109.22500002197921
+        },
+        "_createTimestamp": {
+          "timestampValue": 193.92999995034188
+        },
+        "_loadCount": 1,
+        "_frames": {
+          "__privateStripeFrame2755": {
+            "_callbacks": {
+              "load": [{}, {}, {}, {}],
+              "title": [{}],
+              "unload": [{}],
+              "destroy": [{}],
+              "redirectfocus": [{}],
+              "focus": [{}, {}],
+              "blur": [{}, {}],
+              "submit": [{}],
+              "ready": [{}],
+              "escape": [{}],
+              "change": [{}],
+              "__privateIntegrationError": [{}],
+              "dimensions": [{}],
+              "autofill": [{}],
+              "autofill-cleared": [{}],
+              "update-outer-style": [{}]
+            },
+            "action": {},
+            "type": "CARD_ELEMENT",
+            "loaded": true,
+            "_controllerId": "__privateStripeController2751",
+            "_persistentMessages": [],
+            "_queuedMessages": [],
+            "_requests": {},
+            "_listenerRegistry": {},
+            "id": "__privateStripeFrame2755",
+            "_iframe": {}
+          }
+        },
+        "_requests": {
+          "FETCH_LOCALE2752": {},
+          "FETCH_LOCALE2754": {}
+        },
+        "_mountTimestamp": {
+          "timestampValue": 197.50999996904284
+        }
+      },
+      "_listenerRegistry": {},
+      "_frame": {
+        "_callbacks": {
+          "load": [{}, {}, {}, {}],
+          "title": [{}],
+          "unload": [{}],
+          "destroy": [{}],
+          "redirectfocus": [{}],
+          "focus": [{}, {}],
+          "blur": [{}, {}],
+          "submit": [{}],
+          "ready": [{}],
+          "escape": [{}],
+          "change": [{}],
+          "__privateIntegrationError": [{}],
+          "dimensions": [{}],
+          "autofill": [{}],
+          "autofill-cleared": [{}],
+          "update-outer-style": [{}]
+        },
+        "action": {},
+        "type": "CARD_ELEMENT",
+        "loaded": true,
+        "_controllerId": "__privateStripeController2751",
+        "_persistentMessages": [],
+        "_queuedMessages": [],
+        "_requests": {},
+        "_listenerRegistry": {},
+        "id": "__privateStripeFrame2755",
+        "_iframe": {}
+      },
+      "_fakeInput": {},
+      "_lastFontSize": "16px",
+      "_classes": {
+        "base": "StripeElement",
+        "focus": "StripeElement--focus",
+        "invalid": "StripeElement--invalid",
+        "complete": "StripeElement--complete",
+        "empty": "StripeElement--empty",
+        "webkitAutofill": "StripeElement--webkit-autofill"
+      },
+      "_lastBackgroundColor": "",
+      "_focused": false,
+      "_empty": false,
+      "_invalid": false,
+      "_complete": true,
+      "_autofilled": false,
+      "_lastSubmittedAt": null,
+      "_mountTimestamp": {
+        "timestampValue": 32900.67000000272
+      }
+    },
+    "_parent": {
+      "__zone_symbol__clickfalse": [{
+        "type": "eventTask",
+        "state": "scheduled",
+        "source": "HTMLDivElement.addEventListener:click",
+        "zone": "angular",
+        "runCount": 0
+      }]
+    }
+  }
+}

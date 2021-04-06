@@ -6,6 +6,8 @@
     background-color: rgb(239, 248, 248);
     justify-content: center;
     align-items: center;
+    color: #111;
+    font-weight: bolder;
 }
 
 .basket-container {

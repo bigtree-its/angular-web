@@ -7,30 +7,78 @@
     padding: 5px;
     background-color: #1b1b1b;
     transition: background-color 1s ease 0s;
-    color: white;
 }
 .header{
-    transition: background-color 1s ease 0s;
-    background-color: rgb(64, 64, 64);
-    padding: 5px 0;
+    /* transition: background-color 1s ease 0s; */
+    /* background-color: rgb(64, 64, 64); */
+    /* background-color: rgb(238, 238, 238); */
+    /* background-color: rgb(133, 250, 250); */
+    padding: 10px 0 10px 0;
+    background: rgb(214, 255, 252);
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(64, 199, 190));
 }
+
+.rotate {
+    transform: rotate(0deg);
+    /* Legacy vendor prefixes that you probably don't need... */
+    /* Safari */
+    -webkit-transform: rotate(0deg);
+    /* Firefox */
+    -moz-transform: rotate(0deg);
+    /* IE */
+    -ms-transform: rotate(0deg);
+    /* Opera */
+    -o-transform: rotate(0deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  }
+
+.navbar-brand {
+    display: inline-block;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+    border: 3px solid #111;
+    padding: 6px;
+}
+
+.banner-border {
+    border-color: #DDD!important;
+    border-style: solid!important;
+    border-width: 0 0 1px 0!important;
+    /* background-image: url(https://images-na.ssl-images-amazon.com/images/G/31/common/sprites/tspc-header-bkg.png); */
+    height: 60px;
+    background-position-y: -13px;
+}
+
+.location-section{
+    margin-left: 50px;
+    border: 1px solid #cacaca;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 50px;
+    color: #111;
+}
+
 .nav-right{
     float: right;
     position: relative;
 }
 .logo-brand-text-big,.logo-brand-text-1, .logo-brand-text-2, .logo-brand-text-3{
-    color: #ececec;
-    font-weight: bolder;
-    font-size: 30px;
+    font-weight: 900;
+    font-size: 20px;
     text-decoration: none;
-    /* text-shadow: 2px 2px rgb(189, 186, 186); */
-    /* color: #1d46ce; */
-    /* border-radius: 12px; */
+    color: #111;
+    text-shadow: 2px 2px rgb(189, 186, 186);
+    border-radius: 12px;
+    font-family: 'Syne Mono', monospace;
     /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
     /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
 }
 .logo-brand-text-big{
-    font-size: 40px;
+    font-size: 30px;
 }
 .logo-brand-text-2 {
     color: #fc2929;
@@ -53,18 +101,9 @@
     /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
 }
 
-.navbar-brand {
-    display: inline-block;
-    /* padding-top: .3125rem; */
-    /* padding-bottom: .3125rem; */
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap;
-}
+
 
 .signin-link{
-    color: #fff;
     font-weight: bold;
     font-size: medium;
     text-decoration: none;
@@ -79,7 +118,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    color: #aaa;
     margin-right: 50px;
 }
 .basket-section{
@@ -88,17 +126,14 @@
 }
 .basket-section:hover{
     cursor: pointer;
-    color: white;
 }
 .right-section-text{
     font-size: 14px;
-    color: #aaa;
     background: none;
     border: none;
     outline: none;
 }
 .right-section-text:hover{
-    color: white;
     cursor: pointer;
 }
 
@@ -121,7 +156,6 @@
     padding: 0 10px;
 }
 .welcomeUsername{
-    color: #fff;
 }
 
 .location-section{
@@ -133,7 +167,6 @@
 
 .location-postcode{
     margin: 13px 0;
-    color: #fff;
 }
 .user-location-icon{
     height: 20px;
@@ -145,7 +178,6 @@
     width: 30px;
     margin: 10px 5px 20px 0;
     align-items: center;
-    color: rgb(224, 223, 223);
 }
 
 .top-nav-basket-icon:hover {
@@ -161,7 +193,6 @@
     border: 2px solid #fff;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    color: #fff;
     font-size: 11px;
     font-weight: bold;
     height: 26px;
@@ -182,19 +213,16 @@
 }
 .nav-right-text:hover {
     cursor: pointer;
-    color: white;
 }
 
 .right-button {
     font-size: 16px;
     border: none;
     outline: none;
-    color: #aaa;
     background-color: inherit;
     margin: 0;
 }
 
 .right-button:hover {
     cursor: pointer;
-    color: white;
 }

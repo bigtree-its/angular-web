@@ -9,7 +9,7 @@ import {
   Department,
   ProductModel,
 } from 'src/app/model/product.model';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { ProductService } from 'src/app/service/product.service';
 import * as _ from 'underscore';
 
@@ -51,7 +51,7 @@ export class ProductBrowserComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
-    private messengerService: MessengerService
+    private LocalContextService: LocalContextService
   ) {}
 
   ngOnInit(): void {

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from './model/user';
 import { AccountService } from './service/account.service';
 
 @Component({
@@ -8,14 +9,15 @@ import { AccountService } from './service/account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'OpenBasket';
+  title = 'OpenEcomm';
 
   constructor(
     private router: Router,
     private accountService: AccountService
   ) {
     // redirect to home if already logged in
-    if (this.accountService.userValue) {
+    var user: User = JSON.parse(localStorage.getItem("User"));
+    if (user !== null&& user !== undefined) {
       this.router.navigate(['/']);
     }
   }

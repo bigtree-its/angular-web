@@ -9,8 +9,12 @@ export const environment = {
   REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081/reviews/v1",
   
 
-  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080/users/v1",
+  
   ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082/orders/v1",
+  BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8082/orders/v1/baskets",
+  INVENTORY_SERVICE_URL: window["env"]["inventoryServiceUrl"] || "http://localhost:8082/orders/v1/inventory",
+
+  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080/users/v1",
   CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/auth/change-password',
   FORGOT_PASSWORD: window["env"]["userServiceUrl"] + '/auth/forgot-password',
   RESET_PASSWORD: window["env"]["userServiceUrl"] + '/auth/reset-password',
@@ -22,6 +26,7 @@ export const environment = {
    AUTH_REGISTER_PATH: '/auth/register',
    USERS: '/users',
    ORDERS: '/orders',
+   CREATE_PAYMENT_INTENT: '/create-payment-intent',
    BASKETS: '/baskets',
 
    /** GetAddress.io */
@@ -29,6 +34,13 @@ export const environment = {
    POSTCODELOOKUP_SERVICE_URL: window["env"]["postcodeLookupServiceUrl"] || "https://api.getaddress.io/find",
    DISTANCE_SERVICE_URL: window["env"]["distanceServiceUrl"] || "https://api.getAddress.io/distance",
    ORIGIN_POSTCODE: window["env"]["originPostcode"],
+
+   /** RapidAPI  */
+   X_RapidAPI_Url: window["env"]["X_RapidAPI_Url"],
+   X_RapidAPI_Key: window["env"]["X_RapidAPI_Key"],
+   PostCode4U_Key: window["env"]["PostCode4U_Key"],
+   X_RapidAPI_Username: window["env"]["X_RapidAPI_Username"],
+   X_RapidAPI_Host: window["env"]["X_RapidAPI_Host"]
 };
 
 /*

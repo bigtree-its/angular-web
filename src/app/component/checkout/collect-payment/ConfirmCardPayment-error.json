@@ -1,0 +1,7 @@
+{
+  "error": {
+    "type": "validation_error",
+    "code": "invalid_number",
+    "message": "Your card number is invalid."
+  }
+}

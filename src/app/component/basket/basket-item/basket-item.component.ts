@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BasketItem } from 'src/app/model/basket.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
 
 @Component({
@@ -19,12 +19,12 @@ export class BasketItemComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private messengerService: MessengerService,
+    private LocalContextService: LocalContextService,
     private basketService: BasketService
   ) {}
 
   ngOnInit(): void {
-    this.quantity = this.item.qty;
+    this.quantity = this.item.quantity;
     this.calculateSubTotal();
   }
 
@@ -39,7 +39,7 @@ export class BasketItemComponent implements OnInit {
   increaseQuantity() {
     if (this.quantity < 10) {
       this.quantity = this.quantity + 1;
-      this.item.qty = this.quantity;
+      this.item.quantity = this.quantity;
       this.calculateSubTotal();
     }
   }
@@ -47,14 +47,14 @@ export class BasketItemComponent implements OnInit {
   decreaseQuantity() {
     if (this.quantity > 1) {
       this.quantity = this.quantity - 1;
-      this.item.qty = this.quantity;
+      this.item.quantity = this.quantity;
       this.calculateSubTotal();
     }
   }
 
   private calculateSubTotal() {
     this.subTotal = +(this.quantity * this.item.price).toFixed(2);
-    this.basketService.updateItem(this.item._id, this.item.qty);
+    this.basketService.updateItem(this.item.productId, this.item.quantity);
   }
 
   getFraction(n) {

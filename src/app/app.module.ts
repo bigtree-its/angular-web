@@ -18,9 +18,7 @@ import { BasketComponent } from './component/basket/basket.component';
 import { LoginComponent } from './component/login/login.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BasketItemComponent } from './component/basket/basket-item/basket-item.component';
-import { PlaceOrderComponent } from './component/checkout/place-order/place-order.component';
 import { AddressComponent } from './component/forms/address/address.component';
-import { CheckoutComponent } from './component/checkout/checkout.component';
 import { CheckoutItemComponent } from './component/checkout/checkout-item/checkout-item.component';
 import { AppToastComponent } from './component/common/app-toast/app-toast.component';
 import { AppToastService } from './service/AppToastService';
@@ -35,6 +33,9 @@ import { ProductBrowserComponent } from './component/product-browser/product-bro
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { NavBarComponent } from './component/nav-bar/nav-bar.component';
 import { SmallItemComponent } from './component/home/small-item/small-item.component';
+import { CollectDeliveryAddressComponent } from './component/checkout/collect-delivery-address/collect-delivery-address.component';
+import { CollectPaymentComponent } from './component/checkout/collect-payment/collect-payment.component';
+import { OrderItemComponent } from './component/profile/order-item/order-item.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +47,7 @@ import { SmallItemComponent } from './component/home/small-item/small-item.compo
     BasketComponent,
     LoginComponent,
     BasketItemComponent,
-    PlaceOrderComponent,
     AddressComponent,
-    CheckoutComponent,
     CheckoutItemComponent,
     AppToastComponent,
     ItemComponent,
@@ -61,7 +60,10 @@ import { SmallItemComponent } from './component/home/small-item/small-item.compo
     ProductBrowserComponent,
     DateAgoPipe,
     NavBarComponent,
-    SmallItemComponent
+    SmallItemComponent,
+    CollectDeliveryAddressComponent,
+    CollectPaymentComponent,
+    OrderItemComponent
   ],
   imports: [
     BrowserModule,

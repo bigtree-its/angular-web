@@ -1,6 +1,6 @@
 <div *ngIf="product !== undefined && product !== null" class="container-fluid">
     <div class="d-flex justify-content-between align-items-center">
-        <button (click)="backToResults()" class="btn btn-link">Back to results</button>
+        <button (click)="backToResults()" class="btn btn-link"><strong>Back to results</strong></button>
     </div>
     <hr class="mb-2">
     <div class="row d-flex justify-content-center wrap">
@@ -29,7 +29,7 @@
                         <small>Your question may be answered by sellers, manufacturers or customers who bought this product</small>
                     </div>
                     <div class="form-group">
-                        <button [disabled]="loading" class="btn btn-sm btn-primary px-5">
+                        <button [disabled]="loading" class="btn-g">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Post
                         </button>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="margin-10 product-details-section">
-            <h3 class="text-dark mt-3">{{ product.name}}</h3>
+            <h3 class="text-dark mt-3"><strong>{{ product.name}}</strong></h3>
             <ul>
                 <li *ngFor="let d of product.description" class="d-inline-block
                     bg-light bt-radius my-1">
@@ -50,7 +50,7 @@
 
             <div *ngIf="product.storage">
                 <br>
-                <h4>Storage Instructions</h4>
+                <h4><strong>Storage Instructions</strong></h4>
                 <br>
                 <p>
                     {{product.storage}}
@@ -58,7 +58,7 @@
             </div>
             <div *ngIf="product.nutritionalInformation.length>0">
                 <br>
-                <h4 class="my-1">Nutritional Information</h4>
+                <h4 class="my-1"><strong>Nutritional Information</strong></h4>
                 <br>
                 <ul>
                     <li *ngFor="let ni of product.nutritionalInformation" class="bg-light my-1">
@@ -68,7 +68,7 @@
             </div>
             <div *ngIf="product.qa.length> 0">
                 <br>
-                <h4 class="my-1">Questions & Answers</h4>
+                <h4 class="my-1"><strong>Questions & Answers</strong></h4>
                 <br>
                 <ul>
                     <li *ngFor="let qa of product.qa" class="bg-light my-1">
@@ -78,7 +78,7 @@
             </div>
             <div *ngIf="product.attributes.length> 0">
                 <br>
-                <h4 class="my-1">Product Information</h4>
+                <h4 class="my-1"><strong>Product Information</strong></h4>
                 <br>
                 <ul>
                     <li *ngFor="let att of product.attributes" class="bg-light
@@ -114,8 +114,7 @@
                     <button class="inc-btn" style="font-size: 30px;" (click)="increaseQuantity()">+</button>
                 </div>
                 <div class="d-block d-flex justify-content-center my-3">
-                    <button class="btn btn-warning btn-md" (click)="addToCart()">Add
-                            to Basket</button>
+                    <button class="btn-s btn-lg" (click)="addToCart()">Add to Basket</button>
                 </div>
             </div>
 
@@ -126,9 +125,9 @@
                     <span>You need to <a href="/login">login</a> to write a review</span>
                 </ng-template>
                 <ng-template #elseBlock>
-                    <div class="d-flex justify-content-between" *ngIf="openReviewForm==false">
-                        <span>Want to review ?</span>
-                        <button class="btn btn-primary btn-sm" (click)="writeReview()">Write Review</button>
+                    <div class="layout-start items-center" *ngIf="openReviewForm==false">
+                        <strong class="mr-2">Want to review ? </strong>
+                        <button class="btn-g" (click)="writeReview()">Write Review</button>
                     </div>
                 </ng-template>
                 <form *ngIf="openReviewForm===true" [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()" novalidate>
@@ -153,11 +152,11 @@
                     </div>
                     <div class="form-group">
                         <div class="d-flex justify-content-start">
-                            <button [disabled]="loading" class="btn btn-sm btn-primary px-1 mx-2">
+                            <button [disabled]="loading" class="btn-s">
                                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                 Submit
                             </button>
-                            <button class="btn btn-sm btn-secondary px-1" (click)="cancelReview()">Cancel</button>
+                            <button class="btn-g" (click)="cancelReview()">Cancel</button>
                         </div>
                     </div>
                 </form>

@@ -4,7 +4,7 @@
     overflow: hidden;
     /* background-color: #f3e959; */
     /* background: #e3e2de; */
-    background-color: rgb(64, 64, 64);
+    background-color: rgb(233, 233, 233);
 
     /* font-family: Arial; */
     font-size: large;
@@ -33,10 +33,9 @@
 }
 
 .dropdown .dropbtn {
-    font-size: 16px;
+    /* font-size: 12px; */
     border: none;
     outline: none;
-    color: #aaa;
     padding: 10px 12px;
     background-color: inherit;
     font: inherit;
@@ -52,7 +51,7 @@
 .menuBar a:hover,
 .dropdown:hover .dropbtn {
     /* background-color: #fff; */
-    color: #fff;
+    color: rgb(0, 158, 148);
 }
 
 .dropdown:hover .dropdown-content {
@@ -71,5 +70,5 @@
     line-height: 30px;
     border: none;
     padding-left: 10px;
-    border-radius: 20px;
+    /* border-radius: 20px; */
 }

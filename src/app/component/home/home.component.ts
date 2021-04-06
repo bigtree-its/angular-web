@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
 import { ProductModel } from 'src/app/model/product.model';
 import * as _ from 'underscore';
-import { MessengerService } from 'src/app/service/messenger.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { Router } from '@angular/router';
 import { ProductQuery } from 'src/app/model/query';
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private basketService: BasketService,
-    public messengerService: MessengerService,
+    public LocalContextService: LocalContextService,
     private router: Router
   ) { }
 

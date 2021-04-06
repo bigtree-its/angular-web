@@ -4,6 +4,7 @@ import { faUser, faShoppingCart, faMapMarkerAlt } from '@fortawesome/free-solid-
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
+import { LocalContextService } from 'src/app/service/localcontext.service';
 import { User } from 'src/app/model/user';
 
 @Component({
@@ -17,39 +18,46 @@ export class HeaderComponent implements OnInit {
   faShoppingBag = faShoppingCart;
   faMapMarkerAlt = faMapMarkerAlt;
 
-  userName: string;
+  customerName: string;
   basket: Basket;
   itemCount: number = 0;
   basketTotal: number = 0;
-  user: User;
-  userPostcode: string;
+  customer: User;
+  customerPostcode: string;
 
   constructor(
     public accountService: AccountService,
     private basketService: BasketService,
+    private localContextService: LocalContextService,
     private router: Router) {
   }
 
   ngOnInit(): void {
-    this.basketService.subject$.subscribe(basket => {
+    this.localContextService.basket$.subscribe(basket => {
       this.basket = basket
-      console.log('Basket items : ' + basket.items.length);
-      this.itemCount = basket.items.length;
-      this.basketTotal = +basket.subTotal.toFixed(2);
-    })
-    this.user = this.accountService.userValue;
-    if ( this.user !== undefined && this.user !== null){
-      this.userName = this.user.firstName + " "+ this.user.lastName;
-      if ( this.user.addresses !== undefined && this.user.addresses !== null && this.user.addresses.length > 0){
-        this.userPostcode = this.user.addresses[0].postcode;
+      if ( this.basket.items !== null && this.basket.items !== undefined ){
+        this.itemCount = basket.items.length;
+        console.log('Basket items : ' + this.itemCount);
       }
-    }else{
-      this.userName = "Hello"
-    }
+      this.basketTotal = +basket.total.toFixed(2);
+    })
+
+    this.localContextService.customer$.subscribe(customer =>{
+      this.customer = customer;
+      if ( this.customer !== undefined && this.customer !== null){
+        this.customerName = this.customer.firstName + " "+ this.customer.lastName;
+        if ( this.customer.addresses !== undefined && this.customer.addresses !== null && this.customer.addresses.length > 0){
+          this.customerPostcode = this.customer.addresses[0].postcode;
+        }
+      }else{
+        this.customerName = "Hello"
+      }
+    })
+    
   }
 
-  isUserLoggedIn(): boolean {
-    if (this.accountService.userValue === undefined || this.accountService.userValue === null) {
+  isCustomerLoggedIn(): boolean {
+    if (this.customer === undefined || this.customer === null) {
       return false;
     }
     return true;
@@ -57,8 +65,8 @@ export class HeaderComponent implements OnInit {
 
   logout(){
     this.accountService.logout();
-    this.user = undefined;
-    this.userPostcode = undefined;
+    this.customer = undefined;
+    this.customerPostcode = undefined;
   }
 
   login(){
@@ -77,9 +85,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/orders']);
   }
 
-  getUserName(){
-    if ( this.isUserLoggedIn){
-      return this.accountService.userValue.email;
+  getcustomerName(){
+    if ( this.isCustomerLoggedIn()){
+      return this.customer.email;
     }else{
       return "Hello";
     }

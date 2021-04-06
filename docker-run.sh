@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run --env USERS_URL=HTTP://localhost:8080 --env PRODUCTS_URL=http://localhost:8081 --env REVIEWS_URL=http://localhost:8081 --env ORDERS_URL=http://localhost:8082 -p 80:80 gcr.io/nodal-formula-295821/openbasket/openbasket-web:v1
+docker run --env USERS_URL=HTTP://81.109.75.152:8080/users/v1 --env PRODUCTS_URL=http://81.109.75.152:8081/products/v1 --env REVIEWS_URL=http://81.109.75.152:8081/reviews/v1 -p 80:80 openecomm/web:v1

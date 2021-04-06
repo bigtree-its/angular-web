@@ -5,6 +5,7 @@
     height: 400px;
     background-color: #f7f7f7;
     margin: 100px auto;
+    font-weight: bolder;
 }
 
 .form-signin {

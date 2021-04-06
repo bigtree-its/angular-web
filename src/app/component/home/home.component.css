@@ -74,15 +74,16 @@
 }
 
 .sponsored-product-add-btn {
-    background-color: #19acac;
+    background-color: #111;
     color: white;
     padding: 10px 20px;
     border: none;
+    font-weight: bolder;
 }
 
 .sponsored-product-add-btn:hover {
     cursor: pointer;
-    background-color: #000000;
+    background-color: rgb(138, 138, 138);
 }
 
 .offers-section {

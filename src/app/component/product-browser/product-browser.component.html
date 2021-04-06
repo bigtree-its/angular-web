@@ -1,7 +1,8 @@
+<app-nav-bar></app-nav-bar>
 <div class="page cotainer-fluid d-flex justify-content-start">
     <div class="col-2 nav-section">
         <span class="nav-section-header">{{(department !== undefined && department !== null)? department.name : ""}}</span>
-        <div class="pl-2 mb-3">
+        <div class="pl-2 mb-3 mt-5">
             <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
         </div>
         <div *ngIf="brands.length> 0">
@@ -20,7 +21,7 @@
             </div>
         </div>
     </div>
-    <div class="col main-section">
+    <div class="col main-section d-flex just-content-start wrap">
         <div class="sort-row">
             <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Sort by
