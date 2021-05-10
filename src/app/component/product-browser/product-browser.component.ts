@@ -235,4 +235,14 @@ export class ProductBrowserComponent implements OnInit {
     this.orderH2L = true;
   }
 
+  handleChange(evt, val: string) {
+    var target = evt.target;
+    if (target.checked) {
+      if (val == "low") {
+        this.lowToHigh();
+      } else if (val == "high") {
+        this.highToLow();
+      }
+    }
+  }
 }

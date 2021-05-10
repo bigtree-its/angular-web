@@ -1,42 +1,44 @@
+<app-header></app-header>
 <app-nav-bar></app-nav-bar>
-<div class="page cotainer-fluid d-flex justify-content-start">
-    <div class="col-2 nav-section">
-        <span class="nav-section-header">{{(department !== undefined && department !== null)? department.name : ""}}</span>
-        <div class="pl-2 mb-3 mt-5">
-            <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
+<div class="container">
+  <div class="flex-start">
+    <div class="nav-section flex-column">
+      <div class="category-section">
+        <span
+          class="nav-section-header">{{(department !== undefined && department !== null)? department.name : ""}}</span>
+        <tree-root #tree [nodes]="menuItems" [options]="options" (activate)="onEvent($event)"></tree-root>
+      </div>
+
+      <div class="sort-section">
+        <span class="nav-section-header">Sort</span>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="low" checked
+            (change)="handleChange($event, 'low')">
+          <label class="form-check-label normal" for="low">
+            Lowest First
+          </label>
         </div>
-        <div *ngIf="brands.length> 0">
-            <div class="brand-section">
-                <strong class="text-left d-block font-bold">Featured Brands</strong>
-                <div>
-                    <ul class="mt-1">
-                        <div class="pt-2" *ngFor="let b of brands">
-                            <label class="bt-check">{{ b.name }}
-                                        <input type="checkbox" (change)="selectBrand(b._id,$event)">
-                                        <span class="tick"></span>
-                                    </label>
-                        </div>
-                    </ul>
-                </div>
-            </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="high"
+            (change)="handleChange($event, 'high')">
+          <label class="form-check-label normal" for="high">
+            Highest First
+          </label>
         </div>
+      </div>
+      <div class="brand-section" *ngIf="brands.length > 0">
+        <span class="nav-section-header">Featured Brands</span>
+        <div class="form-check form-switch ml-3" *ngFor="let b of brands">
+          <input class="form-check-input" type="checkbox" id="{{b._id}}" (change)="selectBrand(b._id,$event)">
+          <label class="form-check-label" for="{{b._id}}">{{b.name}}</label>
+        </div>
+      </div>
     </div>
-    <div class="col main-section d-flex just-content-start wrap">
-        <div class="sort-row">
-            <span class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Sort by
-                </span>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <span class="dropdown-item top-nav-logout" (click)="lowToHigh()">Lowest
-                                First</span>
-                <span class="dropdown-item top-nav-logout" (click)="highToLow()">Highest
-                                First</span>
-            </div>
-        </div>
-        <div class="d-flex  container-fluid justify-content-start overflow-y wrap">
-            <div class="space-around" *ngFor="let p of products">
-                <app-item [product]="p"></app-item>
-            </div>
-        </div>
+    <div class="container-fluid flex-start overflow-y wrap">
+      <div *ngFor="let p of products">
+        <app-item [product]="p"></app-item>
+      </div>
     </div>
+  </div>
+
 </div>

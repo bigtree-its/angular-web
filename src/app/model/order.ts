@@ -17,16 +17,24 @@ export class Order {
     packagingCost: number;
     discount: number;
     totalCost: number;
+    cancellationRequested: boolean;
+    cancellationApproved: boolean;
+    cancellationDeclined: boolean;
+    cancelled: boolean;
 }
 
 export class OrderItem {
-    id: number;
+    id: string;
     image: string;
     productId: string;
     productName: string;
     quantity: number;
     price: number;
     total: number;
+    cancellationRequested: boolean;
+    cancellationApproved: boolean;
+    cancellationDeclined: boolean;
+    cancelled: boolean;
 }
 
 export class PaymentIntentRequest{

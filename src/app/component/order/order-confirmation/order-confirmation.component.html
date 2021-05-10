@@ -1,10 +1,11 @@
 <div class="order-confirmation-page">
-    <div class="d-flex justify-content-between">
-        <h4>Order Confirmation</h4>
-        <h3>#{{ orderReferenceNumber }}</h3>
+    <div class="company-logo">
+        <span>bigtree</span>
     </div>
-    <hr class="mb-4">
-    <div class="col mt-5">
+    <div class="order-confirmation">
+        <span>Your Order</span>
+    </div>
+    <div class="col message-section">
         <div class="d-block mb-2">
             Hi <span class="px-1">{{ getFullName() }}</span>,
         </div>
@@ -12,11 +13,23 @@
             <img src="/assets/icons/check.png" alt="" loading="lazy" class="order-confirmation-icon">
             <span class="success-message px-1"></span>Your order is confirmed!
         </div>
-        <div class="d-block mt-3">
-            Thanks for shopping! Your order has been successfully placed. You will receive an email with full order summary
+        <div class="d-block mt-5">
+            Your order has been successfully placed. You will receive an email with full order summary
+        </div>
+        <div class="order-reference-number-outer">
+            <span class="order-reference-number">{{orderReferenceNumber}}</span>
+        </div>
+        <div class="d-block mt-5">
+            Do not hesitate to contact us if you have any question
         </div>
         <div class="d-block mt-3">
-            Your order reference number : <strong class="order-reference-number">{{ orderReferenceNumber }}</strong>
+            Thanks again for your business! We appreciate that you've chosen us
+        </div>
+        <div class="d-block mt-5">
+            Thanks, 
+        </div>
+        <div class="d-block mt-3 bold">
+            BigTree
         </div>
     </div>
 </div>

@@ -1,21 +1,34 @@
 .order{
-    border-radius: 5px;
     margin: 7px 0;
+    border: 1px solid rgb(231, 231, 231);
 }
 .header{
     width: 100%;
+    background-color: #d2f4ea!important;
+    padding: 10px;
+    color: teal;
 }
 
-.item{
-    cursor: pointer;
-    margin: 2px;
-}
 .header-item{
     display: flex;
     flex-direction:column;
     padding: 5px;
     margin-right: 50px;
+    font-weight: normal;
 }
+.header-name{
+    font-weight: bold;
+}
+.header-value{
+    font-weight: normal;
+}
+
+.item{
+    cursor: pointer;
+    margin: 2px;
+    font-weight: normal;
+}
+
 .order-status{
     display: flex;
     flex-direction:column;

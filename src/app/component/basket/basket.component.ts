@@ -25,13 +25,22 @@ export class BasketComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.basket  = this.LocalContextService.getBasket();
-    if ( this.basket !== null && this.basket !== undefined){
-      this.basket.total = 0; 
-      this.calculateBasketTotal();
-    }
+    this.LocalContextService.basket$.subscribe(b => {
+      if (b !== null && b !== undefined) {
+        this.basket = b;
+        this.basket.total = 0;
+        this.calculateBasketTotal();
+      } else {
+        this.basket = this.LocalContextService.getBasket();
+        if (this.basket !== null && this.basket !== undefined) {
+          this.basket.total = 0;
+          this.calculateBasketTotal();
+        }
+      }
+    })
+
   }
-  proceedToCheckout(){
+  proceedToCheckout() {
     this.router.navigate(['/delivery-address']).then();
   }
 
@@ -45,12 +54,12 @@ export class BasketComponent implements OnInit {
   }
 
   calculateBasketTotal() {
-    if ( this.basket.items !== null && this.basket.items !== undefined && this.basket.items.length > 0){
+    if (this.basket.items !== null && this.basket.items !== undefined && this.basket.items.length > 0) {
       this.basket.items.forEach(item => {
-        this.basket.total = + (+this.basket.total + ( +item.quantity * +item.price )).toFixed(2);
+        this.basket.total = + (+this.basket.total + (+item.quantity * +item.price)).toFixed(2);
       })
     }
-  
+
   }
 
   remoteFromBasket(id: string) {
@@ -69,7 +78,7 @@ export class BasketComponent implements OnInit {
     return s;
   }
 
-  getBasketTotal(){
+  getBasketTotal() {
     return this.getPrettyPrintPrice(this.basket.total);
   }
 

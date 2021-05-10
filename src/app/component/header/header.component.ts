@@ -25,6 +25,8 @@ export class HeaderComponent implements OnInit {
   customer: User;
   customerPostcode: string;
 
+  searchText: string = "";
+
   constructor(
     public accountService: AccountService,
     private basketService: BasketService,
@@ -35,62 +37,69 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.localContextService.basket$.subscribe(basket => {
       this.basket = basket
-      if ( this.basket.items !== null && this.basket.items !== undefined ){
+      if (this.basket.items !== null && this.basket.items !== undefined) {
         this.itemCount = basket.items.length;
         console.log('Basket items : ' + this.itemCount);
       }
       this.basketTotal = +basket.total.toFixed(2);
     })
 
-    this.localContextService.customer$.subscribe(customer =>{
+    this.localContextService.customer$.subscribe(customer => {
       this.customer = customer;
-      if ( this.customer !== undefined && this.customer !== null){
-        this.customerName = this.customer.firstName + " "+ this.customer.lastName;
-        if ( this.customer.addresses !== undefined && this.customer.addresses !== null && this.customer.addresses.length > 0){
+      console.log('Customer : ' + JSON.stringify(this.customer));
+      if (this.customer !== undefined && this.customer !== null) {
+        this.customerName = this.customer.firstName + " " + this.customer.lastName;
+        if (this.customer.addresses !== undefined && this.customer.addresses !== null && this.customer.addresses.length > 0) {
           this.customerPostcode = this.customer.addresses[0].postcode;
         }
-      }else{
+      } else {
         this.customerName = "Hello"
       }
     })
-    
+
   }
 
   isCustomerLoggedIn(): boolean {
-    if (this.customer === undefined || this.customer === null) {
+    if (this.customer === undefined || this.customer === null || this.customer.firstName == undefined || this.customer.firstName == null) {
       return false;
     }
     return true;
   }
 
-  logout(){
+  logout() {
     this.accountService.logout();
     this.customer = undefined;
     this.customerPostcode = undefined;
   }
 
-  login(){
+  login() {
     this.router.navigate(['/login']);
   }
 
-  register(){
+  register() {
     this.router.navigate(['/register']);
   }
 
-  profile(){
+  profile() {
     this.router.navigate(['/profile']);
   }
 
-  orders(){
+  orders() {
     this.router.navigate(['/orders']);
   }
 
-  getcustomerName(){
-    if ( this.isCustomerLoggedIn()){
+  getcustomerName() {
+    if (this.isCustomerLoggedIn()) {
       return this.customer.email;
-    }else{
+    } else {
       return "Hello";
     }
   }
 
+  onSubmitSearch() {
+    if (this.searchText === undefined || this.searchText === null || this.searchText === "") {
+      return;
+    }
+    this.router.navigate(['/product-finder', this.searchText]).then();
+  }
 }

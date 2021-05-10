@@ -1,31 +1,43 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+128+Text&display=swap');
+  </style>
+<app-header></app-header>
 <div class="container-fluid">
-    <div class="d-flex justify-content-between container-fluid header">
-        <h4 class="text-dark"><strong>Your Basket</strong></h4>
-        <a href="/">
-            <button type="button" class="btn btn-link"><strong>Continue Shopping</strong></button>
-        </a>
+  <div class="header d-flex justify-content-between bg-light">
+    <h4 class="text-dark"><strong class="banner-text mr-5">Your Basket</strong></h4>
+    <div>
+      <a href="/">
+        <button type="button" class="btn btn-link"><strong>Continue Shopping</strong></button>
+      </a>
     </div>
-    <div *ngIf="basket.items == null || basket.items == undefined || basket.items.length == 0; then thenBlock else elseBlock"></div>
-    <ng-template #thenBlock>
-        <span class="basket-no-items p-5">
-            Oh no! Your basket is empty. Time to go shopping!
-        </span>
-    </ng-template>
-    <ng-template #elseBlock>
-        <div class="d-flex justify-content-center container-fluid mt-2 wrap">
-            <div class="basket-container curved">
-                <div *ngFor="let item of basket.items">
-                    <app-basket-item [item]=item></app-basket-item>
-                </div>
-            </div>
-            <div class="checkout-box d-flex flex-column py-5 px-3">
-                <div class="basket-total-section bt-border-b mb-4 pb-4">
-                    <span class="basket-total-label">Subtotal</span>:
-                    <span class="basket-total">{{ getBasketTotal() | currency: 'GBP' }} </span>
-                </div>
-                <button type="button" class="btn btn-primary btn-sm px-3 py-2 size-lg" (click)="proceedToCheckout()">Check out</button>
-                <small class="text-muted pl-2 py-1">Delivery costs will be calculated at checkout.</small>
-            </div>
+  </div>
+  <div
+    *ngIf="basket.items == null || basket.items == undefined || basket.items.length == 0; then thenBlock else elseBlock">
+  </div>
+  <ng-template #thenBlock>
+    <div class="container basket-no-items ">
+      <img src="/assets/icons/cone-of-shame.png" class="cone-of-shame">
+      <span class="p-5">
+        Oh no! Your basket is empty. Time to go shopping!
+      </span>
+    </div>
+  </ng-template>
+  <ng-template #elseBlock>
+    <div class="d-flex justify-content-center container-fluid mt-2 wrap">
+      <div class="basket-container curved">
+        <div *ngFor="let item of basket.items">
+          <app-basket-item [item]=item></app-basket-item>
         </div>
-    </ng-template>
+      </div>
+      <div class="checkout-box d-flex flex-column py-5 px-3">
+        <div class="basket-total-section mb-4 pb-4">
+          <span class="basket-total-label">Subtotal</span>:
+          <span class="basket-total">{{ getBasketTotal() | currency: 'GBP' }} </span>
+        </div>
+        <!-- <button type="button" class="px-3 py-2 size-lg btn-s" (click)="proceedToCheckout()">Check out</button> -->
+        <button type="button" class="checkout-button" (click)="proceedToCheckout()">Check out</button>
+        <small class="pl-2 py-1">Delivery costs will be calculated at checkout.</small>
+      </div>
+    </div>
+  </ng-template>
 </div>

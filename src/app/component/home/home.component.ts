@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel } from 'src/app/model/product.model';
+import { Carousel, Collection, ProductModel } from 'src/app/model/product.model';
 import * as _ from 'underscore';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
@@ -21,6 +21,9 @@ export class HomeComponent implements OnInit {
   featuredProduct: ProductModel;
   bestSeller: ProductModel[];
   bestSellerProduct: any;
+  carousels: Carousel[];
+  activeCarousel: Carousel;
+  collections: Collection[];
 
   constructor(
     private productService: ProductService,
@@ -67,6 +70,25 @@ export class HomeComponent implements OnInit {
       }
     });
 
+    this.productService.getCarousels().subscribe((result: Carousel[]) => {
+      this.carousels = result;
+      if (
+        this.carousels !== null &&
+        this.carousels !== undefined &&
+        this.carousels.length > 0
+      ) {
+        this.carousels.forEach((p) => {
+          if (p.active) {
+            this.activeCarousel = p;
+          }
+        });
+      }
+    });
+
+    this.productService.getCollections().subscribe((result: Collection[]) => {
+      this.collections = result;
+    });
+
   }
 
   private queryProducts(query: ProductQuery) {
@@ -87,6 +109,11 @@ export class HomeComponent implements OnInit {
 
   selectProduct(p: ProductModel) {
     this.router.navigate(['/product', p._id]).then();
+  }
+
+  selectProductId(productId: string) {
+    console.log('Selecting product: ' + productId);
+    this.router.navigate(['/product', productId]).then();
   }
 
   private setAmountAndFraction(product: ProductModel) {

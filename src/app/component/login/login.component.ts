@@ -64,4 +64,8 @@ export class LoginComponent implements OnInit {
         });
   }
 
+  joinUs(){
+    this.router.navigate(['/register']);
+  }
+
 }

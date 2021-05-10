@@ -24,7 +24,7 @@ export class CheckoutItemComponent implements OnInit {
   ngOnInit(): void {
     this.quantity = this.item.quantity;
     this.calculateSubTotal();
-    this.brand = this.item.brand.name;
+    this.brand = (this.item.brand !== null && this.item.brand !== undefined )? this.item.brand.name : "";
   }
 
   selectProduct(id: String) {

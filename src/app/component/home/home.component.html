@@ -1,14 +1,14 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+  @import url('assets/js/carousel.js');
 
 </style>
+<app-header></app-header>
 <app-nav-bar></app-nav-bar>
 <div class="container-fluid home">
-  <div class="container-fluid d-flex justify-content-center wrap" *ngIf="featuredProduct!==undefined && featuredProduct !== null">
-    <div
-      style="display: flex; flex-direction: column; background-color: #f6fafa; width: 60%;height: 400px;margin: 10px;">
-      <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
+  <div style="width: 90%;height: 500px;margin: 10px;">
+    <!-- <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
       <div class="d-block" style="width: 100%;">
         <span class="d-block sponsored-section-title"
           (click)="selectProduct(featuredProduct)">{{ featuredProduct.name.length > 50 ? featuredProduct.name.substr(0,50): featuredProduct.name }}</span>
@@ -23,7 +23,6 @@
             </div>
           </div>
           <div class="d-block mt-3">
-            <!-- <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button> -->
             <button class="sponsored-product-add-btn" (click)="addToCart(featuredProduct)">Add to Basket</button>
           </div>
           <div class="mt-4">
@@ -36,65 +35,305 @@
               (click)="selectProduct(featuredProduct)" class="featured-product-image">
           </div>
         </div>
+      </div> -->
+    <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let c of carousels" [class.active]="c.active">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{c.title}}</strong></h2>
+              <h1><strong
+                  class="carousel-item-description">{{c.description.length > 80 ? c.description.substr(0,80): c.description}}</strong>
+              </h1>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(c.product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{c.image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(c.product)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button *ngFor="let t of carousels.length" [class.active]="t == 0" type="button"
+          data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{t}}" aria-current="t == 0"
+          aria-label="Slide 1">{{t}}</button>
+         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button> 
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner" style="background-color: white;">
+        <div class="carousel-item carousel-item-c" *ngFor="let c of carousels" [class.active]="c.active">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{c.title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong class="carousel-item-description">{{c.description.length > 80 ? c.description.substr(0,80): c.description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(c.product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{c.image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(c.product)">
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div> -->
+    <!-- <div id="carouselExampleFade" class="carousel carousel-dark carousel-fade carousal-div" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item carousel-item-c active" data-bs-interval="2000">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[0].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong class="carousel-item-description">{{carousels[0].description.length > 80 ? carousels[0].description.substr(0,80): carousels[0].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[0].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[0].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[0].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c" data-bs-interval="2000">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[1].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong class="carousel-item-description">{{carousels[1].description.length > 80 ? carousels[1].description.substr(0,80): carousels[1].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[1].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[1].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[1].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c"  data-bs-interval="2000">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[2].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong class="carousel-item-description">{{carousels[2].description.length > 80 ? carousels[2].description.substr(0,80): carousels[2].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[2].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[2].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[2].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c" data-bs-interval="2000">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[3].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong class="carousel-item-description">{{carousels[3].description.length > 80 ? carousels[3].description.substr(0,80): carousels[3].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[3].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[3].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[3].product)">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div
-      style="display: flex; flex-direction: column; width: 30%;height: 400px; margin: 10px;">
+  </div> -->
+
+    <div id="carouselExampleDark" class="carousel carousel-dark carousel-fade carousal-div" data-bs-ride="carousel"
+      *ngIf="carousels !== null && carousels !==undefined">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item carousel-item-c active" data-bs-interval="1500">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[0].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong
+                    class="carousel-item-description">{{carousels[0].description.length > 80 ? carousels[0].description.substr(0,80): carousels[0].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[0].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[0].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[0].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c" data-bs-interval="1500">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[1].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong
+                    class="carousel-item-description">{{carousels[1].description.length > 80 ? carousels[1].description.substr(0,80): carousels[1].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[1].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[1].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[1].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c" data-bs-interval="1500">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[2].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong
+                    class="carousel-item-description">{{carousels[2].description.length > 80 ? carousels[2].description.substr(0,80): carousels[2].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[2].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[2].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[2].product)">
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item carousel-item-c" data-bs-interval="1500">
+          <div class="d-flex justify-content-center">
+            <div class="carousel-left-section">
+              <h2><strong class="carousel-item-title">{{carousels[3].title}}</strong></h2>
+              <div class="carousel-description-outer">
+                <h1><strong
+                    class="carousel-item-description">{{carousels[3].description.length > 80 ? carousels[3].description.substr(0,80): carousels[3].description}}</strong>
+                </h1>
+              </div>
+              <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[3].product)">Buy</button>
+            </div>
+            <div class="carousel-right-section">
+              <img src={{carousels[3].image}} class="carousel-item-image" alt="" loading="lazy"
+                (click)="selectProductId(carousels[3].product)">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div style="display: flex; flex-direction: column; width: 100%;height: 300px; margin: 10px;">
+      <h3 class="text-bold text-grey" style="padding: 20px;">Our Collections</h3>
+      <div class="scroll-container d-flex justify-content-start py-1">
+        <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+        <div #widgetsContent class="custom-slider-main">
+          <div class="mini-product-item" *ngFor="let collection of collections">
+            <div>
+              <img src={{collection.image}} width="100%" alt="{{collection.name}}" class="mini-product-item-image">
+            </div>
+            <span class="mini-product-item-name">{{ collection.name }}</span>
+          </div>
+        </div>
+        <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+      </div>
+    </div> -->
+    <!-- <div style="display: flex; flex-direction: column; width: 100%;height: 300px; margin: 10px;">
+      <h3 class="text-bold text-grey" style="padding: 20px;">Offers</h3>
+      <div class="scroll-container d-flex justify-content-start py-1">
+        <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+        <div #widgetsContent class="custom-slider-main">
+          <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
+        </div>
+        <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+      </div>
+    </div> -->
+
+    <!-- <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
+    <div style="display: flex; flex-direction: column; width: 40%;height: 400px; margin: 10px;">
       <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
       <div class="a-cardui">
         <div class=" d-flex wrap justify-content-center">
           <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
         </div>
         <div class="a-cardui-footer">
-            <a href="/offers">See more</a>
+          <a href="/offers">See more</a>
         </div>
       </div>
     </div>
-  </div>
-  <div class="container-fluid d-flex justify-content-center wrap py-2" *ngIf="bestSellerProduct!==undefined && bestSellerProduct !== null">
-    <div
-      style="display: flex; flex-direction: column; width: 30%;height: 400px; margin: 10px;">
-      <span class="featured-tag  box-shadow" style="width: 60px;">Offers</span>
+    <div style="display: flex; flex-direction: column; width: 40%;height: 400px; margin: 10px;">
+      <h3 class="text-bold text-grey">Our Collections</h3>
       <div class="a-cardui">
         <div class=" d-flex wrap justify-content-center">
-          <app-small-item [product]="p" *ngFor="let p of products"></app-small-item>
+          <div class="mini-product-item" *ngFor="let collection of collections">
+            <div>
+              <img src={{collection.image}} width="100%" alt="{{collection.name}}" class="mini-product-item-image">
+            </div>
+            <span class="mini-product-item-name">{{ collection.name }}</span>
+          </div>
         </div>
         <div class="a-cardui-footer">
-            <a href="/offers">See more</a>
+          <a href="/offers">See more</a>
         </div>
       </div>
-    </div>
-    <div
-      style="display: flex; flex-direction: column; background-color: #f6fafa; width: 60%;height: 400px;margin: 10px;">
-      <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
-      <div class="d-block" style="width: 100%;">
-        <span class="d-block sponsored-section-title"
-          (click)="selectProduct(bestSellerProduct)">{{ bestSellerProduct.name.length > 50 ? bestSellerProduct.name.substr(0,50): bestSellerProduct.name }}</span>
-      </div>
-      <div style="display: flex;justify-content: space-between; padding: 10px;">
-        <div style="display: flex; flex-direction: column;width: 60%;">
-          <div class="sponsored-section-product-price pt-2">
-            <span class="product-price-currency">£</span>
-            <span class="product-price">{{ bestSellerProduct.amount }}</span>
-            <span class="product-price-fraction">{{ bestSellerProduct.fraction }}</span>
+    </div> -->
+    <!-- <div
+        style="display: flex; flex-direction: column; background-color: #f6fafa; width: 60%;height: 400px;margin: 10px;">
+        <span class="featured-tag  box-shadow" style="width: 50px;">New</span>
+        <div class="d-block" style="width: 100%;">
+          <span class="d-block sponsored-section-title"
+            (click)="selectProduct(bestSellerProduct)">{{ bestSellerProduct.name.length > 50 ? bestSellerProduct.name.substr(0,50): bestSellerProduct.name }}</span>
+        </div>
+        <div style="display: flex;justify-content: space-between; padding: 10px;">
+          <div style="display: flex; flex-direction: column;width: 60%;">
+            <div class="sponsored-section-product-price pt-2">
+              <span class="product-price-currency">£</span>
+              <span class="product-price">{{ bestSellerProduct.amount }}</span>
+              <span class="product-price-fraction">{{ bestSellerProduct.fraction }}</span>
+            </div>
+            <div class="d-block mt-3">
+              <button class="sponsored-product-add-btn" (click)="addToCart(bestSellerProduct)">Add to Basket</button>
+            </div>
+            <div class="mt-4 text-normal text-dark">
+              {{ bestSellerProduct.description }}
+            </div>
           </div>
-          <div class="d-block mt-3">
-            <button class="sponsored-product-add-btn" (click)="addToCart(bestSellerProduct)">Add to Basket</button>
-          </div>
-          <div class="mt-4">
-            {{ bestSellerProduct.description }}
+          <div style="width: 40%;display: flex; justify-content: center;">
+            <div style="height: 250px; width: 250px;">
+              <img src={{bestSellerProduct.picture.thumbnail}} alt="" loading="lazy"
+                (click)="selectProduct(bestSellerProduct)" class="featured-product-image">
+            </div>
           </div>
         </div>
-        <div style="width: 40%;display: flex; justify-content: center;">
-          <div style="height: 250px; width: 250px;">
-            <img src={{bestSellerProduct.picture.thumbnail}} alt="" loading="lazy"
-              (click)="selectProduct(bestSellerProduct)" class="featured-product-image">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid d-flex justify-content-center wrap">
+      </div> -->
+    <!-- </div> -->
     <div class="new-arrival-section">
       <span class="recently-viewed-tag  box-shadow">New Arrivals</span>
       <div class="scroll-container d-flex justify-content-start py-1">
@@ -107,7 +346,6 @@
         <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
       </div>
     </div>
+    <div style="height: 100px;"></div>
   </div>
-  <div style="height: 100px;"></div>
-</div>
-<!-- <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast> -->
+  <!-- <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast> -->

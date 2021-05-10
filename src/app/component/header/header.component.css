@@ -1,228 +1,309 @@
 .sticky {
-    /* position: fixed; */
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 5px;
-    background-color: #1b1b1b;
-    transition: background-color 1s ease 0s;
+  /* position: fixed; */
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background-color: #1b1b1b;
+  transition: background-color 1s ease 0s;
 }
-.header{
-    /* transition: background-color 1s ease 0s; */
-    /* background-color: rgb(64, 64, 64); */
-    /* background-color: rgb(238, 238, 238); */
-    /* background-color: rgb(133, 250, 250); */
-    padding: 10px 0 10px 0;
-    background: rgb(214, 255, 252);
-    background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(64, 199, 190));
+
+.header {
+  /* transition: background-color 1s ease 0s; */
+  /* background-color: rgb(64, 64, 64); */
+  /* background-color: rgb(238, 238, 238); */
+  /* background-color: rgb(133, 250, 250); */
+  /* background: rgb(214, 255, 252); */
+  /* background-image: linear-gradient(to right, rgba(255,0,0,0), rgb(122, 252, 243)); */
+  height: 50px;
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
 }
+
+
 
 .rotate {
-    transform: rotate(0deg);
-    /* Legacy vendor prefixes that you probably don't need... */
-    /* Safari */
-    -webkit-transform: rotate(0deg);
-    /* Firefox */
-    -moz-transform: rotate(0deg);
-    /* IE */
-    -ms-transform: rotate(0deg);
-    /* Opera */
-    -o-transform: rotate(0deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-  }
+  transform: rotate(0deg);
+  /* Legacy vendor prefixes that you probably don't need... */
+  /* Safari */
+  -webkit-transform: rotate(0deg);
+  /* Firefox */
+  -moz-transform: rotate(0deg);
+  /* IE */
+  -ms-transform: rotate(0deg);
+  /* Opera */
+  -o-transform: rotate(0deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
 
 .navbar-brand {
-    display: inline-block;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    line-height: inherit;
-    white-space: nowrap;
-    border: 3px solid #111;
-    padding: 6px;
+  display: inline-block;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  line-height: inherit;
+  white-space: nowrap;
+  /* border: 3px solid #111; */
+  padding: 6px;
+}
+
+.brand-logo {
+  width: 30px;
+  height: 30px;
+}
+
+.brand-name {
+  font-size: 25px;
+  text-decoration: none;
+  color: #111;
+  font-weight: 700;
+  /* text-shadow: 2px 2px rgb(189, 186, 186); */
+  font-family: 'Righteous', cursive;
+  letter-spacing: 1.9px;
 }
 
 .banner-border {
-    border-color: #DDD!important;
-    border-style: solid!important;
-    border-width: 0 0 1px 0!important;
-    /* background-image: url(https://images-na.ssl-images-amazon.com/images/G/31/common/sprites/tspc-header-bkg.png); */
-    height: 60px;
-    background-position-y: -13px;
+  border-style: solid !important;
+  border-width: 0 0 1px 0 !important;
+  /* background-image: url(https://images-na.ssl-images-amazon.com/images/G/31/common/sprites/tspc-header-bkg.png); */
+  height: 60px;
+  background-position-y: -13px;
 }
 
-.location-section{
-    margin-left: 50px;
-    border: 1px solid #cacaca;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-right: 50px;
-    color: #111;
+.left {
+  width: 400px;
 }
 
-.nav-right{
-    float: right;
-    position: relative;
+.right {
+  width: 300px;
 }
-.logo-brand-text-big,.logo-brand-text-1, .logo-brand-text-2, .logo-brand-text-3{
-    font-weight: 900;
-    font-size: 20px;
-    text-decoration: none;
-    color: #111;
-    text-shadow: 2px 2px rgb(189, 186, 186);
-    border-radius: 12px;
-    font-family: 'Syne Mono', monospace;
-    /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
-    /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
+
+.search-contaniner {
+  border: 1px solid rgb(245, 246, 247);
+  border-radius: 8px;
+  background-color: rgb(245, 246, 247);
+  color: rgb(59, 65, 68);
+  font-size: 16px;
+  line-height: 1.5;
+  width: 20%;
+  clear: both;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  transition: width 0.35s ease 0s;
+
 }
-.logo-brand-text-big{
-    font-size: 30px;
+
+.search-icon {
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 0 10px;
+  opacity: 0.4;
+  align-self: center;
 }
+
+.search-box {
+  padding: 5px;
+  max-width: 100%;
+  background: none;
+  font-family: "Fira Mono", "Andale Mono", "Consolas", monospace;
+  font-size: 16px;
+  letter-spacing: 0px;
+  border: none;
+  outline: unset;
+  /* height: 40px; */
+  padding-left: 10px;
+  border-radius: 0;
+  width: calc(100% - 10px);
+  -webkit-appearance: none;
+  position: relative;
+}
+
+.search-button {
+  padding: 3px 8px;
+  background-color: rgb(196, 67, 67);
+  color: white;
+  border: none;
+  font-weight: bolder;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-size: 10px;
+}
+
+.location-section {
+  margin-left: 50px;
+  border: 1px solid #cacaca;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 50px;
+  color: #111;
+}
+
+.nav-right {
+  float: right;
+  position: relative;
+}
+
+
+.logo-brand-text-big {
+  font-size: 30px;
+}
+
 .logo-brand-text-2 {
-    color: #fc2929;
-    font-size: 55px;
-    text-decoration: none;
-    /* text-shadow: 2px 2px rgb(189, 186, 186); */
-    /* color: #1d46ce; */
-    /* border-radius: 12px; */
-    /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
-    /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
+  color: #fc2929;
+  font-size: 55px;
+  text-decoration: none;
 }
+
 .logo-brand-text-3 {
-    color: #ffda37;
-    /* font-size: 25px; */
-    /* text-decoration: none; */
-    /* text-shadow: 2px 2px rgb(189, 186, 186); */
-    /* color: #1d46ce; */
-    /* border-radius: 12px; */
-    /* -webkit-box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
-    /* box-shadow: 0 25px 25px 0 rgba(0, 0, 0, .1); */
+  color: #ffda37;
 }
 
 
+.signin-button,
+.signup-button {
+  padding: 5px;
+  background-color: #fff;
+  font-weight: bold;
+  margin: 0 2px;
+  border: none;
+}
 
-.signin-link{
-    font-weight: bold;
-    font-size: medium;
-    text-decoration: none;
-    border: none;
-    margin: 0;
-    padding: 0;
-    outline: none;
-    background-color: inherit;
+.signin-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: dodgerblue;
 }
-.profile-section, .signin-section, .signup-section, .basket-section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-right: 50px;
+
+.signup-button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color: dodgerblue;
 }
-.basket-section{
-    margin-left: 30px;
-    margin-right: 10px;
+
+.basket-section {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.basket-section:hover{
-    cursor: pointer;
+
+.basket-section:hover {
+  cursor: pointer;
 }
-.right-section-text{
-    font-size: 14px;
-    background: none;
-    border: none;
-    outline: none;
+
+.right-section-text {
+  background: none;
+  border: none;
+  outline: none;
 }
-.right-section-text:hover{
-    cursor: pointer;
+
+.right-section-text:hover {
+  cursor: pointer;
 }
 
 .account-section {
-    width: 50px;
+  width: 50px;
 }
 
 .account-section:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .account-icon:hover {
-    cursor: pointer;
-    color: rgb(0, 187, 115);
+  cursor: pointer;
+  color: rgb(0, 187, 115);
+}
+
+.username-div {
+  padding: 10px;
+  background-color: #384557;
+  height: 100%;
+  margin: 5px;
 }
 
 .my-account {
-    margin: 0;
-    height: 100%;
-    padding: 0 10px;
-}
-.welcomeUsername{
+  margin: 0;
+  height: 100%;
+  padding: 0 10px;
 }
 
-.location-section{
-    padding: 0 10px;
-    opacity: 0.6;
-    color: #aaa;
-    margin-right: 30px;
+.location-section {
+  padding: 0 10px;
+  opacity: 0.6;
+  color: #aaa;
+  margin-right: 30px;
 }
 
-.location-postcode{
-    margin: 13px 0;
+.location-postcode {
+  margin: 13px 0;
 }
-.user-location-icon{
-    height: 20px;
-    width: 20px;
-    margin: 10px 0;
+
+.customer-greeting {
+  margin: 10px;
+
 }
+
 .top-nav-basket-icon {
-    height: 30px;
-    width: 30px;
-    margin: 10px 5px 20px 0;
-    align-items: center;
+  height: 30px;
+  width: 30px;
+  margin: 10px 5px 20px 0;
+  align-items: center;
 }
 
 .top-nav-basket-icon:hover {
-    cursor: pointer;
-    color: rgb(116, 243, 194);
+  cursor: pointer;
+  color: rgb(116, 243, 194);
 }
 
 .top-nav-basket-count {
-    /* background-color: #1a73e8; */
-    background-color: #384557;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    border: 2px solid #fff;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: bold;
-    height: 26px;
-    width: 26px;
-    line-height: 22px;
-    margin-left: -14px;
-    margin-bottom: 13px;
-    text-align: center;
-    visibility: visible;
+  /* background-color: #1a73e8; */
+  background-color: #384557;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  font-size: 11px;
+  height: 26px;
+  width: 26px;
+  line-height: 22px;
+  margin-left: -14px;
+  margin-bottom: 13px;
+  text-align: center;
+  visibility: visible;
 }
-.nav-right-text{
-    font-size: 14px;
-    border: none;
-    outline: none;
-    color: #aaa;
-    background-color: inherit;
-    margin: 0;
+
+.nav-right-text {
+  font-size: 14px;
+  border: none;
+  outline: none;
+  color: #aaa;
+  background-color: inherit;
+  margin: 0;
 }
+
 .nav-right-text:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.right-button {
-    font-size: 16px;
-    border: none;
-    outline: none;
-    background-color: inherit;
-    margin: 0;
+.united-kingdom-icon {
+  height: 20px;
+  width: 20px;
+  align-self: center;
+  margin: 10px;
 }
 
-.right-button:hover {
-    cursor: pointer;
+.shopping-cart-icon {
+  height: 20px;
+  width: 20px;
+  align-self: center;
+}
+
+.basket-item-count {
+  align-self: center;
 }

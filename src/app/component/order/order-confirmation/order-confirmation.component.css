@@ -1,7 +1,40 @@
 .order-confirmation-page {
     margin-top: 70px;
-    width: 60%;
+    width: 40%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+}
+.company-logo{
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 60px;
+    text-shadow: 2px 2px rgb(189, 186, 186);
+    font-family: 'Syne Mono', monospace;
+}
+.order-confirmation{
+    padding: 30px;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgb(229, 248, 239);
+    border: 1px solid #c4dbc4;
+}
+.message-section{
+    background-color: #fcfcfc;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .order-confirmation-page-header {
@@ -18,4 +51,16 @@
 .order-confirmation-icon {
     height: 30px;
     width: 30px;
+}
+.order-reference-number-outer{
+    justify-content: center;
+    display: flex;
+    margin: 10px 0;
+}
+.order-reference-number{
+    padding: 20px;
+    background-color:#fdb601;
+    border: 3px solid #222;
+    font-size: 25px;
+    align-self: center;
 }

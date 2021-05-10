@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { map, catchError, shareReplay } from 'rxjs/operators';
-import { ProductModel, Category, Department } from '../model/product.model';
+import { ProductModel, Category, Department, Carousel, Collection } from '../model/product.model';
 import { LocalContextService } from './localcontext.service';
 import { CategoryQuery, ProductQuery } from '../model/query';
 
@@ -31,6 +31,22 @@ export class ProductService {
     return this.http.get<ProductModel[]>(this.SERVER_URL + '/products');
   }
 
+
+  getCarousels(): Observable<Carousel[]> {
+    console.log('Fetching all carousels...');
+    return this.http.get<Carousel[]>(this.SERVER_URL + '/carousels');
+  }
+
+  getCollections(): Observable<Collection[]> {
+    console.log('Fetching all Collections...');
+    return this.http.get<Collection[]>(this.SERVER_URL + '/collections');
+  }
+
+  getQuestions(productId: string): Observable<Collection[]> {
+    console.log('Fetching all Collections...');
+    return this.http.get<Collection[]>(this.SERVER_URL + '/collections');
+  }
+
   getDepartments(): Observable<Department[]> {
     console.log('Fetching all departments...');
     return this.http.get<Department[]>(this.SERVER_URL + '/departments');
@@ -54,6 +70,9 @@ export class ProductService {
     }
     if ( query.category !== undefined && query.category !== null){
       params = params.set('categories', query.category);
+    }
+    if ( query.keyword !== undefined && query.keyword !== null){
+      params = params.set('name', query.keyword);
     }
     return this.http.get<ProductModel[]>(this.SERVER_URL + '/products', {params});
   }

@@ -68,6 +68,7 @@ export class ProfileComponent implements OnInit {
   changeMadeOnAddress: boolean = false;
   changeMadeOnPersonalDetails: boolean = false;
   changeMadeOnSecurityDetails: boolean = false;
+  status: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -93,6 +94,7 @@ export class ProfileComponent implements OnInit {
 
       this.orderService.getOrders(this.customer.email).subscribe(data => {
         this.orders = data;
+        console.log('Orders: '+ JSON.stringify(this.orders));
         console.log('Retrieved ' + this.orders.length + " orders for this customer");
       });
     }
@@ -174,8 +176,9 @@ export class ProfileComponent implements OnInit {
       this.hidePaymentForm = true;
     }
   }
-  showOrdersModule() {
-    this.moduleName = 'Your Orders';
+
+  showOrdersModule(title: string) {
+    this.moduleName = title;
     this.displayAboutYouModule = false;
     this.displayAddressModule = false;
     this.displayPaymentsModule = false;
@@ -406,7 +409,18 @@ export class ProfileComponent implements OnInit {
     return 'XXXX';
   }
 
-  openOrders() { }
+  showOrders(status: string) {
+    this.status = status;
+    let title = "Your open orders";
+    if (status === "SHIPPED"){
+      title = "Your shipped orders";
+    } else if (status === "CANCELLED"){
+      title = "Your cancelled orders";
+    } else if (status === "COMPLETED"){
+      title = "Your completed orders";
+    } 
+    this.showOrdersModule(title);
+  }
 
   private updateCurrentcustomer() {
     this.accountService

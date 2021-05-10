@@ -1,5 +1,5 @@
 export class ActionResponse {
-    public id: number;
+    public id: string;
     public object: string;
     public action: string;
     public status: boolean;

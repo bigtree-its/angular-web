@@ -7,6 +7,7 @@
     window["env"]["userServiceUrl"] = "${USERS_URL}";
     window["env"]["orderServiceUrl"] = "${ORDERS_URL}";
     window["env"]["basketServiceUrl"] = "${BASKETS_URL}";
+    window["env"]["adServiceUrl"] = "${AD_SERVICE_URL}";
     window["env"]["debug"] = "${DEBUG}";
     
     /** GetAddressIO variables */

@@ -16,6 +16,7 @@ import { LocalContextService } from './localcontext.service';
 })
 export class BasketService {
 
+
   private SERVER_URL = environment.BASKET_SERVICE_URL;
   private BASKETS = environment.BASKETS;
 
@@ -40,7 +41,7 @@ export class BasketService {
 
     this.localContextService.customer$.subscribe((customer)=>{
       this.customer = customer;
-      if (this.customer !== null && this.customer !== undefined){
+      if (this.customer !== null && this.customer !== undefined && this.customer.email !== null && this.customer.email !== undefined){
         console.log('Customer logged in: Getting Basket '+ this.customer.email );
         this.getBasket(this.customer.email);
       }
@@ -62,19 +63,23 @@ export class BasketService {
     params = params.set('email', email);
 
     // Get the basket for this customer from backend
-    this.http.get<Basket>(url, { params: params })
+    this.http.get<Basket[]>(url, { params: params })
       .subscribe(
         {
           next: data => {
-            if (data !== null && data !== undefined) {
+            console.log('Basket retrieved for customer  '+ JSON.stringify(data));
+            console.log('Basket retrieved for customer  '+ data.length);
+            if (data !== null && data !== undefined && data.length > 0) {
               console.log('Basket retrieved for customer  '+ JSON.stringify(data));
-              this.basket = data[0];
-              console.log('Basket retrieved for customer  '+ JSON.stringify(this.basket));
-              this.publishBasket();
+              if ( data[0] !== null){
+                this.basket = data[0];
+                console.log('Basket retrieved for customer  '+ JSON.stringify(this.basket));
+                this.publishBasket();
+              }
             } else {
               // No basket currently saved in datastore, so load from local storage
-              this.createNewBasket();
-              this.localContextService.setBasket(this.basket);
+              // this.createNewBasket();
+              // this.localContextService.setBasket(this.basket);
             }
           },
           error: e => {
@@ -151,6 +156,7 @@ export class BasketService {
     this.localContextService.setBasket(this.basket);
     console.log('Basket: ' + JSON.stringify(this.basket));
   }
+
   getBasketQty(id: string): number {
     if (
       this.basket !== null &&
@@ -236,6 +242,7 @@ export class BasketService {
         this.basket.items.splice(i, 1);
       }
     }
+    this.updateBasket(this.basket);
     this.publishBasket();
   }
 
@@ -248,5 +255,6 @@ export class BasketService {
     console.log('Basket Id : ' + this.basket.basketId);
     console.log('Basket name : ' + this.basketName);
     this.localContextService.setBasket(this.basket);
+    
   }
 }

@@ -34,6 +34,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  login() {
+    this.router.navigate(['/login']);
+  }
+
   // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 

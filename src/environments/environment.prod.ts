@@ -3,6 +3,7 @@ export const environment = {
 
   PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"],
   REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"],
+  AD_SERVICE_URL: window["env"]["adServiceUrl"],
   // POSTCODELOOKUP_SERVICE_URL: window["env"]["postcodeLookupServiceUrl"] || "https://api.getaddress.io/find/g775sf?expand=true&api-key=VoEYLOWRyECPuAIwDnocAQ30109",
 
   ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"],
@@ -15,7 +16,7 @@ export const environment = {
 
   debug: window["env"]["debug"] || false,
 
-  // Paths
+  // BasePaths
   // Paths always starts with prefix '/'
 
   AUTH_LOGIN_PATH: '/auth/login',
@@ -24,6 +25,11 @@ export const environment = {
   ORDERS: '/orders',
   CREATE_PAYMENT_INTENT: '/create-payment-intent',
   BASKETS: '/baskets',
+  ADS_BASEPATH: '/ads/v1',
+
+  /** URI */
+   PROPERTIES_URI: '/properties',
+   PROPERTY_TYPES_URI: '/property-types',
 
   /** GetAddress.io */
   API_KEY_GETADDRESS_IO: window["env"]["apiKeyGetAddressIO"],

@@ -3,12 +3,4 @@
         <img src={{product.picture.thumbnail}} width="100%" alt="{{product.name}}" class="mini-product-item-image" (click)="selectProduct()">
     </div>
     <span class="mini-product-item-name" (click)="selectProduct()">{{ product.name.length > 20 ? product.name.substr(0,20): product.name | titlecase }}</span>
-    <!-- <div class="d-flex flex-column px-2">
-        <div class="p-item-price-section pt-1">
-            <span class="p-item-price-currency">£</span>
-            <span class="p-item-price"></span>
-            <span class="p-item-price-fraction"></span>
-        </div>
-    </div>
-    <button class="btn btn-sm btn-outline-secondary px-4 ml-1 mb-2" for="inputGroupSelect01"></button> -->
 </div>

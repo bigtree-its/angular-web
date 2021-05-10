@@ -142,6 +142,10 @@ export class LocalContextService {
     localStorage.removeItem(this.OBJECT_CUSTOMER_TOKEN);
   }
 
+  removeCustomerBasket() {
+    localStorage.removeItem(this.getCustomer().email);
+  }
+
   public setBasket(basket: Basket){
     var customer: User = this.getCustomer();
     if( customer !== null && customer !== undefined){

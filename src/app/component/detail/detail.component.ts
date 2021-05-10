@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel } from 'src/app/model/product.model';
+import { ProductModel, ProductQA, ProductQuestion } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
@@ -14,6 +14,7 @@ import { ReviewService } from 'src/app/service/review.service';
 import { Review } from 'src/app/model/review';
 import { first } from 'rxjs/operators';
 import { ResponseType, ServerResponse } from 'src/app/model/server-response';
+import { ProductQAService } from 'src/app/service/product-qa.service';
 
 @Component({
   selector: 'app-detail',
@@ -22,20 +23,28 @@ import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 })
 export class DetailComponent implements OnInit {
 
+  starSelected: string = "/assets/icons/star-selected.png";
+  star: string = "/assets/icons/star.png";
+
   /** Questions */
-  form: FormGroup;
-  loading = false;
-  submitted = false;
+  questionForm: FormGroup;
+  questionSubmissionLoding = false;
+  submittedQuestion = false;
 
   /** Review Form */
   reviewForm: FormGroup;
   submittedReview: boolean = false;
   submittedResponse: string = "";
   openReviewForm: boolean = false;
+  reviewSubmissionLoding = false;
   rating: number = 0;
   reviewResponse: ServerResponse = new ServerResponse();
   errorResponse:ResponseType = ResponseType.Error;
   successResponse:ResponseType = ResponseType.Success;
+
+  postQuestionResponse: ServerResponse = new ServerResponse();
+  postQuestionErrorResponse:ResponseType = ResponseType.Error;
+  postQuestionSuccessResponse:ResponseType = ResponseType.Success;
 
   faPlus = faPlus;
   faMinus = faMinus;
@@ -46,6 +55,7 @@ export class DetailComponent implements OnInit {
   mainPicture: String;
   reviews: Review[];
   user: User = new User();
+  qa: ProductQA;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,11 +64,12 @@ export class DetailComponent implements OnInit {
     private reviewService: ReviewService,
     private formBuilder: FormBuilder,
     private basketService: BasketService,
+    private productQAService: ProductQAService,
     private _location: Location
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
+    this.questionForm = this.formBuilder.group({
       question: ['']
     });
 
@@ -78,6 +89,10 @@ export class DetailComponent implements OnInit {
       });
       this.reviewService.getReviews(productId).subscribe((reviews: Review[]) => {
         this.reviews = reviews;
+      });
+      this.productQAService.getQA(productId).subscribe((qa: ProductQA) => {
+        console.log('QA: '+ JSON.stringify(qa));
+        this.qa = qa;
       });
     })
 
@@ -153,21 +168,8 @@ export class DetailComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  get getQuestionForm() { return this.questionForm.controls; }
 
-  onSubmit() {
-    this.submitted = true;
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
-    console.log('Question: '+ this.f.question.value);
-    // console.log('Question Email: '+ this.f.email.value);
-
-    this.loading = true;
-    
-  }
 
   // convenience getter for easy access to form fields
   get reviewFormControls() { return this.reviewForm.controls; }
@@ -181,6 +183,7 @@ export class DetailComponent implements OnInit {
     if ( this.reviewFormControls.headline.value === undefined || this.reviewFormControls.headline.value === null || this.reviewFormControls.headline.value === ""){
       return;
     }
+    this.reviewSubmissionLoding = true;
     this.submittedReview = true;
     var review: Review = new Review();
     review.headline = this.reviewFormControls.headline.value;
@@ -198,13 +201,51 @@ export class DetailComponent implements OnInit {
         this.reviewResponse.message = "We are processing your review. This may take several days, so we appreciate your patience. We will notify you when this is complete.";
         this.reviewResponse.type = ResponseType.Success;
         this.openReviewForm = false;
+        this.reviewSubmissionLoding = false;
       },
       (error) => {
         this.reviewResponse.message = error;
         this.reviewResponse.type = ResponseType.Error;
+        this.reviewSubmissionLoding = false;
       }
     );
   }
+
+  onSubmitQuestion() {
+    
+    // stop here if form is invalid
+    if (this.questionForm.invalid) {
+      return;
+    }
+    console.log('Question: '+ this.getQuestionForm.question.value);
+    this.questionSubmissionLoding = true;
+
+    var question: ProductQuestion = new ProductQuestion();
+    question.question = this.getQuestionForm.question.value;
+    question.product = this.product._id;
+    question.date = new Date();
+    question.userEmail = this.user.email;
+    question.userName = this.user.firstName + this.user.lastName;
+
+    this.submittedQuestion = true;
+    this.productQAService
+    .postQuestion(question)
+    .pipe(first())
+    .subscribe(
+      (data) => {
+        this.postQuestionResponse.message = "Thanks for your question. We will notify you when this is answered.";
+        this.postQuestionResponse.type = ResponseType.Success;
+        this.openReviewForm = false;
+        this.questionSubmissionLoding = false;
+      },
+      (error) => {
+        this.postQuestionResponse.message = "There was an issue when posting your question. Please try again later.";
+        this.postQuestionResponse.type = ResponseType.Error;
+        this.questionSubmissionLoding = false;
+      }
+    );
+  }
+
   setMainPicture(url: String){
     this.mainPicture = url;
   }

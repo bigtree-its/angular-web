@@ -5,6 +5,7 @@ export class ProductQuery{
     featured: boolean;
     bestSeller: boolean;
     category: string;
+    keyword: string;
 }
 
 export class CategoryQuery{

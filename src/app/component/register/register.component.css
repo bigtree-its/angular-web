@@ -1,10 +1,40 @@
-.create-account-page {
-    padding: 10px;
+.login-page {
+    width: 400px;
+    height: 400px;
+    margin: 100px auto;
+  }
+  
+  .login-inner {
+    padding: 30px;
     border-radius: 5px;
-    width: 450px;
-    height: auto;
     background-color: #f7f7f7;
-    margin: 10px auto;
+    font-weight: bolder;
+  }
+  
+  .brand-div {
+    height: 100px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .brand-text {
+    text-align: center;
+    align-self: center;
+    clear: both;
+    font-size: 30px;
+    text-decoration: none;
+    color: #111;
+    /* text-shadow: 2px 2px rgb(189, 186, 186); */
+    border-radius: 12px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: auto;
+    width: 50%;
+  }
+
+.ob-text-field {
+    border: 1px solid #b3b3b3;
 }
 
 .logo {
@@ -14,8 +44,12 @@
     text-align: center;
     align-items: center;
     display: block;
-}
+  }
 
-.ob-text-field {
-    border: 1px solid #b3b3b3;
-}
+  .link{
+      color: blue;
+  }
+  .link:hover{
+      cursor: pointer;
+      text-decoration: underline;
+  }

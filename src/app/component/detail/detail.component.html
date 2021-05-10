@@ -1,198 +1,263 @@
-<div *ngIf="product !== undefined && product !== null" class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center">
-        <button (click)="backToResults()" class="btn btn-link"><strong>Back to results</strong></button>
-    </div>
-    <hr class="mb-2">
-    <div class="row d-flex justify-content-center wrap">
-        <div class="product-image-section margin-10">
-            <div class="main-picture-div">
-                <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}" class="main-picture">
-            </div>
-            <div>
-                <div class="d-inline-block bt-border bt-radius my-1 mr-1">
-                    <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(product.picture.thumbnail)">
-                </div>
-                <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1 mr-1">
-                    <img src={{pic}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(pic)">
-                </div>
-            </div>
-            <hr>
-            <div class="customer-question-section">
-                <strong>Have a question about this product?</strong>
-                <br>
-                <div *ngIf="user === undefined || user === null">
-                    <p>You need to <a href="/login">login</a> to ask a question</p>
-                </div>
-                <form *ngIf="user !== undefined && user !== null" [formGroup]="form" (ngSubmit)="onSubmit()">
-                    <div class="form-group">
-                        <input type="text" formControlName="question" class="form-control" placeholder="e.g When this product available? etc" />
-                        <small>Your question may be answered by sellers, manufacturers or customers who bought this product</small>
-                    </div>
-                    <div class="form-group">
-                        <button [disabled]="loading" class="btn-g">
-                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                            Post
-                        </button>
-                    </div>
-                </form>
-            </div>
+<app-header></app-header>
+<div *ngIf="product !== undefined && product !== null" class="container">
+  <div class="flex-start">
+    <img src="/assets/icons/left-arrow-long.png" height="15px" width="15px" style="margin-top: 8px;">
+    <button (click)="backToResults()" class="btn btn-link align-self-start"><strong>Back to search
+        results</strong></button>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="margin-10 product-image-section ">
+      <div class="main-picture-div">
+        <img src={{mainPicture}} width="100%" height="100%" loading="lazy" alt="{{product.name}}" class="main-picture">
+      </div>
+      <div>
+        <div class="d-inline-block bt-border bt-radius my-1 mr-1">
+          <img src={{product.picture.thumbnail}} alt="{{product.name}}" class="product-details-image-small"
+            (click)="setMainPicture(product.picture.thumbnail)">
         </div>
-        <div class="margin-10 product-details-section">
-            <h3 class="text-dark mt-3"><strong>{{ product.name}}</strong></h3>
-            <ul>
-                <li *ngFor="let d of product.description" class="d-inline-block
-                    bg-light bt-radius my-1">
-                    <p>
-                        {{d}}
-                    </p>
-                </li>
-            </ul>
+        <div *ngFor="let pic of product.picture.additional" class="d-inline-block bt-border bt-radius my-1 mr-1">
+          <img src={{pic}} alt="{{product.name}}" class="product-details-image-small" (click)="setMainPicture(pic)">
+        </div>
+      </div>
+      <hr>
+      <div class="customer-question-section">
+        <strong>Have a question about this product?</strong>
+        <br>
+        <div *ngIf="user === undefined || user === null">
+          <p>You need to <a href="/login">login</a> to ask a question</p>
+        </div>
+        <form *ngIf="user !== undefined && user !== null" [formGroup]="questionForm" (ngSubmit)="onSubmitQuestion()">
+          <div class="form-group">
+            <input type="text" formControlName="question" class="form-control"
+              placeholder="e.g When this product available? etc" />
+            <small>Your question may be answered by sellers, manufacturers or customers who bought this product</small>
+            <div class="flex-column">
+              <span style="font-weight: bold;">Typical questions asked about products:</span>
+              <span style="padding-left: 3px;" class="sm normal">- Is the item durable?</span>
+              <span style="padding-left: 3px;" class="sm normal">- Is this item easy to use?</span>
+              <span style="padding-left: 3px;" class="sm normal">- What are the dimensions of this item?</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <button [disabled]="questionSubmissionLoding" class="btn-g">
+              <span *ngIf="questionSubmissionLoding" class="spinner-border spinner-border-sm mr-1"></span>
+              Post
+            </button>
+          </div>
+        </form>
+        <div *ngIf="submittedQuestion" class="review-response-section"
+          [class.alert-success]="postQuestionResponse.type === successResponse"
+          [class.alert-warning]="postQuestionResponse.type === errorResponse">
+          <span>{{ postQuestionResponse.message}}</span>
+        </div>
+        <div class="mb-3 product-qa-section" *ngIf="qa !== undefined">
+          <strong style="font-size: larger;">Customer Questions</strong><span
+            class="muted ml-3 sm normal">{{qa.questions.length}}
+            questions</span>
+          <br>
+          <div *ngIf="qa.questions === undefined || qa.questions.length === 0">
+            <span class="sm normal">No questions have been submitted yet</span>
+          </div>
+          <div *ngIf="qa.questions !== undefined && qa.questions.length> 0">
+            <br>
+            <div *ngFor="let qa of qa.questions">
+              <div class="question">
+                <span class="text-dark mb-2">{{qa.question}}</span>
+                <span
+                  class="question-user pr-1 sm normal">{{(qa.userName ===undefined || qa.userName === null)?"AY" : qa.userName | titlecase}}</span>
+                <span class="sm normal text-muted">{{qa.date| dateAgo }}</span>
+              </div>
 
-            <div *ngIf="product.storage">
-                <br>
-                <h4><strong>Storage Instructions</strong></h4>
-                <br>
-                <p>
-                    {{product.storage}}
-                </p>
+              <div *ngIf="qa.answers !== null && qa.answers !== undefined && qa.answers.length > 0">
+                <div *ngFor="let answer of qa.answers" class="answer">
+                  <span class="normal mb-2">{{answer.answer}}</span>
+                  <span
+                    class="question-user pr-1 sm normal">{{(answer.userName ===undefined || answer.userName === null)?"Anonymous" : answer.userName | titlecase}}</span>
+                  <div class="d-flex justify-content-start mt-2">
+                    <span class="sm normal text-muted">{{answer.date| dateAgo }}</span>
+                    <span class="ml-2 sm normal">Like</span>
+                    <span class="ml-2 sm normal">Dislike</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div *ngIf="product.nutritionalInformation.length>0">
-                <br>
-                <h4 class="my-1"><strong>Nutritional Information</strong></h4>
-                <br>
-                <ul>
-                    <li *ngFor="let ni of product.nutritionalInformation" class="bg-light my-1">
-                        <strong>{{ni.name}}</strong> : {{ni.value}}
-                    </li>
-                </ul>
-            </div>
-            <div *ngIf="product.qa.length> 0">
-                <br>
-                <h4 class="my-1"><strong>Questions & Answers</strong></h4>
-                <br>
-                <ul>
-                    <li *ngFor="let qa of product.qa" class="bg-light my-1">
-                        <strong>{{qa.name}}</strong> : {{qa.value}}
-                    </li>
-                </ul>
-            </div>
-            <div *ngIf="product.attributes.length> 0">
-                <br>
-                <h4 class="my-1"><strong>Product Information</strong></h4>
-                <br>
-                <ul>
-                    <li *ngFor="let att of product.attributes" class="bg-light
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="margin-10 product-details-section">
+      <h3 class="product-title"><strong>{{ product.name}}</strong></h3>
+      <ul>
+        <li *ngFor="let d of product.description" class="d-inline-block my-1 text-normal text-dark">
+          <p>
+            {{d}}
+          </p>
+        </li>
+      </ul>
+
+      <div *ngIf="product.storage">
+        <br>
+        <h4><strong>Storage Instructions</strong></h4>
+        <br>
+        <p class="text-normal text-dark">
+          {{product.storage}}
+        </p>
+      </div>
+      <div *ngIf="product.nutritionalInformation.length>0">
+        <br>
+        <h4 class="my-1"><strong>Nutritional Information</strong></h4>
+        <br>
+        <ul>
+          <li *ngFor="let ni of product.nutritionalInformation" class="text-normal text-dark my-1">
+            <strong>{{ni.name}}</strong> : {{ni.value}}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="product.qa.length> 0">
+        <br>
+        <h4 class="my-1"><strong>Questions & Answers</strong></h4>
+        <br>
+        <ul>
+          <li *ngFor="let qa of product.qa" class="text-normal text-dark my-1">
+            <strong>{{qa.name}}</strong> : {{qa.value}}
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="product.attributes.length> 0">
+        <br>
+        <h4 class="my-1"><strong>Product Information</strong></h4>
+        <br>
+        <ul>
+          <li *ngFor="let att of product.attributes" class="text-normal text-dark
                         my-1">
-                        <strong>{{att.name}}</strong> : <span>
-                            {{att.value}}
-                        </span>
-                    </li>
-                </ul>
-            </div>
+            <strong>{{att.name}}</strong> : <span>
+              {{att.value}}
+            </span>
+          </li>
+        </ul>
+      </div>
 
-        </div>
-        <div class="bt-box margin-10 details-right-column">
-
-            <!-- Price Section -->
-            <div class="mb-3 product-price-section">
-                <strong style="font-size: larger;">Today's Price: </strong>
-                <div class="d-flex justify-content-start">
-                    <div class="amount-section px-1 py-2">
-                        <span class="price-currency">£</span>
-                        <span class="price">{{ product.amount }}</span>
-                        <span class="price-fraction">{{ product.fraction}}</span>
-                    </div>
-                </div>
-
-                <div>
-                    <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
-                        {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
-                </div>
-                <div class="mt-4 d-flex justify-content-start">
-                    <button class="dec-btn" style="font-size: 30px;" (click)="decreaseQuantity()">-</button>
-                    <span class="qty-value">{{quantity}}</span>
-                    <button class="inc-btn" style="font-size: 30px;" (click)="increaseQuantity()">+</button>
-                </div>
-                <div class="d-block d-flex justify-content-center my-3">
-                    <button class="btn-s btn-lg" (click)="addToCart()">Add to Basket</button>
-                </div>
-            </div>
-
-            <!-- Review Section -->
-            <div class="write-review-section bt-border bg-light mb-3">
-                <div *ngIf="(user === undefined || user === null); then thenBlock else elseBlock"></div>
-                <ng-template #thenBlock>
-                    <span>You need to <a href="/login">login</a> to write a review</span>
-                </ng-template>
-                <ng-template #elseBlock>
-                    <div class="layout-start items-center" *ngIf="openReviewForm==false">
-                        <strong class="mr-2">Want to review ? </strong>
-                        <button class="btn-g" (click)="writeReview()">Write Review</button>
-                    </div>
-                </ng-template>
-                <form *ngIf="openReviewForm===true" [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()" novalidate>
-                    <strong>Overall rating</strong>
-                    <div>
-                        <fa-icon [icon]="faStar" size="sm" [class.star-active]="rating>0" [class.star-muted]="rating < 1" (click)="overallRating(1)"></fa-icon>
-                        <fa-icon [icon]="faStar" size="sm" [class.star-active]="rating>1" [class.star-muted]="rating < 2" (click)="overallRating(2)"></fa-icon>
-                        <fa-icon [icon]="faStar" size="sm" [class.star-active]="rating>2" [class.star-muted]="rating < 3" (click)="overallRating(3)"></fa-icon>
-                        <fa-icon [icon]="faStar" size="sm" [class.star-active]="rating>3" [class.star-muted]="rating < 4" (click)="overallRating(4)"></fa-icon>
-                        <fa-icon [icon]="faStar" size="sm" [class.star-active]="rating>4" [class.star-muted]="rating < 5" (click)="overallRating(5)"></fa-icon>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <strong for="headline">Add a headline</strong>
-                        <input type="text" formControlName="headline" class="form-control" placeholder="What's your thought on this?" />
-                        <div *ngIf=" reviewFormControls.headline.value === undefined || reviewFormControls.headline.value.length === 0" class="invalid-feedback">Password is required
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <strong for="content">Add a written review</strong>
-                        <textarea formControlName="content" class="form-control" placeholder="What did you like or dislike?" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <div class="d-flex justify-content-start">
-                            <button [disabled]="loading" class="btn-s">
-                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                                Submit
-                            </button>
-                            <button class="btn-g" (click)="cancelReview()">Cancel</button>
-                        </div>
-                    </div>
-                </form>
-                <div *ngIf="submittedReview" class="review-response-section" [class.alert-success]="reviewResponse.type === successResponse" [class.alert-warning]="reviewResponse.type === errorResponse">
-                    <span>{{ reviewResponse.message}}</span>
-                </div>
-            </div>
-            <div class="mb-3 product-review-section">
-                <strong style="font-size: larger;">Reviews</strong><span class="muted ml-3">{{reviews.length}} reviews</span>
-                <br>
-                <div *ngIf="reviews === undefined || reviews.length === 0">
-                    <span>No Reviews Have Been Submitted Yet</span>
-                </div>
-                <div *ngIf="reviews !== undefined && reviews.length> 0">
-                    <br>
-                    <div *ngFor="let r of reviews" class="review-box">
-                        <div>
-                            <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>0" [class.star-muted]="r.rating < 1" (click)="overallRating(1)"></fa-icon>
-                            <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>1" [class.star-muted]="r.rating < 2" (click)="overallRating(2)"></fa-icon>
-                            <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>2" [class.star-muted]="r.rating < 3" (click)="overallRating(3)"></fa-icon>
-                            <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>3" [class.star-muted]="r.rating < 4" (click)="overallRating(4)"></fa-icon>
-                            <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>4" [class.star-muted]="r.rating < 5" (click)="overallRating(5)"></fa-icon>
-                        </div>
-                        <strong class="text-dark">{{(r.userName ===undefined || r.userName === null)?"Anonymous" : r.userName}}</strong>
-                        <br>
-                        <span class="text-muted">{{r.date| dateAgo }}</span>
-                        <br>
-                        <strong class="text-dark">{{r.headline}}</strong>
-                        <br>
-                        <p>
-                            {{r.content}}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-    <div style="height: 100px;"></div>
+    <div class="details-right-column">
+      <!-- Price Section -->
+      <div class="product-price-section">
+        <strong style="font-size: larger;">Today's Price </strong>
+        <div class="amount-section py-2">
+          <span class="price-currency">£</span>
+          <span class="price">{{ product.amount }}</span>
+          <span class="price-fraction">{{ product.fraction}}</span>
+        </div>
+
+        <div>
+          <span [class.product-in-stock]="product.stock> 0" [class.product-no-stock]="product.stock <1">
+            {{ product.stock > 0 ? "In Stock " : "No Stock "}}</span>
+        </div>
+        <div class="mt-4 d-flex justify-content-start">
+          <button class="dec-btn" style="font-size: 30px;" (click)="decreaseQuantity()">-</button>
+          <span class="qty-value">{{quantity}}</span>
+          <button class="inc-btn" style="font-size: 30px;" (click)="increaseQuantity()">+</button>
+        </div>
+        <div class="d-block d-flex justify-content-center my-3">
+          <button class="btn-s" (click)="addToCart()">Add to Basket</button>
+        </div>
+      </div>
+
+      <!-- Review Section -->
+      <div class="write-review-section">
+        <div *ngIf="(user === undefined || user === null); then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <span>You need to <a href="/login">login</a> to write a review</span>
+        </ng-template>
+        <ng-template #elseBlock>
+          <div class="layout-start items-center" *ngIf="openReviewForm==false">
+            <strong class="mr-2">Want to review ? </strong>
+            <button class="btn-g" (click)="writeReview()">Write Review</button>
+          </div>
+        </ng-template>
+        <form *ngIf="openReviewForm===true" [formGroup]="reviewForm" (ngSubmit)="onSubmitReview()" novalidate>
+          <strong>Overall rating</strong>
+          <div>
+            <img [src]="rating > 0 ? starSelected : star" class="star" (click)="overallRating(1)">
+            <img [src]="rating > 1 ? starSelected : star" class="star" (click)="overallRating(2)">
+            <img [src]="rating > 2 ? starSelected : star" class="star" (click)="overallRating(3)">
+            <img [src]="rating > 3 ? starSelected : star" class="star" (click)="overallRating(4)">
+            <img [src]="rating > 4 ? starSelected : star" class="star" (click)="overallRating(5)">
+          </div>
+          <br>
+          <div class="form-group">
+            <strong for="headline">Add a headline</strong>
+            <input type="text" formControlName="headline" class="form-control"
+              placeholder="What's your thought on this?" />
+            <div
+              *ngIf=" reviewFormControls.headline.value === undefined || reviewFormControls.headline.value.length === 0"
+              class="invalid-feedback">Password is required
+            </div>
+          </div>
+          <div class="form-group">
+            <strong for="content">Add a written review</strong>
+            <textarea formControlName="content" class="form-control" placeholder="What did you like or dislike?"
+              rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="d-flex justify-content-start">
+              <button [disabled]="reviewSubmissionLoding" class="btn-s">
+                <span *ngIf="reviewSubmissionLoding" class="spinner-border spinner-border-sm mr-1"></span>
+                Submit
+              </button>
+              <button class="btn-g" (click)="cancelReview()">Cancel</button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="submittedReview" class="review-response-section"
+          [class.alert-success]="reviewResponse.type === successResponse"
+          [class.alert-warning]="reviewResponse.type === errorResponse">
+          <span>{{ reviewResponse.message}}</span>
+        </div>
+      </div>
+      <div class="mb-3 product-review-section">
+        <div class="review-section-header">
+          <strong style="font-size: larger;">Reviews</strong><span class="review-count">{{reviews.length}}</span>
+        </div>
+        <div *ngIf="reviews === undefined || reviews.length === 0">
+          <span>No Reviews Have Been Submitted Yet</span>
+        </div>
+        <div *ngIf="reviews !== undefined && reviews.length> 0">
+          <br>
+          <div *ngFor="let r of reviews" class="review-box flex-column">
+            <!-- <div>
+              <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>0" [class.star-muted]="r.rating < 1"
+                (click)="overallRating(1)"></fa-icon>
+              <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>1" [class.star-muted]="r.rating < 2"
+                (click)="overallRating(2)"></fa-icon>
+              <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>2" [class.star-muted]="r.rating < 3"
+                (click)="overallRating(3)"></fa-icon>
+              <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>3" [class.star-muted]="r.rating < 4"
+                (click)="overallRating(4)"></fa-icon>
+              <fa-icon [icon]="faStar" size="sm" [class.star-active]="r.rating>4" [class.star-muted]="r.rating < 5"
+                (click)="overallRating(5)"></fa-icon>
+            </div> -->
+            <strong class="text-dark mb-1">{{r.headline}}</strong>
+            <div>
+              <img [src]="r.rating > 0 ? starSelected : star" class="star">
+              <img [src]="r.rating > 1 ? starSelected : star" class="star">
+              <img [src]="r.rating > 2 ? starSelected : star" class="star">
+              <img [src]="r.rating > 3 ? starSelected : star" class="star">
+              <img [src]="r.rating > 4 ? starSelected : star" class="star">
+            </div>
+            <span class="review-content">
+              "{{r.content}}"
+            </span>
+            <div class="d-flex justify-content-start mt-2">
+              <span
+                class="user-initial">{{(r.userName === undefined || r.userName === null) ?"A" : r.userName.substr(0,1)}}</span>
+              <strong
+                class="review-username">{{(r.userName ===undefined || r.userName === null)?"Anonymous" : r.userName.split(" ")[0] | titlecase}}</strong>
+              <span class="review-time">{{r.date| dateAgo }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 100px;"></div>
 </div>

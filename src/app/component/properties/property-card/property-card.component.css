@@ -1,0 +1,66 @@
+.property-card {
+  width: 23rem;
+  /* width: 224px; */
+  margin: 0 10px;
+  border: none;
+  cursor: pointer;
+  border-bottom: 1px solid rgb(245, 246, 247);
+  height: 296px;
+  margin-bottom: 5px;
+}
+
+.property-card-img {
+  cursor: pointer;
+  border-radius: 8px;
+  height: 200px;
+  transition: 0.3s ease-in-out;
+}
+
+.property-card-img:hover {
+  transform: scale(1.04);
+}
+
+.property-price {
+  position: relative;
+  top: -197px;
+  left: 200px;
+  padding: 0 10px;
+  color: red;
+  font-size: 14px;
+  width: 100px;
+}
+
+.property-title {
+  text-overflow: ellipsis;
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 600;
+  line-height: 12px;
+  cursor: pointer;
+}
+
+.property-address {
+  overflow: hidden;
+  font-family: Effra-Medium, Arial, Geneva, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 14px;
+  padding: 0%;
+  cursor: pointer;
+}
+
+.feature-icon {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px 0 0;
+  opacity: 0.5;
+  align-self: center;
+}
+
+.feature-value {
+  font-size: 11px;
+  color: lightslategrey;
+  align-self: center;
+  margin-right: 10px;
+}

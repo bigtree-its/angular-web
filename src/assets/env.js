@@ -7,6 +7,7 @@
     window["env"]["userServiceUrl"] = "http://localhost:8080/users/v1";
     window["env"]["orderServiceUrl"] = "http://localhost:8082/orders/v1";
     window["env"]["basketServiceUrl"] = "http://localhost:8082/orders/v1/baskets";
+    window["env"]["adServiceUrl"] = "http://localhost:8083";
 
     window["env"]["apiKeyGetAddressIO"] = "VoEYLOWRyECPuAIwDnocAQ30109";
     window["env"]["postcodeLookupServiceUrl"] = "https://api.getaddress.io/find";

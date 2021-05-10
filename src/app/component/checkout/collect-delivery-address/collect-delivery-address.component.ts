@@ -1,16 +1,15 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
 import { Address, RapidApiAddress, RapidApiResult } from 'src/app/model/address';
 import { Basket } from 'src/app/model/basket.model';
 import { Checkout } from 'src/app/model/checkout';
 import { User } from 'src/app/model/user';
 import { AccountService } from 'src/app/service/account.service';
 import { BasketService } from 'src/app/service/basket.service';
-import { CheckoutService } from 'src/app/service/checkout.service';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { RapidApiService } from 'src/app/service/rapid-api.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-collect-delivery-address',
@@ -46,7 +45,7 @@ export class CollectDeliveryAddressComponent implements OnInit {
     private router: Router,
     private basketService: BasketService,
     private accountService: AccountService,
-    private checkoutService: CheckoutService
+    private _location: Location
   ) { }
 
   ngOnInit(): void {
@@ -190,6 +189,7 @@ export class CollectDeliveryAddressComponent implements OnInit {
     this.address.lineNumber2 = this.selectedDeliveryAddress.Place
     this.address.country = "UK"
     this.address.postcode = this.postcode;
+    this.updateAddressWithcustomerContactInfo();
     this.localContextService.setDeliveryAddress(this.address);
   }
 
@@ -213,15 +213,19 @@ export class CollectDeliveryAddressComponent implements OnInit {
 
   private updateAddressWithcustomerContactInfo() {
     var customer: User = this.localContextService.getCustomer();
-    this.address.firstName = customer.firstName;
-    this.address.lastName = customer.lastName;
-    this.address.email = customer.email;
-    this.address.mobile = customer.mobile;
+    if ( customer !== null && customer !== undefined){
+      this.address.firstName = customer.firstName;
+      this.address.lastName = customer.lastName;
+      this.address.email = customer.email;
+      this.address.mobile = customer.mobile;
+    }
   }
 
   getBasketTotal() {
     return this.basket.total;
   }
 
-
+  backToBasket() {
+    this._location.back();
+  }
 }

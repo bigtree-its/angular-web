@@ -1,12 +1,13 @@
 /** Modules */
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TreeModule } from 'angular-tree-component'
+import { TreeModule } from 'angular-tree-component';
+// import { GoogleMapsModule } from '@angular/google-maps';
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -36,6 +37,11 @@ import { SmallItemComponent } from './component/home/small-item/small-item.compo
 import { CollectDeliveryAddressComponent } from './component/checkout/collect-delivery-address/collect-delivery-address.component';
 import { CollectPaymentComponent } from './component/checkout/collect-payment/collect-payment.component';
 import { OrderItemComponent } from './component/profile/order-item/order-item.component';
+import { ProductFinderComponent } from './component/product-finder/product-finder.component';
+import { PropertiesComponent } from './component/properties/properties.component';
+import { PropertyCardComponent } from './component/properties/property-card/property-card.component';
+import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +69,11 @@ import { OrderItemComponent } from './component/profile/order-item/order-item.co
     SmallItemComponent,
     CollectDeliveryAddressComponent,
     CollectPaymentComponent,
-    OrderItemComponent
+    OrderItemComponent,
+    ProductFinderComponent,
+    PropertiesComponent,
+    PropertyCardComponent,
+    PropertyDetailComponent,
   ],
   imports: [
     BrowserModule,

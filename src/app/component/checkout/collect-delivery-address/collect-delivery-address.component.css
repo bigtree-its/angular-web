@@ -1,13 +1,29 @@
 .header {
-  width: 1030px;
-  height: 50px;
-  margin: auto;
+  width: 100%;
   margin-top: 10px;
-  background-color: rgb(239, 248, 248);
-  justify-content: center;
-  align-items: center;
+  display: flex;
+  justify-content: start;
+  align-items: start;
   color: #111;
   font-weight: bolder;
+  padding: 20px;
+}
+
+.basket,
+.delivery-address{
+  background-color: #5469d4;
+  padding: 5px 20px;
+  margin: 0;
+  font-size: 15px;
+  color: #FFF;
+}
+
+.basket {
+  background-color: #ffb806;
+}
+
+.basket:hover {
+  cursor: pointer;
 }
 
 .main-section {
@@ -15,14 +31,24 @@
   align-items: flex-start;
 }
 
+.basket-section {
+  min-width: 400px;
+  margin: 10px 10px 0 0;
+  padding: 30px;
+  background-color: #F0F2F2;
+
+}
+
 .delivery-address-section {
   min-width: 400px;
   /* align-self: center; */
   margin: 10px;
-  padding: 40px;
+  /* padding: 40px; */
   clear: both;
   height: auto;
   align-self: flex-start;
+  padding: 30px;
+  background-color: #F0F2F2;
 }
 
 .error-message{
@@ -32,19 +58,13 @@
   clear: both;
 }
 
-.basket-section {
-  min-width: 400px;
-  /* align-self: center; */
-  margin: 10px;
-  padding: 40px;
-  border: 1px #D5D9D9 solid;
-  border-radius: 8px;
-}
+
 
 .address-list {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 10px;
 }
 
 .address-section-item {

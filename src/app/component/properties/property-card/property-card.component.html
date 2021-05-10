@@ -1,0 +1,27 @@
+<div class="card property-card" (click)="selectProperty()">
+  <div class="">
+    <img src="{{property.cover_photo}}" class="card-img-top property-card-img" alt="..." (click)="selectProperty()">
+    <span class="property-price">{{ property.purchase_price | currency : 'GBP' : 'symbol' : '1.0-0'}}</span>
+  </div>
+  <div class="flex-column px-3">
+    <div class="flex-column">
+      <h2 class="property-title" (click)="selectProperty()">{{property.title}}</h2>
+      <h2 class="property-address">{{property.street}}, {{property.city}}</h2>
+    </div>
+    <div class="flex-start" (click)="selectProperty()">
+      <div class="">
+        <img src="/assets/icons/bed.png" class="feature-icon">
+        <span class="feature-value">{{property.bedrooms}}</span>
+      </div>
+      <div class="">
+        <img src="/assets/icons/bathtub.png" class="feature-icon">
+        <span class="feature-value">{{property.bathrooms}}</span>
+      </div>
+      <div class="">
+        <img src="/assets/icons/shower.png" class="feature-icon">
+        <span class="feature-value">{{property.bathrooms}}</span>
+      </div>
+    </div>
+    <p class="card-text">{{property.summary}}</p>
+  </div>
+</div>

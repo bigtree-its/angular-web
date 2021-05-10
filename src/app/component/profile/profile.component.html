@@ -1,34 +1,54 @@
+<app-header></app-header>
 <div class="container-fluid">
-  <div class="h-flex justify-content-center wrap">
+  <div class="flex-start">
     <div class="nav-section">
-      <h3><strong>Your Account</strong></h3>
-      <ul>
-        <div class="nav-item" (click)="showAboutYouModule()">
-          <img src="/assets/icons/resume.png" height="30px" width="30px" class="nav-item-icon">
-          <li class="nav-item-text">Personal Details</li>
-        </div>
-        <div class="nav-item" (click)="showSecurityModule()">
-          <img src="/assets/icons/cyber-security.png" height="30px" width="30px" class="nav-item-icon">
-          <li class="nav-item-text">Login & Security</li>
-        </div>
-        <div class="nav-item" (click)="showAddressModule()">
-          <img src="/assets/icons/pin.png" height="30px" width="30px" class="nav-item-icon">
-          <li class="nav-item-text">Your Addresses</li>
-        </div>
-        <div class="nav-item" (click)="showPaymentsModule()">
-          <img src="/assets/icons/credit-card.png" height="30px" width="30px" class="nav-item-icon">
-          <li class="nav-item-text">Your Payments</li>
-        </div>
-        <div class="nav-item" (click)="showOrdersModule()">
-          <img src="/assets/icons/delay.png" height="30px" width="30px" class="nav-item-icon">
-          <li class="nav-item-text">Your Orders</li>
-        </div>
-      </ul>
+      <div class="p-3 bg-white" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+          <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+          <span class="fs-5 fw-semibold">Your Account</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+              Personal Details
+            </button>
+            <div class="collapse show" id="home-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
+                <li><a (click)="showAboutYouModule()" class="link-dark rounded nav-item">Change contact details</a></li>
+                <li><a (click)="showAddressModule()" class="link-dark rounded nav-item">Change address</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+              Login and Security
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+              <ul class="btn-to ggle-nav list-unstyled fw-normal pb-1 ml-1">
+                <li><a class="link-dark rounded nav-item" (click)="showSecurityModule()">Change Password</a></li>
+              </ul>
+            </div>
+          </li>
+          <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+              Orders
+            </button>
+            <div class="collapse" id="orders-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
+                <li><a (click)="showOrders('CREATED')" class="link-dark rounded nav-item">Open Orders</a></li>
+                <li><a (click)="showOrders('SHIPPED')" class="link-dark rounded nav-item">Shipped Orders</a></li>
+                <li><a (click)="showOrders('COMPLETED')" class="link-dark rounded nav-item">Completed Orders</a></li>
+                <li><a (click)="showOrders('CANCELLED')" class="link-dark rounded nav-item">Cancelled Orders</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="detail-section">
-      <h2><strong>{{moduleName}}</strong></h2>
-      <hr>
-      <div *ngIf="displayAboutYouModule == true">
+      <span class="fs-5 fw-semibold">{{moduleName}}</span>
+      <div class="border-top my-3"></div>
+      <div *ngIf="displayAboutYouModule == true" style="width: 400px;">
         <form #personalDetailsForm="ngForm" (ngSubmit)=(onSubmitPersonalDetails(personalDetailsForm))>
           <div class="mb-3 ml-3">
             <label for="firstNamePersonalDetails">Email</label>
@@ -56,7 +76,7 @@
           </button>
         </form>
       </div>
-      <div *ngIf="displaySecurityModule == true">
+      <div *ngIf="displaySecurityModule == true"  style="width: 400px;">
         <form [formGroup]="changePasswordFormGroup" (ngSubmit)="onSubmitChangePassword()">
           <div class="form-group">
             <label for="currentPassword">Current Password</label>
@@ -101,14 +121,15 @@
           <button class="btn-g">Ok</button>
         </div>
       </div>
-      <div *ngIf="displayAddressModule == true">
+      <div *ngIf="displayAddressModule == true"  style="width: 500px;">
         <ng-container *ngIf="addressList.length == 0; then thenBlock;
                     else
                     elseBlock">
         </ng-container>
         <ng-template #thenBlock>
           <span class="basket-no-items">
-            You have no address registered. <button type="button" class="btn-g ml-1" (click)="onAddAddress()">Add</button>
+            You have no address registered. <button type="button" class="btn-g ml-1"
+              (click)="onAddAddress()">Add</button>
           </span>
         </ng-template>
         <ng-template #elseBlock>
@@ -314,7 +335,7 @@
         </ng-template>
         <ng-template #elseBlock>
           <div *ngFor="let item of orders">
-            <app-order-item [order]=item></app-order-item>
+            <app-order-item [order]=item *ngIf="status == item.status"></app-order-item>
           </div>
         </ng-template>
       </div>

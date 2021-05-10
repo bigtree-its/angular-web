@@ -1,22 +1,22 @@
+<app-header></app-header>
 <div class="container-fluid">
-  <div class="d-flex justify-content-between container-fluid header">
-    <h4 class="text-dark"><strong>Delivery Address</strong></h4>
+  <div class="header bg-light">
+    <h4 class="text-dark"><strong class="banner-text mr-5">Checkout</strong></h4>
+    <h4 class="text-dark"><strong class="basket" routerLink="/basket">Basket</strong></h4>
+    <h4 class="text-dark"><strong class="delivery-address">Deliver Address</strong></h4>
   </div>
   <div *ngIf="isError" class="alert alert-warning banner">
     <span>{{message}}</span>
   </div>
   <div class="d-flex container-fluid wrap main-section">
-    <div class="basket-section">
-      <div class="d-flex justify-content-between align-items-center">
+    <div class="basket-section bg-light">
+      <div class="d-flex justify-content-between align-items-center mb-3">
         <h5><strong>Your Basket</strong></h5>
         <span class="btn btn-sm btn-outline-secondary"><strong>{{basket.items.length }} items</strong></span>
       </div>
-      <hr class="mb-3">
       <app-checkout-item [item]="item" *ngFor="let item of basket.items"></app-checkout-item>
-      <hr class="mb-4">
-      <ul class="list-group mb-3">
-        <li class="list-group-item d-flex justify-content-between
-                      bg-light">
+      <ul class="list-group mt-3 mb-2">
+        <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="text-success">
             <h6 class="my-0">Promo code</h6>
             <small>EXAMPLECODE</small>
@@ -38,8 +38,7 @@
       </form>
     </div>
     <div class="delivery-address-section">
-      <h4 class="mb-3" style="font-weight: bolder;">Where should we send your order?</h4>
-      <hr class="mb-2">
+      <h4 class="mb-3" style="font-weight: bolder; padding: 10px;">Where should we send your order?</h4>
       <div *ngIf="addressList !== undefined && addressList !== null && addressList.length > 0">
         <div class="address-list">
           <div class="form-check d-flex justify-content-start" *ngFor="let add of addressList">
@@ -53,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div style="padding: 10px;">
         <form #postcodeLoookupForm="ngForm" (ngSubmit)=(onSubmitPostcodeLookup(postcodeLoookupForm))>
           <div class="d-flex justify-content-between">
             <div style="width: 80%;">
@@ -84,6 +83,7 @@
                   *ngIf="address.lineNumber2 !== undefined &&  address.lineNumber2.length > 0">{{ address.lineNumber2 }}</span>
                 <span *ngIf="address.city !== undefined &&  address.city.length > 0">{{ address.city }}</span>
                 <span *ngIf="address.country !== undefined &&  address.country.length > 0">{{ address.country }}</span>
+                <small class="mt-2">Wen you proceed next this address will used for delivery</small>
               </div>
             </div>
             <div *ngIf="address !== null && address !==undefined"

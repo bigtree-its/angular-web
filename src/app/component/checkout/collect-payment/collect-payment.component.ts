@@ -139,7 +139,9 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
         console.log('Unable to collect payment from your card.')
       }
     });
+  }
 
-    
+  backToDeliveryAddress() {
+    this._location.back();
   }
 }

@@ -1,29 +1,35 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
 </style>
 
-<div class="container-fluid d-flex justify-content-between wrap header banner-border">
-  <div class="d-flex justify-content-start ml-2">
-    <a class="navbar-brand rotate" href="#">
-      <!-- <img src="/assets/icons/sale.png" width="30" height="30" class="d-inline-block mb-3" alt=""> -->
-      <strong class="logo-brand-text-big">OpenEcomm</strong>
+<div class="container-fluid header">
+  <div class="d-flex justify-content-start ml-2 left">
+    <a class="flex-start" href="#">
+      <img src="/assets/icons/communities.png"  class=" mb-3 brand-logo" alt="" href="#">
+      <span class="brand-name" href="#">bigtree</span>
     </a>
-    <div class="location-section"
-      *ngIf="isCustomerLoggedIn() == true && customer.addresses !== undefined && customer.addresses !== null && customer.addresses.length > 0">
+    <!-- <div class="location-section"
+      *ngIf="isCustomerLoggedIn() == true  && customer.addresses !== null && customer.addresses.length > 0">
       <span>Deliver To:</span>
       <strong style="color:#111;">{{ customer.addresses[0].postcode }}</strong>
-    </div>
+    </div> -->
   </div>
-
-
-  <div class="d-flex justify-content-end">
-    <div *ngIf="isCustomerLoggedIn() == true" class="d-flex justify-content-center">
-      <div class="dropdown  px-3 right-button profile-section">
+  <div class="search-contaniner">
+    <div class="d-flex justify-content-start">
+      <img src="/assets/icons/search.png" class="search-icon" />
+      <input type="search" class="search-box" placeholder="Search products" autocomplete="off" value
+        [(ngModel)]="searchText" />
+    </div>
+    <button class="search-button" (click)="onSubmitSearch()">Search</button>
+  </div>
+  <div class="d-flex justify-content-end right">
+    <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
+    <div *ngIf="isCustomerLoggedIn() == true" class="customer-greeting">
+      <div class="dropdown">
         <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
-          Hello,
-          <span class="welcomeUsername">{{customer.firstName}}</span>
+          <span>{{customer.firstName}}</span>
         </span>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <span class="dropdown-item " (click)="logout()" *ngIf="isCustomerLoggedIn() == true">Logout</span>
@@ -33,20 +39,11 @@
         </div>
       </div>
     </div>
-    <div class="signin-section" *ngIf="isCustomerLoggedIn() == false">
-      <span class="right-section-text">Hi there,</span>
-      <button class="signin-link mr-1" (click)="login()">Sign In</button>
-    </div>
-    <div class="signup-section" *ngIf="isCustomerLoggedIn() == false">
-      <button class="right-section-text" (click)="register()">Sign Up</button>
-    </div>
+    <button class="signin-button" (click)="login()" *ngIf="isCustomerLoggedIn() == false">Sign In</button>
+    <button class="signup-button" (click)="register()" *ngIf="isCustomerLoggedIn() == false">Sign Up</button>
     <div class="basket-section" routerLink="/basket">
-      <span class="right-section-text">Your Basket</span>
-      <div class="d-flex justify-content-start">
-        <fa-icon [icon]=" faShoppingBag" size="md " class="mr-3"></fa-icon>
-        <span>{{ itemCount > 0 ? itemCount : "Empty" }}</span>
-      </div>
-
+      <img src="/assets/icons/shopping-cart.png" class="shopping-cart-icon">
+      <span class="basket-item-count">{{ itemCount > 0 ? itemCount : "Empty" }}</span>
     </div>
     <!--     
     <span routerLink="/basket" class=" right-button mr-1 d-flex justify-content-center">

@@ -7,8 +7,8 @@ export const environment = {
 
   PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8081/products/v1",
   REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081/reviews/v1",
+  AD_SERVICE_URL: window["env"]["adServiceUrl"] || "http://localhost:8083",
   
-
   
   ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082/orders/v1",
   BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8082/orders/v1/baskets",
@@ -21,13 +21,18 @@ export const environment = {
 
   debug: window["env"]["debug"] || false,
 
-  /** Paths */
+  /** Base Paths */
    AUTH_LOGIN_PATH: '/auth/login',
    AUTH_REGISTER_PATH: '/auth/register',
    USERS: '/users',
    ORDERS: '/orders',
    CREATE_PAYMENT_INTENT: '/create-payment-intent',
    BASKETS: '/baskets',
+   ADS_BASEPATH: '/ads/v1',
+
+   /** URI */
+   PROPERTIES_URI: '/properties',
+   PROPERTY_TYPES_URI: '/property-types',
 
    /** GetAddress.io */
    API_KEY_GETADDRESS_IO: window["env"]["apiKeyGetAddressIO"],

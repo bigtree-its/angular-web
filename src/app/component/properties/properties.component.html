@@ -1,0 +1,113 @@
+<style>
+  @import url('assets/js/common.js');
+
+</style>
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <div class="flex-start">
+    <div class="nav-section flex-column">
+      <div class="sort-section">
+        <span class="nav-section-header">Properties</span>
+        <!-- <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked
+            (change)="handleMarketType($event, 'sale')">
+          <label class="form-check-label normal" for="flexRadioDefault1">
+            Sale
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"
+            (change)="handleMarketType($event, 'rent')">
+          <label class="form-check-label normal" for="flexRadioDefault2">
+            Rent
+          </label>
+        </div> -->
+        <div class="radio-wrapper">
+          <input class="radio-state" type="radio" name="marketType" id="Sale" value="Sale"
+            (change)="handleMarketType($event, 'sale')" checked>
+          <label class="radio-label" for="Sale">
+            <div class="radio-indicator"></div>
+            <span class="radio-text">Sale</span>
+          </label>
+        </div>
+        <div class="radio-wrapper">
+          <input class="radio-state" type="radio" name="marketType" id="Rent" value="Rent"
+            (change)="handleMarketType($event, 'rent')">
+          <label class="radio-label" for="Rent">
+            <div class="radio-indicator"></div>
+            <span class="radio-text">Rent</span>
+          </label>
+        </div>
+
+      </div>
+      <div class="sort-section flex-column">
+        <span class="nav-section-header">Property Type</span>
+        <label class="label py-2" *ngFor="let type of types">
+          <div class="toggle">
+            <input class="toggle-state" type="checkbox" name="check" value="check" id="{{type._id}}"
+              (change)="selectType(type._id,$event)" />
+            <div class="indicator"></div>
+          </div>
+          <div class="label-text">{{type.name}}</div>
+        </label>
+      </div>
+      <div class="sort-section">
+        <span class="nav-section-header">Bedrooms</span>
+        <span id="minBedroom"></span>
+        <!-- <div>
+          <label for="minBed" class="form-label">Min <output id="minBedDisplay" name="minBedDisplay"
+              for="minBed">1</output></label>
+          <input type="range" class="form-range" min="1" max="5" value="1" id="minBed"
+            oninput="minBedDisplay.value=minBed.value">
+        </div>
+        <div>
+          <label for="maxBed" class="form-label">Max <output id="maxBedDisplay" name="maxBedDisplay"
+              for="maxBed">1</output></label>
+          <input type="range" class="form-range" min="1" max="5" value="5" id="maxBed"
+            oninput="maxBedDisplay.value=maxBed.value">
+        </div> -->
+        <div class="flex-column">
+          <div class="flex-start">
+            <span style="color: darkgrey;">Min </span><span id="minBedrooms" class="ml-2">{{minBedrooms}}</span>
+          </div>
+          <!-- <input class="range" type="range" value="1" min="1" max="5" [(ngModel)]="minBedrooms" (ngModelChange)="updateMinBedrooms($event)"> -->
+          <input type="range" class="range-style" value="5" min="1" max="5" [(ngModel)]="minBedrooms" (ngModelChange)="updateMinBedrooms($event)">
+        </div>
+        <div class="flex-column mt-3">
+          <div class="flex-start">
+            <span style="color: darkgrey;">Max </span><span id="maxBedrooms" class="ml-2">{{maxBedrooms}}</span>
+          </div>
+          <!-- <input class="range" type="range" value="5" min="1" max="5" [(ngModel)]="maxBedrooms" (ngModelChange)="updateMaxBedrooms($event)"> -->
+          <input type="range" class="range-style" value="5" min="1" max="5" [(ngModel)]="maxBedrooms" (ngModelChange)="updateMaxBedrooms($event)">
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid flex-start overflow-y wrap main-section">
+
+      <ng-container *ngIf="properties == null || properties == undefined || properties.length == 0; then thenBlock;
+      else
+      elseBlock">
+      </ng-container>
+      <ng-template #thenBlock>
+        <div>
+          <h3>We couldn't find what you’re looking for right now.</h3>
+          <div style="margin-top:10px; width: 500px; padding: 30px; background-color: #f2f2f2;  border-radius: 8px;"
+            class="flex-start">
+            <img src="/assets/icons/notification.png" style="height: 20px; width: 20px;" class="align-self-center">
+            <div class="flex-column ml-3">
+              <h5 class="mb-2">Notify me about...</h5>
+              <span>{{notificationMessage}}</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template #elseBlock>
+        <div class="space-around" *ngFor="let p of properties">
+          <app-property-card [property]="p"></app-property-card>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>

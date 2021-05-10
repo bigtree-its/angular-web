@@ -1,11 +1,7 @@
 <div class="container-fluid menuBar">
-    <div class="col-6">
+    <div class="align-items-center">
         <div *ngFor="let d of departments" class="dropdown">
             <button class="dropbtn" (click)="selectDepartment(d)">{{ d.name }}</button>
         </div>
     </div>
-   <div class="col-6 search-section d-flex justify-content-start">
-       <input type="search" value placeholder="Search openecomm.co.uk" class="search-box">
-       <button class="btn btn-sm btn-primary">Search</button>
-   </div>
 </div>

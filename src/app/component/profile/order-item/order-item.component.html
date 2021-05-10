@@ -1,22 +1,22 @@
-<div class="order bt-border">
-  <div class="d-flex justify-content-between header bg-light">
+<div class="order">
+  <div class="d-flex justify-content-between header">
     <div class="h-flex align-items-start wrap">
       <div class="header-item">
-        <span class="bold">ORDER PLACED</span>
-        <span>{{order.date}}</span>
+        <span class="header-name">Order Placed</span>
+        <span class="header-value">{{order.date}}</span>
       </div>
       <div class="header-item">
-        <span>TOTAL</span>
-        <span>{{order.totalCost | currency :'GBP' }}</span>
+        <span class="header-name">Total</span>
+        <span class="header-value">{{order.totalCost | currency :'GBP' }}</span>
       </div>
       <div class="header-item">
-        <span>REFERENCE</span>
-        <span>#{{order.reference}}</span>
+        <span class="header-name">Reference</span>
+        <span class="header-value">#{{order.reference}}</span>
       </div>
     </div>
     <div class="order-status">
-      <span>STATUS</span>
-      <span>#{{order.reference}}</span>
+      <span class="header-name">Status</span>
+      <span class="header-value">{{order.status}}</span>
     </div>
   </div>
   <div class="items-list">
@@ -24,8 +24,6 @@
       <div class="d-flex justify-content-between">
         <div class="h-flex align-items-start wrap">
           <img src={{item.image}} alt="{{item.productName}}" class="basket-item-image" (click)="selectProduct(item.productId)">
-          <!-- <div class="basket-item-image-section">
-            <img src="/assets/icons/product-image.png" alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item._id)"> -->
           <div class="basket-item-content" (click)="selectProduct(item.productId)">
             <span class="basket-item-name">{{item.productName.length > 30 ? item.productName.substr(0,30) + '... ' : item.productName}}</span>
             <span class="basket-item-price">{{ item.price  | currency :'GBP'}}</span>
@@ -34,8 +32,8 @@
           <span class="basket-item-subtotal">{{ item.total | currency : 'GBP'}}</span>
         </div>
         <div class="items-list">
-          <button class="btn-s"><strong>Cancel Item</strong></button>
-          <button class="btn-g"><strong>Write Review</strong></button>
+          <button class="btn-s" (click)="requestCancel(item)">{{item.cancellationRequested == true ? "Cancellation Requested" : "Cancel Item" }}</button>
+          <button class="btn-g">Write Review</button>
         </div>
       </div>
     </div>

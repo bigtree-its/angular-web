@@ -1,48 +1,39 @@
 /* menuBar container */
 
 .menuBar {
-    overflow: hidden;
-    /* background-color: #f3e959; */
-    /* background: #e3e2de; */
-    background-color: rgb(233, 233, 233);
-
-    /* font-family: Arial; */
-    font-size: large;
-    display: flex;
-    justify-content: center;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 
 /* Links inside the menuBar */
 
 .menuBar a {
-    float: left;
-    font-size: 16px;
-    color: white;
-    text-align: center;
-    padding: 10px 12px;
-    text-decoration: none;
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 10px 12px;
+  text-decoration: none;
 }
 
 
 /* The dropdown container */
 
 .dropdown {
-    float: left;
-    overflow: hidden;
+  float: left;
+  overflow: hidden;
 }
 
 .dropdown .dropbtn {
-    /* font-size: 12px; */
-    border: none;
-    outline: none;
-    padding: 10px 12px;
-    background-color: inherit;
-    font: inherit;
-    font-weight: bold;
-    /* Important for vertical align on mobile phones */
-    margin: 0;
-    /* Important for vertical align on mobile phones */
+  /* font-size: 12px; */
+  border: none;
+  outline: none;
+  padding: 10px 12px;
+  background-color: inherit;
+  font: inherit;
+  margin: 0;
 }
 
 
@@ -50,25 +41,11 @@
 
 .menuBar a:hover,
 .dropdown:hover .dropbtn {
-    /* background-color: #fff; */
-    color: rgb(0, 158, 148);
+  /* background-color: #fff; */
+  color: rgb(0, 158, 148);
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
+  display: block;
 }
 
-.search-section{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.search-box{
-    width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    line-height: 30px;
-    border: none;
-    padding-left: 10px;
-    /* border-radius: 20px; */
-}

@@ -1,16 +1,16 @@
 <style>
-  @import url('assets/client.js');
-
+  @import url('assets/js/client.js');
 </style>
-
-<div class="container-fluid">
-  <div class="container">
-    <div class="header">
-      <h4 class="text-dark"><strong>Make Payment</strong></h4>
-    </div>
+<app-header></app-header>
+<div class="container-fluid flex-column">
+  <div class="header bg-light">
+    <h4 class="text-dark"><strong class="banner-text mr-5">Checkout</strong></h4>
+    <h4 class="text-dark"><strong class="basket" routerLink="/basket">Basket</strong></h4>
+    <h4 class="text-dark"><strong class="delivery-address" (click)="backToDeliveryAddress()">Deliver Address</strong></h4>
+    <h4 class="text-dark"><strong class="make-payment">Make Payment</strong></h4>
   </div>
   <div class="d-flex container-fluid wrap main-section">
-    <div class="details-section">
+    <div class="details-section bg-light">
       <div class="order-summary">
         <h4><strong>Order Summary</strong></h4>
       </div>
@@ -46,7 +46,15 @@
         <strong>{{order.discount | currency: 'GBP'}}</strong>
       </div>
     </div>
-    <div class="payment-section" laylout-v>
+    <div class="payment-section bg-light">
+      <div class="title-section">
+        <div class="">
+          <span style="color: teal;">How are delivery costs calculated?</span>
+        </div>
+        <p class="text-normal">
+          Bigtree Delivery has been applied to the eligible items in your order.
+        </p>
+      </div>
       <!-- Display a payment form -->
       <form id="payment-form" class="stripe-form">
         <div id="card-element">
@@ -62,7 +70,7 @@
         <span id="card-success" class="success-message"></span>
         <span id="card-error" role="alert" class="error-message"></span>
       </div>
-      <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo"/>
+      <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo" />
     </div>
   </div>
 </div>

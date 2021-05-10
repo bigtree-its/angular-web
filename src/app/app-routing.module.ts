@@ -13,6 +13,9 @@ import { ResetPasswordComponent } from './component/reset-password/reset-passwor
 import { ProductBrowserComponent } from './component/product-browser/product-browser.component';
 import { CollectDeliveryAddressComponent } from './component/checkout/collect-delivery-address/collect-delivery-address.component';
 import { CollectPaymentComponent } from './component/checkout/collect-payment/collect-payment.component';
+import { ProductFinderComponent } from './component/product-finder/product-finder.component';
+import { PropertiesComponent } from './component/properties/properties.component';
+import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
 
 
 const routes: Routes = [
@@ -44,6 +47,9 @@ const routes: Routes = [
     path: 'profile', component: ProfileComponent, canActivate : [AuthGuard]
   },
   {
+    path: 'properties', component: PropertiesComponent,
+  },
+  {
     path: 'forgot-password', component: ForgotPasswordComponent
   },
   {
@@ -51,7 +57,14 @@ const routes: Routes = [
   }
   ,
   {
+    path: 'properties/detail/:id', component: PropertyDetailComponent
+  }
+  ,
+  {
     path: 'category-browser/:id', component: ProductBrowserComponent
+  },
+  {
+    path: 'product-finder/:keyword', component: ProductFinderComponent
   }
 
 ];

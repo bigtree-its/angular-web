@@ -1,0 +1,46 @@
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="cotainer-fluid flex-column">
+  <div class="flex-start top-row">
+    <span class="text-bold pr-1">{{(products !== null && products !== undefined)? products.length : 0 }}</span><span class="normal pr-1"> results for</span> 
+    <span class="keyword">{{keyword}}</span>
+  </div>
+  <div class="flex-start">
+    <div class="nav-section flex-column">
+      <div class="sort-section">
+        <span class="nav-section-header">Sort</span>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked (change)="handleChange($event, 'low')">
+          <label class="form-check-label normal" for="flexRadioDefault1">
+            Lowest First
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  (change)="handleChange($event, 'high')">
+          <label class="form-check-label normal" for="flexRadioDefault2">
+            Highest First
+          </label>
+        </div>
+      </div>
+      <div *ngIf="brands.length > 0">
+        <span class="nav-section-header">Featured Brands</span>
+        <div class="brand-section">
+          <ul class="mt-1">
+            <div class="pt-2" *ngFor="let b of brands">
+              <label class="bt-check">{{ b.name }}
+                <input type="checkbox" (change)="selectBrand(b._id,$event)">
+                <span class="tick"></span>
+              </label>
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid flex-start overflow-y wrap">
+      <div class="space-around" *ngFor="let p of products">
+        <app-item [product]="p"></app-item>
+      </div>
+    </div>
+  </div>
+
+</div>
