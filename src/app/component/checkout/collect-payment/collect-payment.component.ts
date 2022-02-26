@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Address } from 'src/app/model/address';
 import { Basket } from 'src/app/model/basket.model';
 import { Order, OrderItem, PaymentIntentResponse, PaymentIntentRequest } from 'src/app/model/order';
-import { User } from 'src/app/model/user';
+import { CustomerSession, Customer } from 'src/app/model/customer';
 import { GetAddressIOService } from 'src/app/service/get-address-io.service';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { OrderService } from 'src/app/service/order.service';
@@ -23,7 +23,8 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
   order: Order;
   paymentIntentResponse: PaymentIntentResponse;
   stripeConfirmationError:string;
-  customer: User;
+  customerSession: CustomerSession;
+  customer: Customer;
 
   constructor( private _location: Location,
     private orderService: OrderService,
@@ -34,7 +35,10 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {
     this.address = this.localContextService.getDeliveryAddress();
     this.basket = this.localContextService.getBasket();
-    this.customer = this.localContextService.getCustomer();
+    this.customerSession = this.localContextService.getCustomerSession();
+    if ( this.customerSession !== null && this.customerSession !== undefined){
+      this.customer = this.customerSession.customer;
+    }
     this.createOrder(1.50);
     console.log('Postage Address: '+ JSON.stringify(this.address))
   }

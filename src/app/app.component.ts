@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './model/user';
+import { Customer } from './model/customer';
 import { AccountService } from './service/account.service';
 
 @Component({
@@ -9,15 +9,15 @@ import { AccountService } from './service/account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'OpenEcomm';
+  title = 'BEKU';
 
   constructor(
     private router: Router,
     private accountService: AccountService
   ) {
     // redirect to home if already logged in
-    var user: User = JSON.parse(localStorage.getItem("User"));
-    if (user !== null&& user !== undefined) {
+    var customer: Customer = JSON.parse(localStorage.getItem("Customer"));
+    if (customer !== null&& customer !== undefined) {
       this.router.navigate(['/']);
     }
   }

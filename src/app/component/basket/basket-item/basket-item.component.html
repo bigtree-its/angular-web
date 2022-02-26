@@ -1,18 +1,21 @@
-<div class="basket-item">
-    <img src={{item.image}} alt="{{item.productName}}" class="basket-item-image" (click)="selectProduct(item.productId)">
-    <div class="basket-item-content">
-        <span class="basket-item-name">{{item.productName.length > 30 ? item.productName.substr(0,30) + '... ' : item.productName}}</span>
-        <span class="basket-item-price">{{ getPrettyPrintPrice(item.price)  | currency :'GBP'}}</span>
-    </div>
-    <div class="basket-item-qty-section">
-        <button class="btn-g" (click)="increaseQuantity()" [class.disabled]="quantity > 9"> + </button>
-        <!-- <img src="/assets/icons/up-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
-        border-box px-2 rounded-lg" (click)="increaseQuantity()" [class.disabled]="quantity > 9"> -->
-        <span class="basket-item-qty">{{quantity}}</span>
-        <button class="btn-g" (click)="decreaseQuantity()" [class.disabled]="quantity < 2"> - </button>
-        <!-- <img src="/assets/icons/down-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
-            border-box px-2 rounded-lg" (click)="decreaseQuantity()" [class.disabled]="quantity < 2"> -->
+<div class="d-flex justify-content-between root-div">
+    <div class="d-flex flex-start">
+        <img src={{item.image}} alt="{{item.productName}}" class="basket-item-image" (click)="selectProduct(item.productId)">
+        <div class="d-flex flex-column">
+            <span class="basket-item-name">{{item.productName.length > 30 ? item.productName.substr(0,30) + '... ' : item.productName}}</span>
+            <span class="basket-item-price">{{ getPrettyPrintPrice(item.price)  | currency :'GBP'}}</span>
+            <div class="d-flex flex-start pl-2 align-items-center">
+                <button class="btn-g" (click)="increaseQuantity()" [class.disabled]="quantity > 9"> + </button>
+                <!-- <img src="/assets/icons/up-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
+                border-box px-2 rounded-lg" (click)="increaseQuantity()" [class.disabled]="quantity > 9"> -->
+                <span class="basket-item-qty">{{quantity}}</span>
+                <button class="btn-g" (click)="decreaseQuantity()" [class.disabled]="quantity < 2"> - </button>
+                <!-- <img src="/assets/icons/down-arrow.png" width="40px" height="30px" class="qty-icon bt-border mr-1
+                    border-box px-2 rounded-lg" (click)="decreaseQuantity()" [class.disabled]="quantity < 2"> -->
+                    <button class="btn btn-link btn-xs basket-item-action-section" (click)="removeProduct(item.productId)">Remove</button>
+            </div>
+        </div>
     </div>
     <span class="basket-item-subtotal">{{ getSubTotal() | currency : 'GBP'}}</span>
-    <button class="btn btn-link btn-xs basket-item-action-section" (click)="removeProduct(item.productId)">Remove</button>
+    
 </div>

@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div *ngIf="product !== undefined && product !== null" class="container">
+<div *ngIf="product !== undefined && product !== null" class="container-fluid">
   <div class="flex-start">
     <img src="/assets/icons/left-arrow-long.png" height="15px" width="15px" style="margin-top: 8px;">
     <button (click)="backToResults()" class="btn btn-link align-self-start"><strong>Back to search
@@ -23,10 +23,10 @@
       <div class="customer-question-section">
         <strong>Have a question about this product?</strong>
         <br>
-        <div *ngIf="user === undefined || user === null">
+        <div *ngIf="customer === undefined || customer === null">
           <p>You need to <a href="/login">login</a> to ask a question</p>
         </div>
-        <form *ngIf="user !== undefined && user !== null" [formGroup]="questionForm" (ngSubmit)="onSubmitQuestion()">
+        <form *ngIf="customer !== undefined && customer !== null" [formGroup]="questionForm" (ngSubmit)="onSubmitQuestion()">
           <div class="form-group">
             <input type="text" formControlName="question" class="form-control"
               placeholder="e.g When this product available? etc" />
@@ -64,7 +64,7 @@
               <div class="question">
                 <span class="text-dark mb-2">{{qa.question}}</span>
                 <span
-                  class="question-user pr-1 sm normal">{{(qa.userName ===undefined || qa.userName === null)?"AY" : qa.userName | titlecase}}</span>
+                  class="question-customer pr-1 sm normal">{{(qa.customerName ===undefined || qa.customerName === null)?"AY" : qa.customerName | titlecase}}</span>
                 <span class="sm normal text-muted">{{qa.date| dateAgo }}</span>
               </div>
 
@@ -72,7 +72,7 @@
                 <div *ngFor="let answer of qa.answers" class="answer">
                   <span class="normal mb-2">{{answer.answer}}</span>
                   <span
-                    class="question-user pr-1 sm normal">{{(answer.userName ===undefined || answer.userName === null)?"Anonymous" : answer.userName | titlecase}}</span>
+                    class="question-customer pr-1 sm normal">{{(answer.customerName ===undefined || answer.customerName === null)?"Anonymous" : answer.customerName | titlecase}}</span>
                   <div class="d-flex justify-content-start mt-2">
                     <span class="sm normal text-muted">{{answer.date| dateAgo }}</span>
                     <span class="ml-2 sm normal">Like</span>
@@ -164,7 +164,7 @@
 
       <!-- Review Section -->
       <div class="write-review-section">
-        <div *ngIf="(user === undefined || user === null); then thenBlock else elseBlock"></div>
+        <div *ngIf="(customer === undefined || customer === null); then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
           <span>You need to <a href="/login">login</a> to write a review</span>
         </ng-template>
@@ -215,13 +215,15 @@
         </div>
       </div>
       <div class="mb-3 product-review-section">
-        <div class="review-section-header">
-          <strong style="font-size: larger;">Reviews</strong><span class="review-count">{{reviews.length}}</span>
-        </div>
+       
         <div *ngIf="reviews === undefined || reviews.length === 0">
-          <span>No Reviews Have Been Submitted Yet</span>
+          <span class="review-section-header">Reviews</span>
+          <small>No reviews yet</small>
         </div>
         <div *ngIf="reviews !== undefined && reviews.length> 0">
+          <div class="review-section-header">
+            <strong style="font-size: larger;">Reviews</strong><span class="review-count">{{reviews.length}}</span>
+          </div>
           <br>
           <div *ngFor="let r of reviews" class="review-box flex-column">
             <!-- <div>
@@ -249,9 +251,9 @@
             </span>
             <div class="d-flex justify-content-start mt-2">
               <span
-                class="user-initial">{{(r.userName === undefined || r.userName === null) ?"A" : r.userName.substr(0,1)}}</span>
+                class="customer-initial">{{(r.customerName === undefined || r.customerName === null) ?"A" : r.customerName.substr(0,1)}}</span>
               <strong
-                class="review-username">{{(r.userName ===undefined || r.userName === null)?"Anonymous" : r.userName.split(" ")[0] | titlecase}}</strong>
+                class="review-customername">{{(r.customerName ===undefined || r.customerName === null)?"Anonymous" : r.customerName.split(" ")[0] | titlecase}}</strong>
               <span class="review-time">{{r.date| dateAgo }}</span>
             </div>
           </div>

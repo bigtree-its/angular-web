@@ -1,7 +1,6 @@
 import { Address } from "./address";
-import { PaymentCard } from "./payment-card";
 
-export class User {
+export class Customer {
     _id: string;
     email: string;
     password: string;
@@ -10,13 +9,27 @@ export class User {
     token: string;
     mobile: string;
     addresses: Address[];
-    paymentCards: PaymentCard[];
+}
+
+export class CustomerSession{
+    session : Session;
+    customer: Customer;
+    success: boolean;
+    message: string;
+}
+
+export class Session{
+    _id : string;
+    customerId: string;
+    sessionId: string;
+    accessToken: string;
+    start: Date;
 }
 
 export class ResetPasswordRequest{
     email: string
     password: string;
-    passCode: string;
+    otp: string;
 }
 
 export class VerifyIdentityRequest{

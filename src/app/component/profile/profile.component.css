@@ -4,7 +4,12 @@
   margin: 5px;
   clear: both;
 }
-
+.nabvar-heading{
+  font-size: 25px;
+  padding: 30px;
+  text-align: center;
+  font-weight: bold;
+}
 .detail-section {
   clear: both;
   border-radius: 3px;

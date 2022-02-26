@@ -16,6 +16,8 @@ import { CollectPaymentComponent } from './component/checkout/collect-payment/co
 import { ProductFinderComponent } from './component/product-finder/product-finder.component';
 import { PropertiesComponent } from './component/properties/properties.component';
 import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
+import { PropertyMapComponent } from './component/properties/property-map/property-map.component';
+import { HomeFoodComponent } from './component/home-food/home-food.component';
 
 
 const routes: Routes = [
@@ -48,6 +50,9 @@ const routes: Routes = [
   },
   {
     path: 'properties', component: PropertiesComponent,
+  },
+  {
+    path: 'home-food', component: HomeFoodComponent,
   },
   {
     path: 'forgot-password', component: ForgotPasswordComponent

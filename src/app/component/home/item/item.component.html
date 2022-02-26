@@ -1,15 +1,14 @@
 <div class="product-item p-item">
     <div class="p-1">
-        <img src={{product.picture.thumbnail}} width="100%" height="225" alt="{{product.name}}" class="product-card-image" (click)="selectProduct()">
+        <img src={{product.picture.thumbnail}} width="100%" height="225" alt="{{product.name}}" class="card-image" (click)="selectProduct()">
         <!-- <img src="/assets/icons/product-image.png" width="100%" height="200" alt="{{product.name}}" class="product-card-image" (click)="selectProduct()"> -->
     </div>
-    <div class="d-flex flex-column px-2">
-        <span class="p-item-name" (click)="selectProduct()">{{ product.name.length > 40 ? product.name.substr(0,40): product.name | titlecase }}</span>
-        <div class="p-item-price-section pt-1">
-            <span class="p-item-price-currency">£</span>
-            <span class="p-item-price">{{ getAmount() }}</span>
-            <span class="p-item-price-fraction">{{ getFraction() }}</span>
-        </div>
+    <div class="d-flex flex-column card-text-div">
+        <span class="card-text-title">The Brand</span>
+        <span class="card-text-desc" (click)="selectProduct()">{{ product.name.length > 40 ? product.name.substr(0,40): product.name | titlecase }}</span>
+    </div>
+    <div class="d-flex justify-content-center px-2">
+        <!-- <span class="p-item-name" (click)="selectProduct()">{{ product.name.length > 40 ? product.name.substr(0,40): product.name | titlecase }}</span> -->
         <!-- <div class="d-flex justify-content-between align-items-center">
             <div *ngIf="product.stock > 0" class="d-flex justify-content-start">
                 <select [(ngModel)]="selectedValue" class="selection-box">
@@ -27,15 +26,26 @@
                 </span>
             </div>
         </div> -->
-        <!-- <div class="d-flex justify-content-between">
+        <div class="">
             <div>
-                <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                <fa-icon [icon]="faStar" size="xs" class="star-active"></fa-icon>
-                <fa-icon [icon]="faStar" size="xs" class="star-muted"></fa-icon>
+                <fa-icon [icon]="faStar" size="s" class="star-active"></fa-icon>
+                <fa-icon [icon]="faStar" size="s" class="star-active"></fa-icon>
+                <fa-icon [icon]="faStar" size="s" class="star-active"></fa-icon>
+                <fa-icon [icon]="faStar" size="s" class="star-active"></fa-icon>
+                <fa-icon [icon]="faStar" size="s" class="star-muted"></fa-icon>
             </div>
+        </div>
+        <!-- <div class="d-flex flex-start pt-2 pr-2 card-price">
+            <span class="p-item-price-currency">{{ currencySymbol }}</span>
+            <span class="p-item-price">{{ getAmount() }}</span>
+            <span class="p-item-price-fraction">{{ getFraction() }}</span>
         </div> -->
+        <div class="ml-3 card-price">
+            <span>{{ currencySymbol }}</span>
+            <span>{{ getAmount() }}</span>
+            <span>.</span>
+            <span>{{ getFraction() }}</span>
+        </div>
     </div>
-    <button class="btn-s px-4 ml-1 mb-2" (click)="addToCart()" for="inputGroupSelect01">Add to Basket</button>
+    <!-- <button class="btn-s px-4 ml-1 mb-2" (click)="addToCart()" for="inputGroupSelect01">Add to Basket</button> -->
 </div>

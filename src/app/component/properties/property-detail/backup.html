@@ -1,0 +1,204 @@
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="container" *ngIf="property !== undefined && property !== null">
+
+  <!-- Top-row to show back-to-results -->
+
+  <div class="flex-start">
+    <img src="/assets/icons/left-arrow-long.png" height="15px" width="15px" style="margin-top: 8px;">
+    <button (click)="backToResults()" class="btn btn-link align-self-start"><strong>Back to search
+        results</strong></button>
+  </div>
+  <div class="d-flex justify-content-center flex-column">
+    <!-- Title-Row to show Property Title -->
+    <div class="title-section flex-between">
+      <div class="flex-column">
+        <h2 class="property-title">{{ property.title }}</h2>
+        <span class="property-address">{{ property.street }}, {{ property.city }}, {{ property.postcode }}</span>
+      </div>
+      <div class="flex-column">
+        <h4>{{ property.purchase_price | currency : 'GBP' : 'symbol' : '1.0-0'}}</h4>
+        <span class="price-quote">{{property.purchase_quote}}</span>
+      </div>
+    </div>
+
+    <div class="d-flex flex-start flex-wrap justify-content-center">
+      </div>
+
+    <!-- Main Section -->
+    <!-- <div class="main-section flex-start mt-2">
+ 
+      <div class="map-section flex-column">
+        <span class="section-header">View On Map</span>
+        
+        <div class="google-map-div">
+          <google-map height="500px" width="100%" [zoom]="zoom" [center]="center" [options]="options"></google-map>
+        </div>
+      </div>
+    </div> -->
+    <!-- LEFT:  Main Picture and Description -->
+    <div class="left-section flex-column">
+      <div class="image-section">
+        <img src={{display_picture}} width="100%" height="100%" loading="lazy" alt="{{property.title}}"
+          class="main-picture">
+        <!-- <div class="flex-start thumbnail-div">
+            <img src={{g}} width="100%" height="100%" loading="lazy" alt="{{property.title}}" class="thumbnail-picture"
+              *ngFor="let g of gallery" (click)="displayPicture(g)">
+          </div> -->
+        <div class="thumbnail-div scroll-container d-flex justify-content-start py-1">
+          <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+          <div #widgetsContent class="custom-slider-main">
+            <img src={{g}} width="100%" height="100%" loading="lazy" alt="{{property.title}}"
+              class="thumbnail-picture space-around mx-2" *ngFor="let g of gallery" (click)="displayPicture(g)">
+          </div>
+          <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+        </div>
+      </div>
+      <div class="flex-between mt-2 bt-border-y py-3">
+        <div class="flex-column">
+          <span class="feature-title">PROPERTY TYPE</span>
+          <div class="flex-start">
+            <img src="/assets/icons/home.png" class="feature-icon">
+            <span class="feature-value">{{property.type.name}}</span>
+          </div>
+        </div>
+        <div class="flex-column">
+          <span class="feature-title">BEDROOMS</span>
+          <div class="flex-start">
+            <img src="/assets/icons/bed.png" class="feature-icon">
+            <span class="feature-value"> X{{property.bedrooms}}</span>
+          </div>
+        </div>
+        <div class="flex-column">
+          <span class="feature-title">BATHROOMS</span>
+          <div class="flex-start">
+            <img src="/assets/icons/bathtub.png" class="feature-icon">
+            <span class="feature-value">X{{property.bathrooms}}</span>
+          </div>
+        </div>
+      </div>
+      <div id="module">
+        <h3 class="section-header">Property description</h3>
+        <div class="collapse" id="collapseExample" aria-expanded="false">
+          <span *ngFor="let d of property.description" class="property-description-text">{{d}}</span>
+        </div>
+        <a role="button" class="collapsed" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+          aria-controls="collapseExample"></a>
+      </div>
+    </div>
+
+    <!-- MIDDLE:  Contact, Amenities etc -->
+    <div class="middle-section flex-column">
+      <div class="market-by-div flex-column">
+        <span class="marketted-by">MARKETED BY</span>
+        <span class="marketted-by-contact-person">{{property.contact_person}}</span>
+        <span class="more-properties btn-link">More properties from this contact</span>
+        <br>
+        <button class="btn-p">Request Details</button>
+        <span class="added-on">Added on {{property.added_date | date: 'dd/MM/yyyy' }}</span>
+      </div>
+      <div class="key-feature-section flex-column">
+        <h5 class="section-header">Key features</h5>
+        <div class="flex-start wrap py-1">
+          <span *ngFor="let d of property.key_features" class="property-key-feature-text">{{d}}</span>
+        </div>
+      </div>
+      <div class="feature-section flex-column">
+        <h5 class="section-header">Stations</h5>
+        <div class="flex-start wrap py-1" *ngFor="let st of property.stations">
+          <img src="/assets/icons/train.png" class="train-icon"> <strong class="station-name">{{st.name}}</strong> :
+          <span class="station-distance">{{st.value}}</span>
+        </div>
+      </div>
+
+      <div class="feature-section flex-column">
+        <h5 class="section-header">Schools</h5>
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="nusery-tab" data-bs-toggle="tab" data-bs-target="#nusery" type="button"
+              role="tab" aria-controls="nusery" aria-selected="true">Nursery</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="primaries-tab" data-bs-toggle="tab" data-bs-target="#primaries" type="button"
+              role="tab" aria-controls="primaries" aria-selected="false">Primary</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="secondary-tab" data-bs-toggle="tab" data-bs-target="#secondary" type="button"
+              role="tab" aria-controls="secondary" aria-selected="false">Secondary</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="nusery" role="tabpanel" aria-labelledby="nusery-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="primaries-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="secondary" role="tabpanel" aria-labelledby="secondary-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-section flex-column">
+        <h5 class="section-header">Amenities</h5>
+        <ul class="nav nav-tabs" id="amenitiesTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="hospital-tab" data-bs-toggle="tab" data-bs-target="#hospital"
+              type="button" role="tab" aria-controls="hospital" aria-selected="true">Hospital</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="wellbeing-tab" data-bs-toggle="tab" data-bs-target="#wellbeing" type="button"
+              role="tab" aria-controls="wellbeing" aria-selected="false">WellBeing</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="leisure-tab" data-bs-toggle="tab" data-bs-target="#leisure" type="button"
+              role="tab" aria-controls="leisure" aria-selected="false">Leisure</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="nusery" role="tabpanel" aria-labelledby="nusery-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="primaries-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="secondary" role="tabpanel" aria-labelledby="secondary-tab">
+            <div class="flex-start wrap py-1" *ngFor="let school of property.schools">
+              <img src="/assets/icons/graduation-hat.png" class="train-icon"> <strong
+                class="station-name">{{school.name}}</strong>
+              :
+              <span class="station-distance">{{school.value}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height: 200px;"></div>

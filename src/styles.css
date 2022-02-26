@@ -19,7 +19,6 @@ body {
   /* line-height: 1.5rem; */
   color: #111;
   text-align: left;
-  background-color: #fff;
   font-size: 13px;
   line-height: 19px;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +28,13 @@ body {
   /* font-style: normal; */
   /* font-family: 'Quicksand', sans-serif; */
   /* font-family: "Google Sans Display", "Google Sans", "Roboto", "Arial", sans-serif; */
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  height: 100%;
 }
 
 .blue {
@@ -287,11 +292,11 @@ select:focus {
 }
 
 .btn-p{
-  background-image: linear-gradient(to bottom, #00deb6, #0ccaa7);
+  background-image: linear-gradient(to bottom, #ff2c2c, #ca220c);
   min-height: 20px;
   min-width: 30px;
   padding: 10px;
-  border: 1px solid #0abe9d;
+  border: 1px solid #ca220c;
   z-index: 2;
   appearance: none;
   margin: 5px 5px 0 0;
@@ -300,9 +305,10 @@ select:focus {
   font-size: 15px;
 }
 .btn-p:hover {
-  background-image: linear-gradient(to bottom, #00deb6, #12947c);
+  background-image: linear-gradient(to bottom, #ff2c2c, #ca220c);
   cursor: pointer;
 }
+
 .btn-s {
   background-image: linear-gradient(to bottom, #f0c14b, #f3c143);
   min-height: 20px;

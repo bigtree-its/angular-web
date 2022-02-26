@@ -27,8 +27,14 @@ export class NavBarComponent implements OnInit {
   }
   selectDepartment(d: Department) {
     this.department = d;
-    if ( this.department.name === 'Properties'){
+    if ( this.department.name === 'Home Food'){
+      // this.router.navigate(['/properties']).then();
+      // this.router.navigate(['/properties/map']).then();
+      this.router.navigate(['/home-food']).then();
+    }else if ( this.department.name === 'Properties'){
       this.router.navigate(['/properties']).then();
+      // this.router.navigate(['/properties/map']).then();
+      // this.router.navigate(['/home-food']).then();
     }else{
       this.router.navigate(['/category-browser', this.department._id]).then();
     }

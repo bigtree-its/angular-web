@@ -12,7 +12,8 @@ import { CategoryQuery, ProductQuery } from '../model/query';
 })
 export class ProductService {
   
-  SERVER_URL = environment.PRODUCT_SERVICE_URL;
+  // SERVER_URL = environment.PRODUCT_SERVICE_URL;
+  SERVER_URL = "http://localhost:8080/products/v1";
 
   allDeps$: Observable<Department[]>;
   cats$: Observable<Category[]>;

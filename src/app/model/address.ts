@@ -44,6 +44,15 @@ export class PostcodeLookupResultAddress {
 
 }
 
+export class RapidApiByPostcodeResponse{
+    Summaries: RapidApiByPostcodeResponseSummary[]
+}
+
+export class RapidApiByPostcodeResponseSummary{
+    Id: number;
+    StreetAddress: string;
+    Place: string;
+}
 export class Distance {
     public from: Place;
     public to: Place;

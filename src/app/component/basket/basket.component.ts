@@ -25,7 +25,7 @@ export class BasketComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.LocalContextService.basket$.subscribe(b => {
+    this.LocalContextService.basketSubject$.subscribe(b => {
       if (b !== null && b !== undefined) {
         this.basket = b;
         this.basket.total = 0;

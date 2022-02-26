@@ -28,7 +28,7 @@ export interface Picture{
 export interface QuestionAnswer{
     product: string,
     email: string,
-    username: string,
+    customername: string,
     question: string,
     answers: string[]
 }
@@ -79,40 +79,3 @@ export class Collection{
     public description: string;
 }
 
-export class ProductQuestion {
-    _id: string;
-    product: string;
-    question: string;
-    userName: string;
-    userEmail: string;
-    date: Date;
-}
-
-export class ProductAnswer {
-    _id: string;
-    question: string;
-    answer: string;
-    userName: string;
-    userEmail: string;
-    date: Date;
-}
-
-export class ProductQAA {
-    id: string;
-    answer: string;
-    userName: string;
-    userEmail: string;
-    date: Date;
-}
-export class ProductQAQ {
-    id: string;
-    question: string;
-    userName: string;
-    userEmail: string;
-    date: Date;
-}
-
-export class ProductQA {
-    product: string;
-    questions: ProductQAQ[];
-}

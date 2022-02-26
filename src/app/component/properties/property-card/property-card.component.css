@@ -8,46 +8,61 @@
   height: 296px;
   margin-bottom: 5px;
 }
+.image-div{
+  height: 180px;
+}
 
 .property-card-img {
   cursor: pointer;
   border-radius: 8px;
-  height: 200px;
-  transition: 0.3s ease-in-out;
+  height: 180px;
+  width: 100%;
+  transition: 0.5s ease-in-out;
 }
 
 .property-card-img:hover {
-  transform: scale(1.04);
+  transform: scale(1.08);
 }
-
+.details-div {
+  margin-top: 5px;
+}
+.feature-cell {
+  height: 25px;
+  margin: 0 2px;
+}
 .property-price {
   position: relative;
-  top: -197px;
-  left: 200px;
+  top: -19px;
+  left: 229px;
   padding: 0 10px;
-  color: red;
+  color: white;
+  background-color: blue;
   font-size: 14px;
   width: 100px;
 }
 
 .property-title {
-  text-overflow: ellipsis;
-  font-size: 12px;
-  -webkit-font-smoothing: antialiased;
   font-weight: 600;
-  line-height: 12px;
-  cursor: pointer;
+    font-size: 14px;
+    line-height: 1.2;
+    margin: 0;
+    padding-bottom: 2px;
+    color: #727a7e;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .property-address {
-  overflow: hidden;
-  font-family: Effra-Medium, Arial, Geneva, sans-serif;
-  -webkit-font-smoothing: antialiased;
   font-weight: 600;
-  font-size: 13px;
-  line-height: 14px;
-  padding: 0%;
-  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.2;
+  margin: 0;
+  padding-bottom: 2px;
+  color: #727a7e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .feature-icon {
@@ -59,7 +74,7 @@
 }
 
 .feature-value {
-  font-size: 11px;
+  font-size: 14px;
   color: lightslategrey;
   align-self: center;
   margin-right: 10px;

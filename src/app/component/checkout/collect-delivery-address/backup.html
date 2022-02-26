@@ -1,0 +1,177 @@
+<style>
+    @import url('assets/js/client.js');
+  </style>
+  <app-header></app-header>
+  <div class="container-fluid">
+    <div class="box">
+      <div class="row header">
+        <h4 class="text-dark"><strong class="banner-text mr-5">Checkout</strong></h4>
+        <h4 class="text-dark"><strong class="basket" routerLink="/basket">Basket</strong></h4>
+        <h4 class="text-dark"><strong class="delivery-address">Deliver Address</strong></h4>
+      </div>
+      <div class="row content">
+        <div *ngIf="isError" class="alert alert-warning banner">
+          <span>{{message}}</span>
+        </div>
+        <div class="d-flex wrap">
+          <div class="left-section">
+            <div class="basket-section">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5><strong>Your Basket</strong></h5>
+                <span class="btn btn-sm btn-outline-secondary"><strong>{{basket.items.length }} items</strong></span>
+              </div>
+              <app-checkout-item [item]="item" *ngFor="let item of basket.items"></app-checkout-item>
+              <ul class="list-group mt-3 mb-2">
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">Promo code</h6>
+                    <small>EXAMPLECODE</small>
+                  </div>
+                  <span class="text-success">-£5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total </span>
+                  <strong>{{basket.total | currency: 'GBP'}}</strong>
+                </li>
+              </ul>
+              <form class="card p-2">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Promo code">
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">Redeem</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="right-section">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
+                      Delivery Address
+                    </button>
+                  </h5>
+                </div>
+  
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="delivery-address-section">
+                      <h4 class="mb-3" style="font-weight: bolder; padding: 10px;">Where should we send your order?</h4>
+                      <div *ngIf="addressList !== undefined && addressList !== null && addressList.length > 0">
+                        <div class="address-list">
+                          <div class="form-check d-flex justify-content-start" *ngFor="let add of addressList">
+                            <input class="form-check-input align-self-center" type="radio" name="flexRadioDefault"
+                              id="flexRadioDefault1" [checked]="add.selected == true">
+                            <div class="form-check-label address-card" for="flexRadioDefault1">
+                              <span *ngIf="add.lineNumber1 !== undefined &&  add.lineNumber1.length > 0">{{
+                                add.lineNumber1
+                                }}</span>
+                              <span *ngIf="add.lineNumber2 !== undefined &&  add.lineNumber2.length > 0">{{
+                                add.lineNumber2
+                                }}</span>
+                              <span *ngIf="add.city !== undefined &&  add.city.length > 0">{{ add.city }}</span>
+                              <span *ngIf="add.country !== undefined &&  add.country.length > 0">{{ add.country }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div style="padding: 10px;">
+                        <form #postcodeLoookupForm="ngForm" (ngSubmit)=(onSubmitPostcodeLookup(postcodeLoookupForm))>
+                          <div class="d-flex justify-content-between">
+                            <div style="width: 80%;">
+                              <input type="text" class="form-control ob-text-field" style="font-weight: bold;"
+                                id="postcode" placeholder="Enter your postcode" [(ngModel)]="address.postcode"
+                                name="postcode" #postcode="ngModel">
+                            </div>
+                            <div style="width: 20%;">
+                              <button type="submit" class="btn btn-md btn-primary mb-1 ml-1"
+                                [disabled]="!postcodeLoookupForm.form.valid">Search</button>
+                            </div>
+                          </div>
+                          <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0"
+                            class="d-flex justify-content-start mt-3">
+                            <div style="width: 100%;">
+                              <select style="border:1px solid #cacaca" [ngModel]="selectedDeliveryAddress"
+                                (ngModelChange)="onSelectDeliveryAddress($event)" name="sel3"
+                                style="width: 100%; height: 30px;">
+                                <option [ngValue]="i" *ngFor="let i of postcodeAddressList">{{ i.StreetAddress }}, {{
+                                  i.Place
+                                  }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="mt-3">
+                            <div class="d-flex justify-content-start align-items-center">
+                              <div class="address-card ml-3" *ngIf="address !== undefined">
+                                <span *ngIf="address.lineNumber1 !== undefined &&  address.lineNumber1.length > 0">{{
+                                  address.lineNumber1 }}</span>
+                                <span *ngIf="address.lineNumber2 !== undefined &&  address.lineNumber2.length > 0">{{
+                                  address.lineNumber2 }}</span>
+                                <span *ngIf="address.city !== undefined &&  address.city.length > 0">{{ address.city
+                                  }}</span>
+                                <span *ngIf="address.country !== undefined &&  address.country.length > 0">{{
+                                  address.country
+                                  }}</span>
+                                <small class="mt-2">When you proceed next this address will used for delivery</small>
+                              </div>
+                            </div>
+                            <div *ngIf="address !== null && address !==undefined"
+                              class="d-flex justify-content-center checkout-address-action-div">
+                              <button type="button" class="btn btn-primary" type="button" data-toggle="collapse"
+                                data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Continue to
+                                Payment</button>
+                            </div>
+                            <span class="error-message"
+                              *ngIf="errorMessage !== undefined && errorMessage !== null">{{errorMessage}}</span>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingTwo">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">
+                      Make Payment
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <div class="stripe-container-section">
+                      <h4 class="mb-3" style="font-weight: bolder; padding: 10px;">How do you want to pay us?</h4>
+                      <!-- Display a payment form -->
+                      <form id="payment-form" class="">
+                        <div id="card-element">
+                          <!--Stripe.js injects the Card Element-->
+                        </div>
+                        <button id="paywithCardButton" class="stripe-button" (click)="makePayment()">
+                          <div class="spinner hidden stripe-button" id="spinner"></div>
+                          <span id="button-text">Pay</span><span class="px-3">{{order.totalCost | currency: 'GBP'}}</span>
+                        </button>
+                        <small class="text-muted">By selecting this button, you agree to the Terms of Sale.</small>
+                      </form>
+                      <div id="payment-result" class="payment-result hidden">
+                        <span id="card-success" class="success-message">You payment is success</span>
+                        <span id="card-error" class="error-message text-danger">Your payment failed</span>
+                      </div>
+                      <div class="my-5">
+                        <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

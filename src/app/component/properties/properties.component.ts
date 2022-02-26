@@ -61,7 +61,7 @@ export class PropertiesComponent implements OnInit {
 
   lowFirst() {
     this.properties = this.properties.sort((p1: Property, p2: Property) => {
-      return p1.purchase_price - p2.purchase_price;
+      return p1.sale? p1.sale.price - p2.sale.price: p1.rental.price - p2.rental.price;
     });
     this.orderL2H = true;
     this.orderH2L = false;
@@ -69,7 +69,7 @@ export class PropertiesComponent implements OnInit {
 
   highFirst() {
     this.properties = this.properties.sort((p1: Property, p2: Property) => {
-      return p2.purchase_price - p1.purchase_price;
+      return p1.sale? p2.sale.price - p1.sale.price: p2.rental.price - p1.rental.price;
     });
     this.orderL2H = false;
     this.orderH2L = true;

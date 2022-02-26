@@ -77,6 +77,7 @@ export class HomeComponent implements OnInit {
         this.carousels !== undefined &&
         this.carousels.length > 0
       ) {
+        console.log('Carousels retrieved: ' + this.carousels.length);
         this.carousels.forEach((p) => {
           if (p.active) {
             this.activeCarousel = p;

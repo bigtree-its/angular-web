@@ -1,0 +1,19 @@
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="filter-div">
+
+    </div>
+    <div class="list-div">
+
+    </div>
+    <div class="map-div">
+      <google-map height="100%" width="100%" [zoom]="zoom" [center]="center" [options]="options"></google-map>
+      <div class="map-control">
+        <span (click)="zoomIn()" class="map-zoomIn">+</span>
+        <span (click)="zoomOut()" class="map-zoomOut">-</span>
+      </div>
+    </div>
+  </div>
+</div>

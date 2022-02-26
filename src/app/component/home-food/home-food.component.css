@@ -1,0 +1,67 @@
+.filter-div {
+    width: 20%;
+    border: 1px solid #f5f3f3;
+  }
+  
+  .list-div {
+    width: 30%;
+    border: 1px solid #f5f3f3;
+    height: auto;
+  }
+  
+  .map-div {
+    width: 50%;
+    height: 800px;
+    border: 1px solid #f5f3f3;
+  }
+  .map-container{
+    height: 100%;
+    width: 100%;
+  }
+  .map-control {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -400px;
+    left: 500px;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 40px;
+    height: 80px;
+  }
+  
+  .map-control:hover {
+    cursor: pointer;
+    background-color: white;
+  }
+  
+  .map-zoomOut,
+  .map-zoomIn {
+    width: 40px !important;
+    height: 60px !important;
+    background-color: #fff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .map-zoomIn {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .map-zoomOut {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .map-zoomOut:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+  }
+  .map-zoomIn:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+  }
+  

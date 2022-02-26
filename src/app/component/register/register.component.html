@@ -1,7 +1,7 @@
 <div class="login-page">
   <div class="brand-div">
     <a class="navbar-brand" href="#">
-      <img src="/assets/icons/b.png" width="30" height="30" class="d-inline-block mb-3" alt="">
+      <img src="/assets/icons/bigtree.png" width="30" height="30" class="d-inline-block mb-3" alt="">
       <strong class="brand-text">BigTree</strong>
     </a>
   </div>
@@ -30,6 +30,14 @@
           [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
           <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mobile">Mobile</label>
+        <input type="text" formControlName="mobile" class="form-control ob-text-field"
+          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+        <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+          <div *ngIf="f.mobile.errors.required">Mobile is required</div>
         </div>
       </div>
       <div class="form-group">

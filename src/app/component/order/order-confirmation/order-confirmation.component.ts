@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Order } from 'src/app/model/order';
-import { User } from 'src/app/model/user';
+import { Customer } from 'src/app/model/customer';
 import { AccountService } from 'src/app/service/account.service';
 
 @Component({
@@ -18,13 +18,13 @@ export class OrderConfirmationComponent implements OnInit {
   totalItems: number;
   private orderSubject: BehaviorSubject<Order>;
   public order: Order;
-  public user: User;
+  public customer: Customer;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.order = JSON.parse(localStorage.getItem('Order'));
-    this.user = JSON.parse(localStorage.getItem('User'));
+    this.customer = JSON.parse(localStorage.getItem('Customer'));
     if (this.order !== null && this.order !== undefined) {
       this.orderReferenceNumber = this.order.reference;
     }
@@ -32,9 +32,9 @@ export class OrderConfirmationComponent implements OnInit {
   }
 
   getFullName() {
-    if (this.user != null && this.user !== undefined) {
-      let firstName = this.user.firstName.substr(0, 1).toUpperCase() + this.user.firstName.substr(1);
-      let lastName = this.user.lastName.substr(0, 1).toUpperCase() + this.user.lastName.substr(1);
+    if (this.customer != null && this.customer !== undefined) {
+      let firstName = this.customer.firstName.substr(0, 1).toUpperCase() + this.customer.firstName.substr(1);
+      let lastName = this.customer.lastName.substr(0, 1).toUpperCase() + this.customer.lastName.substr(1);
       return firstName + ' ' + lastName;
     }
     return ' ';

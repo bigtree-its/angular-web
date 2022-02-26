@@ -1,0 +1,115 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Berkshire+Swash&family=Delius+Unicase:wght@700&family=Fondamento&family=Merienda&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Goldman&display=swap');
+  @import url('assets/js/carousel.js');
+</style>
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="container-fluid home">
+  <div style="width: 100%;margin: 10px;">
+    <div class="d-flex flex-column">
+      <div *ngIf="carousels !== null && carousels !== undefined && carousels.length > 0"  id="carouselExampleFade" class="carousel carousel-dark carousel-fade carousal-div" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item carousel-item-c active" data-bs-interval="2000">
+            <div class="d-flex justify-content-center">
+              <div class="carousel-left-section">
+                <h2><strong class="carousel-item-title">{{carousels[1].title}}</strong></h2>
+                <div class="carousel-description-outer">
+                  <h1><strong class="carousel-item-description">{{carousels[1].description.length > 80 ? carousels[1].description.substr(0,80): carousels[1].description}}</strong>
+                  </h1>
+                </div>
+                <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[1].product)">Buy</button>
+              </div>
+              <div class="carousel-right-section">
+                <img src={{carousels[1].image}} class="carousel-item-image" alt="" loading="lazy"
+                  (click)="selectProductId(carousels[1].product)">
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item carousel-item-c" data-bs-interval="2000">
+            <div class="d-flex justify-content-center">
+              <div class="carousel-left-section">
+                <h2><strong class="carousel-item-title">{{carousels[1].title}}</strong></h2>
+                <div class="carousel-description-outer">
+                  <h1><strong class="carousel-item-description">{{carousels[1].description.length > 80 ? carousels[1].description.substr(0,80): carousels[1].description}}</strong>
+                  </h1>
+                </div>
+                <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[1].product)">Buy</button>
+              </div>
+              <div class="carousel-right-section">
+                <img src={{carousels[1].image}} class="carousel-item-image" alt="" loading="lazy"
+                  (click)="selectProductId(carousels[1].product)">
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item carousel-item-c"  data-bs-interval="2000">
+            <div class="d-flex justify-content-center">
+              <div class="carousel-left-section">
+                <h2><strong class="carousel-item-title">{{carousels[2].title}}</strong></h2>
+                <div class="carousel-description-outer">
+                  <h1><strong class="carousel-item-description">{{carousels[2].description.length > 80 ? carousels[2].description.substr(0,80): carousels[2].description}}</strong>
+                  </h1>
+                </div>
+                <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[2].product)">Buy</button>
+              </div>
+              <div class="carousel-right-section">
+                <img src={{carousels[2].image}} class="carousel-item-image" alt="" loading="lazy"
+                  (click)="selectProductId(carousels[2].product)">
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item carousel-item-c" data-bs-interval="2000">
+            <div class="d-flex justify-content-center">
+              <div class="carousel-left-section">
+                <h2><strong class="carousel-item-title">{{carousels[3].title}}</strong></h2>
+                <div class="carousel-description-outer">
+                  <h1><strong class="carousel-item-description">{{carousels[3].description.length > 80 ? carousels[3].description.substr(0,80): carousels[3].description}}</strong>
+                  </h1>
+                </div>
+                <button class="carousel-item-button btn-g" (click)="selectProductId(carousels[3].product)">Buy</button>
+              </div>
+              <div class="carousel-right-section">
+                <img src={{carousels[3].image}} class="carousel-item-image" alt="" loading="lazy"
+                  (click)="selectProductId(carousels[3].product)">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="new-arrival-section d-flex justify-content-center">
+        <div class="d-flex flex-column">
+        <span class="section-header">New Arrivals</span>
+        <div class="scroll-container d-flex justify-content-start py-1">
+          <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+          <div #widgetsContent class="custom-slider-main">
+            <div class="space-around" *ngFor="let p of products">
+              <app-item [product]="p"></app-item>
+            </div>
+          </div>
+          <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+        </div>
+      </div>
+      <div class="new-arrival-section d-flex justify-content-center">
+        <div class="d-flex flex-column">
+        <span class="section-header">Hot Sale</span>
+        <div class="scroll-container d-flex justify-content-start py-1">
+          <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+          <div #widgetsContent class="custom-slider-main">
+            <div class="space-around" *ngFor="let p of products">
+              <app-item [product]="p"></app-item>
+            </div>
+          </div>
+          <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+        </div>
+      </div>
+    </div>
+    <div style="height: 100px;"></div>
+  </div>
+ </div>
+  <!-- <app-app-toast aria-live="polite" aria-atomic="true"></app-app-toast> -->

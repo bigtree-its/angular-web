@@ -1,9 +1,9 @@
 <div class="d-flex justify-content-between bt-border-b py-3">
     <div class="col-7 d-flex flex-column">
-        <span class="my-0 text-normal">{{item.productName.length> 30 ? item.productName.substr(0,30)+ "...": item.productName}}</span>
+        <span class="my-0">{{item.productName.length> 30 ? item.productName.substr(0,30): item.productName}}</span>
         <small class="text-muted">{{ item.brand?.name }}</small>
     </div>
-    <span class="col-3 text-muted text-right-align checkout-item-price-n-qty">{{item.quantity}}@{{item.price | currency: 'GBP'}}</span>
+    <span class="col-3 text-right-align checkout-item-price-n-qty">{{item.quantity}}@{{item.price | currency: 'GBP'}}</span>
     <div class="text-muted checkout-item-subtotal">
         <span class="basket-item-price">{{item.price * item.quantity | currency: 'GBP'}}</span>
     </div>

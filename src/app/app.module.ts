@@ -7,7 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'angular-tree-component';
-// import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { CookieService } from 'ngx-cookie-service';
+
 
 /** Components */
 import { AppComponent } from './app.component';
@@ -41,6 +43,8 @@ import { ProductFinderComponent } from './component/product-finder/product-finde
 import { PropertiesComponent } from './component/properties/properties.component';
 import { PropertyCardComponent } from './component/properties/property-card/property-card.component';
 import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
+import { PropertyMapComponent } from './component/properties/property-map/property-map.component';
+import { HomeFoodComponent } from './component/home-food/home-food.component';
 
 
 @NgModule({
@@ -74,9 +78,12 @@ import { PropertyDetailComponent } from './component/properties/property-detail/
     PropertiesComponent,
     PropertyCardComponent,
     PropertyDetailComponent,
+    PropertyMapComponent,
+    HomeFoodComponent,
   ],
   imports: [
     BrowserModule,
+    GoogleMapsModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
@@ -84,9 +91,10 @@ import { PropertyDetailComponent } from './component/properties/property-detail/
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbModule,
+   
     TreeModule.forRoot()
   ],
-  providers: [AppToastService],
+  providers: [AppToastService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,43 +1,131 @@
+import { SafeStyle } from "@angular/platform-browser";
+
+export class Sale{
+    price: number;
+    quote: string;
+}
+export class Rental  {
+    price: number;
+    quote: string;
+    maxTerm: string;
+    minTerm: string;
+}
+export class Address  {
+    name: string;
+    email: string;
+    mobile: string;
+    telephone: string;
+    propertyNumber: string;
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    postcode: string;
+    country: string;
+    latitude: number;
+    longitude: number
+}
+export class School  {
+    name: String; 
+    distance: String;
+    address: Address;
+    isPrimary: Boolean;
+    isSecondary: Boolean;
+    isStateSchool: Boolean;
+}
+export class PropertyEnquiry {
+    _id: string;
+    property: string;
+    enquiry: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    postcode: string;
+    mobile: string;
+    date: Date;
+}
+
+export class PropertyEnquiryResponse {
+    _id: string;
+    enquiryId: string;
+    property: string;
+    enquiry: string;
+    reply: string;
+    date: Date;
+}
+
+export class SuperStore  {
+    name: String; 
+    distance: String;
+    address: Address;
+    isPrimary: Boolean;
+    isSecondary: Boolean;
+    isStateSchool: Boolean;
+}
+
+export class Contact  {
+    person: string;
+    email: string;
+    mobile: string;
+    telephone: string;
+}
+
+export class PropertyQuries {
+    enquiries: PropertyQA[];
+}
+
+export class PropertyQA {
+    enquiry: PropertyEnquiry;
+    replies: PropertyEnquiryResponse[];
+}
+
 export class Property {
-    _id: number;
+    _id: string;
     title: string;
     pin: string;
 
     description: string[];
     summary: string[];
-    key_features: string[];
+    keyFeatures: string[];
     type: NameValue;
-    consumption_type: string;
+    consumptionType: string;
     tenure: string;
+    size: string;
 
+    hospitals: NameValue[];
     stations: NameValue[];
-    schools: NameValue[];
+    shops: NameValue[];
+    parks: NameValue[];
+    malls: NameValue[];
+    leisureCenters: NameValue[];
+    schools: School[];
+    superStores: SuperStore[];
+    sale : Sale;
+    rental : Rental;
 
-    rental_price: number;
-    purchase_price: number;
-    rental_term: string;
-    purchase_quote: string;
+    addedDate: Date;
+    liveDate: Date;
+    availableDate: Date;
 
-    added_date: Date;
-    live_date: Date;
-    available_date: Date;
-
-    contact_person: string;
-    contact_phone: string;
-    contact_email: string;
+    contact: Contact;
+    address: Address;
 
     bedrooms: number;
     bathrooms: number;
-    cover_photo: string;
+    coverPhoto: string;
     gallery: string[];
-    floor_plan: string[];
+    floorPlan: string[];
 
-    property_number: string;
-    street: string;
-    city: string;
-    country: string;
+}
+
+export class PropertyQuery{
+    marketType: string;
+    types: string;
     postcode: string;
-
+    status: string;
+    max_bedrooms: string;
+    min_bedrooms: string;
+    last1month: boolean;
+    last7days: boolean;
 }
 export interface NameValue{
     _id: string
@@ -48,14 +136,4 @@ export interface NameValue{
 export class PropertyType{
     name: string;
     _id: string;
-}
-export class PropertyQuery{
-    min_bedrooms: string;
-    max_bedrooms: string;
-    postcode: string;
-    last7days: boolean;
-    last1month: boolean;
-    types: string;
-    status: string;
-    marketType: string;
 }

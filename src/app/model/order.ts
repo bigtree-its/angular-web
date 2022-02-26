@@ -8,6 +8,7 @@ export class Order {
     expectedDeliveryDate: Date;
     email: string;
     currency: string;
+    paymentReference: string;
     items: OrderItem[];
     address: Address;
     paymentCard: PaymentCard;
@@ -38,6 +39,7 @@ export class OrderItem {
 }
 
 export class PaymentIntentRequest{
+    customerEmail: string;
     currency: string;
     subTotal: number;
     deliveryCost: number;

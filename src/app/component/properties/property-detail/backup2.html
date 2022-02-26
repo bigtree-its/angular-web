@@ -1,0 +1,51 @@
+<app-header></app-header>
+<app-nav-bar></app-nav-bar>
+<div class="container" *ngIf="property !== undefined && property !== null">
+
+  <!-- Top-row to show back-to-results -->
+
+  <div class="flex-start">
+    <img src="/assets/icons/left-arrow-long.png" height="15px" width="15px" style="margin-top: 8px;">
+    <button (click)="backToResults()" class="btn btn-link align-self-start"><strong>Back to search
+        results</strong></button>
+  </div>
+  <div class="d-flex justify-content-center flex-column">
+    <!-- Title-Row to show Property Title -->
+    <div class="title-section flex-between">
+      <div class="flex-column">
+        <h2 class="property-title">{{ property.title }}</h2>
+        <span class="property-address">{{ property.street }}, {{ property.city }}, {{ property.postcode }}</span>
+      </div>
+      <div class="flex-column">
+        <h4>{{ property.purchase_price | currency : 'GBP' : 'symbol' : '1.0-0'}}</h4>
+        <span class="price-quote">{{property.purchase_quote}}</span>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+  <div class="d-flex flex-start flex-wrap justify-content-center">
+    <div class="left">
+      <div class="image-section">
+        <img src={{display_picture}} width="100%" height="100%" loading="lazy" alt="{{property.title}}"
+          class="main-picture">
+        <!-- <div class="flex-start thumbnail-div">
+            <img src={{g}} width="100%" height="100%" loading="lazy" alt="{{property.title}}" class="thumbnail-picture"
+              *ngFor="let g of gallery" (click)="displayPicture(g)">
+          </div> -->
+        <div class="thumbnail-div scroll-container d-flex justify-content-start py-1">
+          <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left" (click)="scrollLeft()">
+          <div #widgetsContent class="custom-slider-main">
+            <img src={{g}} width="100%" height="100%" loading="lazy" alt="{{property.title}}"
+              class="thumbnail-picture space-around mx-2" *ngFor="let g of gallery" (click)="displayPicture(g)">
+          </div>
+          <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right" (click)="scrollRight()">
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      RIGHT
+    </div>
+  </div>
+</div>
+<div style="height: 200px;"></div>

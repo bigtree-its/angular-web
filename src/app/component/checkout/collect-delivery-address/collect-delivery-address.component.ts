@@ -1,15 +1,17 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Address, RapidApiAddress, RapidApiResult } from 'src/app/model/address';
+import { Address, RapidApiAddress, RapidApiByPostcodeResponse, RapidApiByPostcodeResponseSummary, RapidApiResult } from 'src/app/model/address';
 import { Basket } from 'src/app/model/basket.model';
 import { Checkout } from 'src/app/model/checkout';
-import { User } from 'src/app/model/user';
+import { CustomerSession, Customer } from 'src/app/model/customer';
 import { AccountService } from 'src/app/service/account.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { RapidApiService } from 'src/app/service/rapid-api.service';
 import { Location } from '@angular/common';
+import { Order, OrderItem, PaymentIntentRequest, PaymentIntentResponse } from 'src/app/model/order';
+import { OrderService } from 'src/app/service/order.service';
 
 @Component({
   selector: 'app-collect-delivery-address',
@@ -29,30 +31,34 @@ export class CollectDeliveryAddressComponent implements OnInit {
   showCardSection: boolean;
   hidePostcodeLoookupForm: boolean;
 
-  rapidApiResult: RapidApiResult;
-
   isError: boolean = false;
   message: String;
-  postcodeAddressList: RapidApiAddress[];
-  selectedDeliveryAddress: RapidApiAddress;
+  postcodeAddressList: RapidApiByPostcodeResponseSummary[];
+  selectedDeliveryAddress: RapidApiByPostcodeResponseSummary;
   postcode: string;
   errorMessage: string;
-  customer: User;
-
+  customerSession: CustomerSession;
+  customer: Customer;
+  order: Order;
+  paymentIntentResponse : PaymentIntentResponse;
+  stripeConfirmationError:string;
+  
   constructor(
     private rapidApiService: RapidApiService,
     private localContextService: LocalContextService,
     private router: Router,
     private basketService: BasketService,
     private accountService: AccountService,
+    private orderService: OrderService,
     private _location: Location
   ) { }
 
   ngOnInit(): void {
 
     this.basket = this.localContextService.getBasket();
-    this.customer = this.localContextService.getCustomer();
-    if ( this.customer !== null && this.customer !== undefined){
+    this.customerSession = this.localContextService.getCustomerSession();
+    if ( this.customerSession !== null && this.customerSession !== undefined){
+      this.customer = this.customerSession.customer;
       this.addressList = this.customer.addresses;
       if (this.addressList !== undefined && this.addressList.length > 0) {
         this.hidePostcodeLoookupForm = true;
@@ -66,8 +72,39 @@ export class CollectDeliveryAddressComponent implements OnInit {
       }
     }
     this.errorMessage = null;
+    this.createOrder(1.50);
   }
 
+  ngAfterViewInit(): void {
+    const stripe = (<any>window).Stripe;
+    (<any>window).loadStripeElements();
+  }
+
+  createOrder(deliveryCost: number) {
+    var saleTax = this.percentage(this.basket.total, 1);
+    this.order = new Order();
+    this.order.address = this.address;
+    this.order.email = this.customer.email;
+    this.order.currency = "GBP";
+    this.order.subTotal = this.basket.total;
+    this.order.saleTax = saleTax;
+    this.order.shippingCost = deliveryCost;
+    this.order.packagingCost = 0.50;
+    this.order.totalCost = + (+this.basket.total + saleTax + deliveryCost + this.order.packagingCost).toFixed(2);
+    var items: OrderItem[] = [];
+    this.basket.items.map(bi => {
+      var item: OrderItem = new OrderItem();
+      item.price = bi.price;
+      item.productId = bi.productId;
+      item.productName = bi.productName;
+      item.quantity = bi.quantity;
+      item.image = bi.image;
+      item.total = + (bi.quantity * bi.price ).toFixed(2);
+      items.push(item);
+    });
+    this.order.items = items;
+    console.log('Creating order: '+ JSON.stringify(this.order))
+  }
 
   cancelAddressForm() {
     this.hideAddressEditForm = true;
@@ -116,7 +153,8 @@ export class CollectDeliveryAddressComponent implements OnInit {
       if (this.addressList[i].postcode === a.postcode) {
         this.addressList.splice(i, 1);
         this.customer.addresses = this.addressList;
-        this.localContextService.setCustomer(this.customer)
+        this.customerSession.customer = this.customer;
+        this.localContextService.setCustomerSession(this.customerSession)
         this.accountService.updateCurrentCustomer();
       }
     }
@@ -143,13 +181,14 @@ export class CollectDeliveryAddressComponent implements OnInit {
       .lookupAddresses(postcode.trim())
       // .pipe(first())
       .subscribe(
-        (data: RapidApiResult) => {
-          // this.postcodeAddressList =  _.sortBy(data.addresses, 'building_number');
-          this.rapidApiResult = data;
-          this.postcodeAddressList = data.Summaries.sort(function (a, b) {
-            return a.Id - b.Id
-          });
+        (data: RapidApiByPostcodeResponse) => {
+          // this.postcodeAddressList = data.summaries.sort(function (a, b) {
+          //   return a.Id - b.Id
+          // }); 
+          this.postcodeAddressList = data.Summaries;
+          console.log('Address Lookup Response. ' + data);
           console.log('Address Lookup Response. ' + JSON.stringify(data));
+          console.log('Address List. ' + data.Summaries);
           this.selectedDeliveryAddress = this.postcodeAddressList[0];
           this.postcode = postcode;
         },
@@ -206,13 +245,14 @@ export class CollectDeliveryAddressComponent implements OnInit {
       existing.country = this.address.country;
       existing.postcode = this.address.postcode;
       this.customer.addresses = this.addressList;
-      this.localContextService.setCustomer(this.customer);
+      this.customerSession.customer = this.customer;
+      this.localContextService.setCustomerSession(this.customerSession);
       this.accountService.updateCurrentCustomer();
     }
   }
 
   private updateAddressWithcustomerContactInfo() {
-    var customer: User = this.localContextService.getCustomer();
+    var customer: Customer = this.localContextService.getCustomerSession().customer;
     if ( customer !== null && customer !== undefined){
       this.address.firstName = customer.firstName;
       this.address.lastName = customer.lastName;
@@ -227,5 +267,54 @@ export class CollectDeliveryAddressComponent implements OnInit {
 
   backToBasket() {
     this._location.back();
+  }
+
+  percentage(num, per) {
+    return (num / 100) * per;
+  }
+  
+  confirmPurchase() {
+    console.log('Confirming order..')
+    this.orderService.placeOrder(this.order);
+  }
+
+  handleStripConfirmation(response){
+    if ( response !== null && response !== undefined){
+      var paymentIntent = response.paymentIntent;
+      var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
+      console.log('Payment successfull: '+ paymentIntentJson);
+      if ( response.error){
+        this.stripeConfirmationError = response.error.message;
+      }else{
+        this.order.paymentReference = paymentIntent.id;
+        this.confirmPurchase()
+      }
+    }
+  }
+
+  makePayment(){
+    console.log('Creating payment intent');
+    var paymentIntentRequest = new PaymentIntentRequest();
+    paymentIntentRequest.customerEmail = this.customer.email;
+    paymentIntentRequest.currency = "GBP";
+    paymentIntentRequest.subTotal = this.order.subTotal * 100;
+    paymentIntentRequest.deliveryCost = this.order.shippingCost * 100;
+    paymentIntentRequest.packagingCost = this.order.packagingCost * 100;
+    paymentIntentRequest.saleTax = this.order.saleTax * 100;
+    (<any>window).changeLoadingState(true);
+    this.orderService.createPaymentIntent(paymentIntentRequest).subscribe((result: PaymentIntentResponse) => {
+      this.paymentIntentResponse = result;
+      if (
+        this.paymentIntentResponse !== null &&
+        this.paymentIntentResponse !== undefined &&
+        this.paymentIntentResponse.clientSecret !== null &&
+        this.paymentIntentResponse.clientSecret !== undefined
+      ) {
+        var stripeElements = (<any>window).getStripeElements();
+        (<any>window).pay(stripeElements.stripe, stripeElements.card, this.paymentIntentResponse.clientSecret, this);
+      }else{
+        console.log('Unable to collect payment from your card.')
+      }
+    });
   }
 }

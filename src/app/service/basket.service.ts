@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { AccountService } from './account.service';
 import { nanoid } from 'nanoid'
 import { ActionResponse } from '../model/action-response';
-import { User } from '../model/user';
+import { CustomerSession, Customer } from '../model/customer';
 import { LocalContextService } from './localcontext.service';
 
 @Injectable({
@@ -18,9 +18,10 @@ export class BasketService {
 
 
   private SERVER_URL = environment.BASKET_SERVICE_URL;
-  private BASKETS = environment.BASKETS;
 
   basketName: string = "anonymous";
+
+  ipAddress: string;
 
   basket: Basket = {
     items: [],
@@ -31,7 +32,7 @@ export class BasketService {
     orderReference: "",
     total: 0,
   };
-  customer: User;
+  customerSession: CustomerSession;
 
   constructor(
     private http: HttpClient,
@@ -39,20 +40,29 @@ export class BasketService {
     private localContextService: LocalContextService,
     private acccountService: AccountService) {
 
-    this.localContextService.customer$.subscribe((customer)=>{
-      this.customer = customer;
-      if (this.customer !== null && this.customer !== undefined && this.customer.email !== null && this.customer.email !== undefined){
-        console.log('Customer logged in: Getting Basket '+ this.customer.email );
-        this.getBasket(this.customer.email);
+    this.getIPAddress();
+    
+    this.localContextService.customerSessionSubject$.subscribe((customerSession)=>{
+      this.customerSession = customerSession;
+      if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
+        var email:string = this.customerSession.customer.email;
+        console.log('Customer logged in: Getting Basket '+ email );
+        this.getBasket(email);
       }
     })
-    this.customer = localContextService.getCustomer();
     var basket: Basket = localContextService.getBasket();
-    if (basket === null || basket === undefined) {
+    if ((basket === null || basket === undefined) && (this.basket !== null && this.basket !== undefined)) {
       localContextService.setBasket(this.basket);
     } else {
       this.basket = basket;
     }
+  }
+
+  getIPAddress()
+  {
+    this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
+      this.ipAddress = res.ip;
+    });
   }
 
   getBasket(email: string) {
@@ -109,10 +119,9 @@ export class BasketService {
     var params = new HttpParams();
     params = params.set('basketId', this.basket.basketId);
     params = params.set('createIfNew', "true");
+   
+    this.basket.email = this.localContextService.getCustomerEmail();
 
-    if (this.acccountService.isAuthenticated()) {
-      this.basket.email = this.localContextService.getCustomer().email;
-    }
     console.log('Updating basket: ' + JSON.stringify(basket))
 
     this.http.put<ActionResponse>(url, this.basket, { params: params })
@@ -141,7 +150,7 @@ export class BasketService {
         id: 0,
         basketId: nanoid(),
         date: new Date(),
-        email: this.localContextService.getCustomer().email,
+        email: this.localContextService.getCustomerEmail(),
         orderReference: "",
         total: 0,
       };

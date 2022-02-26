@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
-import { ResetPasswordRequest } from 'src/app/model/user';
+import { ResetPasswordRequest } from 'src/app/model/customer';
 
 @Component({
   selector: 'app-reset-password',
@@ -27,7 +27,7 @@ export class ResetPasswordComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
       repeatPassword: ['', Validators.required],
-      passCode: ['', Validators.required]
+      otp: ['', Validators.required]
     });
     this.loading = false;
     this.submitted = false;
@@ -49,7 +49,7 @@ export class ResetPasswordComponent implements OnInit {
     var request: ResetPasswordRequest = {
       email: this.f.email.value,
       password: this.f.password.value,
-      passCode: this.f.passCode.value
+      otp: this.f.otp.value
     }
     this.accountService
       .resetPassword(request)

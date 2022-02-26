@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ProductModel } from 'src/app/model/product.model';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-item',
@@ -15,8 +16,12 @@ export class ItemComponent implements OnInit {
   faShoppingBasket = faShoppingBasket;
   faStar = faStar;
 
+  currency: string = environment.CURRENCY;
+  currencySymbol: string = environment.CURRENCY_SYMBOL;
+
   selectedValue: number = 1;
   @Input() product: ProductModel;
+  productprice: string = "0.00";
 
   constructor(
     private basketService: BasketService,
@@ -24,6 +29,12 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // if ( this.product !== null && this.product !== undefined){
+    //   console.log('The product in Constructor of ITEM '+ this.product._id);
+    //   var price = this.product.salePrice;
+    //   this.productprice = price.toLocaleString("en", {style:"currency", currency: this.currency }).replace(/\d+([,.]\d+)?/g, "");
+    //   console.log('The product Price: '+ this.productprice);
+    // }
   }
 
   getFraction(): string {

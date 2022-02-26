@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { RapidApiResult } from '../model/address';
+import { RapidApiByPostcodeResponse, RapidApiResult } from '../model/address';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,6 @@ export class RapidApiService {
   private X_RapidAPI_Url = environment.X_RapidAPI_Url;
   private X_RapidAPI_Key = environment.X_RapidAPI_Key;
   private X_RapidAPI_Host = environment.X_RapidAPI_Host;
-  private PostCode4U_Key = environment.PostCode4U_Key;
-  private X_RapidAPI_Username = environment.X_RapidAPI_Username;
   private ORIGIN_POSTCODE = environment.ORIGIN_POSTCODE;
 
 
@@ -23,7 +21,7 @@ export class RapidApiService {
     private http: HttpClient
   ) { }
 
-  lookupAddresses(postcode: string): Observable<RapidApiResult> {
+  lookupAddresses(postcode: string): Observable<RapidApiByPostcodeResponse> {
     console.log('Fetching addresses for postcode ', postcode);
 
     let headers = new HttpHeaders();
@@ -34,10 +32,8 @@ export class RapidApiService {
     headers = headers.append('useQueryString', 'true');
 
     var params = new HttpParams();
-    params = params.set('key', this.PostCode4U_Key);
     params = params.set('postcode', postcode);
-    params = params.set('username', this.X_RapidAPI_Username);
 
-    return this.http.get<RapidApiResult>(this.X_RapidAPI_Url, { headers: headers, params: params }) as Observable<RapidApiResult>;
+    return this.http.get<RapidApiByPostcodeResponse>(this.X_RapidAPI_Url, { headers: headers, params: params }) as Observable<RapidApiByPostcodeResponse>;
   }
 }

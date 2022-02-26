@@ -13,7 +13,7 @@ import { first } from 'rxjs/operators';
 import { OrderService } from 'src/app/service/order.service';
 import { Order } from 'src/app/model/order';
 import { LocalContextService } from 'src/app/service/localcontext.service';
-import { User } from 'src/app/model/user';
+import { CustomerSession, Customer } from 'src/app/model/customer';
 
 @Component({
   selector: 'app-profile',
@@ -42,7 +42,8 @@ export class ProfileComponent implements OnInit {
   changePasswordFormGroup: FormGroup;
 
   /** customer */
-  customer: User;
+  customerSession: CustomerSession;
+  customer: Customer;
 
   /** Address */
   hideAddressSection: boolean;
@@ -50,17 +51,12 @@ export class ProfileComponent implements OnInit {
   address: Address;
   addressList: Address[] = [];
 
-  /** Payments */
-  hidePaymentForm: boolean;
-  paymentCard: PaymentCard = new PaymentCard();
+  /** Orders */
   orders: Order[];
-  paymentCardList: PaymentCard[] = [];
-  type: String = 'Credit';
 
   /** Display Controls */
   displayAboutYouModule: boolean = true;
   displayAddressModule: boolean;
-  displayPaymentsModule: boolean;
   displayOrdersModule: boolean;
   displaySecurityModule: boolean;
 
@@ -76,13 +72,12 @@ export class ProfileComponent implements OnInit {
     private localContextService: LocalContextService,
     private orderService: OrderService,
   ) {
-    this.customer = this.localContextService.getCustomer();
-    if (this.customer !== undefined && this.customer !== null) {
+    this.customerSession = this.localContextService.getCustomerSession();
+    if (this.customerSession !== undefined && this.customerSession !== null) {
+      this.customer = this.customerSession.customer;
       console.log('customer ' + JSON.stringify(this.customer));
       this.addressList = this.customer.addresses;
-      this.paymentCardList = this.customer.paymentCards;
       console.log('Address list for customer ' + JSON.stringify(this.addressList));
-      console.log('Payment Card list for customer ' + JSON.stringify(this.paymentCardList));
       if (this.addressList === undefined || this.addressList.length == 0) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
@@ -115,10 +110,10 @@ export class ProfileComponent implements OnInit {
     this.message = "";
     this.isSuccess = false;
 
-    this.customer = this.localContextService.getCustomer();
-    if (this.customer !== undefined && this.customer !== null) {
+    this.customerSession = this.localContextService.getCustomerSession();
+    if (this.customerSession !== undefined && this.customerSession !== null) {
+      this.customer = this.customerSession.customer;
       this.addressList = this.customer.addresses;
-      this.paymentCardList = this.customer.paymentCards;
       if (this.addressList === undefined || this.addressList.length == 0) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
@@ -139,7 +134,6 @@ export class ProfileComponent implements OnInit {
     this.moduleName = 'Your Personal Details';
     this.displayAboutYouModule = true;
     this.displayAddressModule = false;
-    this.displayPaymentsModule = false;
     this.displayOrdersModule = false;
     this.displaySecurityModule = false;
     this.saveChangesEnabled = true;
@@ -149,7 +143,6 @@ export class ProfileComponent implements OnInit {
     this.displayAboutYouModule = false;
     this.displaySecurityModule = true;
     this.displayAddressModule = false;
-    this.displayPaymentsModule = false;
     this.displayOrdersModule = false;
     this.saveChangesEnabled = false;
   }
@@ -157,31 +150,15 @@ export class ProfileComponent implements OnInit {
     this.moduleName = 'Your Addresses';
     this.displayAboutYouModule = false;
     this.displayAddressModule = true;
-    this.displayPaymentsModule = false;
     this.displayOrdersModule = false;
     this.displaySecurityModule = false;
     this.saveChangesEnabled = true;
   }
-  showPaymentsModule() {
-    this.moduleName = 'Your Payment Details';
-    this.displayAboutYouModule = false;
-    this.displayAddressModule = false;
-    this.displayPaymentsModule = true;
-    this.displayOrdersModule = false;
-    this.displaySecurityModule = false;
-    this.saveChangesEnabled = true;
-    if (this.paymentCardList === undefined || this.paymentCardList.length == 0) {
-      this.hidePaymentForm = false;
-    } else {
-      this.hidePaymentForm = true;
-    }
-  }
-
+ 
   showOrdersModule(title: string) {
     this.moduleName = title;
     this.displayAboutYouModule = false;
     this.displayAddressModule = false;
-    this.displayPaymentsModule = false;
     this.displayOrdersModule = true;
     this.displaySecurityModule = false;
     this.saveChangesEnabled = false;
@@ -202,7 +179,7 @@ export class ProfileComponent implements OnInit {
     this.customer.firstName = this.customer.firstName;
     this.customer.lastName = this.customer.lastName;
     this.customer.mobile = this.customer.mobile;
-    this.localContextService.setCustomer(this.customer);
+    this.localContextService.setCustomerSession(this.customerSession);
     this.updateCurrentcustomer();
   }
 
@@ -270,7 +247,7 @@ export class ProfileComponent implements OnInit {
         this.addressList.splice(i, 1);
 
         this.customer.addresses = this.addressList;
-        this.localContextService.setCustomer(this.customer);
+        this.localContextService.setCustomerSession(this.customerSession);
         this.updateCurrentcustomer();
         break;
       }
@@ -310,103 +287,9 @@ export class ProfileComponent implements OnInit {
       existing.postcode = this.address.postcode;
 
       this.customer.addresses = this.addressList;
-      this.localContextService.setCustomer(this.customer);
+      this.localContextService.setCustomerSession(this.customerSession);
       this.updateCurrentcustomer();
     }
-  }
-
-  addNewPaymentMethod() {
-    this.hidePaymentForm = false;
-    this.paymentCard = new PaymentCard();
-  }
-
-  cancelPaymentForm() {
-    this.hidePaymentForm = true;
-    this.paymentCard = new PaymentCard();
-  }
-
-
-  editPaymentMethod(p: PaymentCard) {
-    this.hidePaymentForm = false;
-    this.paymentCard = p;
-  }
-
-  removePaymentMethod(p: PaymentCard) {
-    for (let i = 0; i < this.paymentCardList.length; i++) {
-      if (this.paymentCardList[i].cardNumber === p.cardNumber) {
-        this.paymentCardList.splice(i, 1);
-      }
-    }
-    this.customer.paymentCards = this.paymentCardList;
-    this.localContextService.setCustomer(this.customer);
-    this.updateCurrentcustomer();
-  }
-
-  usePaymentMethod(p: PaymentCard) {
-    for (let i = 0; i < this.paymentCardList.length; i++) {
-      let pay: PaymentCard = this.paymentCardList[i];
-      if (this.paymentCardList[i].cardNumber === p.cardNumber) {
-        pay.selected = true;
-      } else {
-        pay.selected = false;
-      }
-    }
-    this.customer.paymentCards = this.paymentCardList;
-    this.localContextService.setCustomer(this.customer);
-    this.updateCurrentcustomer();
-  }
-
-  onSubmitPaymentMethod(f: NgForm) {
-    console.log('Submitting card: ' + JSON.stringify(this.paymentCard));
-    if (f.valid) {
-      this.updatePaymentList();
-      this.hidePaymentForm = true;
-    }
-  }
-
-
-  selectType(e: String) {
-    this.type = e;
-    // this.card.cardType = this.type;
-
-  }
-
-  private updatePaymentList() {
-    console.log('Card List: ' + JSON.stringify(this.paymentCardList));
-    console.log('Form card: ' + JSON.stringify(this.paymentCard));
-    var card: PaymentCard = new PaymentCard();
-    if (this.paymentCard._id !== undefined && this.paymentCard._id !== null) {
-      let existing: PaymentCard = this.paymentCardList.find((card) => card._id === this.paymentCard._id);
-      if (existing) {
-        /** Update card */
-        console.log('Card found already: ' + JSON.stringify(existing));
-        existing.cardNumber = this.paymentCard.cardNumber;
-        existing.nameOnCard = this.paymentCard.nameOnCard;
-        existing.expiryMonth = this.paymentCard.expiryMonth;
-        existing.expiryYear = this.paymentCard.expiryYear;
-        existing.cvv = this.paymentCard.cvv;
-        existing.cardType = CardType.Debit;
-        this.usePaymentMethod(existing);
-      }
-    } else {
-      /** New Card */
-      card.cardNumber = this.paymentCard.cardNumber;
-      card.nameOnCard = this.paymentCard.nameOnCard;
-      card.expiryMonth = this.paymentCard.expiryMonth;
-      card.expiryYear = this.paymentCard.expiryYear;
-      card.cvv = this.paymentCard.cvv;
-      card.cardType = CardType.Debit;
-      this.paymentCardList.push(card);
-      this.usePaymentMethod(card);
-    }
-  }
-
-  getMaskedCardNumber(card: PaymentCard): string {
-    if (card !== undefined && card.cardNumber !== undefined && card.cardNumber.length === 16) {
-      var masked = "**** " + card.cardNumber.substr(11, 4);
-      return masked;
-    }
-    return 'XXXX';
   }
 
   showOrders(status: string) {

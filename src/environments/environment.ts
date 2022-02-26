@@ -5,8 +5,11 @@
 export const environment = {
   production: false,
 
-  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8081/products/v1",
-  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8081/reviews/v1",
+  CURRENCY: "GBP",
+  CURRENCY_SYMBOL: "£",
+
+  PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8080/products/v1",
+  REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8080/reviews/v1",
   AD_SERVICE_URL: window["env"]["adServiceUrl"] || "http://localhost:8083",
   
   
@@ -14,16 +17,16 @@ export const environment = {
   BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8082/orders/v1/baskets",
   INVENTORY_SERVICE_URL: window["env"]["inventoryServiceUrl"] || "http://localhost:8082/orders/v1/inventory",
 
-  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8080/users/v1",
-  CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/auth/change-password',
-  FORGOT_PASSWORD: window["env"]["userServiceUrl"] + '/auth/forgot-password',
-  RESET_PASSWORD: window["env"]["userServiceUrl"] + '/auth/reset-password',
+  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8081/users/v1",
+  RESET_PASSWORD_INITIATE: window["env"]["userServiceUrl"] + '/password-reset/initiate',
+  RESET_PASSWORD_SUBMIT: window["env"]["userServiceUrl"] + '/password-reset/submit',
+  CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/password-reset/change',
 
   debug: window["env"]["debug"] || false,
 
   /** Base Paths */
-   AUTH_LOGIN_PATH: '/auth/login',
-   AUTH_REGISTER_PATH: '/auth/register',
+   AUTH_LOGIN_PATH: '/login',
+   AUTH_REGISTER_PATH: '/register',
    USERS: '/users',
    ORDERS: '/orders',
    CREATE_PAYMENT_INTENT: '/create-payment-intent',
@@ -41,11 +44,9 @@ export const environment = {
    ORIGIN_POSTCODE: window["env"]["originPostcode"],
 
    /** RapidAPI  */
-   X_RapidAPI_Url: window["env"]["X_RapidAPI_Url"],
-   X_RapidAPI_Key: window["env"]["X_RapidAPI_Key"],
-   PostCode4U_Key: window["env"]["PostCode4U_Key"],
-   X_RapidAPI_Username: window["env"]["X_RapidAPI_Username"],
-   X_RapidAPI_Host: window["env"]["X_RapidAPI_Host"]
+   X_RapidAPI_Url: window["env"]["X_RapidAPI_Url"] || "https://samsinfield-postcodes-4-u-uk-address-finder.p.rapidapi.com/ByPostcode/json",
+   X_RapidAPI_Host: window["env"]["X_RapidAPI_Host"] || "samsinfield-postcodes-4-u-uk-address-finder.p.rapidapi.com",
+   X_RapidAPI_Key: window["env"]["X_RapidAPI_Key"] || "249a5c6ab3mshce3cf38f2ca8130p195a93jsn3ad1c6002c20"
 };
 
 /*

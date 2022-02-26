@@ -1,10 +1,11 @@
 export class Review {
     _id: string;
-    product: string;
+    entity: string;
     headline: string;
     content: string;
     rating: number;
     date: Date;
-    userEmail: string;
-    userName: string;
+    customerEmail: string;
+    customerName: string;
+    customerMobile: string;
 }

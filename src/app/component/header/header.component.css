@@ -55,11 +55,9 @@
 
 .brand-name {
   font-size: 25px;
-  text-decoration: none;
   color: #111;
   font-weight: 700;
-  /* text-shadow: 2px 2px rgb(189, 186, 186); */
-  font-family: 'Righteous', cursive;
+  text-shadow: 2px 2px rgb(189, 186, 186);
   letter-spacing: 1.9px;
 }
 
@@ -166,23 +164,23 @@
 
 .signin-button,
 .signup-button {
-  padding: 5px;
-  background-color: #fff;
+  background: #f8f8f7;
+  border-radius: 3px;
+  padding: 15px;
+  clear: both;
   font-weight: bold;
   margin: 0 2px;
   border: none;
 }
 
 .signin-button:hover {
-  text-decoration: underline;
   cursor: pointer;
-  color: dodgerblue;
+  color: #d1d1d1;
 }
 
 .signup-button:hover {
-  text-decoration: underline;
   cursor: pointer;
-  color: dodgerblue;
+  color: #d1d1d1;
 }
 
 .basket-section {

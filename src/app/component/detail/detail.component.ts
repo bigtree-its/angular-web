@@ -2,19 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/service/product.service';
-import { ProductModel, ProductQA, ProductQuestion } from 'src/app/model/product.model';
+import { ProductModel } from 'src/app/model/product.model';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/service/account.service';
-import { User } from 'src/app/model/user';
+import { CustomerSession, Customer } from 'src/app/model/customer';
 import { ReviewService } from 'src/app/service/review.service';
 import { Review } from 'src/app/model/review';
 import { first } from 'rxjs/operators';
 import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 import { ProductQAService } from 'src/app/service/product-qa.service';
+import { ProductQA, ProductQuestion } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-detail',
@@ -54,7 +55,8 @@ export class DetailComponent implements OnInit {
   quantity: number = 1;
   mainPicture: String;
   reviews: Review[];
-  user: User = new User();
+  customer: Customer = new Customer();
+  customerSession: CustomerSession;
   qa: ProductQA;
 
   constructor(
@@ -79,24 +81,28 @@ export class DetailComponent implements OnInit {
     });
 
     this.activatedRoute.params.subscribe(params => {
-      const productId = params['id'];
+      const entityId = params['id'];
       console.log(`Product Id: ${params['id']}`);
-      this.productService.getSingleProduct(productId).subscribe((product: ProductModel) => {
+      this.productService.getSingleProduct(entityId).subscribe((product: ProductModel) => {
         this.product = product;
         this.product.amount = this.getAmount();
         this.product.fraction = this.getFraction();
         this.mainPicture = this.product.picture.thumbnail;
       });
-      this.reviewService.getReviews(productId).subscribe((reviews: Review[]) => {
+      this.reviewService.getReviews(entityId).subscribe((reviews: Review[]) => {
         this.reviews = reviews;
       });
-      this.productQAService.getQA(productId).subscribe((qa: ProductQA) => {
+      this.productQAService.getQA(entityId).subscribe((qa: ProductQA) => {
         console.log('QA: '+ JSON.stringify(qa));
         this.qa = qa;
       });
     })
 
-    this.user = this.localContextService.getCustomer();
+    this.customerSession = this.localContextService.getCustomerSession();
+    if ( this.customerSession !== null && this.customerSession !== undefined){
+      this.customer = this.customerSession.customer;
+    }
+
   }
 
   increaseQuantity() {
@@ -190,9 +196,9 @@ export class DetailComponent implements OnInit {
     review.content = this.reviewFormControls.content.value;
     review.rating = this.rating;
     review.date = new Date();
-    review.product = this.product._id;
-    review.userEmail = this.user.email;
-    review.userName = this.user.firstName + this.user.lastName;
+    review.entity = this.product._id;
+    review.customerEmail = this.customer.email;
+    review.customerName = this.customer.firstName + this.customer.lastName;
     this.reviewService
     .createReview(review)
     .pipe(first())
@@ -222,10 +228,10 @@ export class DetailComponent implements OnInit {
 
     var question: ProductQuestion = new ProductQuestion();
     question.question = this.getQuestionForm.question.value;
-    question.product = this.product._id;
+    question.entity = this.product._id;
     question.date = new Date();
-    question.userEmail = this.user.email;
-    question.userName = this.user.firstName + this.user.lastName;
+    question.customerEmail = this.customer.email;
+    question.customerName = this.customer.firstName + this.customer.lastName;
 
     this.submittedQuestion = true;
     this.productQAService

@@ -12,7 +12,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
-import { ResetPasswordRequest, User } from '../model/user';
+import { CustomerSession, ResetPasswordRequest, Customer } from '../model/customer';
 import {
   ReasonPhrases,
   StatusCodes,
@@ -21,8 +21,6 @@ import {
 } from 'http-status-codes';
 
 import { AlertService } from './alert.service';
-import { BasketService } from './basket.service';
-import { Address } from '../model/address';
 import { LocalContextService } from './localcontext.service';
 
 const httpOptions = {
@@ -40,12 +38,12 @@ export class AccountService {
 
   public errorMessage: String;
 
-  SERVER_URL = environment.ACCOUNT_SERVICE_URL;
+  SERVER_URL = "http://localhost:8081/customers/v1";
   LOGIN_URL = this.SERVER_URL + environment.AUTH_LOGIN_PATH;
   REGISTER_URL = this.SERVER_URL + environment.AUTH_REGISTER_PATH;
-  CHANGE_PASSWORD_URL = environment.CHANGE_PASSWORD;
-  FORGOT_PASSWORD_URL = environment.FORGOT_PASSWORD;
-  RESET_PASSWORD_URL = environment.RESET_PASSWORD;
+  RESET_PASSWORD_INITIATE = environment.RESET_PASSWORD_INITIATE;
+  RESET_PASSWORD_SUBMIT = environment.RESET_PASSWORD_SUBMIT;
+  CHANGE_PASSWORD = environment.CHANGE_PASSWORD;
   USERS_URL = this.SERVER_URL + environment.USERS;
 
   jwtHelper = new JwtHelperService();
@@ -59,10 +57,10 @@ export class AccountService {
   }
 
   public isAuthenticated(): boolean {
-    var token = this.localContextService.getCustomerToken();
-    if (token === null || token === undefined || this.jwtHelper.isTokenExpired(token)) {
+    var customerSession = this.localContextService.getCustomerSession();
+    if (customerSession === null || customerSession === undefined) {
       console.log('User not authenticated.');
-      this.localContextService.removeCustomer();
+      this.localContextService.removeCustomerSession();
       return false;
     } else {
       console.log('User Authenticated');
@@ -70,63 +68,55 @@ export class AccountService {
     }
   }
 
-  getToken(): string {
-    return this.localContextService.getCustomerToken();
-  }
 
-  login(username: string, password: string): Observable<User> {
+  login(username: string, password: string): Observable<CustomerSession> {
     return this.http
-      .post<User>(this.LOGIN_URL, {
+      .post<CustomerSession>(this.LOGIN_URL, {
         email: username,
         password: password,
       })
       .pipe(
         map((response) => {
-          var token = response.token;
-          this.localContextService.setCustomerToken(token);
-          response.token = "";
-          this.localContextService.setCustomer(response);
+          console.log('The login response ' + JSON.stringify(response))
+          this.localContextService.setCustomerSession(response);
           return response;
         })
       );
   }
 
-  register(user: User): Observable<User> {
-    console.log('Register User: ' + JSON.stringify(user));
-    return this.http.post<User>(this.REGISTER_URL, user).pipe(
+  register(customer: Customer) {
+    console.log('Register User: ' + JSON.stringify(customer));
+    return this.http.post<Customer>(this.REGISTER_URL, customer).pipe(
       map((response) => {
-        var token = response.token;
-        this.localContextService.setCustomerToken(token);
-        response.token = "";
-        this.localContextService.setCustomer(response);
-        return response;
+        return this.login(customer.email, customer.password);
       })
     );
   }
 
   logout() {
     // remove user from local storage and set current user to null
-    this.localContextService.removeCustomer();
-    this.localContextService.removeCustomerToken();
+    this.localContextService.removeCustomerSession();
+    this.localContextService.removeCustomerBasket();
     this.router.navigate(['/']);
   }
 
   updateCurrentCustomer() {
-    var customer:User = this.localContextService.getCustomer();
-    if ( customer === null || customer === undefined){
+    var customerSession: CustomerSession = this.localContextService.getCustomerSession();
+    if (customerSession === null || customerSession === undefined) {
       console.log("Cannot update customer. Customer not found");
       return;
     }
     httpOptions.headers = httpOptions.headers.set(
       'Authorization',
-      this.localContextService.getCustomerToken()
+      customerSession.session.accessToken
     );
+    var customer: Customer = customerSession.customer;
     const apiURL = this.USERS_URL + "/" + customer._id;
     console.log('Updating User: ' + JSON.stringify(customer));
-    return this.http.put<User>(apiURL, customer, httpOptions).pipe(
+    return this.http.put<Customer>(apiURL, customer, httpOptions).pipe(
       map((response) => {
-        response.token = "";
-        this.localContextService.setCustomer(response);
+        customerSession.customer = response;
+        this.localContextService.setCustomerSession(customerSession);
         return response;
       }),
       retry(1),
@@ -136,40 +126,36 @@ export class AccountService {
   changePassword(
     currentPassword: string,
     newPassword: string
-  ): Observable<User> {
+  ): Observable<Customer> {
 
-    var customer:User = this.localContextService.getCustomer();
-    if ( customer === null || customer === undefined){
+    var customerSession: CustomerSession = this.localContextService.getCustomerSession();
+    if (customerSession === null || customerSession === undefined) {
       console.log("Cannot update customer. Customer not found");
       return;
     }
-
     httpOptions.headers = httpOptions.headers.set(
       'Authorization',
-      'Bearer ' + this.localContextService.getCustomerToken()
+      customerSession.session.accessToken
     );
-    const apiURL = this.CHANGE_PASSWORD_URL;
+    var customer: Customer = customerSession.customer;
+    const apiURL = this.CHANGE_PASSWORD;
     var req = {
       email: customer.email,
       password: currentPassword,
       newPassword: newPassword,
     };
-    return this.http
-      .put<User>(apiURL, req, httpOptions)
-      .pipe(
-        map((response) => {
-          var token = response.token;
-          this.localContextService.setCustomerToken(token);
-          response.token = "";
-          this.localContextService.setCustomer(response);
-          return response;
-        }),
-        retry(1),
-        catchError(this.handleError));
+    return this.http.put<Customer>(apiURL, req, httpOptions).pipe(
+      map((response) => {
+        customerSession.customer = response;
+        this.localContextService.setCustomerSession(customerSession);
+        return response;
+      }),
+      retry(1),
+      catchError(this.handleError));
   }
 
   forgotPassword(email: string): Observable<void> {
-    const apiURL = this.FORGOT_PASSWORD_URL;
+    const apiURL = this.RESET_PASSWORD_INITIATE;
     var req = {
       email: email
     };
@@ -180,7 +166,7 @@ export class AccountService {
   }
 
   resetPassword(request: ResetPasswordRequest): Observable<void> {
-    const apiURL = this.RESET_PASSWORD_URL;
+    const apiURL = this.RESET_PASSWORD_SUBMIT;
     return this.http
       .put<void>(apiURL, request)
       .pipe(retry(1), catchError(this.handleError));

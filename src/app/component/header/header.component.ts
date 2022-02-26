@@ -5,7 +5,7 @@ import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
 import { LocalContextService } from 'src/app/service/localcontext.service';
-import { User } from 'src/app/model/user';
+import { CustomerSession, Customer } from 'src/app/model/customer';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit {
   basket: Basket;
   itemCount: number = 0;
   basketTotal: number = 0;
-  customer: User;
+  customerSession: CustomerSession;
+  customer: Customer;
   customerPostcode: string;
 
   searchText: string = "";
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.localContextService.basket$.subscribe(basket => {
+    this.localContextService.basketSubject$.subscribe(basket => {
       this.basket = basket
       if (this.basket.items !== null && this.basket.items !== undefined) {
         this.itemCount = basket.items.length;
@@ -44,10 +45,11 @@ export class HeaderComponent implements OnInit {
       this.basketTotal = +basket.total.toFixed(2);
     })
 
-    this.localContextService.customer$.subscribe(customer => {
-      this.customer = customer;
-      console.log('Customer : ' + JSON.stringify(this.customer));
-      if (this.customer !== undefined && this.customer !== null) {
+    this.localContextService.customerSessionSubject$.subscribe(customerSession => {
+      this.customerSession = customerSession;
+      console.log('Customer : ' + JSON.stringify(this.customerSession));
+      if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
+        this.customer = this.customerSession.customer;
         this.customerName = this.customer.firstName + " " + this.customer.lastName;
         if (this.customer.addresses !== undefined && this.customer.addresses !== null && this.customer.addresses.length > 0) {
           this.customerPostcode = this.customer.addresses[0].postcode;

@@ -1,5 +1,5 @@
 // A reference to Stripe.js initialized with your real test publishable API key.
-var stripe = Stripe("pk_test_51IL6YhCYSHJV743tS2a6P13bf69XrPbb7w63YCLHmtoILKQ0COnV4wZgNpflbHZXzOyppKC1sM3KTfWx1g0x5YLC00BgSLCZMr");
+var stripe = Stripe("pk_test_51KRx9YHvD8eQSoOrnlrvhj1NkS5D5yHryYc4tc9rMnyVxZ0aaIYHDo4Pf8OfQnQBQydI5XmrfGWYePKujl02SMf700frauRjlo");
 var confirmCardPaymentResponse;
 var elements = stripe.elements();
 var style = {
@@ -19,7 +19,7 @@ var style = {
     },
   },
 };
-var card = elements.create("card", { style: style, hidePostalCode: false });
+var card = elements.create("card", { style: style, hidePostalCode: true });
 var loadStripeElements = function () {
   card.mount("#card-element");
 }
@@ -74,9 +74,9 @@ var pay = function (stripe, card, clientSecret, callback) {
 var orderComplete = function (result, clientSecret, callback) {
   // Just for the purpose of the sample, show the PaymentIntent response object
   stripe.retrievePaymentIntent(clientSecret).then(function (result) {
-    var paymentIntent = result.paymentIntent;
-    var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
-    console.log('Payment successfull: '+ paymentIntentJson);
+    // var paymentIntent = result.paymentIntent;
+    // var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
+    // console.log('Payment successfull: '+ paymentIntentJson);
     document.querySelector("#payment-form").classList.add("hidden");
     document.querySelector("#payment-result").classList.remove("hidden");
     document.querySelector("#payment-result").classList.add("bg-success");

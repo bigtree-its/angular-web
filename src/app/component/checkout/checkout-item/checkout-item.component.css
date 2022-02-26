@@ -1,0 +1,17 @@
+/** CHECKOUT PAGE */
+
+.checkout-container {
+    display: inline-block;
+}
+
+.checkout-item-price-n-qty {
+    width: 70px;
+    text-align: right;
+    font-style: normal;
+    font-weight: lighter;
+}
+
+.checkout-item-subtotal {
+    width: 70px;
+    text-align: right;
+}
