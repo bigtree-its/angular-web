@@ -1,0 +1,23 @@
+.chef-card {
+  margin: 3px;
+  width: 540px;
+  height: 200px;
+  border: 2px solid #a6faeb;
+  border-radius: 14px;
+}
+
+.chef-card-img-div {
+  width: 40%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chef-card-img {
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+  border-radius: 14px;
+}
+
+.chef-card-img:hover {
+  transform: scale(1.08);
+}

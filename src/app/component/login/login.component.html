@@ -2,47 +2,35 @@
     <div class="brand-div">
         <a class="navbar-brand" href="#">
             <img src="/assets/icons/bigtree.png" width="30" height="30" class="d-inline-block mb-3" alt="">
-            <strong class="brand-text">BigTree</strong>
+            <strong class="brand-text">Login to UrChef</strong>
         </a>
     </div>
-    <div class="login-inner">
-        <div class="container-fluid justify-content-center">
-            <div class="logo">Log In as a Customer</div>
-            <div class="card-body">
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="text" formControlName="email" class="form-control ob-text-field"
-                            placeholder="Email Address" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                            <div *ngIf="f.email.errors.required">Email is required</div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" formControlName="password" class="form-control ob-text-field"
-                            [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                            <div *ngIf="f.password.errors.required">Password is required</div>
-                        </div>
-                        <span *ngIf="loginSuccessful==false" class="passwordNotMatched mb-2">Email and Password are not
-                            matched</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <button [disabled]="loading" class="btn px-5" style="display: block;border: 0.5px solid #bbb;">
-                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                            Login
-                        </button>
-
-                    </div>
-                    <div class="form-group">
-                        <p class="mt-3">New user? <span class="link" (click)="joinUs()">Join Us</span></p>
-                        <button class="btn btn-sm btn-warning" *ngIf="loginSuccessful==false"
-                            routerLink="../forgot-password">Forgot Password ?</button>
-                    </div>
-                </form>
-            </div>
+    <div class="d-flex flex-column" style="margin: 10px 0;">
+        <div
+            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
+            <input class="_381fS" type="email" name="email" id="email" tabindex="1"
+                autocomplete="off" value="" [(ngModel)]="email" #ctrl="ngModel">
+            <div class="_2EeI1 _26LFr"></div>
+            <label class="_1Cvlf _2tL9P " for="mobile">Email</label>
+        </div>
+        <div
+            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+            <input class="_381fS" type="password" name="password" id="password" tabindex="2"
+                autocomplete="off" value="" [(ngModel)]="password" #ctrl="ngModel">
+            <div class="_2EeI1 _26LFr"></div>
+            <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
+        </div>
+        <div class="_25qBi _2-hTu" (click)="submit()">
+            <a class="_2REYC" style="color: #fff;">
+                <input type="submit" style="display: none;">Submit
+            </a>
         </div>
     </div>
+    <div *ngIf="error !== undefined" style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
+        <p>{{error}}</p>
+    </div>
+    <div style="display: block;width: 100%;font-weight: normal;">
+        New user? <span (click)="joinUs()">Join Us</span>
+    </div>
+
 </div>

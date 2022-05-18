@@ -1,0 +1,19 @@
+[
+    {
+        "description": [],
+        "foods": [
+            "d1692832-d88d-4614-aedc-359c43ebc391",
+            "2e6d821b-dff7-4142-9dab-9870e35f35ac"
+        ],
+        "_id": "6a4ad89b-c2e5-40d6-a356-a9d9be9c89b0",
+        "chefId": "721dc4e3-b87c-4da3-8ff5-8c6b2907614e",
+        "orderBefore": "2022-05-19T17:00:00.244Z",
+        "collectionStartDate": "2022-05-20T10:00:00.244Z",
+        "collectionEndDate": "2022-05-20T17:00:00.244Z",
+        "deliveryStartDate": "2022-05-20T16:00:00.244Z",
+        "deliveryEndDate": "2022-05-20T18:00:00.244Z",
+        "createdAt": "2022-05-17T14:44:49.577Z",
+        "updatedAt": "2022-05-17T14:44:49.577Z",
+        "__v": 0
+    }
+]

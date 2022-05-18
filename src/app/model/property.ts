@@ -1,4 +1,4 @@
-import { SafeStyle } from "@angular/platform-browser";
+import { Address, Contact } from "./common-models";
 
 export class Sale{
     price: number;
@@ -10,20 +10,7 @@ export class Rental  {
     maxTerm: string;
     minTerm: string;
 }
-export class Address  {
-    name: string;
-    email: string;
-    mobile: string;
-    telephone: string;
-    propertyNumber: string;
-    addressLine1: string;
-    addressLine2: string;
-    city: string;
-    postcode: string;
-    country: string;
-    latitude: number;
-    longitude: number
-}
+
 export class School  {
     name: String; 
     distance: String;
@@ -62,12 +49,6 @@ export class SuperStore  {
     isStateSchool: Boolean;
 }
 
-export class Contact  {
-    person: string;
-    email: string;
-    mobile: string;
-    telephone: string;
-}
 
 export class PropertyQuries {
     enquiries: PropertyQA[];

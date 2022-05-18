@@ -1,0 +1,17 @@
+<div class="order-item d-flex flex-column">
+    <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
+        <div class="d-flex flex-start left">
+            <img src={{item.image}} width="100%" height="100%" loading="lazy" alt="{{item.name}}"
+                class="thumbnail-picture">
+            <span class="food-name">{{item.qty}}</span>
+            <span class="food-name">{{item.name}}</span>
+        </div>
+        <span class="food-name">{{item.subTotal | currency: 'GBP'}}</span>
+    </div>
+    <div *ngIf="item.extras !== null && item.extras !== undefined && item.extras.length > 0">
+        <div style="width: 100%;clear: both; display: flex; justify-content: space-between;" *ngFor="let extra of item.extras">
+            <span class="food-name">{{extra.name}}</span>
+            <span class="food-name">{{extra.price}}</span>
+        </div>
+    </div>
+</div>

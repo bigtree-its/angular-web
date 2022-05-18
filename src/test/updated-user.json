@@ -85,8 +85,8 @@
   "address": {
     "firstName": "Navaneethakrishnan",
     "lastName": "Kannusamy",
-    "lineNumber1": "18, Galston Avenue",
-    "lineNumber2": "Newton mearns",
+    "addressLine1": "18, Galston Avenue",
+    "addressLine2": "Newton mearns",
     "city": "Glasgow",
     "country": "United Kingdom",
     "postCode": null,
@@ -133,8 +133,8 @@
   "address": {
     "firstName": "Navaneethakrishnan",
     "lastName": "Kannusamy",
-    "lineNumber1": "18, Galston Avenue",
-    "lineNumber2": "Newton mearns",
+    "addressLine1": "18, Galston Avenue",
+    "addressLine2": "Newton mearns",
     "city": "Glasgow",
     "country": "United Kingdom",
     "postCode": null,

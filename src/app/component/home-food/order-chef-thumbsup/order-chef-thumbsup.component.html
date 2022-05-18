@@ -1,0 +1,50 @@
+<app-header></app-header>
+<div class="container wrap" style="margin-top: 10px;">
+    <div style=" border-bottom: 1px solid #e0e0e0; padding: 10px 0; margin: 10px 0;">
+        <span style="font-size: 20px;font-weight: 100;">An order for you !</span>
+    </div>
+    <div class="d-flex flex-column" style=" height: 100%;min-width: 49%;margin: 10px 1px;">
+        
+        <div class="d-flex justify-content-between align-items-center"  style="padding:3px 10px;font-weight: 300;">
+            <button type="button" class="btn btn-outline-dark py-3 mr-1" (click)="confirm()" >Confirm</button>
+            <button type="button" class="btn btn-outline-dark py-3" (click)="reject()">Reject</button>
+        </div>
+
+        <div *ngIf="foodOrder !== undefined" class="order-content-section"
+            style="overflow-y: auto;margin: 0 10px;border: 1px solid #e3e3e3;">
+            <div>
+                <app-food-order-item [item]="item" *ngFor="let item of foodOrder.items"></app-food-order-item>
+            </div>
+
+            <div style="margin: 10px 0;">
+                <span style="font-weight: 500;font-size: 13px;color: #282c3f;padding: 10px;">Bill Details</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" style="padding:3px 10px;font-weight: 300;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Item Total</span>
+                <span
+                    style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.subTotal
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" style="padding:3px  10px;font-weight: 300;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Delivery Fee</span>
+                <span
+                    style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.deliveryFee
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="border-top: 1px solid #e3e3e3;padding:6px  10px;font-weight: 300;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Taxes and Charges</span>
+                <span
+                    style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.saleTax
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="border-top: 1px solid #e3e3e3;padding: 10px;">
+                <span style="vertical-align: middle;font-size: 14px;">TO PAY</span>
+                <span
+                    style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.total
+                    | currency: 'GBP'}}</span>
+            </div>
+        </div>
+    </div>
+</div>

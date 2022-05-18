@@ -1,0 +1,146 @@
+<app-header></app-header>
+<!-- <app-nav-bar></app-nav-bar> -->
+<script>
+    var firstTabEl = document.querySelector('#myTab li:last-child a')
+    var firstTab = new bootstrap.Tab(firstTabEl)
+
+    firstTab.show()
+</script>
+<div class="container d-flex flex-column justify-content-center" *ngIf="localChef !== undefined && localChef !== null">
+    <div class="nav-container d-flex flex-start">
+        <img src="/assets/icons/left-arrow-long.png" height="15px" width="15px" style="margin-top: 8px;">
+        <button (click)="backToResults()" class="btn btn-link align-self-start"><strong>Back to search
+                results</strong></button>
+    </div>
+    <div class="chef-banner-container box-shadow">
+        <div class="d-flex flex-start">
+            <div class="chef-banner-image-container">
+                <img src={{display_picture}} width="100%" height="100%" loading="lazy" alt="{{localChef.name}}"
+                    class="chef-home-main-image">
+            </div>
+            <div class="chef-banner-content-container d-flex flex-column">
+                <span style="font-weight: 300;font-size: 32px;display: block;padding: 10px 0;">{{localChef.name}}</span>
+                <div class="d-flex flex-start">
+                    <span class="cuisine-name" *ngFor="let cuisine of localChef.cuisines">{{cuisine.name}}</span>
+                </div>
+                <div class="d-flex flex-start">
+                    <div class="chef-banner-content-left-container d-flex flex-column">
+                        <div class="collection-location-container" style="padding: 10px 0;">
+                            <div class="d-flex flex-start">
+                                <img src="/assets/icons/shopping-bag.png" height="25px" width="25px"
+                                    style="margin-top: 7px;">
+                                <span style="font-size: 15px; display: block;padding: 10px 0;font-weight: 300;">Collect
+                                    at</span>
+                            </div>
+                            <span
+                                style="font-size: 12px; display: block;padding: 0 5px;font-weight: lighter;">{{getAddress()}}</span>
+                        </div>
+                        <div class="chef-banner-delivery-container d-flex flex-column"
+                            *ngIf="localChef.delivery !== undefined && localChef.delivery === true">
+                            <div class="d-flex flex-start">
+                                <img src="/assets/icons/take-away.png" height="25px" width="25px"
+                                    style="margin-top: 7px;">
+                                <span
+                                    style="font-size: 15px; display: block;padding: 10px 5px;font-weight: 300;">Delivery
+                                    Locations</span>
+                            </div>
+                            <div class="d-flex flex-start">
+                                <span
+                                    style="margin: 5px 2px 0 0;font-size: 12px; padding: 5px;font-weight: lighter; border:1px solid grey; border-radius: 12px;"
+                                    *ngFor="let serviceArea of localChef.serviceAreas">{{serviceArea.name}},
+                                    {{serviceArea.city}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chef-banner-content-right-container d-flex flex-column" style="padding: 10px 0;">
+                        <div class="ratings-div">
+                            <img [src]="localChef.rating > 0 ? starSelected : star" class="star">
+                            <img [src]="localChef.rating > 1 ? starSelected : star" class="star">
+                            <img [src]="localChef.rating > 2 ? starSelected : star" class="star">
+                            <img [src]="localChef.rating > 3 ? starSelected : star" class="star">
+                            <img [src]="localChef.rating > 4 ? starSelected : star" class="star">
+                        </div>
+                        <div class="features-div d-flex flex-start">
+                            <span class="feature"
+                                *ngIf="localChef.noMinimumOrder !== undefined && localChef.noMinimumOrder === true">. No
+                                Minimum
+                                Order</span>
+                            <span class="feature"
+                                *ngIf="localChef.collectionOnly !== undefined && localChef.collectionOnly === true">.
+                                Collection
+                                Only</span>
+                            <span class="feature"
+                                *ngIf="localChef.preOrder !== undefined && localChef.preOrder === true">. Pre
+                                Order</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chef-gallery-container">
+        <div class="d-flex flex-start justify-content-center wrap">
+            <img src={{photo}} width="100%" height="100%" loading="lazy" alt="{{localChef.name}}"
+                class="thumbnail-picture" *ngFor="let photo of gallery" (click)="displayPicture(photo)">
+        </div>
+    </div>
+    <div class="d-flex flex-start">
+        <!-- <div class="chef-image-container">
+            <img src={{display_picture}} width="100%" height="100%" loading="lazy" alt="{{localChef.name}}" class="chef-home-main-image">
+            <div class="thumbnail-div scroll-container d-flex justify-content-start py-1">
+                <img src="/assets/icons/left-arrow.png" alt="" loading="lazy" class="scroll-left"
+                    (click)="scrollLeft()">
+                <div #widgetsContent class="custom-slider-main">
+                    <img src={{g}} width="100%" height="100%" loading="lazy" alt="{{localChef.name}}"
+                        class="thumbnail-picture space-around mx-2" *ngFor="let g of gallery"
+                        (click)="displayPicture(g)">
+                </div>
+                <img src="/assets/icons/right-arrow.png" alt="" loading="lazy" class="scroll-right"
+                    (click)="scrollRight()">
+            </div>
+           
+        </div> -->
+        <div class="chef-category-container">
+            <div class="d-flex flex-column">
+                <span class="categories" *ngFor="let c of localChef.categories"
+                    (click)="selectCategory($event, c)">{{c}}</span>
+            </div>
+        </div>
+        <div class="chef-content-container d-flex flex-column">
+            <div class="d-flex flex-column" *ngIf="foods_to_display !== undefined && foods_to_display.length > 0">
+                <span class="selected-category">{{selectedCategory}}</span>
+                <div class="food-container">
+                    <app-food-card [food]="food" *ngFor="let food of foods_to_display"></app-food-card>
+                </div>
+            </div>
+        </div>
+        <div class="chef-cart-container d-flex flex-column">
+            <span class="cart-container-header">Your Order</span>
+            <div *ngIf="foodOrder !== undefined" class="order-content-section">
+                <div class="order-item-div" *ngFor="let item of foodOrder.items">
+                    <div class="d-flex felx-start">
+                        <span class="qty-value">{{item.qty}}</span>
+                        <span class="food-order-item-name">{{item.name}}</span>
+                    </div>
+                    <!-- <div class="d-flex felx-start">
+                        <button class="food-order-qty-btn" style="font-size: 20px;" (click)="decreaseQuantity(item)">-</button>
+                        <span class="qty-value">{{item.qty}}</span>
+                        <button class="qty-btn" style="font-size: 10px;" (click)="increaseQuantity(item)">+</button>
+                        <span class="item-price">{{item.subTotal | currency: 'GBP'}}</span>
+                    </div> -->
+                    <div class="d-flex felx-start">
+                        <button class="food-order-item-delete-btn" (click)="deleteItem(item)">X</button>
+                        <span class="item-price">{{item.subTotal | currency: 'GBP'}}</span>
+                    </div>
+                    
+                </div>
+                <div class="order-bottom-section">
+                    <button type="button" ngbAutofocus class="btn order-confirm-button"
+                        (click)="confirmOrder()">CHECKOUT</button>
+                    <span class="order-total-price">{{foodOrder.total | currency: 'GBP'}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="height: 300px;"></div>

@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Address } from '../model/address';
 import { PaymentCard } from '../model/payment-card';
-import { AppToastService } from './AppToastService';
 import { Category, Department } from '../model/product.model';
-import { CustomerSession } from '../model/customer';
 import { Basket } from '../model/basket.model';
-import { nanoid } from 'nanoid';
 import { Utils } from '../helpers/utils';
 import { AccountService } from './account.service';
+import { Address } from '../model/common-models';
 
 @Injectable({
   providedIn: 'root'
@@ -23,44 +20,29 @@ export class LocalContextService {
   paymentCardSubject$: BehaviorSubject<PaymentCard>;
   departmentSubject$: BehaviorSubject<Department[]>;
   categorieSubject$: BehaviorSubject<Category[]>;
-  customerSessionSubject$: BehaviorSubject<CustomerSession>;
   basketSubject$: BehaviorSubject<Basket>;
   deps: Department[] = [];
   cats: Category[] = [];
 
   private OBJECT_DELIVERY_ADDRESS: string = "DeliveryAddress";
   private OBJECT_CUSTOMER_SESSION: string = "CustomerSession";
-  private OBJECT_BASKET: string = "Basket";
+  
   private OBJECT_PAYMENT_CARD: string = "PaymentCard";
 
   constructor(
-    private toastService: AppToastService,
+    private accountService: AccountService,
     private Utils: Utils
   ) {
 
-    var basket: Basket = this.getBasket();
-    var customerSession: CustomerSession = this.getCustomerSession();
     let address: Address = JSON.parse(localStorage.getItem(this.OBJECT_DELIVERY_ADDRESS));
-    let card: PaymentCard = JSON.parse(localStorage.getItem(this.OBJECT_PAYMENT_CARD));
-
-
     this.deliveryAddressSubject$ = new BehaviorSubject<Address>(this.deliveryAddress);
-    this.paymentCardSubject$ = new BehaviorSubject<PaymentCard>(this.paymentCard);
     this.departmentSubject$ = new BehaviorSubject<Department[]>(this.deps);
     this.categorieSubject$ = new BehaviorSubject<Category[]>(this.cats);
-    this.basketSubject$ = new BehaviorSubject<Basket>(basket);
-    this.customerSessionSubject$ = new BehaviorSubject<CustomerSession>(customerSession);
 
     if (address !== null && address !== undefined) {
       this.deliveryAddress = address;
       this.deliveryAddressSubject$.next({ ...this.deliveryAddress });
     }
-    if (card !== null && card !== undefined) {
-      this.paymentCard = card;
-      this.paymentCardSubject$.next({ ...this.paymentCard });
-    }
-    this.basketSubject$.next({ ...basket });
-    this.customerSessionSubject$.next({ ...customerSession });
   }
 
   cacheDeps(deps: Department[]) {
@@ -134,76 +116,8 @@ export class LocalContextService {
     this.paymentCardSubject$.next({ ...this.paymentCard });
   }
 
-  removeCustomerSession() {
-    localStorage.removeItem(this.OBJECT_CUSTOMER_SESSION);
-    var customerSession = null;
-    this.customerSessionSubject$.next({ ...customerSession });
-  }
-
-  removeCustomerBasket() {
-    localStorage.removeItem(this.getCustomerSession().customer.email);
-  }
-
-  public setBasket(basket: Basket) {
-    var customerSession: CustomerSession = this.getCustomerSession();
-    if (customerSession !== null && customerSession !== undefined) {
-      localStorage.setItem(customerSession.customer.email, JSON.stringify(basket));
-    } else {
-      localStorage.setItem(this.OBJECT_BASKET, JSON.stringify(basket));
-    }
-    this.basketSubject$.next({ ...basket });
-  }
-
   setDeliveryAddress(add: Address) {
     localStorage.setItem(this.OBJECT_DELIVERY_ADDRESS, JSON.stringify(add));
-  }
-
-  setCustomerSession(customerSession: CustomerSession) {
-    localStorage.setItem(this.OBJECT_CUSTOMER_SESSION, JSON.stringify(customerSession));
-  }
-
-
-  getBasket(): Basket {
-    var basketJson = null;
-    var customerSession: CustomerSession = this.getCustomerSession();
-    if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
-      basketJson = localStorage.getItem(customerSession.customer.email)
-    } else {
-      basketJson = localStorage.getItem(this.OBJECT_BASKET);
-    }
-    if (basketJson !== undefined && basketJson !== null) {
-      return JSON.parse(basketJson);
-    }
-    var basket: Basket = {
-      items: [],
-      id: 0,
-      basketId: nanoid(),
-      date: new Date(),
-      email: "",
-      orderReference: "",
-      total: 0,
-    };
-
-    if (customerSession !== null && customerSession !== undefined) {
-      basket.email = customerSession.customer.email;
-    }
-    return basket;
-  }
-
-  getCustomerSession(): CustomerSession {
-    var customerJson = localStorage.getItem(this.OBJECT_CUSTOMER_SESSION);
-    if (!this.Utils.isEmpty(customerJson)) {
-      return JSON.parse(customerJson);
-    }
-    return null;
-  }
-
-  getCustomerEmail(): string {
-    var customerJson = localStorage.getItem(this.OBJECT_CUSTOMER_SESSION);
-    if (!this.Utils.isEmpty(customerJson)) {
-      return JSON.parse(customerJson).customer.email;
-    }
-    return "guest@beku.com";
   }
 
   getDeliveryAddress(): Address {

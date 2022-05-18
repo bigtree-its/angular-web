@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Address } from 'src/app/model/address';
 import { NgForm } from '@angular/forms';
+import { Address } from 'src/app/model/common-models';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 
 @Component({

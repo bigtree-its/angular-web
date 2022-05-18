@@ -1,0 +1,15 @@
+.serviceArea {
+    transition: 0.5s ease-in-out;
+    height: 200px;
+    width: 200px;
+    margin: 5px 10px 5px 0;
+    align-items: center;
+    line-height: 200px;
+    background: #fcd;
+    text-align: center;
+    font-size: 25px;
+  }
+  .serviceArea:hover{
+    cursor: pointer;
+    transform: scale(1.08);
+  }

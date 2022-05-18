@@ -9,13 +9,12 @@ import { BasketService } from 'src/app/service/basket.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/service/account.service';
-import { CustomerSession, Customer } from 'src/app/model/customer';
 import { ReviewService } from 'src/app/service/review.service';
 import { Review } from 'src/app/model/review';
 import { first } from 'rxjs/operators';
 import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 import { ProductQAService } from 'src/app/service/product-qa.service';
-import { ProductQA, ProductQuestion } from 'src/app/model/common-models';
+import { Customer, CustomerSession, ProductQA, ProductQuestion } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-detail',
@@ -62,6 +61,7 @@ export class DetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
+    private accountService: AccountService,
     private localContextService: LocalContextService,
     private reviewService: ReviewService,
     private formBuilder: FormBuilder,
@@ -98,7 +98,7 @@ export class DetailComponent implements OnInit {
       });
     })
 
-    this.customerSession = this.localContextService.getCustomerSession();
+    this.customerSession = this.accountService.getCustomerSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
       this.customer = this.customerSession.customer;
     }
@@ -197,7 +197,7 @@ export class DetailComponent implements OnInit {
     review.rating = this.rating;
     review.date = new Date();
     review.entity = this.product._id;
-    review.customerEmail = this.customer.email;
+    review.customerEmail = this.customer.contact.email;
     review.customerName = this.customer.firstName + this.customer.lastName;
     this.reviewService
     .createReview(review)
@@ -230,7 +230,7 @@ export class DetailComponent implements OnInit {
     question.question = this.getQuestionForm.question.value;
     question.entity = this.product._id;
     question.date = new Date();
-    question.customerEmail = this.customer.email;
+    question.customerEmail = this.customer.contact.email;
     question.customerName = this.customer.firstName + this.customer.lastName;
 
     this.submittedQuestion = true;

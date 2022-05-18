@@ -14,11 +14,13 @@ import { AlertService } from 'src/app/service/alert.service';
 export class LoginComponent implements OnInit {
 
 
-  form: FormGroup;
-  loading = false;
-  submitted = false;
+  submitted: boolean = false;
+  loading: boolean = false;
+  successful: boolean = false;
+  password: string = '';
+  error: string;
+  email: string;
   returnUrl: string;
-  loginSuccessful: boolean = true;
 
   constructor(private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -28,30 +30,20 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+    this.loading = false;
+    this.submitted = false;
+    this.successful = false;
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
 
-  onSubmit() {
+  submit() {
     this.submitted = true;
-
     // reset alerts on submit
     this.alertService.clear();
-
-    // stop here if form is invalid
-    if (this.form.invalid) {
-      return;
-    }
-
     this.loading = true;
-    this.accountService.login(this.f.email.value, this.f.password.value)
+    this.accountService.login(this.email, this.password)
       .pipe(first())
       .subscribe(
         data => {
@@ -60,7 +52,7 @@ export class LoginComponent implements OnInit {
         error => {
           this.alertService.error(error);
           this.loading = false;
-          this.loginSuccessful = false;
+          this.successful = false;
         });
   }
 

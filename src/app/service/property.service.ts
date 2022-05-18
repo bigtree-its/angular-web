@@ -9,7 +9,7 @@ import { Property, PropertyQuery, PropertyType } from '../model/property';
 @Injectable({
   providedIn: 'root'
 })
-export class AdService {
+export class PropertyService {
 
   private URL = environment.AD_SERVICE_URL;
   private BASEPATH = environment.ADS_BASEPATH;
@@ -22,7 +22,6 @@ export class AdService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private localContextService: LocalContextService
   ) {
   }
 

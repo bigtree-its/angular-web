@@ -78,9 +78,9 @@ var orderComplete = function (result, clientSecret, callback) {
     // var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
     // console.log('Payment successfull: '+ paymentIntentJson);
     document.querySelector("#payment-form").classList.add("hidden");
-    document.querySelector("#payment-result").classList.remove("hidden");
-    document.querySelector("#payment-result").classList.add("bg-success");
-    document.querySelector("#card-success").textContent = "Payment Sucessfull";
+    document.querySelector("#payment-result-section").classList.remove("hidden");
+    document.querySelector("#payment-result-message").classList.add("payment-result-success");
+    document.querySelector("#payment-result-message").textContent = "Your card payment successful";
     setTimeout(function () {
     }, 4000);
     changeLoadingState(false);
@@ -92,13 +92,13 @@ var orderComplete = function (result, clientSecret, callback) {
 var showError = function (result, callback) {
   changeLoadingState(false);
   console.log('Payment Error: '+ result.error.message);
-  document.querySelector("#payment-result").classList.remove("hidden");
-  document.querySelector("#payment-result").classList.add("bg-warning");
-  document.querySelector("#card-error").textContent = result.error.message;
-  setTimeout(function () {
-    document.querySelector("#card-error").textContent = "";
-    document.querySelector("#payment-result").classList.add("hidden");
-  }, 4000);
+  document.querySelector("#payment-result-section").classList.remove("hidden");
+  document.querySelector("#payment-result-message").classList.add("payment-result-error");
+  document.querySelector("#payment-result-message").textContent = result.error.message;
+  // setTimeout(function () {
+  //   document.querySelector("#card-error").textContent = "";
+  //   document.querySelector("#payment-result").classList.add("hidden");
+  // }, 4000);
   callback.handleStripConfirmation(result);
 };
 

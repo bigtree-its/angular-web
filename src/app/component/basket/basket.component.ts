@@ -31,7 +31,7 @@ export class BasketComponent implements OnInit {
         this.basket.total = 0;
         this.calculateBasketTotal();
       } else {
-        this.basket = this.LocalContextService.getBasket();
+        this.basket = this.basketService.getBasket();
         if (this.basket !== null && this.basket !== undefined) {
           this.basket.total = 0;
           this.calculateBasketTotal();

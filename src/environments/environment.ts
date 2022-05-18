@@ -11,30 +11,36 @@ export const environment = {
   PRODUCT_SERVICE_URL: window["env"]["productServiceUrl"] || "http://localhost:8080/products/v1",
   REVIEW_SERVICE_URL: window["env"]["reviewServiceUrl"] || "http://localhost:8080/reviews/v1",
   AD_SERVICE_URL: window["env"]["adServiceUrl"] || "http://localhost:8083",
-  
+  OPENCHEF_ORDERS_HOST: window["env"]["openChefServiceUrl"] || "http://localhost:8085",
   
   ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082/orders/v1",
   BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8082/orders/v1/baskets",
   INVENTORY_SERVICE_URL: window["env"]["inventoryServiceUrl"] || "http://localhost:8082/orders/v1/inventory",
 
-  ACCOUNT_SERVICE_URL: window["env"]["userServiceUrl"] || "http://localhost:8081/users/v1",
-  RESET_PASSWORD_INITIATE: window["env"]["userServiceUrl"] + '/password-reset/initiate',
-  RESET_PASSWORD_SUBMIT: window["env"]["userServiceUrl"] + '/password-reset/submit',
-  CHANGE_PASSWORD: window["env"]["userServiceUrl"] + '/password-reset/change',
+  ACCOUNT_SERVICE_URL: window["env"]["customerServiceUrl"] || "http://localhost:8081/urchef/v1/customers",
+  RESET_PASSWORD_INITIATE: window["env"]["customerServiceUrl"] + '/password-reset/initiate',
+  RESET_PASSWORD_SUBMIT: window["env"]["customerServiceUrl"] + '/password-reset/submit',
+  CHANGE_PASSWORD: window["env"]["customerServiceUrl"] + '/password-reset/change',
 
   debug: window["env"]["debug"] || false,
 
   /** Base Paths */
    AUTH_LOGIN_PATH: '/login',
    AUTH_REGISTER_PATH: '/register',
-   USERS: '/users',
+   USERS: '/customers',
    ORDERS: '/orders',
-   CREATE_PAYMENT_INTENT: '/create-payment-intent',
+   CREATE_PAYMENT_INTENT: '/openchef/v1/create-payment-intent',
    BASKETS: '/baskets',
    ADS_BASEPATH: '/ads/v1',
 
    /** URI */
    PROPERTIES_URI: '/properties',
+   LOCALCHEFS_URI: '/localchefs',
+   LOCALAREA_URI: '/localarea',
+   CUISINES_URI: '/cuisines',
+   FOODS_URI: '/foods',
+   CALENDARS_URI: '/calendars', //http://localhost:8083/ads/v1/calendars?chef=721dc4e3-b87c-4da3-8ff5-8c6b2907614e&thisweek=true
+   OPENCHEF_ORDERS_URI: '/openchef/v1/orders',
    PROPERTY_TYPES_URI: '/property-types',
 
    /** GetAddress.io */

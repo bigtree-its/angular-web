@@ -1,32 +1,18 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
-</style>
-
-<div class="container-fluid header">
-  <div class="d-flex justify-content-start ml-2 left">
-    <a class="flex-start" href="#">
-      <!-- <img src="/assets/icons/bigtree.png"  class="ml-3 mt-3 brand-logo" alt="" href="#"> -->
-      <span class="brand-name mt-2" href="#">trulia</span>
-    </a>
-    <!-- <div class="location-section"
-      *ngIf="isCustomerLoggedIn() == true  && customer.addresses !== null && customer.addresses.length > 0">
-      <span>Deliver To:</span>
-      <strong style="color:#111;">{{ customer.addresses[0].postcode }}</strong>
-    </div> -->
-  </div>
-  <div class="search-contaniner">
-    <div class="d-flex justify-content-start">
-      <img src="/assets/icons/search.png" class="search-icon" />
-      <input type="search" class="search-box" placeholder="Search products" autocomplete="off" value
-        [(ngModel)]="searchText" />
+  @import url('https://fonts.googleapis.com/css2?family=Judson&display=swap');
+  </style>
+<div class="d-flex justify-content-between" style="height: 65px;line-height: 65px;">
+  <div class="d-flex flex-start" (click)="home()">
+    <div class="d-flex flex-start justify-content-center" >
+      <!-- <img src="/assets/icons/coffee-cup.png"  alt="" href="#" style="margin: 10px; width: 30px;height: 30px;position: relative; top: 9px;left: 11px;"> -->
+      <span style="font-weight: 900;font-size: 27px;margin-right: 10px;font-family: 'Judson', serif;">Route2Chef.</span>
     </div>
-    <button class="search-button" (click)="onSubmitSearch()">Search</button>
+    
   </div>
-  <div class="d-flex justify-content-end right">
+  <div class="d-flex justify-content-end">
     <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
     <div *ngIf="isCustomerLoggedIn() == true" class="customer-greeting">
-      <div class="dropdown">
+      <div>
         <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
           <span>{{customer.firstName}}</span>
@@ -39,9 +25,10 @@
         </div>
       </div>
     </div>
-    <button class="signin-button" (click)="login()" *ngIf="isCustomerLoggedIn() == false">Sign In</button>
-    <button class="signup-button" (click)="register()" *ngIf="isCustomerLoggedIn() == false">Sign Up</button>
-    <div class="basket-section" routerLink="/basket">
+    <button class="header-button" (click)="becomeChef()">Become a Chef</button>
+    <button class="header-button" (click)="login()" *ngIf="isCustomerLoggedIn() == false">Log in</button>
+    <button class="header-button" (click)="register()" *ngIf="isCustomerLoggedIn() == false">Sign up</button>
+    <div class="basket-section" routerLink="/food-checkout">
       <img src="/assets/icons/shopping-cart.png" class="shopping-cart-icon">
       <span class="basket-item-count">{{ itemCount > 0 ? itemCount : "Empty" }}</span>
     </div>

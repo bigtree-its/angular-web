@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Customer } from './model/customer';
+import { Customer } from './model/common-models';
 import { AccountService } from './service/account.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { AccountService } from './service/account.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'BEKU';
+  title = 'OpenChef';
 
   constructor(
     private router: Router,

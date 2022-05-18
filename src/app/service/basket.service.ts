@@ -8,66 +8,80 @@ import { Router } from '@angular/router';
 import { AccountService } from './account.service';
 import { nanoid } from 'nanoid'
 import { ActionResponse } from '../model/action-response';
-import { CustomerSession, Customer } from '../model/customer';
 import { LocalContextService } from './localcontext.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { basename } from '@angular/compiler-cli/src/ngtsc/file_system';
+import { CustomerSession } from '../model/common-models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BasketService {
 
-
   private SERVER_URL = environment.BASKET_SERVICE_URL;
-
+  basketSubject$: BehaviorSubject<Basket>;
   basketName: string = "anonymous";
+  private OBJECT_BASKET: string = "Basket";
 
   ipAddress: string;
 
-  basket: Basket = {
-    items: [],
-    id: 0,
-    basketId: nanoid(),
-    date: new Date(),
-    email: "",
-    orderReference: "",
-    total: 0,
-  };
+  basket: Basket;
   customerSession: CustomerSession;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private localContextService: LocalContextService,
-    private acccountService: AccountService) {
-
+    private accountService: AccountService) {
+    this.basketSubject$ = new BehaviorSubject<Basket>(this.basket);
     this.getIPAddress();
-    
-    this.localContextService.customerSessionSubject$.subscribe((customerSession)=>{
+    this.accountService.customerSessionSubject$.subscribe((customerSession) => {
       this.customerSession = customerSession;
-      if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
-        var email:string = this.customerSession.customer.email;
-        console.log('Customer logged in: Getting Basket '+ email );
-        this.getBasket(email);
+      if (customerSession === null || customerSession === undefined || customerSession.customer === null || customerSession.customer === undefined) {
+        this.removeCustomerBasket();
+      } else {
+        var email: string = this.customerSession.customer.contact.email;
+        console.log('Customer logged in: Getting Basket ' + email);
+        var basketJson = localStorage.getItem(this.OBJECT_BASKET + "-" + email);
+        if (basketJson !== undefined && basketJson !== null) {
+          this.basket = JSON.parse(basketJson);
+          this.publishBasket();
+        } else {
+          this.createNewBasket(email);
+        }
       }
-    })
-    var basket: Basket = localContextService.getBasket();
-    if ((basket === null || basket === undefined) && (this.basket !== null && this.basket !== undefined)) {
-      localContextService.setBasket(this.basket);
-    } else {
-      this.basket = basket;
-    }
+    });
   }
 
-  getIPAddress()
-  {
-    this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
+
+  public createNewBasket(email: string) {
+    var basket: Basket = {
+      items: [],
+      id: 0,
+      basketId: nanoid(),
+      date: new Date(),
+      email: email,
+      orderReference: "",
+      total: 0,
+    };
+    if (email !== undefined && email !== null) {
+      localStorage.setItem(this.OBJECT_BASKET + "-" + email, JSON.stringify(basket));
+    } else {
+      localStorage.setItem(this.OBJECT_BASKET + "-Anonymous", JSON.stringify(basket));
+    }
+
+    this.basket = basket;
+    this.publishBasket();
+  }
+
+  getIPAddress() {
+    this.http.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
       this.ipAddress = res.ip;
     });
   }
 
-  getBasket(email: string) {
+  getBasketFromServer(email: string) {
 
-    console.log('Retrieving Basket for customer '+ email);
+    console.log('Retrieving Basket for customer ' + email);
     var url = this.SERVER_URL;
     var params = new HttpParams();
     params = params.set('email', email);
@@ -77,13 +91,13 @@ export class BasketService {
       .subscribe(
         {
           next: data => {
-            console.log('Basket retrieved for customer  '+ JSON.stringify(data));
-            console.log('Basket retrieved for customer  '+ data.length);
+            console.log('Basket retrieved for customer  ' + JSON.stringify(data));
+            console.log('Basket retrieved for customer  ' + data.length);
             if (data !== null && data !== undefined && data.length > 0) {
-              console.log('Basket retrieved for customer  '+ JSON.stringify(data));
-              if ( data[0] !== null){
+              console.log('Basket retrieved for customer  ' + JSON.stringify(data));
+              if (data[0] !== null) {
                 this.basket = data[0];
-                console.log('Basket retrieved for customer  '+ JSON.stringify(this.basket));
+                console.log('Basket retrieved for customer  ' + JSON.stringify(this.basket));
                 this.publishBasket();
               }
             } else {
@@ -100,30 +114,15 @@ export class BasketService {
       );
   }
 
-  createNewBasket(){
-    this.basket = {
-      items: [],
-      id: 0,
-      basketId: nanoid(),
-      date: new Date(),
-      email: "",
-      orderReference: "",
-      total: 0,
-    };
-  }
-
-
   updateBasket(basket: Basket) {
     this.basket = basket;
     var url = this.SERVER_URL;
     var params = new HttpParams();
     params = params.set('basketId', this.basket.basketId);
     params = params.set('createIfNew', "true");
-   
-    this.basket.email = this.localContextService.getCustomerEmail();
 
+    this.basket.email = this.accountService.getCustomerEmail();
     console.log('Updating basket: ' + JSON.stringify(basket))
-
     this.http.put<ActionResponse>(url, this.basket, { params: params })
       .subscribe(
         {
@@ -140,30 +139,6 @@ export class BasketService {
           }
         }
       );
-  }
-
-  initializeBasket() {
-    if (this.basket === null || this.basket === undefined) {
-      console.log('Basket is null. Initializing..')
-      this.basket = {
-        items: [],
-        id: 0,
-        basketId: nanoid(),
-        date: new Date(),
-        email: this.localContextService.getCustomerEmail(),
-        orderReference: "",
-        total: 0,
-      };
-    } else {
-      console.log('Basket Initializing..')
-      this.basket.basketId = nanoid(),
-      this.basket.items = [];
-      this.basket.total = 0;
-      this.basket.orderReference = "";
-      this.basket.email = "";
-    }
-    this.localContextService.setBasket(this.basket);
-    console.log('Basket: ' + JSON.stringify(this.basket));
   }
 
   getBasketQty(id: string): number {
@@ -184,7 +159,7 @@ export class BasketService {
     console.log('Add item to basket')
     if (this.basket === null || this.basket === undefined) {
       console.log('Basket is null')
-      this.initializeBasket();
+      this.createNewBasket(null);
     }
     if (qty === 0) {
       qty = 1;
@@ -222,7 +197,7 @@ export class BasketService {
     console.log('Calculating basket total');
 
     let total: number = 0;
-    if ( this.basket.items !== null && this.basket.items !== undefined && this.basket.items.length > 0){
+    if (this.basket.items !== null && this.basket.items !== undefined && this.basket.items.length > 0) {
       this.basket.items.forEach((item) => {
         total = total + item.quantity * item.price;
       });
@@ -241,6 +216,13 @@ export class BasketService {
     }
   }
 
+  removeCustomerBasket() {
+    this.basket = null;
+    localStorage.removeItem(this.OBJECT_BASKET);
+    this.basketSubject$.next({ ...this.basket });
+  }
+
+
   removeItem(id: String) {
     console.log('Removing product ${id}');
     var items = this.basket.items;
@@ -258,12 +240,19 @@ export class BasketService {
   private publishBasket() {
     console.log('Publishing basket..')
     this.calculateBasketTotal();
-    if ( this.basket.basketId !== null && this.basket.basketId !== undefined ){
+    if (this.basket.basketId !== null && this.basket.basketId !== undefined) {
       this.basket.basketId = nanoid();
     }
-    console.log('Basket Id : ' + this.basket.basketId);
-    console.log('Basket name : ' + this.basketName);
-    this.localContextService.setBasket(this.basket);
-    
+    this.setBasket(this.basket);
+
+  }
+
+  getBasket(): Basket {
+    return this.basket;
+  }
+
+  public setBasket(basket: Basket) {
+    localStorage.setItem(this.OBJECT_BASKET, JSON.stringify(basket));
+    this.basketSubject$.next({ ...basket });
   }
 }

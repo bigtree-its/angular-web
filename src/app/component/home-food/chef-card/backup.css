@@ -1,0 +1,33 @@
+.chef-card {
+    margin: 10px;
+    width: 298px;
+    height: 200px;
+    border: 1px solid #e3e3e3;
+  }
+  
+  .chef-card-img-div {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .chef-card-img {
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+  }
+  
+  .chef-card-img:hover {
+    transform: scale(1.08);
+  }
+  
+  .checf-card-name {
+    text-align: center;
+    padding: 2px;
+    align-items: center;
+    font-size: 15px;
+  }
+  
+  .cusine-name {
+    font-size: 15px;
+    text-transform: uppercase;
+  }

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AccountService } from '../../service/account.service'
 import { AlertService } from '../../service/alert.service'
+import { Utils } from 'src/app/helpers/utils';
+import { SignupRequest } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-register',
@@ -12,12 +14,20 @@ import { AlertService } from '../../service/alert.service'
 })
 export class RegisterComponent implements OnInit {
 
-  form: FormGroup;
-  loading = false;
-  submitted = false;
+  submitted: boolean = false;
+  loading: boolean = false;
+  successful: boolean = false;
+  error: string;
+  firstName: string;
+  lastName: string;
+  mobile: string;
+  email: string;
+  password: string = '';
+  confirmPassword: string = '';
+  returnUrl: string;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private utils: Utils,
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
@@ -25,39 +35,53 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      mobile: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
+
   }
 
   login() {
     this.router.navigate(['/login']);
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
-
-  onSubmit() {
+  submit() {
     this.submitted = true;
-
-    // reset alerts on submit
-    this.alertService.clear();
-
     // stop here if form is invalid
-    if (this.form.invalid) {
+    if (this.utils.isEmpty(this.firstName)) {
+      this.error = "Firstname is mandatory";
       return;
     }
-    if ( this.f.password.value !== this.f.confirmPassword.value){
+    if (this.utils.isEmpty(this.lastName)) {
+      this.error = "Lastname is mandatory";
       return;
     }
-
+    if (this.utils.isEmpty(this.email)) {
+      this.error = "Email is mandatory";
+      return;
+    }
+    if (this.utils.isEmpty(this.mobile)) {
+      this.error = "Mobile is mandatory";
+      return;
+    }
+    if (this.utils.isEmpty(this.password)) {
+      this.error = "Password is mandatory";
+      return;
+    }
+    if (this.password.length < 8 || this.confirmPassword.length < 8) {
+      this.error = "Password must be minimum 8 characters long";
+      return;
+    }
+    if (!this.utils.isEquals(this.confirmPassword, this.password)) {
+      this.error = "Passwords do not match";
+      return;
+    }
+    this.error = undefined;
+    var signupRequest: SignupRequest = new SignupRequest();
+    signupRequest.firstName = this.firstName;
+    signupRequest.lastName = this.lastName;
+    signupRequest.email = this.email;
+    signupRequest.mobile = this.mobile;
+    signupRequest.password = this.password;
     this.loading = true;
-    this.accountService.register(this.form.value)
+    this.accountService.register(signupRequest)
       .pipe(first())
       .subscribe(
         data => {
@@ -66,6 +90,8 @@ export class RegisterComponent implements OnInit {
           // this.router.navigate(['/'], { relativeTo: this.route });
         },
         error => {
+          console.log(error.data);
+          this.error = error.data.detail;
           this.alertService.error(error);
           this.loading = false;
         });

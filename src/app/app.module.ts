@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'angular-tree-component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { CookieService } from 'ngx-cookie-service';
+import { CookieModule } from 'ngx-cookie';
 
 
 /** Components */
@@ -45,6 +45,15 @@ import { PropertyCardComponent } from './component/properties/property-card/prop
 import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
 import { PropertyMapComponent } from './component/properties/property-map/property-map.component';
 import { HomeFoodComponent } from './component/home-food/home-food.component';
+import { ChefCardComponent } from './component/home-food/chef-card/chef-card.component';
+import { ChefHomeComponent } from './component/home-food/chef-home/chef-home.component';
+import { FoodCardComponent } from './component/home-food/food-card/food-card.component';
+import { FoodCheckoutComponent } from './component/home-food/food-checkout/food-checkout.component';
+import { FoodOrderItemComponent } from './component/home-food/food-order-item/food-order-item.component';
+import { OrderChefThumbsupComponent } from './component/home-food/order-chef-thumbsup/order-chef-thumbsup.component';
+import { CityComponent } from './component/home-food/city/city.component';
+import { ChefListComponent } from './component/home-food/chef-list/chef-list.component';
+import { OrderStatusComponent } from './component/home-food/order-status/order-status.component';
 
 
 @NgModule({
@@ -80,6 +89,15 @@ import { HomeFoodComponent } from './component/home-food/home-food.component';
     PropertyDetailComponent,
     PropertyMapComponent,
     HomeFoodComponent,
+    ChefCardComponent,
+    ChefHomeComponent,
+    FoodCardComponent,
+    FoodCheckoutComponent,
+    FoodOrderItemComponent,
+    OrderChefThumbsupComponent,
+    CityComponent,
+    ChefListComponent,
+    OrderStatusComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,10 +109,10 @@ import { HomeFoodComponent } from './component/home-food/home-food.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbModule,
-   
+    CookieModule.forRoot(),
     TreeModule.forRoot()
   ],
-  providers: [AppToastService, CookieService],
+  providers: [AppToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,65 @@
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2EeQ7NRUPra6LjcoX3t374dyJZ7IVMeQ&region=GB&callback=initMap&libraries=&v=weekly"
+  async></script>
+<app-header></app-header>
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="container">
+  <div class="d-flex justify-content-center home-chef-header-div">
+    <span class="home-chef-header">Do you fancy home cooked food</span>
+  </div>
+  <div class="ad-container">
+    <div class="d-flex justify-content-center align-items-center">
+      <img style="margin: 0 10px;" width="260" height="260"
+        src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/rng/md/carousel/production/fwnt49ony3qu8gtrofuv">
+      <img style="margin: 0 10px;" width="260" height="260"
+        src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/rng/md/carousel/production/rmpqtbcjncmuptlvxacm">
+      <img style="margin: 0 10px;" width="260" height="260"
+        src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_520,h_520/rng/md/carousel/production/zddd8ibq2qu4dfqkuwcu">
+    </div>
+  </div>
+  <div class="lookup-container d-flex flex-column box-shadow">
+    <span style="font-size: 30px;padding: 10px;">Find chefs</span>
+    <span style="font-weight: 300;padding: 10px;">Discover entire homes and private rooms perfect for any trip.</span>
+    <form #localAreaLookupForm="ngForm" (ngSubmit)=(onSubmitLocalAreaLookup(localAreaLookupForm))>
+      <div style="border:1px solid #e0e0e0;min-width:100%;display:flex;flex-direction: row;">
+        <img (click)="doSearch()" src="/assets/icons/search.png" class="search-icon" />
+        <input type="text" class="form-control localarea-search-input" id="localArea"
+          placeholder="Enter your local area" [(ngModel)]="localAreaSearchText" name="localArea" #localArea="ngModel">
+        <span class="search-clear-button" (click)="clearSearchText()">X</span>
+        <!-- <button type="submit" class="btn localarea-search-button ml-1"
+          [disabled]="!localAreaLookupForm.form.valid">Search</button> -->
+      </div>
+    </form>
+    <div *ngIf="displayAreaSelectionContainer">
+      <div style="border:1px solid #e0e0e0;overflow-y: auto;height: 150px;padding:10px;">
+        <div class="local-area-option" *ngFor="let la of localAreaList" (click)="onSelectLocalArea(la)">
+          <span>{{ la.name }},{{la.city}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="searchDiv d-flex flex-start"> -->
+  <!-- <form #localAreaLookupForm="ngForm" (ngSubmit)=(onSubmitLocalAreaLookup(localAreaLookupForm))>
+      <div style="width: 90%;"> -->
+  <!-- <input type="text" class="form-control hcf-lookup-input" id="localArea" placeholder="Enter your local area"
+          [(ngModel)]="localAreaSearchText" name="localArea" #localArea="ngModel"> -->
+  <!-- </div>
+      <div style="width: 10%;">
+        <button type="submit" class="submit-button" [disabled]="!localAreaLookupForm.form.valid">Search</button>
+      </div>
+    </form> -->
+
+  <div class="result-container-header d-flex justify-content-start align-items-center"
+    *ngIf="selectedLocalArea !== null && selectedLocalArea !== undefined">
+    <span class="selected-area-help">Your Local Chefs in</span>
+    <span style="font-weight: 400;padding: 8px 3px;font-size: 16px;"> {{selectedLocalArea.name
+      }},{{selectedLocalArea.city}}</span>
+  </div>
+  <div class="d-flex justify-content-center flex-start wrap"
+    *ngIf="localChefs !== null && localChefs !== undefined && localChefs.length > 0">
+    <div class="space-around" *ngFor="let chef of localChefs">
+      <app-chef-card [chef]="chef"></app-chef-card>
+    </div>
+  </div>
+  <div class="bottom-placeholder"></div>
+</div>

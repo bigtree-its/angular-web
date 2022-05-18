@@ -1,4 +1,4 @@
-import { Address } from './address';
+import { Address } from './common-models';
 import { PaymentCard } from './payment-card';
 export class Order {
     id: number;

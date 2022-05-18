@@ -57,17 +57,6 @@
   cursor: pointer;
 }
 
-.left-section {
-  /* width: 66%; */
-}
-
-.middle-section {
-  /* width: 34%; */
-}
-
-.map-section {
-}
-
 .feature-title {
   font-weight: normal;
   color: lightslategrey;

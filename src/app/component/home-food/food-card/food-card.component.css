@@ -1,0 +1,134 @@
+.food-card {
+    margin: 1px 5px 5px 0;
+    padding: 5px;
+    /* background: #f8f8f7; */
+    border-radius: 3px;
+    /* border: none; */
+    border: 1px solid #f8f8f7;
+    width: 500px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.food-card:hover {
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+.thumbnail-picture {
+    min-width: 110px;
+    max-width: 110px;
+    min-height: 70px;
+    max-height: 70px;
+    /* border-radius: 8px; */
+    margin: 0 5px 0 0;
+    box-sizing: border-box;
+    transition: 0.5s ease-in-out;
+}
+
+.thumbnail-picture:hover {
+    cursor: pointer;
+    transform: scale(1.18);
+}
+
+.food-price {
+    font-weight: bold;
+    padding: 5px;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+}
+
+.add-button {
+    background-color: rgb(12, 190, 131);
+    padding: 5px 20px;
+    border: none;
+    margin: 0 0 0 10px;
+    height: 35px;
+    align-self: center;
+}
+
+.add-button:hover {
+    background-color: rgb(5, 150, 101);
+    cursor: pointer;
+    color: white;
+}
+.food-card-model-close-button{
+    border: 1px solid salmon;
+}
+.food-model-footer{
+  background-color: rgb(250, 252, 253);
+}
+
+.food-card-qty-btn {
+    height: 35px;
+    width: 35px;
+    align-items: center;
+    border-radius: 54%;
+    border: 1px solid #a0a6ac;
+    color: #666869;
+    font-size: 23px;
+}
+.food-card-qty-btn:hover{
+    background-color: #f8f8f7;
+    cursor: pointer;
+}
+
+.qty-value {
+  border: none;
+  padding: 7px 10px;
+  width: 30px;
+}
+
+.add-to-order-button{
+    margin-right: 10px;
+    background-color: #52524e;
+    color: #fff;
+    align-self: center;
+}
+.add-to-order-button:hover{
+    background-color: aquamarine;
+    color: #222;
+    cursor: pointer;
+}
+.model-price{
+    font-weight: bold;
+    padding: 10px;
+    /* align-items: center; */
+    align-self: center;
+    /* text-align: center; */
+    font-size: 21px;
+    vertical-align: middle;
+}
+.choice-div{
+    border-radius: 12px;
+    padding: 5px;
+}
+.choice-div:hover{
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+.extra-div{
+    border-radius: 12px;
+    padding: 5px;
+}
+.extra-div:hover{
+    background-color: rgb(245, 245, 245);
+    cursor: pointer;
+}
+.model-extra-checkbox{
+    display: flex;
+    flex-direction: row;
+    /* align-items: flex-start; */
+    justify-content: space-between;
+}
+.model-extra-name{
+    padding-left: 10px;
+    box-sizing: border-box;
+    padding: 0;
+    margin-right: 10px;
+    margin-top: 3px;
+    float: left;
+    text-align: left;
+}
+.model-extra-price{
+    padding-right: 10px;
+}

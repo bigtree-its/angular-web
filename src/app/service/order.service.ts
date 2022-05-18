@@ -50,8 +50,8 @@ export class OrderService {
           console.log('Order Response: ' + orderJson);
           if ( this.order !== null && this.order !== undefined){
             localStorage.setItem("Order", orderJson);
-            this.localContextService.removeCustomerBasket();
-            this.basketService.initializeBasket();
+            this.basketService.removeCustomerBasket();
+            this.basketService.createNewBasket(order.email);
             this.router.navigate(['/order-confirmation']);
           }
         },

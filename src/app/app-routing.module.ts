@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './component/home/home.component';
 import { DetailComponent } from './component/detail/detail.component';
 import { BasketComponent } from './component/basket/basket.component';
 import { LoginComponent } from './component/login/login.component';
 import { RegisterComponent } from './component/register/register.component';
-import { OrderConfirmationComponent } from './component/order/order-confirmation/order-confirmation.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { AuthGuard } from './helpers/auth-guard';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
@@ -16,18 +14,22 @@ import { CollectPaymentComponent } from './component/checkout/collect-payment/co
 import { ProductFinderComponent } from './component/product-finder/product-finder.component';
 import { PropertiesComponent } from './component/properties/properties.component';
 import { PropertyDetailComponent } from './component/properties/property-detail/property-detail.component';
-import { PropertyMapComponent } from './component/properties/property-map/property-map.component';
 import { HomeFoodComponent } from './component/home-food/home-food.component';
+import { ChefHomeComponent } from './component/home-food/chef-home/chef-home.component';
+import { FoodCheckoutComponent } from './component/home-food/food-checkout/food-checkout.component';
+import { CityComponent } from './component/home-food/city/city.component';
+import { ChefListComponent } from './component/home-food/chef-list/chef-list.component';
+import { OrderStatusComponent } from './component/home-food/order-status/order-status.component';
 
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent
+    path: '', component: HomeFoodComponent
   },
   {
     path: 'product/:id', component: DetailComponent
   }
-  ,{
+  , {
     path: 'basket', component: BasketComponent
   },
   {
@@ -37,39 +39,53 @@ const routes: Routes = [
     path: 'register', component: RegisterComponent
   },
   {
-    path: 'delivery-address', component: CollectDeliveryAddressComponent, canActivate : [AuthGuard]
+    path: 'delivery-address', component: CollectDeliveryAddressComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'collect-payment', component: CollectPaymentComponent, canActivate : [AuthGuard]
+    path: 'collect-payment', component: CollectPaymentComponent, canActivate: [AuthGuard]
   },
+  // },
+  // {
+  //   path: 'order-confirmation', component: OrderConfirmationComponent, canActivate: [AuthGuard]
+  // },
   {
-    path: 'order-confirmation', component: OrderConfirmationComponent, canActivate : [AuthGuard]
-  },
-  {
-    path: 'profile', component: ProfileComponent, canActivate : [AuthGuard]
+    path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]
   },
   {
     path: 'properties', component: PropertiesComponent,
   },
   {
-    path: 'home-food', component: HomeFoodComponent,
+    path: 'local-chef', component: HomeFoodComponent,
   },
   {
     path: 'forgot-password', component: ForgotPasswordComponent
   },
   {
     path: 'reset-password', component: ResetPasswordComponent
-  }
-  ,
+  },
   {
     path: 'properties/detail/:id', component: PropertyDetailComponent
-  }
-  ,
+  },
   {
     path: 'category-browser/:id', component: ProductBrowserComponent
   },
   {
     path: 'product-finder/:keyword', component: ProductFinderComponent
+  },
+  {
+    path: 'chef/:id', component: ChefHomeComponent
+  },
+  {
+    path: 'food-checkout', component: FoodCheckoutComponent
+  },
+  {
+    path: 'city', component: CityComponent
+  },
+  {
+    path: 'chef-list/:area', component: ChefListComponent
+  },
+  {
+    path: 'order-status/:reference', component: OrderStatusComponent
   }
 
 ];

@@ -6,14 +6,11 @@ import {
   NgForm,
   Validators,
 } from '@angular/forms';
-import { Address } from 'src/app/model/address';
-import { CardType, PaymentCard } from 'src/app/model/payment-card';
 import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
 import { OrderService } from 'src/app/service/order.service';
 import { Order } from 'src/app/model/order';
-import { LocalContextService } from 'src/app/service/localcontext.service';
-import { CustomerSession, Customer } from 'src/app/model/customer';
+import { Address, Customer, CustomerSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-profile',
@@ -49,7 +46,6 @@ export class ProfileComponent implements OnInit {
   hideAddressSection: boolean;
   hideAddressForm: boolean;
   address: Address;
-  addressList: Address[] = [];
 
   /** Orders */
   orders: Order[];
@@ -69,25 +65,23 @@ export class ProfileComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
-    private localContextService: LocalContextService,
     private orderService: OrderService,
   ) {
-    this.customerSession = this.localContextService.getCustomerSession();
+    this.customerSession = this.accountService.getCustomerSession();
     if (this.customerSession !== undefined && this.customerSession !== null) {
       this.customer = this.customerSession.customer;
       console.log('customer ' + JSON.stringify(this.customer));
-      this.addressList = this.customer.addresses;
-      console.log('Address list for customer ' + JSON.stringify(this.addressList));
-      if (this.addressList === undefined || this.addressList.length == 0) {
+      this.address = this.customer.address;
+      console.log('Address of customer ' + JSON.stringify(this.address));
+      if (this.address === undefined ) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
       } else {
         this.hideAddressSection = false;
         this.hideAddressForm = true;
-        this.address = this.addressList[0];
       }
 
-      this.orderService.getOrders(this.customer.email).subscribe(data => {
+      this.orderService.getOrders(this.customer.contact.email).subscribe(data => {
         this.orders = data;
         console.log('Orders: '+ JSON.stringify(this.orders));
         console.log('Retrieved ' + this.orders.length + " orders for this customer");
@@ -110,20 +104,19 @@ export class ProfileComponent implements OnInit {
     this.message = "";
     this.isSuccess = false;
 
-    this.customerSession = this.localContextService.getCustomerSession();
+    this.customerSession = this.accountService.getCustomerSession();
     if (this.customerSession !== undefined && this.customerSession !== null) {
       this.customer = this.customerSession.customer;
-      this.addressList = this.customer.addresses;
-      if (this.addressList === undefined || this.addressList.length == 0) {
+      this.address = this.customer.address;
+      if (this.address === undefined) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
       } else {
         this.hideAddressSection = false;
         this.hideAddressForm = true;
-        this.address = this.addressList[0];
       }
 
-      this.orderService.getOrders(this.customer.email).subscribe(data => {
+      this.orderService.getOrders(this.customer.contact.email).subscribe(data => {
         this.orders = data;
         console.log('Retrieved ' + this.orders.length + " orders for this customer");
       });
@@ -175,11 +168,11 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.customer.email = this.customer.email;
+    this.customer.contact.email = this.customer.contact.email;
     this.customer.firstName = this.customer.firstName;
     this.customer.lastName = this.customer.lastName;
-    this.customer.mobile = this.customer.mobile;
-    this.localContextService.setCustomerSession(this.customerSession);
+    this.customer.contact.mobile = this.customer.contact.mobile;
+    this.accountService.storeCustomerSession(this.customerSession);
     this.updateCurrentcustomer();
   }
 
@@ -218,11 +211,6 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  onAddAddress() {
-    this.openAddress();
-    this.address = new Address();
-    this.addressList.push(this.address);
-  }
   openAddress() {
     this.hideAddressSection = true;
     this.hideAddressForm = false;
@@ -235,28 +223,15 @@ export class ProfileComponent implements OnInit {
     this.hideAddressSection = true;
     this.hideAddressForm = true;
   }
-  editAddress(address: Address) {
-    this.address = address;
+  editAddress() {
     this.hideAddressSection = true;
     this.hideAddressForm = false;
     this.displayAboutYouModule = false;
   }
-  removeAddress(address: Address) {
-    for (let i = 0; i < this.addressList.length; i++) {
-      if (this.addressList[i]._id === address._id) {
-        this.addressList.splice(i, 1);
-
-        this.customer.addresses = this.addressList;
-        this.localContextService.setCustomerSession(this.customerSession);
-        this.updateCurrentcustomer();
-        break;
-      }
-    }
-  }
 
   onSubmitAddress(f: NgForm) {
     if (f.valid) {
-      if (this.address.lineNumber1 === undefined) {
+      if (this.address.addressLine1 === undefined) {
         this.hideAddressForm = false;
       } else {
         this.hideAddressForm = true;
@@ -268,28 +243,24 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  onAddAddress(){
+    
+  }
+  removeAddress(){
+    
+  }
+
 
   private updateAddressList() {
-    let existing: Address = this.addressList.find(
-      (a) => a._id === this.address._id
-    );
-    if (!existing) {
-      this.addressList.push(this.address);
-    } else {
-      existing.firstName = this.address.firstName;
-      existing.lastName = this.address.lastName;
-      existing.email = this.address.email;
-      existing.mobile = this.address.mobile;
-      existing.lineNumber1 = this.address.lineNumber1;
-      existing.lineNumber2 = this.address.lineNumber2;
-      existing.city = this.address.city;
-      existing.country = this.address.country;
-      existing.postcode = this.address.postcode;
+    this.address.addressLine1 = this.address.addressLine1;
+    this.address.addressLine2 = this.address.addressLine2;
+    this.address.city = this.address.city;
+    this.address.country = this.address.country;
+    this.address.postcode = this.address.postcode;
 
-      this.customer.addresses = this.addressList;
-      this.localContextService.setCustomerSession(this.customerSession);
-      this.updateCurrentcustomer();
-    }
+    this.customer.address = this.address;
+    this.accountService.storeCustomerSession(this.customerSession);
+    this.updateCurrentcustomer();
   }
 
   showOrders(status: string) {

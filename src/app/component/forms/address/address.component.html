@@ -1,4 +1,4 @@
-<div class="d-block">
+<!-- <div class="d-block">
     <form #f="ngForm" (ngSubmit)=(onSubmit(f))>
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -37,16 +37,16 @@
         </div>
 
         <div class="mb-3">
-            <label for="lineNumber1">Address</label>
-            <input type="text" class="form-control" id="lineNumber1" placeholder="1234, Main St" required [(ngModel)]="address.lineNumber1" name="lineNumber1" #lineNumber1="ngModel">
-            <div [hidden]="lineNumber1.valid || lineNumber1.pristine" class="alert alert-danger">
+            <label for="addressLine1">Address</label>
+            <input type="text" class="form-control" id="addressLine1" placeholder="1234, Main St" required [(ngModel)]="address.addressLine1" name="addressLine1" #addressLine1="ngModel">
+            <div [hidden]="addressLine1.valid || addressLine1.pristine" class="alert alert-danger">
                 Please enter a valid address line.
             </div>
         </div>
 
         <div class="mb-3">
-            <label for="lineNumber2">Address 2 <span class="text-muted">(Optional)</span></label>
-            <input type="text" class="form-control" id="lineNumber2" placeholder="Apartment or suite" [(ngModel)]="address.lineNumber2" value="" name="lineNumber3" #lineNumber3="ngModel">
+            <label for="addressLine2">Address 2 <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="addressLine2" placeholder="Apartment or suite" [(ngModel)]="address.addressLine2" value="" name="lineNumber3" #lineNumber3="ngModel">
         </div>
 
         <div class="row">
@@ -79,4 +79,4 @@
         </div>
         <button type="submit " class="btn btn-success" [disabled]="!f.form.valid">Submit</button>
     </form>
-</div>
+</div> -->

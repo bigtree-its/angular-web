@@ -2,13 +2,14 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Customer, CustomerSession } from 'src/app/model/customer';
-import { AdService } from 'src/app/service/ad.service';
+import { PropertyService } from 'src/app/service/property.service';
 import { LocalContextService } from 'src/app/service/localcontext.service';
 import { first } from 'rxjs/operators';
 import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 import { Property, PropertyEnquiry, PropertyType } from 'src/app/model/property';
 import { PropertyEnquiryService } from 'src/app/service/property-enquiry.service';
+import { AccountService } from 'src/app/service/account.service';
+import { Customer, CustomerSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-property-detail',
@@ -49,7 +50,8 @@ export class PropertyDetailComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private adService: AdService,
+    private propertyService: PropertyService,
+    private accountService: AccountService,
     private propertyEnquiryService: PropertyEnquiryService,
     private formBuilder: FormBuilder,
     private localContextService: LocalContextService,
@@ -64,7 +66,7 @@ export class PropertyDetailComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const propertyId = params['id'];
       console.log(`Property Id: ${params['id']}`);
-      this.adService.getProperty(propertyId).subscribe((property: Property) => {
+      this.propertyService.getProperty(propertyId).subscribe((property: Property) => {
         this.property = property;
         console.log('The property : ' + JSON.stringify(this.property));
         this.center = {
@@ -80,7 +82,7 @@ export class PropertyDetailComponent implements OnInit {
       });
     })
 
-    this.customerSession = this.localContextService.getCustomerSession();
+    this.customerSession = this.accountService.getCustomerSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
       this.customer = this.customerSession.customer;
     }
@@ -174,7 +176,7 @@ export class PropertyDetailComponent implements OnInit {
     question.mobile = this.getQuestionForm.mobile.value;
     question.property = this.property._id;
     question.date = new Date();
-    question.email = this.customer.email;
+    question.email = this.customer.contact.email;
     question.firstName = this.customer.firstName; 
     question.lastName = this.customer.lastName;
 

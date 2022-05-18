@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Customer } from 'src/app/model/common-models';
 import { Order } from 'src/app/model/order';
-import { Customer } from 'src/app/model/customer';
 import { AccountService } from 'src/app/service/account.service';
 
 @Component({

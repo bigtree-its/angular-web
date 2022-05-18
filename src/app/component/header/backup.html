@@ -1,0 +1,46 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200&display=swap');
+    </style>
+  
+  <div class="container-fluid header">
+    <div class="d-flex flex-start ml-2 left brand-section" (click)="home()">
+      <img src="/assets/icons/cooking.png" class="brand-logo" alt="" href="#">
+      <span class="hcm-brand-name">AirChef</span>
+    </div>
+    <div class="search-contaniner">
+      <div class="d-flex justify-content-start">
+        <img src="/assets/icons/search.png" class="search-icon" />
+        <input type="search" class="search-box" placeholder="Search products" autocomplete="off" value
+          [(ngModel)]="searchText" />
+      </div>
+      <button class="search-button" (click)="onSubmitSearch()">Search</button>
+    </div>
+    <div class="d-flex justify-content-end right">
+      <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
+      <div *ngIf="isCustomerLoggedIn() == true" class="customer-greeting">
+        <div class="dropdown">
+          <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <span>{{customer.firstName}}</span>
+          </span>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <span class="dropdown-item " (click)="logout()" *ngIf="isCustomerLoggedIn() == true">Logout</span>
+            <span class="dropdown-item " (click)="login()" *ngIf="isCustomerLoggedIn() == false">Login</span>
+            <span class="dropdown-item " (click)="profile()">Profile</span>
+            <span class="dropdown-item " (click)="orders()">Orders</span>
+          </div>
+        </div>
+      </div>
+      <button class="signin-button" (click)="login()" *ngIf="isCustomerLoggedIn() == false">Sign In</button>
+      <button class="signup-button" (click)="register()" *ngIf="isCustomerLoggedIn() == false">Sign Up</button>
+      <div class="basket-section" routerLink="/basket">
+        <img src="/assets/icons/shopping-cart.png" class="shopping-cart-icon">
+        <span class="basket-item-count">{{ itemCount > 0 ? itemCount : "Empty" }}</span>
+      </div>
+      <!--     
+      <span routerLink="/basket" class=" right-button mr-1 d-flex justify-content-center">
+        <img src="/assets/icons/shopping-cart.png " alt=" " loading="lazy " class="top-nav-basket-icon mx-2 ">
+        <span class="text-center top-nav-basket-count ">{{ itemCount }}</span>
+      </span> -->
+    </div>
+  </div>

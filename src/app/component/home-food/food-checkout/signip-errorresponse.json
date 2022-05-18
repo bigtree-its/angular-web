@@ -1,0 +1,18 @@
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 400,
+    "statusText": "OK",
+    "url": "http://localhost:8081/urchef/v1/customers/register",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for http://localhost:8081/urchef/v1/customers/register: 400 OK",
+    "error": {
+        "reference": "e13ffa6c-b46c-4b35-ba0e-31d840bac404",
+        "title": "Bad Request",
+        "detail": "Customer already exist",
+        "status": 400
+    }
+}

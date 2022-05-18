@@ -48,19 +48,6 @@
   padding: 6px;
 }
 
-.brand-logo {
-  width: 30px;
-  height: 30px;
-}
-
-.brand-name {
-  font-size: 25px;
-  color: #111;
-  font-weight: 700;
-  text-shadow: 2px 2px rgb(189, 186, 186);
-  letter-spacing: 1.9px;
-}
-
 .banner-border {
   border-style: solid !important;
   border-width: 0 0 1px 0 !important;
@@ -162,29 +149,24 @@
 }
 
 
-.signin-button,
-.signup-button {
-  background: #f8f8f7;
-  border-radius: 3px;
-  padding: 15px;
-  clear: both;
-  font-weight: bold;
-  margin: 0 2px;
+.header-button{
+  background: none;
+  font-weight: 900;
+  margin: 16px 5px 16px 0;
   border: none;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 12px;
+  padding: 0 20px;
 }
 
-.signin-button:hover {
+.header-button:hover {
   cursor: pointer;
-  color: #d1d1d1;
-}
-
-.signup-button:hover {
-  cursor: pointer;
-  color: #d1d1d1;
+  background-color: aquamarine;
 }
 
 .basket-section {
-  margin: 10px;
+  margin: 10px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -241,11 +223,6 @@
   margin: 13px 0;
 }
 
-.customer-greeting {
-  margin: 10px;
-
-}
-
 .top-nav-basket-icon {
   height: 30px;
   width: 30px;
@@ -300,6 +277,8 @@
   height: 20px;
   width: 20px;
   align-self: center;
+  position: relative;
+  top: 24px;
 }
 
 .basket-item-count {

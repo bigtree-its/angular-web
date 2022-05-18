@@ -27,10 +27,11 @@ export class NavBarComponent implements OnInit {
   }
   selectDepartment(d: Department) {
     this.department = d;
-    if ( this.department.name === 'Home Food'){
+    console.log('Selected Department: '+ this.department.name)
+    if ( this.department.name === 'LOCAL CHEF'){
       // this.router.navigate(['/properties']).then();
       // this.router.navigate(['/properties/map']).then();
-      this.router.navigate(['/home-food']).then();
+      this.router.navigate(['/local-chef']).then();
     }else if ( this.department.name === 'Properties'){
       this.router.navigate(['/properties']).then();
       // this.router.navigate(['/properties/map']).then();

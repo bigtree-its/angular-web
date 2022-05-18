@@ -1,7 +1,7 @@
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Component, OnInit } from '@angular/core';
 import { Property, PropertyQuery, PropertyType } from 'src/app/model/property';
-import { AdService } from 'src/app/service/ad.service';
+import { PropertyService } from 'src/app/service/property.service';
 import * as _ from 'underscore';
 
 @Component({
@@ -22,12 +22,12 @@ export class PropertiesComponent implements OnInit {
   selectedTypes: PropertyType[] = [];
   propertyQuery: PropertyQuery = new PropertyQuery();
 
-  constructor(private adService: AdService) { }
+  constructor(private propertyService: PropertyService) { }
 
   ngOnInit(): void {
     this.fetchProperties();
 
-    this.adService
+    this.propertyService
       .getPropertyTypes()
       .subscribe((result: PropertyType[]) => {
         this.types = result;
@@ -49,7 +49,7 @@ export class PropertiesComponent implements OnInit {
 
   private fetchProperties() {
     this.propertyQuery.marketType = this.marketType;
-    this.adService
+    this.propertyService
       .getProperties(this.propertyQuery)
       .subscribe((result: Property[]) => {
         this.properties = result;

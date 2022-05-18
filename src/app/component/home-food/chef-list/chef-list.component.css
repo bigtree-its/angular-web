@@ -1,0 +1,9 @@
+.icon-div{
+    background: none;
+    margin-right: 20px;
+    padding: 0 10px;
+}
+.icon-div:hover {
+    cursor: pointer;
+    background-color: aquamarine;
+}

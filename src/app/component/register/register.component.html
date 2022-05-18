@@ -2,74 +2,64 @@
   <div class="brand-div">
     <a class="navbar-brand" href="#">
       <img src="/assets/icons/bigtree.png" width="30" height="30" class="d-inline-block mb-3" alt="">
-      <strong class="brand-text">BigTree</strong>
+      <strong class="brand-text">Join Us</strong>
     </a>
   </div>
-  <div class="login-inner">
-    <div class="logo">Join Us</div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="firstName">First Name</label>
-        <input type="text" formControlName="firstName" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-          <div *ngIf="f.firstName.errors.required">First Name is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input type="text" formControlName="lastName" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-          <div *ngIf="f.lastName.errors.required">Last Name is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="text" formControlName="email" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-          <div *ngIf="f.email.errors.required">Email is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="mobile">Mobile</label>
-        <input type="text" formControlName="mobile" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
-        <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
-          <div *ngIf="f.mobile.errors.required">Mobile is required</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" formControlName="password" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-        <small class="text-muted pl-2 py-1">Password must be minimum 8 chars and contain at least a number.</small>
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-          <div *ngIf="f.password.errors.required">Password is required</div>
-          <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" formControlName="confirmPassword" class="form-control ob-text-field"
-          [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
-        <small class="text-muted pl-2 py-1">Password must be minimum 8 chars and contain at least a number.</small>
-        <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
-          <div *ngIf="f.confirmPassword.errors.required">Password is required</div>
-          <div *ngIf="f.confirmPassword.errors.minlength">Password must be at least 6 characters</div>
-        </div>
-        <span *ngIf="submitted && f.confirmPassword.value !== f.password.value" class="passwordNotMatched mb-2">Password
-          is not matched</span>
-      </div>
-      <div class="form-group h-flex ">
-        <button [disabled]="loading" class="btn btn-primary mr-3">
-          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-          Register
-        </button>
-        <p class="mt-2">Already have an account? <span class="link" (click)="login()">Login</span></p>
-      </div>
-    </form>
+  <div class="d-flex flex-column" style="margin: 10px 0;">
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
+      <input class="_381fS" type="text" name="firstName" id="firstName" tabindex="1" autocomplete="off" value=""
+        [(ngModel)]="firstName" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Firstname</label>
+    </div>
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+      <input class="_381fS" type="email" name="lastName" id="lastName" tabindex="1" autocomplete="off" value=""
+        [(ngModel)]="lastName" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Lastname</label>
+    </div>
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+      <input class="_381fS" type="text" name="mobile" id="mobile" tabindex="1" autocomplete="off" value=""
+        [(ngModel)]="mobile" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Mobile</label>
+    </div>
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+      <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value=""
+        [(ngModel)]="email" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Email</label>
+    </div>
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+      <input class="_381fS" type="password" name="password" id="password" tabindex="2" autocomplete="off" value=""
+        [(ngModel)]="password" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
+    </div>
+    <div
+      style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+      <input class="_381fS" type="password" name="confirmPassword" id="confirmPassword" tabindex="2" autocomplete="off"
+        value="" [(ngModel)]="confirmPassword" #ctrl="ngModel">
+      <div class="_2EeI1 _26LFr"></div>
+      <label class="_1Cvlf _2tL9P " for="mobile">Confirm Password</label>
+    </div>
+    <div class="_25qBi _2-hTu" (click)="submit()">
+      <a class="_2REYC" style="color: #fff;">
+        <input type="submit" style="display: none;">Submit
+      </a>
+    </div>
+  </div>
+  <div *ngIf="error !== undefined"
+    style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
+    <p>{{error}}</p>
+  </div>
+  <div style="display: block;width: 100%;font-weight: normal;">
+    Have account? <span (click)="login()">Login</span>
   </div>
 </div>
 

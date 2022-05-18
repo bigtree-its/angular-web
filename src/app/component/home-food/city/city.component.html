@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class="container d-flex flex-column">
+    
+    <div *ngIf="showServiceAreas">
+        <span style="font-size: 30px;opacity: 0.6;margin-bottom: 10px; border-bottom: 1px solid #e3e3e3;display: block; padding: 10px 0;line-height: 50px;font-weight: 400;">Service Areas</span>
+        <div class="d-flex flex-start wrap"
+            *ngIf="serviceAreaList !== undefined && serviceAreaList !== null && serviceAreaList.length> 0">
+            <div class="serviceArea" *ngFor="let sa of serviceAreaList" (click)="selectServiceArea(sa)">
+                <span>{{sa.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="showServiceAreaChefs">
+        <span style="font-size: 30px;opacity: 0.6;margin-bottom: 10px; border-bottom: 1px solid #e3e3e3;display: block; padding: 10px 0;line-height: 50px;font-weight: 400;">Popular Chefs</span>
+        <div class="d-flex flex-start wrap"
+          *ngIf="localChefs !== null && localChefs !== undefined && localChefs.length > 0">
+          <div *ngFor="let chef of localChefs" style="margin: 0 0 50px 0;">
+            <app-chef-card [chef]="chef"></app-chef-card>
+          </div>
+        </div>
+      </div>
+</div>

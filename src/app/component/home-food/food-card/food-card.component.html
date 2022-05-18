@@ -1,0 +1,93 @@
+<div class="food-card">
+  <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
+    <div class="d-flex flex-start">
+      <img src={{food.image}} width="100%" height="100%" loading="lazy" alt="{{food.name}}" class="thumbnail-picture">
+      <div class="d-flex flex-column ">
+        <span style="font-weight: bold;padding: 0 5px;font-size: 15px;">{{food.name}}</span>
+        <span style="font-weight: normal;padding: 5px;">{{food.description}}</span>
+      </div>
+    </div>
+    <div class="d-flex flex-start">
+      <span class="food-price">{{food.price | currency: 'GBP'}}</span>
+      <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(content)">Add to order</button> -->
+      <button class="btn add-to-order-button" (click)="openScrollableContent(content)">Add</button>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{food.name}}</h4>
+    <button type="button" class="btn-close food-card-model-close-button" aria-label="Close"
+      (click)="modal.dismiss('Cross click')">X</button>
+  </div>
+  <div class="modal-body">
+    <div class="d-flex flex-column">
+      <span style="font-weight: bold;padding: 0 5px;font-size: 15px;">{{food.name}}</span>
+      <span class="food-description">{{food.description}}</span>
+    </div>
+    <div style="padding: 10px 0;">
+      <ngb-accordion [closeOthers]="true" activeIds="static-1">
+        <ngb-panel id="static-1" *ngIf="food.choices !== undefined && food.choices !== null && food.choices.length > 0">
+          <ng-template ngbPanelTitle>
+            <span>Choose One</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="btn-group d-flex flex-column" role="group" ngbRadioGroup name="radioBasic">
+              <label ngbButtonLabel class="btn-light model-extra-checkbox" *ngFor="let choice of food.choices">
+                <div>
+                  <input ngbButton type="radio" class="btn-check model-extra-name" [value]="choice.name"
+                    (change)="handleChoiceSelection($event)"> {{choice.name}}
+                </div>
+                <span class="model-extra-price ml-5">{{choice.price | currency: 'GBP'}}</span>
+              </label>
+            </div>
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-2" *ngIf="food.extras !== undefined && food.extras !== null && food.extras.length > 0">
+          <ng-template ngbPanelTitle>
+            <span>Extras</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="btn-group d-flex flex-column" role="group">
+              <label ngbButtonLabel class="btn-light model-extra-checkbox" *ngFor="let extra of food.extras">
+                <div>
+                  <input ngbButton type="checkbox" class="btn-check model-extra-name" [value]="extra.name"
+                    (change)="selectExtra(extra.name,$event)">
+                  <span>{{extra.name}}</span>
+                </div>
+                <span class="model-extra-price ml-5">{{extra.price | currency: 'GBP'}}</span>
+              </label>
+            </div>
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="static-3">
+          <ng-template ngbPanelTitle>
+            <!-- <span>&#9733; Special Instructions &#9733;</span> -->
+            <span>Special Instructions</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="d-flex flex-column">
+              <span class="my-1">Any instructions to Chef ?</span>
+              <input type="text" [(ngModel)]="specialInstruction" placeholder="Add a note"
+                style="display: block; padding: 10px 5px; border: 1px solid #efefef; border-radius: 12px;" />
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+    </div>
+
+  </div>
+  <div class="modal-footer d-flex justify-content-between food-model-footer">
+    <div class="d-flex justify-content-start">
+      <button class="food-card-qty-btn" (click)="decreaseQuantity()">-</button>
+      <span class="qty-value">{{quantity}}</span>
+      <button class="food-card-qty-btn" (click)="increaseQuantity()">+</button>
+    </div>
+
+    <div class="model-button-section">
+      <span class="model-price">{{price | currency: 'GBP'}}</span>
+      <button type="button" ngbAutofocus class="btn btn-light add-to-order-button" (click)="addToOrder()">OK</button>
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+  </div>
+</ng-template>

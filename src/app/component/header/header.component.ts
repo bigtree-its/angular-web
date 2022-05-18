@@ -4,8 +4,7 @@ import { faUser, faShoppingCart, faMapMarkerAlt } from '@fortawesome/free-solid-
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
-import { LocalContextService } from 'src/app/service/localcontext.service';
-import { CustomerSession, Customer } from 'src/app/model/customer';
+import { Customer, CustomerSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-header',
@@ -31,28 +30,34 @@ export class HeaderComponent implements OnInit {
   constructor(
     public accountService: AccountService,
     private basketService: BasketService,
-    private localContextService: LocalContextService,
     private router: Router) {
   }
 
   ngOnInit(): void {
-    this.localContextService.basketSubject$.subscribe(basket => {
+    this.basketService.basketSubject$.subscribe(basket => {
       this.basket = basket
-      if (this.basket.items !== null && this.basket.items !== undefined) {
-        this.itemCount = basket.items.length;
-        console.log('Basket items : ' + this.itemCount);
+      if ( this.basket === null || this.basket === undefined){
+        console.log("Basket is null")
+      }else{
+        if (this.basket.items !== null && this.basket.items !== undefined) {
+          this.itemCount = basket.items.length;
+          console.log('Basket items : ' + this.itemCount);
+        }
+        if ( this.basket.total === null || this.basket.total === undefined){
+          this.basket.total = 0;
+        }
+        this.basketTotal = +this.basket.total.toFixed(2);
       }
-      this.basketTotal = +basket.total.toFixed(2);
     })
 
-    this.localContextService.customerSessionSubject$.subscribe(customerSession => {
+    this.accountService.customerSessionSubject$.subscribe(customerSession => {
       this.customerSession = customerSession;
       console.log('Customer : ' + JSON.stringify(this.customerSession));
       if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
         this.customer = this.customerSession.customer;
         this.customerName = this.customer.firstName + " " + this.customer.lastName;
-        if (this.customer.addresses !== undefined && this.customer.addresses !== null && this.customer.addresses.length > 0) {
-          this.customerPostcode = this.customer.addresses[0].postcode;
+        if (this.customer.address !== undefined && this.customer.address !== null ) {
+          this.customerPostcode = this.customer.address.postcode;
         }
       } else {
         this.customerName = "Hello"
@@ -73,7 +78,13 @@ export class HeaderComponent implements OnInit {
     this.customer = undefined;
     this.customerPostcode = undefined;
   }
+  home() {
+    this.router.navigate(['/']);
+  }
 
+  becomeChef(){
+    
+  }
   login() {
     this.router.navigate(['/login']);
   }
@@ -92,7 +103,7 @@ export class HeaderComponent implements OnInit {
 
   getcustomerName() {
     if (this.isCustomerLoggedIn()) {
-      return this.customer.email;
+      return this.customer.contact.email;
     } else {
       return "Hello";
     }
