@@ -1,9 +1,10 @@
-import { Address, Contact, Customer } from "./common-models";
+import { Address, ChefContact, Contact, Customer, User } from "./common-models";
 
 export class LocalChef {
     _id: string;
     coverPhoto: string;
     name: string;
+    email: string;
     displayName: string;
     days: string[];
     description: string[];
@@ -16,19 +17,21 @@ export class LocalChef {
     rating: number;
     reviews: number;
     minimumOrder: number;
-    deliveryFee: number;
     packagingFee: number;
     collectionPolicy: string;
     deliveryPolicy: string;
     address: Address;
-    contact: Contact;
+    contact: ChefContact;
     noMinimumOrder: boolean;
     delivery: boolean;
-    collectionOnly: boolean;
     takingOrdersNow: boolean;
     preOrder: boolean;
     allDays: boolean;
     active: boolean;
+
+    freeDeliveryOver: number;
+    deliveryMinimum: number;
+    deliveryFee: number;
 }
 
 export class Cuisine {
@@ -97,6 +100,7 @@ export class LocalChefSearchQuery {
     serviceAreaSlug: string;
     cuisines: string;
     slots: string;
+    email: string;
     serviceAreas: string;
     status: string;
     noMinimumOrder: boolean;
@@ -124,16 +128,89 @@ export class FoodOrder {
     pickup: boolean;
     pickupTime: Date;
     deliveryTime: Date;
-    customer: Customer;
+    customer: User;
     chef: Chef;
-    serviceMode: string;    
+    review: Review;
+    serviceMode: string;
 }
 
-export class Orders{
+export class CustomerOrder {
+    chefId: string;
+    customerEmail: string;
+    customerMobile: string;
+    reference: string;
+    currency: string;
+    serviceMode: string;
+    paymentReference: string;
+    status: string;
+    items: FoodOrderItem[];
+    subTotal: number;
+    total: number;
+    deliveryFee: number;
+    packagingFee: number;
+    saleTax: number;
+    dateCreated: Date;
+    dateUpdated: Date;
+    dateDeleted: Date;
+    orderCreated: Date;
+    orderAccepted: Date;
+    orderCollected: Date;
+    orderDelivered: Date;
+    orderRejected: Date;
+    delivery: boolean;
+    pickup: boolean;
+    pickupTime: Date;
+    deliveryTime: Date;
+    customer: User;
+    chef: Chef;
+    review: Review;
+    notes: string;
+}
+
+export class OrderSearchQuery {
+    reference: string;
+    customerEmail: string;
+    chefId: string;
+    thisMonth: boolean;
+    thisYear: boolean;
+    all: boolean;
+}
+
+export class OrderUpdateRequest {
+    reference: string;
+    id: string;
+    status: string;
+    chefNotes: string;
+    customerComments: string;
+    expectedCollectionDate: Date;
+    expectedDeliveryDate: Date;
+    customerRating: number;
+}
+
+export class CustomerReview {
+    customerEmail: string;
+    chefId: string;
+    comments: string;
+    reviewDate: Date;
+    rating: number;
+    customerName: string;
+    customerMobile: string;
+}
+
+export class Review {
+    comments: string;
+    rating: number;
+}
+
+export class CustomerOrderList {
+    orders: CustomerOrder[]
+}
+
+export class Orders {
     orders: FoodOrder[]
 }
 
-export class Chef{
+export class Chef {
     chefId: string;
     name: string;
     image: string;

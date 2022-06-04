@@ -20,6 +20,10 @@ import { FoodCheckoutComponent } from './component/home-food/food-checkout/food-
 import { CityComponent } from './component/home-food/city/city.component';
 import { ChefListComponent } from './component/home-food/chef-list/chef-list.component';
 import { OrderStatusComponent } from './component/home-food/order-status/order-status.component';
+import { ChefConfirmComponent } from './component/home-food/chef-confirm/chef-confirm.component';
+import { CustomerProfileComponent } from './component/customer-profile/customer-profile.component';
+import { SupplierProfileComponent } from './component/supplier-profile/supplier-profile.component';
+import { BecomeASupplierComponent } from './component/become-a-supplier/become-a-supplier.component';
 
 
 const routes: Routes = [
@@ -86,8 +90,19 @@ const routes: Routes = [
   },
   {
     path: 'order-status/:reference', component: OrderStatusComponent
+  },
+  {
+    path: 'confirm-order/:reference', component: ChefConfirmComponent
+  },
+  {
+    path: 'customer-profile', component: CustomerProfileComponent
+  },
+  {
+    path: 'supplier-profile', component: SupplierProfileComponent
+  },
+  {
+    path: 'become-a-supplier', component: BecomeASupplierComponent
   }
-
 ];
 
 @NgModule({

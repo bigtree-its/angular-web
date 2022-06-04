@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 import { Utils } from 'src/app/helpers/utils';
 import { LocalArea, LocalChef, LocalChefSearchQuery } from 'src/app/model/localchef';
 import { LocalChefService } from 'src/app/service/localchef.service';

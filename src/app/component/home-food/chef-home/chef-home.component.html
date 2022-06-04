@@ -6,55 +6,72 @@
 
     firstTab.show()
 </script>
-<div class="d-flex justify-content-between" *ngIf="localChef !== undefined && localChef !== null" >
+<div class="d-flex justify-content-between" *ngIf="localChef !== undefined && localChef !== null">
 
     <div style="width:15%;" class="d-flex flex-column">
-        <span style="font-weight: 900;font-size: 18px;">About me</span>
+        <div style="margin-bottom:20px;line-height:40px;height: 40px;"
+            class="d-flex flex-start align-items-center">
+            <div class="icon-div" style="width: 10%;">
+                <img src="/assets/icons/left-arrow-long.png" height="20px" width="20px" (click)="back()">
+            </div>
+
+            <span style="font-weight: 500;font-size:25px;">About Me</span>
+        </div>
         <div class="chef-home-img-div d-flex flex-column">
             <img width="100%" height="100%" src="{{localChef.coverPhoto}}" alt="..." class="chef-home-img">
             <span style="font-weight: 900;font-size: 15px;padding: 5px 10px;">{{localChef.name}}</span>
             <div class="d-flex flex-start" style="padding: 10px;">
                 <img [src]="starSelected" style="width: 15px;height: 15px;">
-                <span> .  </span>
+                <span> . </span>
                 <span>{{localChef.reviews}} reviews</span>
             </div>
         </div>
-        <div class="d-flex flex-column" style="width: 100%;margin-top: 18px;" *ngIf="localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
-            <span style="font-weight: 900;font-size: 18px;">My Specials</span>
-            <div class="d-flex flex-start"  style="margin: 10px 0;">
+        <div class="d-flex flex-column"
+            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
+            *ngIf="localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
+            <span style="font-weight: 400;font-size: 18px;">My Specials</span>
+            <div class="d-flex flex-start" style="margin: 10px 0;">
                 <span *ngFor="let special of localChef.specials"
-                style="font-size: 12px;padding: 0 10px 0 0;">{{special}}</span>
+                    style="font-weight: 400;font-size: 12px;padding: 0 10px 0 0;">{{special}}</span>
             </div>
         </div>
-        <div class="d-flex flex-column" style="width: 100%;margin-top: 18px;" *ngIf="localChef.slots !== null && localChef.slots !== undefined && localChef.slots.length > 0">
-            <span style="font-weight: 900;font-size: 18px;">I Serve</span>
-            <div class="d-flex flex-start"  style="margin: 10px 0;">
+        <div class="d-flex flex-column"
+            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
+            *ngIf="localChef.slots !== null && localChef.slots !== undefined && localChef.slots.length > 0">
+            <span style="font-weight: 400;font-size: 18px;">I Serve</span>
+            <div class="d-flex flex-start" style="margin: 10px 0;">
                 <span *ngFor="let slot of localChef.slots"
-                style="font-size: 12px;padding: 0 10px 0 0;">{{slot}}</span>
+                    style="font-weight: 400;font-size: 12px;padding: 0 10px 0 0;">{{slot}}</span>
             </div>
         </div>
-        <div class="d-flex flex-column" style="width: 100%;margin-top: 18px;" *ngIf="localChef.delivery">
-            <span style="font-weight: 900;font-size: 18px;">Delivery Areas</span>
+        <div class="d-flex flex-column"
+            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
+            *ngIf="localChef.delivery">
+            <span style="font-weight: 400;font-size: 18px;">Delivery Areas</span>
             <div class="d-flex flex-column" style="margin: 10px 0;">
                 <span *ngFor="let serviceArea of localChef.serviceAreas"
-                style="font-size: 12px;padding: 0;">{{serviceArea.name}}, {{serviceArea.city}}</span>
+                    style="font-weight: 400;font-size: 12px;padding: 0;">{{serviceArea.name}},
+                    {{serviceArea.city}}</span>
             </div>
         </div>
-        <div class="d-flex flex-column" style="width: 100%;margin-top: 18px;">
-            <span style="font-weight: 900;font-size: 18px;">Collect At</span>
-            <span style="display: block;font-size: 13px;  padding:10px 0;" class="wrap">{{getAddress()}}</span>
+        <div class="d-flex flex-column"
+            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;">
+            <span style="font-weight: 400;font-size: 18px;">Collect At</span>
+            <span style="font-weight: 400;display: block;font-size: 12px;  padding:10px 0;"
+                class="wrap">{{getAddress()}}</span>
         </div>
     </div>
     <div style="width:60%;" class="d-flex flex-column">
         <span style="font-weight: 900;font-size: 18px;">This Week</span>
         <div class="d-flex flex-column" style="margin: 10px 0;" *ngFor="let cal of calendars">
-            <span style="font-size: 17px;padding: 10px 0;font-weight: 500;">Order by {{ cal.orderBefore | date : 'EE d LLL'}}</span>
+            <span style="font-size: 17px;padding: 10px 0;font-weight: 500;">Order by {{ cal.orderBefore | date : 'EE d
+                LLL'}}</span>
             <div class="d-flex flex-column">
                 <app-food-card [food]="food" *ngFor="let food of cal.foods"></app-food-card>
             </div>
         </div>
     </div>
-    <div style="width: 20%;border-left:1px solid #e3e3e3;padding: 10px;" >
+    <div style="width: 20%;border-left:1px solid #e3e3e3;padding: 10px;">
         <div
             *ngIf="(foodOrder === undefined || foodOrder.items === null || foodOrder.items === undefined || foodOrder.items.length === 0); then thenBlock else elseBlock">
         </div>
@@ -62,7 +79,7 @@
             <div class="d-flex flex-column" style="padding: 10px 4px;">
                 <span style="align-self: center;font-size: 30px;padding: 10px 0;display: block;text-align: center;">Cart
                     Empty</span>
-                <span style="color: #535665;font-weight: 300;">Good food is always cooking! Go ahead, order some
+                <span style="color: #535665;font-weight: 400;">Good food is always cooking! Go ahead, order some
                     yummy items from the menu</span>
             </div>
         </ng-template>
@@ -79,7 +96,7 @@
                         <span style="font-weight: bold;font-size: 13px;">Subtotal <br><span class="small">Additional
                                 charges may apply</span></span>
                         <span
-                            style="font-size: 14px;padding: 10px;align-self: center;vertical-align: middle;font-weight: bold;">{{foodOrder.total
+                            style="font-size: 14px;padding: 10px;align-self: center;vertical-align: middle;font-weight: bold;">{{foodOrder.subTotal
                             | currency: 'GBP'}}</span>
                     </div>
                 </div>
@@ -92,4 +109,4 @@
         </ng-template>
     </div>
 </div>
-<div style="height: 300px;"></div>
+<div style="height: 400px;"></div>

@@ -14,35 +14,46 @@ body {
   background-color: #F2F3F4;
   color: #111;
   text-align: left;
-  font-size: 12px;
-  line-height: 19px;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-tap-highlight-color: transparent;
-  font-weight: bold;
-  /* font-family: 'Roboto', sans-serif; */
-  /* font-family: ProximaNova,arial,Helvetica Neue,sans-serif; */
-  font-family: "Graphik Dan Web", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: 'Comic Neue', cursive; */
+  font-family: WPRoobert Light, Roobert Light, SF Pro, Noto Sans Regular, Roboto, Helvetica, Arial;
+  line-height: 1.4em;
+  /* word-spacing: 0.1em; */
+  /* letter-spacing: 0.2px; */
+  font-weight: normal;
+  text-rendering: optimizelegibility;
 }
 
 *:focus {
   outline: none;
 }
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 #map {
   height: 100%;
 }
 
-.bottom-placeholder{
+.bottom-placeholder {
   height: 100px;
 }
+
 .blue {
   color: #007bff;
 }
 
 .indigo {
-  color: #6610f2;
+  color: #6911dd;
 }
 
 .purple {
@@ -134,7 +145,177 @@ body {
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
+/* text Box */
+.input-div {
+  width: 100%;
+  border: 1px solid #e3e3e3;
+  padding: 0;
+  display: block;
+  position: relative;
+  transform: translateZ(0);
+  margin: 5px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: rgb(226, 237, 247);
+}
+.input-div:hover{
+  cursor: pointer;
+  border: 1px solid #212529;
+}
 
+._381fS {
+  background-color: transparent;
+  line-height: normal;
+  outline: none;
+  height: 70px;
+  width: 100%;
+  font-size: 15px;
+  margin: 0;
+  padding: 0 20px;
+  padding-top: 22px;
+  box-shadow: none;
+  box-sizing: border-box;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  border: none;
+}
+
+._26LFr {
+  -ms-transform: translateY(70%);
+  transform: translateY(70%);
+}
+
+._25qBi {
+  position: relative;
+  clear: both;
+}
+
+._2-hTu {
+  clear: both;
+  margin-top: 20px;
+}
+
+._2tL9P {
+  font-size: 12px;
+  font-weight: 500;
+  color: #7e808c;
+  -ms-transform: translateY(-70%);
+  transform: translateY(-70%);
+}
+
+._1Cvlf {
+  position: absolute;
+  left: 0;
+  bottom: 24px;
+  padding-left: 20px;
+  line-height: 20px;
+  font-size: 15px;
+  cursor: text;
+  transition: .2s ease;
+  width: 100%;
+  color: #222;
+  will-change: transform, color, font-size;
+  pointer-events: none;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+._2EeI1 {
+  position: absolute;
+  right: 20px;
+  bottom: 26px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #5d8ed5;
+  transform: translateZ(0);
+  cursor: pointer;
+  will-change: transform;
+  transition: .2s ease;
+}
+
+._2REYC {
+  width: 100%;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  padding: 0 2rem;
+  letter-spacing: 0;
+  color: #fff;
+  background-color: #6610f2;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%);
+  border-radius: 6px;
+}
+
+
+.btn-normal {
+  border: 2px solid #fff;
+  color: #111;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.btn-normal:hover {
+  border: 2px solid #ffa601;
+  color: #111;
+  cursor: pointer;
+}
+
+.btn-ok {
+  border: 1px solid #ffa601;
+  color: #111;
+  display: inline-block;
+  padding: 5px 9px;
+}
+
+.btn-ok:hover {
+  background-color: #ffa601;
+  color: #111;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  border: 1px solid #222;
+  color: #111;
+  display: inline-block;
+  padding: 5px 9px;
+}
+
+.btn-cancel:hover {
+  background-color: #222;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-normal-selected {
+  background-color: #ffa601;
+  color: #fff;
+}
+
+.icon-div {
+  background: none;
+  margin-right: 20px;
+  height: 40px;
+  line-height: 40px;
+  max-width: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.icon-div:hover {
+  cursor: pointer;
+  background-color: #ffa601;
+}
 
 .cursor-pointer {
   cursor: pointer;
@@ -177,7 +358,7 @@ body {
   border: 1px solid #ebf3ff;
 }
 
-.bg-info{
+.bg-info {
   background: #d8efef;
 }
 
@@ -214,7 +395,8 @@ body {
 .align-items-center {
   align-items: center;
 }
-.align-self-center{
+
+.align-self-center {
   align-self: center;
 }
 
@@ -272,8 +454,10 @@ body {
 .btn-g {
   background-image: linear-gradient(to bottom, #f5f8f9, #e4e9ea);
   min-height: 20px;
+  max-height: 30px;
+  line-height: 30px;
   min-width: 30px;
-  padding: 4px 10px;
+  padding: 0 10px;
   border: 1px solid #a0a6ac;
   z-index: 2;
   appearance: none;
@@ -286,7 +470,7 @@ body {
   cursor: pointer;
 }
 
-.btn-p{
+.btn-p {
   background-image: linear-gradient(to bottom, #ff2c2c, #ca220c);
   min-height: 20px;
   min-width: 30px;
@@ -299,6 +483,7 @@ body {
   font-weight: normal;
   font-size: 15px;
 }
+
 .btn-p:hover {
   background-image: linear-gradient(to bottom, #ff2c2c, #ca220c);
   cursor: pointer;
@@ -770,7 +955,7 @@ ul {
 .custom-control-input:checked~.custom-control-label::before {
   color: #fff;
   background-color: red;
-  border-color:red;
+  border-color: red;
   outline: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -874,6 +1059,7 @@ ul {
   height: 4rem;
   align-content: center;
 }
+
 #pointer {
   padding: 9px 19px 9px 40px;
   height: 40px;
@@ -882,6 +1068,7 @@ ul {
   text-align: center;
   color: #fff;
 }
+
 #pointer:after {
   content: "";
   position: absolute;
@@ -893,6 +1080,7 @@ ul {
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
 }
+
 #pointer:before {
   content: "";
   position: absolute;

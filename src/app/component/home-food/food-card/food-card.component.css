@@ -1,12 +1,10 @@
 .food-card {
     margin: 1px 5px 5px 0;
-    padding: 5px;
-    /* background: #f8f8f7; */
-    border-radius: 3px;
-    /* border: none; */
+    padding: 6px 15px 6px 7px;
+    border-radius: 15px;
     border: 1px solid #f8f8f7;
-    width: 500px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    width: 550px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
 }
 
 .food-card:hover {
@@ -18,10 +16,11 @@
     max-width: 110px;
     min-height: 70px;
     max-height: 70px;
-    /* border-radius: 8px; */
+    border-radius: 8px;
     margin: 0 5px 0 0;
     box-sizing: border-box;
     transition: 0.5s ease-in-out;
+    align-self: center;
 }
 
 .thumbnail-picture:hover {
@@ -53,7 +52,15 @@
 }
 .food-card-model-close-button{
     border: 1px solid salmon;
+    border-radius: 12px;
 }
+
+.food-card-model-close-button:hover{
+    cursor: pointer;
+    background-color: salmon;
+    color: #222;
+}
+
 .food-model-footer{
   background-color: rgb(250, 252, 253);
 }
@@ -80,15 +87,16 @@
 
 .add-to-order-button{
     margin-right: 10px;
-    background-color: #52524e;
+    /* background-color: #52524e;
     color: #fff;
-    align-self: center;
+    align-self: center; */
 }
 .add-to-order-button:hover{
-    background-color: aquamarine;
-    color: #222;
-    cursor: pointer;
+    /* background-color: aquamarine;
+    color: #222; */
+    /* cursor: pointer; */
 }
+
 .model-price{
     font-weight: bold;
     padding: 10px;

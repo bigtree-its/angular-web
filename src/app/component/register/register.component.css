@@ -54,29 +54,42 @@
       text-decoration: underline;
   }
 
-  ._381fS{
+  .input-div {
+    width: 100%;
+    border: 1px solid #fff;
+    padding: 0;
+    display: block;
+    position: relative;
+    transform: translateZ(0);
+    margin: 5px 0;
+    border-radius: 6px;
+  }
+  
+  ._381fS {
     background-color: transparent;
     line-height: normal;
-    border: none;
     outline: none;
     height: 70px;
     width: 100%;
-    font-size: 17px;
+    font-size: 15px;
     margin: 0;
     padding: 0 20px;
     padding-top: 22px;
     box-shadow: none;
     box-sizing: border-box;
-    border-radius: 0;
+    border-radius: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     font-weight: 500;
+    border: none;
   }
+  
   ._26LFr {
     -ms-transform: translateY(70%);
     transform: translateY(70%);
   }
+  
   ._25qBi {
     position: relative;
     clear: both;
@@ -86,6 +99,7 @@
     clear: both;
     margin-top: 20px;
   }
+  
   ._2tL9P {
     font-size: 12px;
     font-weight: 500;
@@ -93,21 +107,23 @@
     -ms-transform: translateY(-70%);
     transform: translateY(-70%);
   }
+  
   ._1Cvlf {
     position: absolute;
     left: 0;
     bottom: 24px;
     padding-left: 20px;
     line-height: 20px;
-    font-size: 17px;
+    font-size: 15px;
     cursor: text;
     transition: .2s ease;
     width: 100%;
     color: #93959f;
-    will-change: transform,color,font-size;
+    will-change: transform, color, font-size;
     pointer-events: none;
     font-weight: 400;
   }
+  
   ._2EeI1 {
     position: absolute;
     right: 20px;
@@ -120,6 +136,7 @@
     will-change: transform;
     transition: .2s ease;
   }
+  
   ._2REYC {
     width: 100%;
     text-decoration: none;
@@ -127,14 +144,14 @@
     display: inline-block;
     text-align: center;
     border: none;
-    line-height: 50px;
+    line-height: 40px;
     font-size: 14px;
     font-weight: 600;
-    height: 50px;
+    height: 40px;
     padding: 0 2rem;
     letter-spacing: 0;
     color: #fff;
-    background-color: #60b246;
+    background-color: #6610f2;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%);
+    border-radius: 6px;
   }
-  

@@ -1,0 +1,76 @@
+<div class="order">
+    <div class="d-flex justify-content-between header">
+      <div class="h-flex align-items-start wrap">
+        <div class="header-item">
+          <span class="header-name">Order</span>
+          <span class="header-value">{{order.dateCreated}}</span>
+        </div>
+        <div class="header-item">
+          <span class="header-name">Total</span>
+          <span class="header-value">{{order.total | currency :'GBP' }}</span>
+        </div>
+        <div class="header-item">
+          <span class="header-name">Reference</span>
+          <span class="header-value">#{{order.reference}}</span>
+        </div>
+      </div>
+      <div class="order-status">
+        <span class="header-name">Status</span>
+        <span class="header-value">{{order.status | titlecase}}</span>
+      </div>
+      <div class="order-status">
+        <span class="header-name">Delivery Mode</span>
+        <span class="header-value">{{order.serviceMode | titlecase}}</span>
+      </div>
+      <button class="btn-g" (click)="showReviewPanel()">{{reviewButtonLabel}}</button>
+    </div>
+    <div class="d-flex flex-column" style="padding: 5px;margin: 5px 0;">
+      <app-food-order-item [item]="item" [displayImage]="false" [displayDeleteOption]="false"
+        *ngFor="let item of order.items"></app-food-order-item>
+  
+      <!-- <div *ngFor="let item of order.items" class="item">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex align-items-start wrap">
+            <img src={{item.image}} alt="{{item.name}}" class="basket-item-image" (click)="selectProduct(item.name)">
+            <div class="basket-item-content" (click)="selectProduct(item.name)">
+              <span class="basket-item-name">{{item.name.length > 30 ? item.name.substr(0,30) + '... ' : item.name}}</span>
+              <span class="basket-item-price">{{ item.price  | currency :'GBP'}}</span>
+              <span class="basket-item-qty">Qty: {{item.quantity}}</span>
+            </div>
+            <span class="basket-item-subtotal">{{ item.subTotal | currency : 'GBP'}}</span>
+          </div>
+          <div class="items-list">
+            <button class="btn-g">Write Review</button>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="d-flex flex-column" style="height: auto; width: 100%;background-color: aliceblue;" *ngIf="writeReview">
+      <textarea class="form-control" id="reviewComment" rows="3" value="" [(ngModel)]="reviewComment"
+        #ctrl="ngModel"></textarea>
+      <div class="d-flex flex-start" style="padding: 10px 10px 0 10px;">
+        <img [src]="rating > 0 ? starSelected : star" class="star" (click)="overallRating(1)">
+        <img [src]="rating > 1 ? starSelected : star" class="star" (click)="overallRating(2)">
+        <img [src]="rating > 2 ? starSelected : star" class="star" (click)="overallRating(3)">
+        <img [src]="rating > 3 ? starSelected : star" class="star" (click)="overallRating(4)">
+        <img [src]="rating > 4 ? starSelected : star" class="star" (click)="overallRating(5)">
+      </div>
+      <div class="d-flex flex-start" style="padding: 10px;">
+        <button class="btn-s" (click)="submitReview()">Submit</button>
+        <button class="btn-g" (click)="cancelReview()">Cancel</button>
+      </div>
+    </div>
+    <div class="d-flex flex-column" style="height: auto; width: 100%;background-color: aliceblue;padding: 10px;" *ngIf="readReview">
+      <span>{{review.comments}}</span>
+      <div class="d-flex flex-start" style="padding: 10px 0;">
+        <img [src]="review.rating > 0 ? starSelected : star" class="star">
+        <img [src]="review.rating > 1 ? starSelected : star" class="star">
+        <img [src]="review.rating > 2 ? starSelected : star" class="star">
+        <img [src]="review.rating > 3 ? starSelected : star" class="star">
+        <img [src]="review.rating > 4 ? starSelected : star" class="star">
+      </div>
+    </div>
+    <div class="d-flex flex-column" style="height: auto; width: 100%;background-color: aliceblue;padding: 10px;" *ngIf="submittedReview">
+      <span>Thanks for your feedback.</span>
+    </div>
+  </div>

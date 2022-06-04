@@ -20,8 +20,8 @@ export class Utils {
     return false;
   }
 
-  public isEquals(data: string, data2: string): Boolean {
-    if ( data === data2 ){
+  public isEquals(data1: string, data2: string): Boolean {
+    if ( data1 === data2 ){
         return true;
     }
     return false;

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FoodOrder, Orders } from 'src/app/model/localchef';
+import { FoodOrder, Orders, OrderSearchQuery } from 'src/app/model/localchef';
 import { FoodOrderservice } from 'src/app/service/food-order.service';
 import { LocalChefService } from 'src/app/service/localchef.service';
 
@@ -25,7 +25,10 @@ export class OrderStatusComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const reference = params['reference'];
       console.log(`OrderReference : ${params['reference']}`);
-      this.foodOrderService.getOrderByReference(reference).subscribe((orders: Orders) => {
+      var query: OrderSearchQuery = new OrderSearchQuery();
+      query.reference = reference;
+
+      this.foodOrderService.getOrders(query).subscribe((orders: Orders) => {
         this.orders = orders;
         if ( this.orders !== undefined && orders.orders !== undefined && orders.orders.length > 0){
           this.foodOrder = this.orders.orders[0];
@@ -33,7 +36,6 @@ export class OrderStatusComponent implements OnInit {
           console.log('Order Reference-Status:['+ reference+' - '+ this.foodOrder.status);
           this.localChef = this.foodOrder.chef;
         }
-        
       });
     });
   }

@@ -1,0 +1,66 @@
+.back-btn {
+    background: transparent;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 10px;
+    text-decoration: underline;
+    border-radius: 10px;
+    font-weight: 600;
+    margin: 0 10px;
+}
+
+.back-btn:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+
+}
+
+.local-area-option {
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    font-size: 14px;
+    margin: 9px 0;
+    border-radius: 8px;
+    width: 100%;
+    background-color: rgb(247, 247, 247);
+    border: 1px solid rgb(221, 221, 221);
+}
+
+.local-area-option:hover {
+    border: 1px solid #222;
+    cursor: pointer;
+}
+
+.icon {
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+    height: 30px;
+    width: 32px;
+    align-items: center;
+}
+
+.icon-close{
+    border-radius: 50%;
+    border: 1px solid #e3e3e3;
+    height: 20px;
+    width: 22px;
+    align-items: center;
+}
+.icon-close:hover{
+    cursor: pointer;
+    border: 1px solid #222;
+    background-color: #e3e3e3;
+}
+.icon:hover{
+    cursor: pointer;
+    border: 1px solid #222;
+    background-color: #e3e3e3;
+}
+
+.selected{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #222;
+}

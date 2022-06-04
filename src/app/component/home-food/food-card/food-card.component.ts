@@ -24,7 +24,7 @@ export class FoodCardComponent implements OnInit {
   @Input() food: Food;
 
   quantity: number = 1;
-  price: number = 0;
+  price: number = 0.00;
   specialInstruction: string;
   selectedchoice: Extra;
   selectedExtras: Extra[] = [];
@@ -156,7 +156,7 @@ export class FoodCardComponent implements OnInit {
     if (this.selectedchoice !== null && this.selectedchoice !== undefined) {
       extraTotal = extraTotal + this.selectedchoice.price;
     }
-    this.price = (this.price + extraTotal) * this.quantity;
+    this.price = (this.food.price + extraTotal) * this.quantity;
     this.price = +(+this.price).toFixed(2);
   }
 }

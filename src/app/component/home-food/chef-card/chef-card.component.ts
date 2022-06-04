@@ -10,8 +10,8 @@ import { LocalChef } from 'src/app/model/localchef';
 export class ChefCardComponent implements OnInit {
 
   @Input() chef: LocalChef;
-  starSelected: string = "/assets/icons/pointed-star.png";
-  star: string = "/assets/icons/star.png";
+  starSelected: string = "/assets/icons/star-solid.svg";
+  star: string = "/assets/icons/star-regular.svg";
   
   constructor(private router: Router) { }
 

@@ -44,7 +44,7 @@ export class ChefListComponent implements OnInit {
       });
   }
 
-  backToHome() {
+  back() {
     this._location.back();
   }
 }

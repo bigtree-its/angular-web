@@ -9,7 +9,7 @@ import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 import { Property, PropertyEnquiry, PropertyType } from 'src/app/model/property';
 import { PropertyEnquiryService } from 'src/app/service/property-enquiry.service';
 import { AccountService } from 'src/app/service/account.service';
-import { Customer, CustomerSession } from 'src/app/model/common-models';
+import { User, UserSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-property-detail',
@@ -27,8 +27,8 @@ export class PropertyDetailComponent implements OnInit {
   postQuestionSuccessResponse:ResponseType = ResponseType.Success;
   openReviewForm: boolean = false;
   
-  customerSession: CustomerSession;
-  customer: Customer;
+  customerSession: UserSession;
+  customer: User;
   property: Property;
   type: PropertyType;
   display_picture: string;
@@ -82,9 +82,9 @@ export class PropertyDetailComponent implements OnInit {
       });
     })
 
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
     }
 
     this.questionForm = this.formBuilder.group({
@@ -176,9 +176,8 @@ export class PropertyDetailComponent implements OnInit {
     question.mobile = this.getQuestionForm.mobile.value;
     question.property = this.property._id;
     question.date = new Date();
-    question.email = this.customer.contact.email;
-    question.firstName = this.customer.firstName; 
-    question.lastName = this.customer.lastName;
+    question.email = this.customer.email;
+    question.firstName = this.customer.fullName; 
 
     this.submittedQuestion = true;
     this.propertyEnquiryService

@@ -11,7 +11,6 @@ import { LocalChef, Cuisine, LocalChefSearchQuery, LocalAreaSearchResponse, Loca
 })
 export class LocalChefService {
 
-
   private URL = environment.AD_SERVICE_URL;
   private BASEPATH = environment.ADS_BASEPATH;
   private LOCALCHEFS_URI = environment.LOCALCHEFS_URI;
@@ -47,6 +46,9 @@ export class LocalChefService {
     if (query.status !== undefined && query.status !== null) {
       params = params.set('status', query.status);
     }
+    if (query.email !== undefined && query.email !== null) {
+      params = params.set('email', query.email);
+    }
     if (query.noMinimumOrder !== undefined && query.noMinimumOrder !== null) {
       params = params.set('noMinimumOrder', "");
     }
@@ -75,9 +77,16 @@ export class LocalChefService {
   }
 
   getLocalChef(id: string): Observable<LocalChef> {
-
     var url = this.URL + this.BASEPATH + this.LOCALCHEFS_URI + "/" + id;
     return this.http.get<LocalChef>(url);
+  }
+
+  getLocalChefByEmail(email: string): Observable<LocalChef[]> {
+    var params = new HttpParams();
+    params = params.set('email', email);
+    var url = this.URL + this.BASEPATH + this.LOCALCHEFS_URI ;
+    console.log('Fetching chef by email '+ url);
+    return this.http.get<LocalChef[]>(url, {params});
   }
 
   getServiceAreabySlug(slug: string): Observable<LocalArea> {
@@ -120,7 +129,7 @@ export class LocalChefService {
   }
 
   getAllCuisines(): Observable<Cuisine[]> {
-
+    console.log('Fetching all cuisines.')
     var url = this.URL + this.BASEPATH + this.CUISINES_URI;
     return this.http.get<Cuisine[]>(url);
   }
@@ -148,7 +157,17 @@ export class LocalChefService {
     return this.http.get<Calendar[]>(url, { params });
   }
 
+  createNewChef(chef: LocalChef): Observable<LocalChef> {
+    var url = this.URL + this.BASEPATH + this.LOCALCHEFS_URI;
+    console.log('Creating new chef : ' + url + ", " + JSON.stringify(chef));
+    return this.http.post<LocalChef>(url, chef);
+  }
 
+  update(chef: LocalChef): Observable<LocalChef> {
+    var url = this.URL + this.BASEPATH + this.LOCALCHEFS_URI + "/" + chef._id;
+    console.log('Updating chef : ' + url + ", " + JSON.stringify(chef));
+    return this.http.put<LocalChef>(url, chef);
+  }
 
   placeOrder(localChef: LocalChef) {
     var url = this.URL + this.URL + this.LOCALCHEFS_URI;

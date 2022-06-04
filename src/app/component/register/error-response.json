@@ -1,0 +1,18 @@
+{
+    "headers": {
+        "normalizedNames": {},
+        "lazyUpdate": null
+    },
+    "status": 400,
+    "statusText": "OK",
+    "url": "http://localhost:8081/r2c/v1/users/signup",
+    "ok": false,
+    "name": "HttpErrorResponse",
+    "message": "Http failure response for http://localhost:8081/r2c/v1/users/signup: 400 OK",
+    "error": {
+        "reference": "94089de5-bc0d-455b-9157-19202dd250ae",
+        "title": "Bad Request",
+        "detail": "User already exist",
+        "status": 400
+    }
+}

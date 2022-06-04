@@ -1,24 +1,22 @@
-<div class="login-page">
-    <div class="brand-div">
-        <a class="navbar-brand" href="#">
-            <img src="/assets/icons/bigtree.png" width="30" height="30" class="d-inline-block mb-3" alt="">
-            <strong class="brand-text">Login to UrChef</strong>
+<app-header></app-header>
+<div  style="width: 400px;height: 400px;" class="centered">
+    <div class="d-flex justify-content-center">
+        <a href="#">
+            <span style="font-weight: 900;font-size: 27px;padding-left: 5px;font-family: 'Marcellus', serif;color: #6911dd;letter-spacing: 2px;">Workplace</span>
         </a>
     </div>
     <div class="d-flex flex-column" style="margin: 10px 0;">
-        <div
-            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
-            <input class="_381fS" type="email" name="email" id="email" tabindex="1"
-                autocomplete="off" value="" [(ngModel)]="email" #ctrl="ngModel">
+        <div class="input-div">
+            <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value=""
+                [(ngModel)]="email" #ctrl="ngModel">
             <div class="_2EeI1 _26LFr"></div>
-            <label class="_1Cvlf _2tL9P " for="mobile">Email</label>
+            <label class="_1Cvlf _2tL9P" for="email">Email</label>
         </div>
-        <div
-            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
-            <input class="_381fS" type="password" name="password" id="password" tabindex="2"
-                autocomplete="off" value="" [(ngModel)]="password" #ctrl="ngModel">
+        <div class="input-div">
+            <input class="_381fS" type="password" name="password" id="password" tabindex="1" autocomplete="off" value=""
+                [(ngModel)]="password" #ctrl="ngModel">
             <div class="_2EeI1 _26LFr"></div>
-            <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
+            <label class="_1Cvlf _2tL9P" for="password">Password</label>
         </div>
         <div class="_25qBi _2-hTu" (click)="submit()">
             <a class="_2REYC" style="color: #fff;">
@@ -26,11 +24,12 @@
             </a>
         </div>
     </div>
-    <div *ngIf="error !== undefined" style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
+    <div *ngIf="error !== undefined"
+        style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
         <p>{{error}}</p>
     </div>
     <div style="display: block;width: 100%;font-weight: normal;">
-        New user? <span (click)="joinUs()">Join Us</span>
+        New user? <span (click)="joinUs()" style="font-size: 16px;cursor: pointer;">Join Us</span>
     </div>
 
 </div>

@@ -11,7 +11,7 @@ import { ActionResponse } from '../model/action-response';
 import { LocalContextService } from './localcontext.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { basename } from '@angular/compiler-cli/src/ngtsc/file_system';
-import { CustomerSession } from '../model/common-models';
+import { UserSession } from '../model/common-models';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,7 @@ export class BasketService {
   ipAddress: string;
 
   basket: Basket;
-  customerSession: CustomerSession;
+  customerSession: UserSession;
 
   constructor(
     private http: HttpClient,
@@ -34,12 +34,12 @@ export class BasketService {
     private accountService: AccountService) {
     this.basketSubject$ = new BehaviorSubject<Basket>(this.basket);
     this.getIPAddress();
-    this.accountService.customerSessionSubject$.subscribe((customerSession) => {
+    this.accountService.userSessionSubject$.subscribe((customerSession) => {
       this.customerSession = customerSession;
-      if (customerSession === null || customerSession === undefined || customerSession.customer === null || customerSession.customer === undefined) {
+      if (customerSession === null || customerSession === undefined || customerSession.user === null || customerSession.user === undefined) {
         this.removeCustomerBasket();
       } else {
-        var email: string = this.customerSession.customer.contact.email;
+        var email: string = this.customerSession.user.email;
         console.log('Customer logged in: Getting Basket ' + email);
         var basketJson = localStorage.getItem(this.OBJECT_BASKET + "-" + email);
         if (basketJson !== undefined && basketJson !== null) {
@@ -121,7 +121,7 @@ export class BasketService {
     params = params.set('basketId', this.basket.basketId);
     params = params.set('createIfNew', "true");
 
-    this.basket.email = this.accountService.getCustomerEmail();
+    this.basket.email = this.accountService.getUserEmail();
     console.log('Updating basket: ' + JSON.stringify(basket))
     this.http.put<ActionResponse>(url, this.basket, { params: params })
       .subscribe(

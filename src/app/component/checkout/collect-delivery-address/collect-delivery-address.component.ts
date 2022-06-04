@@ -11,7 +11,7 @@ import { RapidApiService } from 'src/app/service/rapid-api.service';
 import { Location } from '@angular/common';
 import { Order, OrderItem, PaymentIntentRequest, PaymentIntentResponse } from 'src/app/model/order';
 import { OrderService } from 'src/app/service/order.service';
-import { Address, Customer, CustomerSession } from 'src/app/model/common-models';
+import { Address, User, UserSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-collect-delivery-address',
@@ -36,8 +36,8 @@ export class CollectDeliveryAddressComponent implements OnInit {
   selectedDeliveryAddress: RapidApiByPostcodeResponseSummary;
   postcode: string;
   errorMessage: string;
-  customerSession: CustomerSession;
-  customer: Customer;
+  customerSession: UserSession;
+  customer: User;
   order: Order;
   paymentIntentResponse : PaymentIntentResponse;
   stripeConfirmationError:string;
@@ -55,9 +55,9 @@ export class CollectDeliveryAddressComponent implements OnInit {
   ngOnInit(): void {
 
     this.basket = this.basketService.getBasket();
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
       this.address = this.customer.address;
       if (this.address !== undefined ) {
         this.hidePostcodeLoookupForm = true;
@@ -79,7 +79,7 @@ export class CollectDeliveryAddressComponent implements OnInit {
     var saleTax = this.percentage(this.basket.total, 1);
     this.order = new Order();
     this.order.address = this.address;
-    this.order.email = this.customer.contact.email;
+    this.order.email = this.customer.email;
     this.order.currency = "GBP";
     this.order.subTotal = this.basket.total;
     this.order.saleTax = saleTax;
@@ -207,9 +207,9 @@ export class CollectDeliveryAddressComponent implements OnInit {
     this.address.country = this.address.country;
     this.address.postcode = this.address.postcode;
     this.customer.address = this.address;
-    this.customerSession.customer = this.customer;
-    this.accountService.storeCustomerSession(this.customerSession);
-    this.accountService.updateCurrentCustomer();
+    this.customerSession.user = this.customer;
+    this.accountService.storeUserSession(this.customerSession);
+    this.accountService.updateCurrentUser();
   }
 
 
@@ -247,7 +247,7 @@ export class CollectDeliveryAddressComponent implements OnInit {
   makePayment(){
     console.log('Creating payment intent');
     var paymentIntentRequest = new PaymentIntentRequest();
-    paymentIntentRequest.customerEmail = this.customer.contact.email;
+    paymentIntentRequest.customerEmail = this.customer.email;
     paymentIntentRequest.currency = "GBP";
     paymentIntentRequest.subTotal = this.order.subTotal * 100;
     paymentIntentRequest.deliveryCost = this.order.shippingCost * 100;

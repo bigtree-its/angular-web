@@ -158,13 +158,12 @@
   font-weight: 800;
   color: #535665;
   font-size: 14px;
-  border: 2px solid #a6faeb;
-  border-radius: 14px;
+  border: 2px solid #6911dd;
 }
 
 .local-area-option:hover {
-  background-color: #a6faeb;
-  color: #111;
+  background-color: #6911dd;
+  color: #fff;
   cursor: pointer;
 }
 

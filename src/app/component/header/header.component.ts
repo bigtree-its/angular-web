@@ -4,7 +4,7 @@ import { faUser, faShoppingCart, faMapMarkerAlt } from '@fortawesome/free-solid-
 import { AccountService } from 'src/app/service/account.service';
 import { Router } from '@angular/router';
 import { BasketService } from 'src/app/service/basket.service';
-import { Customer, CustomerSession } from 'src/app/model/common-models';
+import { User, UserSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-header',
@@ -17,15 +17,16 @@ export class HeaderComponent implements OnInit {
   faShoppingBag = faShoppingCart;
   faMapMarkerAlt = faMapMarkerAlt;
 
-  customerName: string;
+  userName: string;
   basket: Basket;
   itemCount: number = 0;
   basketTotal: number = 0;
-  customerSession: CustomerSession;
-  customer: Customer;
-  customerPostcode: string;
+  userSession: UserSession;
+  user: User;
+  userPostcode: string;
 
   searchText: string = "";
+  role: string;
 
   constructor(
     public accountService: AccountService,
@@ -50,24 +51,26 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    this.accountService.customerSessionSubject$.subscribe(customerSession => {
-      this.customerSession = customerSession;
-      console.log('Customer : ' + JSON.stringify(this.customerSession));
-      if (customerSession !== null && customerSession.customer !== null && customerSession.customer !== undefined) {
-        this.customer = this.customerSession.customer;
-        this.customerName = this.customer.firstName + " " + this.customer.lastName;
-        if (this.customer.address !== undefined && this.customer.address !== null ) {
-          this.customerPostcode = this.customer.address.postcode;
+    this.accountService.userSessionSubject$.subscribe(userSession => {
+      this.userSession = userSession;
+      console.log('UserSession : ' + JSON.stringify(this.userSession));
+      if (userSession !== null && userSession.user !== null && userSession.user !== undefined) {
+        this.user = this.userSession.user;
+        this.role = this.user.role;
+        this.userName = this.user.fullName;
+        console.log('The logged in user: '+ JSON.stringify(this.user))
+        if (this.user.address !== undefined && this.user.address !== null ) {
+          this.userPostcode = this.user.address.postcode;
         }
       } else {
-        this.customerName = "Hello"
+        this.userName = "Hello"
       }
     })
 
   }
 
-  isCustomerLoggedIn(): boolean {
-    if (this.customer === undefined || this.customer === null || this.customer.firstName == undefined || this.customer.firstName == null) {
+  isUserLoggedIn(): boolean {
+    if (this.user === undefined || this.user === null || this.user.fullName == undefined || this.user.fullName == null) {
       return false;
     }
     return true;
@@ -75,35 +78,39 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.accountService.logout();
-    this.customer = undefined;
-    this.customerPostcode = undefined;
+    this.user = undefined;
+    this.userPostcode = undefined;
   }
   home() {
     this.router.navigate(['/']);
   }
 
   becomeChef(){
-    
+    console.log('Navigating to supplier reg')
+    // this.router.navigate(['/register'], { queryParams: {r: 'Supplier'}});
+    this.router.navigateByUrl('/register?r=Supplier');
   }
   login() {
     this.router.navigate(['/login']);
   }
 
   register() {
-    this.router.navigate(['/register']);
+    console.log('Navigating to customer reg')
+    // this.router.navigate(['/register'], { queryParams: {r: 'Customer'}});
+    this.router.navigateByUrl('/register?r=Customer');
   }
 
   profile() {
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/customer-profile']);
   }
 
   orders() {
     this.router.navigate(['/orders']);
   }
 
-  getcustomerName() {
-    if (this.isCustomerLoggedIn()) {
-      return this.customer.contact.email;
+  getuserName() {
+    if (this.isUserLoggedIn()) {
+      return this.user.email;
     } else {
       return "Hello";
     }

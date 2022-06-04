@@ -10,7 +10,7 @@
     <div class="d-flex flex-start">
       <span class="food-price">{{food.price | currency: 'GBP'}}</span>
       <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(content)">Add to order</button> -->
-      <button class="btn add-to-order-button" (click)="openScrollableContent(content)">Add</button>
+      <button class="btn btn-light btn-outline-secondary" style="height: 25px;line-height: 15px;align-self: center;" (click)="openScrollableContent(content)">Add</button>
     </div>
   </div>
 </div>
@@ -22,8 +22,8 @@
   </div>
   <div class="modal-body">
     <div class="d-flex flex-column">
-      <span style="font-weight: bold;padding: 0 5px;font-size: 15px;">{{food.name}}</span>
-      <span class="food-description">{{food.description}}</span>
+      <span style="font-weight: bold;font-size: 15px;">{{food.name}}</span>
+      <span style="font-weight: normal;">{{food.description}}</span>
     </div>
     <div style="padding: 10px 0;">
       <ngb-accordion [closeOthers]="true" activeIds="static-1">
@@ -79,15 +79,15 @@
   </div>
   <div class="modal-footer d-flex justify-content-between food-model-footer">
     <div class="d-flex justify-content-start">
-      <button class="food-card-qty-btn" (click)="decreaseQuantity()">-</button>
+      <button class="btn btn-light btn-outline-secondary" (click)="decreaseQuantity()">-</button>
       <span class="qty-value">{{quantity}}</span>
-      <button class="food-card-qty-btn" (click)="increaseQuantity()">+</button>
+      <button class="btn btn-light btn-outline-success" (click)="increaseQuantity()">+</button>
     </div>
 
     <div class="model-button-section">
       <span class="model-price">{{price | currency: 'GBP'}}</span>
-      <button type="button" ngbAutofocus class="btn btn-light add-to-order-button" (click)="addToOrder()">OK</button>
-      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+      <button type="button" style="margin-right: 5px;" class="btn-ok" (click)="addToOrder()">OK</button>
+      <button type="button" class="btn-cancel" (click)="modal.close('Close click')">Close</button>
     </div>
   </div>
 </ng-template>

@@ -10,7 +10,7 @@ import { AccountService } from 'src/app/service/account.service';
 import { first } from 'rxjs/operators';
 import { OrderService } from 'src/app/service/order.service';
 import { Order } from 'src/app/model/order';
-import { Address, Customer, CustomerSession } from 'src/app/model/common-models';
+import { Address, User, UserSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-profile',
@@ -39,8 +39,8 @@ export class ProfileComponent implements OnInit {
   changePasswordFormGroup: FormGroup;
 
   /** customer */
-  customerSession: CustomerSession;
-  customer: Customer;
+  customerSession: UserSession;
+  customer: User;
 
   /** Address */
   hideAddressSection: boolean;
@@ -67,13 +67,13 @@ export class ProfileComponent implements OnInit {
     private accountService: AccountService,
     private orderService: OrderService,
   ) {
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if (this.customerSession !== undefined && this.customerSession !== null) {
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
       console.log('customer ' + JSON.stringify(this.customer));
       this.address = this.customer.address;
       console.log('Address of customer ' + JSON.stringify(this.address));
-      if (this.address === undefined ) {
+      if (this.address === undefined) {
         this.hideAddressSection = true;
         this.hideAddressForm = false;
       } else {
@@ -81,9 +81,9 @@ export class ProfileComponent implements OnInit {
         this.hideAddressForm = true;
       }
 
-      this.orderService.getOrders(this.customer.contact.email).subscribe(data => {
+      this.orderService.getOrders(this.customer.email).subscribe(data => {
         this.orders = data;
-        console.log('Orders: '+ JSON.stringify(this.orders));
+        console.log('Orders: ' + JSON.stringify(this.orders));
         console.log('Retrieved ' + this.orders.length + " orders for this customer");
       });
     }
@@ -104,9 +104,9 @@ export class ProfileComponent implements OnInit {
     this.message = "";
     this.isSuccess = false;
 
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if (this.customerSession !== undefined && this.customerSession !== null) {
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
       this.address = this.customer.address;
       if (this.address === undefined) {
         this.hideAddressSection = true;
@@ -116,7 +116,7 @@ export class ProfileComponent implements OnInit {
         this.hideAddressForm = true;
       }
 
-      this.orderService.getOrders(this.customer.contact.email).subscribe(data => {
+      this.orderService.getOrders(this.customer.email).subscribe(data => {
         this.orders = data;
         console.log('Retrieved ' + this.orders.length + " orders for this customer");
       });
@@ -147,7 +147,7 @@ export class ProfileComponent implements OnInit {
     this.displaySecurityModule = false;
     this.saveChangesEnabled = true;
   }
- 
+
   showOrdersModule(title: string) {
     this.moduleName = title;
     this.displayAboutYouModule = false;
@@ -168,11 +168,10 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.customer.contact.email = this.customer.contact.email;
-    this.customer.firstName = this.customer.firstName;
-    this.customer.lastName = this.customer.lastName;
+    this.customer.email = this.customer.email;
+    this.customer.fullName = this.customer.fullName;
     this.customer.contact.mobile = this.customer.contact.mobile;
-    this.accountService.storeCustomerSession(this.customerSession);
+    this.accountService.storeUserSession(this.customerSession);
     this.updateCurrentcustomer();
   }
 
@@ -243,11 +242,11 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  onAddAddress(){
-    
+  onAddAddress() {
+
   }
-  removeAddress(){
-    
+  removeAddress() {
+
   }
 
 
@@ -259,26 +258,26 @@ export class ProfileComponent implements OnInit {
     this.address.postcode = this.address.postcode;
 
     this.customer.address = this.address;
-    this.accountService.storeCustomerSession(this.customerSession);
+    this.accountService.storeUserSession(this.customerSession);
     this.updateCurrentcustomer();
   }
 
   showOrders(status: string) {
     this.status = status;
     let title = "Your open orders";
-    if (status === "SHIPPED"){
+    if (status === "SHIPPED") {
       title = "Your shipped orders";
-    } else if (status === "CANCELLED"){
+    } else if (status === "CANCELLED") {
       title = "Your cancelled orders";
-    } else if (status === "COMPLETED"){
+    } else if (status === "COMPLETED") {
       title = "Your completed orders";
-    } 
+    }
     this.showOrdersModule(title);
   }
 
   private updateCurrentcustomer() {
     this.accountService
-      .updateCurrentCustomer()
+      .updateUser(this.customer)
       .pipe(first())
       .subscribe(
         (data) => {

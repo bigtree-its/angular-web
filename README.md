@@ -62,3 +62,51 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+# Angular Tips
+## How to access a http response headers
+```
+this.myservice.method(req)
+      .subscribe({
+        next: data => {
+          const keys = data.headers.keys();
+          var headers = keys.map(key =>
+            `${key}: ${data.headers.get(key)}`);
+        },
+        error: e => {
+          console.error('error response' + JSON.stringify(e));
+          this.error = e.error.detail;
+        }
+      });
+
+```
+## How to read query params from the url in the component
+```
+
+# Read the entire query param map
+
+    this.route.queryParamMap
+      .subscribe((params) => {
+        var paramsObject = { ...params.keys, ...params };
+        console.log(paramsObject);
+        this.myparam = params.get("a");
+        this.myparam = params.get("b");
+        }
+      );
+# Read the entire query params
+    this.route.queryParams.subscribe(params => {
+      var myVar = params.r;
+    });
+
+```
+## How to navigate to another page with query params
+```
+
+# 1
+  // this.router.navigate(['/register'], { queryParams: {r: 'Supplier'}});
+    
+# 2
+   this.router.navigateByUrl('/register?r=Supplier');
+
+```

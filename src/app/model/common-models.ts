@@ -59,10 +59,33 @@ export class Address {
     public addressLine2: string;
 }
 
+export class User{
+    id: string;
+    email: string;
+    role: string;
+    fullName: string;
+    contact: Contact;
+    address: Address
+}
+
 export class Contact{
     public telephone: string;
-    public email: string;
     public mobile: string;
+}
+
+export class ChefContact{
+    public telephone: string;
+    public mobile: string;
+    public email: string;
+    public fullName: string;
+}
+
+export class UserSession{
+    user: User;
+    session: Session;
+    success: boolean;
+    message: string;
+    status: number;
 }
 
 export class CustomerSession{
@@ -73,16 +96,21 @@ export class CustomerSession{
 }
 
 export class Session{
-    _id : string;
-    customerId: string;
-    sessionId: string;
+    id : string;
+    email: string;
+    ipAddress: string;
     accessToken: string;
     start: Date;
 }
 
 export class LoginRequest{
-    email: string
+    email: string;
     password: string;
+}
+
+export class LogoutRequest{
+    email: string;
+    session: string;
 }
 
 
@@ -91,8 +119,7 @@ export class SignupRequest{
     password: string;
     mobile: string;
     fullName: string;
-    firstName: string;
-    lastName: string;
+    role: string;
 }
 
 

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Calendar, Food, FoodOrder, FoodOrderItem, LocalChef } from 'src/app/model/localchef';
 import { FoodOrderservice } from 'src/app/service/food-order.service';
 import { LocalChefService } from 'src/app/service/localchef.service';
+import { NavigationService } from 'src/app/service/navigation.service';
 import * as _ from 'underscore';
 
 
@@ -32,6 +33,7 @@ export class ChefHomeComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
     private localChefService: LocalChefService,
     private foodOrderService: FoodOrderservice,
+    private navigationService: NavigationService,
     private _location: Location,
     private router: Router) { }
 
@@ -164,6 +166,10 @@ export class ChefHomeComponent implements OnInit {
 
   scrollRight() {
     this.widgetsContent.nativeElement.scrollLeft += 150;
+  }
+
+  back(){
+    this.navigationService.back();
   }
 
 }

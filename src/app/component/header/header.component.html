@@ -1,41 +1,25 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Judson&display=swap');
-  </style>
-<div class="d-flex justify-content-between" style="height: 65px;line-height: 65px;">
-  <div class="d-flex flex-start" (click)="home()">
-    <div class="d-flex flex-start justify-content-center" >
-      <!-- <img src="/assets/icons/coffee-cup.png"  alt="" href="#" style="margin: 10px; width: 30px;height: 30px;position: relative; top: 9px;left: 11px;"> -->
-      <span style="font-weight: 900;font-size: 27px;margin-right: 10px;font-family: 'Judson', serif;">Route2Chef.</span>
-    </div>
-    
+  @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
+</style>
+<div class="d-flex justify-content-between"
+  style="height: 65px;line-height: 65px;font-family: WPRoobert Light, Roobert Light, SF Pro, Noto Sans Regular, Roboto, Helvetica, Arial;border-bottom: 1px solid #e3e3e3;margin-bottom: 13px;">
+  <div class="d-flex flex-start justify-content-center"
+    style="padding: 0 10px;height: 40px;align-self: center;line-height: 40px;cursor: pointer;" (click)="home()">
+    <span class="align-self-center"
+      style="height: 30px;width: 30px;border:2px solid #6911dd;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;">W</span>
+    <span
+      style="font-weight: 900;font-size: 27px;font-family: 'Marcellus', serif;color: #6911dd;letter-spacing: 2px;">Workplace</span>
   </div>
-  <div class="d-flex justify-content-end">
+  <div class="d-flex justify-content-end align-items-center">
     <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
-    <div *ngIf="isCustomerLoggedIn() == true" class="customer-greeting">
-      <div>
-        <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
-          <span>{{customer.firstName}}</span>
-        </span>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <span class="dropdown-item " (click)="logout()" *ngIf="isCustomerLoggedIn() == true">Logout</span>
-          <span class="dropdown-item " (click)="login()" *ngIf="isCustomerLoggedIn() == false">Login</span>
-          <span class="dropdown-item " (click)="profile()">Profile</span>
-          <span class="dropdown-item " (click)="orders()">Orders</span>
-        </div>
-      </div>
-    </div>
-    <button class="header-button" (click)="becomeChef()">Become a Chef</button>
-    <button class="header-button" (click)="login()" *ngIf="isCustomerLoggedIn() == false">Log in</button>
-    <button class="header-button" (click)="register()" *ngIf="isCustomerLoggedIn() == false">Sign up</button>
-    <div class="basket-section" routerLink="/food-checkout">
-      <img src="/assets/icons/shopping-cart.png" class="shopping-cart-icon">
-      <span class="basket-item-count">{{ itemCount > 0 ? itemCount : "Empty" }}</span>
-    </div>
-    <!--     
-    <span routerLink="/basket" class=" right-button mr-1 d-flex justify-content-center">
-      <img src="/assets/icons/shopping-cart.png " alt=" " loading="lazy " class="top-nav-basket-icon mx-2 ">
-      <span class="text-center top-nav-basket-count ">{{ itemCount }}</span>
-    </span> -->
+    <span class="align-self-center" *ngIf="isUserLoggedIn() == true"
+      style="height: 30px;width: 30px;border:2px solid #6911dd;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;margin: 0 5px;">{{userName.substr(0,1)}}</span>
+    <span *ngIf="isUserLoggedIn() == true">{{userName}}</span>
+    <span style="margin: 0 10px;cursor: pointer;" (click)="becomeChef()" *ngIf="isUserLoggedIn() == false || role == 'Customer' ">Become a chef</span>
+    <span style="margin: 0 10px;cursor: pointer;" (click)="login()" *ngIf="isUserLoggedIn() == false">Sign In</span>
+    <span style="margin: 0 10px;cursor: pointer;" (click)="register()" *ngIf="isUserLoggedIn() == false">Sign Up</span>
+    <img src="/assets/icons/logout.png" class="united-kingdom-icon" *ngIf="isUserLoggedIn() == true"
+      (click)="logout()" />
   </div>
+
 </div>

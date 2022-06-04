@@ -10,6 +10,7 @@ import { FoodOrderservice } from 'src/app/service/food-order.service';
 export class FoodOrderItemComponent implements OnInit {
 
   @Input() item: FoodOrderItem;
+  @Input() priceMode: String;
   @Input() displayImage: boolean = true;
   @Input() displayDeleteOption: boolean = false;
   

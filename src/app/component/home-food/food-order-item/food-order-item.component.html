@@ -9,7 +9,7 @@
         <div
             style="width: 100%;clear: both; display: flex; justify-content: space-between;">
             <span style="font-weight: 600;">{{item.name}}</span>
-            <span style="font-weight: 300;">{{item.subTotal | currency: 'GBP'}}</span>
+            <span style="font-weight: 300;">{{item.price | currency: 'GBP'}}</span>
         </div>
         <div *ngIf="item.choice !== null && item.choice !== undefined">
             <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">

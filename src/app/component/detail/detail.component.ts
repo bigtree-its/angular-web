@@ -14,7 +14,7 @@ import { Review } from 'src/app/model/review';
 import { first } from 'rxjs/operators';
 import { ResponseType, ServerResponse } from 'src/app/model/server-response';
 import { ProductQAService } from 'src/app/service/product-qa.service';
-import { Customer, CustomerSession, ProductQA, ProductQuestion } from 'src/app/model/common-models';
+import { Customer, UserSession, ProductQA, ProductQuestion, User } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-detail',
@@ -54,8 +54,8 @@ export class DetailComponent implements OnInit {
   quantity: number = 1;
   mainPicture: String;
   reviews: Review[];
-  customer: Customer = new Customer();
-  customerSession: CustomerSession;
+  customer: User = new User();
+  customerSession: UserSession;
   qa: ProductQA;
 
   constructor(
@@ -98,9 +98,9 @@ export class DetailComponent implements OnInit {
       });
     })
 
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
     }
 
   }
@@ -197,8 +197,8 @@ export class DetailComponent implements OnInit {
     review.rating = this.rating;
     review.date = new Date();
     review.entity = this.product._id;
-    review.customerEmail = this.customer.contact.email;
-    review.customerName = this.customer.firstName + this.customer.lastName;
+    review.customerEmail = this.customer.email;
+    review.customerName = this.customer.fullName;
     this.reviewService
     .createReview(review)
     .pipe(first())
@@ -230,8 +230,8 @@ export class DetailComponent implements OnInit {
     question.question = this.getQuestionForm.question.value;
     question.entity = this.product._id;
     question.date = new Date();
-    question.customerEmail = this.customer.contact.email;
-    question.customerName = this.customer.firstName + this.customer.lastName;
+    question.customerEmail = this.customer.email;
+    question.customerName = this.customer.fullName ;
 
     this.submittedQuestion = true;
     this.productQAService

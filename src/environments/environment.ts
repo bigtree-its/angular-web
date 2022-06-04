@@ -26,8 +26,9 @@ export const environment = {
 
   /** Base Paths */
    AUTH_LOGIN_PATH: '/login',
-   AUTH_REGISTER_PATH: '/register',
-   USERS: '/customers',
+   AUTH_REGISTER_PATH: '/signup',
+   AUTH_LOGOUT_PATH: '/logout',
+   USERS: '/users',
    ORDERS: '/orders',
    CREATE_PAYMENT_INTENT: '/openchef/v1/create-payment-intent',
    BASKETS: '/baskets',

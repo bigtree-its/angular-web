@@ -9,6 +9,17 @@
   transition: background-color 1s ease 0s;
 }
 
+.profile-dd-item{
+  background: none;
+  height: 30px;
+  line-height: 30px;
+}
+
+.profile-dd-item:hover{
+  cursor: pointer;
+  background-color:  #1b1b1b;
+}
+
 .header {
   /* transition: background-color 1s ease 0s; */
   /* background-color: rgb(64, 64, 64); */
@@ -152,17 +163,17 @@
 .header-button{
   background: none;
   font-weight: 900;
-  margin: 16px 5px 16px 0;
+  margin: 16px 0px 16px 0;
   border: none;
   height: 35px;
   line-height: 35px;
-  border-radius: 12px;
-  padding: 0 20px;
+  padding: 0 10px;
+  border-bottom: 3px solid #F2F3F4;
 }
 
 .header-button:hover {
   cursor: pointer;
-  background-color: aquamarine;
+  border-bottom: 3px solid #222;
 }
 
 .basket-section {

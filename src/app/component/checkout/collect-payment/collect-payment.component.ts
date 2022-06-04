@@ -9,7 +9,7 @@ import { LocalContextService } from 'src/app/service/localcontext.service';
 import { OrderService } from 'src/app/service/order.service';
 import { AccountService } from 'src/app/service/account.service';
 import { BasketService } from 'src/app/service/basket.service';
-import { Address, Customer, CustomerSession } from 'src/app/model/common-models';
+import { Address, User, UserSession } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-collect-payment',
@@ -24,8 +24,8 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
   order: Order;
   paymentIntentResponse: PaymentIntentResponse;
   stripeConfirmationError:string;
-  customerSession: CustomerSession;
-  customer: Customer;
+  customerSession: UserSession;
+  customer: User;
 
   constructor( private _location: Location,
     private orderService: OrderService,
@@ -38,9 +38,9 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
   ngOnInit(): void {
     this.address = this.localContextService.getDeliveryAddress();
     this.basket = this.basketService.getBasket();
-    this.customerSession = this.accountService.getCustomerSession();
+    this.customerSession = this.accountService.getUserSession();
     if ( this.customerSession !== null && this.customerSession !== undefined){
-      this.customer = this.customerSession.customer;
+      this.customer = this.customerSession.user;
     }
     this.createOrder(1.50);
     console.log('Postage Address: '+ JSON.stringify(this.address))
@@ -82,7 +82,7 @@ export class CollectPaymentComponent implements OnInit,AfterViewInit {
     this.order.date = new Date();
     this.order.address = this.address;
     // this.order.paymentCard = this.paymentCard;
-    this.order.email = this.customer.contact.email;
+    this.order.email = this.customer.email;
     this.order.currency = "GBP";
     this.order.subTotal = this.basket.total;
     this.order.saleTax = saleTax;

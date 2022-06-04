@@ -54,7 +54,14 @@ import { OrderChefThumbsupComponent } from './component/home-food/order-chef-thu
 import { CityComponent } from './component/home-food/city/city.component';
 import { ChefListComponent } from './component/home-food/chef-list/chef-list.component';
 import { OrderStatusComponent } from './component/home-food/order-status/order-status.component';
-
+import { ChefConfirmComponent } from './component/home-food/chef-confirm/chef-confirm.component';
+import { CustomerOrderComponent } from './component/customer-profile/customer-order/customer-order.component';
+import { SupplierOrderComponent } from './component/supplier-profile/supplier-order/supplier-order.component';
+import { CustomerProfileComponent } from './component/customer-profile/customer-profile.component';
+import { SupplierProfileComponent } from './component/supplier-profile/supplier-profile.component';
+import { BecomeASupplierComponent } from './component/become-a-supplier/become-a-supplier.component';
+import { CurrencyPipe } from '@angular/common';
+import { MyCurrencyPipe } from './helpers/my-currency-pipe';
 
 @NgModule({
   declarations: [
@@ -98,6 +105,12 @@ import { OrderStatusComponent } from './component/home-food/order-status/order-s
     CityComponent,
     ChefListComponent,
     OrderStatusComponent,
+    ChefConfirmComponent,
+    CustomerProfileComponent,
+    SupplierProfileComponent,
+    CustomerOrderComponent,
+    SupplierOrderComponent,
+    BecomeASupplierComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +125,7 @@ import { OrderStatusComponent } from './component/home-food/order-status/order-s
     CookieModule.forRoot(),
     TreeModule.forRoot()
   ],
-  providers: [AppToastService],
+  providers: [AppToastService, CurrencyPipe, MyCurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

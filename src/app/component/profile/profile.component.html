@@ -16,8 +16,8 @@
             </button>
             <div class="collapse show" id="home-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
-                <li><a (click)="showAboutYouModule()" class="link-dark rounded nav-item">Change contact details</a></li>
-                <li><a (click)="showAddressModule()" class="link-dark rounded nav-item">Change address</a></li>
+                <li><a (click)="showAboutYouModule()" class="link-dark rounded nav-item">Contact</a></li>
+                <li><a (click)="showAddressModule()" class="link-dark rounded nav-item">Address</a></li>
               </ul>
             </div>
           </li>
@@ -28,7 +28,7 @@
             </button>
             <div class="collapse show" id="dashboard-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
-                <li><a (click)="showSecurityModule()" class="link-dark rounded nav-item">Change Password</a></li>
+                <li><a (click)="showSecurityModule()" class="link-dark rounded nav-item">Security</a></li>
               </ul>
             </div>
           </li>
@@ -40,9 +40,8 @@
             <div class="collapse show" id="orders-collapse">
               <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
                 <li><a (click)="showOrders('CREATED')" class="link-dark rounded nav-item">Open Orders</a></li>
-                <li><a (click)="showOrders('SHIPPED')" class="link-dark rounded nav-item">Shipped Orders</a></li>
+                <li><a (click)="showOrders('CONFIRMED')" class="link-dark rounded nav-item">Confirmed Orders</a></li>
                 <li><a (click)="showOrders('COMPLETED')" class="link-dark rounded nav-item">Completed Orders</a></li>
-                <li><a (click)="showOrders('CANCELLED')" class="link-dark rounded nav-item">Cancelled Orders</a></li>
               </ul>
             </div>
           </li>
@@ -57,17 +56,12 @@
           <div class="mb-3 ml-3">
             <label for="firstNamePersonalDetails">Email</label>
             <input type="text" class="form-control ob-text-field" id="emailPersonalDetails" placeholder="" required
-              [(ngModel)]="customer.contact.email" name="emailPersonalDetails" #emailPersonalDetails="ngModel" disabled>
+              [(ngModel)]="customer.email" name="emailPersonalDetails" #emailPersonalDetails="ngModel" disabled>
           </div>
           <div class="mb-3 ml-3">
-            <label for="firstNamePersonalDetails">First name</label>
-            <input type="text" class="form-control ob-text-field" id="firstNamePersonalDetails" placeholder="" required
-              [(ngModel)]="customer.firstName" name="firstNamePersonalDetails" #firstNamePersonalDetails="ngModel">
-          </div>
-          <div class="mb-3 ml-3">
-            <label for="lastNamePersonalDetails">Last name</label>
-            <input type="text" class="form-control ob-text-field" id="lastNamePersonalDetails" placeholder="" required
-              [(ngModel)]="customer.lastName" name="lastNamePersonalDetails" #lastNamePersonalDetails="ngModel">
+            <label for="fullNamePersonalDetails">Last name</label>
+            <input type="text" class="form-control ob-text-field" id="fullNamePersonalDetails" placeholder="" required
+              [(ngModel)]="customer.fullName" name="fullNamePersonalDetails" #fullNamePersonalDetails="ngModel">
           </div>
           <div class="mb-3 ml-3">
             <label for="mobilePersonalDetails">Mobile</label>
@@ -161,9 +155,9 @@
                     placeholder="" value="" name="firstName" #firstName="ngModel" required>
                 </div> -->
                 <!-- <div class="address-form-col-half mb-3 ml-3">
-                  <label for="lastName">Last name</label>
-                  <input type="text" class="form-control ob-text-field" id="lastName" placeholder="" value="" required
-                    [(ngModel)]="address.lastName" name="lastName" #lastName="ngModel">
+                  <label for="fullName">Last name</label>
+                  <input type="text" class="form-control ob-text-field" id="fullName" placeholder="" value="" required
+                    [(ngModel)]="address.fullName" name="fullName" #fullName="ngModel">
                 </div> -->
               </div>
               <div class="mb-3 ml-3">
@@ -173,14 +167,13 @@
               </div>
               <div class="mb-3 ml-3">
                 <label for="addressLine1">Address</label>
-                <input type="text" class="form-control ob-text-field" id="addressLine2" placeholder="1234, Main St"
+                <input type="text" class="form-control ob-text-field" id="addressLine2" placeholder="123, MyStreet"
                   required [(ngModel)]="address.addressLine1" name="addressLine1" #addressLine1="ngModel">
               </div>
 
               <div class="mb-3 ml-3">
                 <label for="addressLine2">Address 2 <span class="text-muted">(Optional)</span></label>
-                <input type="text" class="form-control ob-text-field" id="addressLine2" placeholder="Apartment or
-                                    suite" [(ngModel)]="address.addressLine2" value="" name="addressLine2"
+                <input type="text" class="form-control ob-text-field" id="addressLine2" placeholder="Area, Location etc" [(ngModel)]="address.addressLine2" value="" name="addressLine2"
                   #addressLine2="ngModel">
               </div>
 
@@ -207,7 +200,7 @@
                                 </div> -->
                 </div>
                 <div class="address-form-col-1-3 mb-3 ml-3">
-                  <label for="postcode">Post/Zip code</label>
+                  <label for="postcode">Postcode</label>
                   <input type="text" class="form-control ob-text-field" id="postcode" placeholder="" required
                     [(ngModel)]="address.postcode" name="postcode" #postcode="ngModel">
                   <!-- <div [hidden]="postcode.valid || postcode.pristine" class="alert alert-danger">

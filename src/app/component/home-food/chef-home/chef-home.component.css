@@ -359,7 +359,7 @@
 }
 
 .order-confirm-button {
-    color: #1dffcd;
+    color: #ffa601;
     padding: 10px;
     font-weight: bold;
     background-color: #292929;
@@ -372,6 +372,7 @@
 .order-confirm-button:hover {
     cursor: pointer;
     color: #fff;
+    background-color: #fd7e14;
     transform: scale(1.01);
 }
 

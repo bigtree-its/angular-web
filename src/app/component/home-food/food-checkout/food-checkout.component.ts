@@ -8,7 +8,7 @@ import { RapidApiService } from 'src/app/service/rapid-api.service';
 import { Chef, FoodOrder, LocalChef } from 'src/app/model/localchef';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Address, Customer, CustomerSession, SignupRequest } from 'src/app/model/common-models';
+import { Address, User, UserSession, SignupRequest } from 'src/app/model/common-models';
 
 @Component({
   selector: 'app-food-checkout',
@@ -26,14 +26,14 @@ export class FoodCheckoutComponent implements OnInit {
   postcodeAddressList: RapidApiByPostcodeResponseSummary[];
   rapidApiByPostcodeResponseSummary: RapidApiByPostcodeResponseSummary;
   postcode: string;
-  customerSession: CustomerSession;
-  customer: Customer;
+  userSession: UserSession;
+  user: User;
   hideAddressSection: boolean;
   paymentIntentResponse: PaymentIntentResponse;
   stripeConfirmationError: string;
   localChef: LocalChef;
   serviceMode: string = "Collection";
-  customerLoggedIn: boolean;
+  userLoggedIn: boolean;
   addressSelected: boolean;
   action: string;
   loginEmail: string = '';
@@ -59,19 +59,19 @@ export class FoodCheckoutComponent implements OnInit {
   ngOnInit(): void {
 
     this.isLoggedIn();
-    this.customerSession = this.accountService.getCustomerSession();
-    if (this.customerSession !== undefined && this.customerSession !== null && this.customerSession.customer !== null && this.customerSession.customer !== undefined) {
-      this.customer = this.customerSession.customer;
-      this.address = this.customer.address;
-      console.log('The customer : '+ JSON.stringify(this.customer));
+    this.userSession = this.accountService.getUserSession();
+    if (this.userSession !== undefined && this.userSession !== null && this.userSession.user !== null && this.userSession.user !== undefined) {
+      this.user = this.userSession.user;
+      this.address = this.user.address;
+      console.log('The user : '+ JSON.stringify(this.user));
     }else{
-      this.customerLoggedIn = false;
+      this.userLoggedIn = false;
     }
     this.localChef = this.foodOrderService.getChef();
     this.foodOrder = this.foodOrderService.getOrder();
     console.log('ChefOrder on Storage: '+ JSON.stringify(this.foodOrder));
     console.log('Chef on Storage: '+ JSON.stringify(this.localChef));
-    console.log('Customer on Storage: '+ JSON.stringify(this.customerSession));
+    console.log('User on Storage: '+ JSON.stringify(this.userSession));
   }
 
   ngAfterViewInit(): void {
@@ -80,7 +80,7 @@ export class FoodCheckoutComponent implements OnInit {
   }
 
   isLoggedIn() {
-    this.customerLoggedIn = this.accountService.isAuthenticated();
+    this.userLoggedIn = this.accountService.isAuthenticated();
   }
 
   actionLogin() {
@@ -99,31 +99,31 @@ export class FoodCheckoutComponent implements OnInit {
   doLoginSubmit() {
     console.log('Submitting log in Email ' + this.loginEmail);
     console.log('Submitting log in Password ' + this.loginPassword);
-    this.loginCustomer(this.loginEmail, this.loginPassword);
+    this.loginUser(this.loginEmail, this.loginPassword);
   }
 
-  loginCustomer(email: string, password: string) {
+  loginUser(email: string, password: string) {
     this.accountService.login(email, password)
       .pipe(first())
       .subscribe(
         data => {
           if ( data === null || data === undefined){
-            this.customerLoggedIn = false;
+            this.userLoggedIn = false;
             this.loginErrorResponse  = "Username or Password not correct.";
           }else{
-            var customerSession: CustomerSession = data;
-            if( customerSession.success){
-              this.customerLoggedIn = true;
+            var userSession: UserSession = data;
+            if( userSession.success){
+              this.userLoggedIn = true;
               this.loginErrorResponse = undefined;
             }else{
-              this.loginErrorResponse = customerSession.message;
+              this.loginErrorResponse = userSession.message;
             }
           }
           // this.router.navigate([this.returnUrl]);
          
         },
         error => {
-          this.customerLoggedIn = false;
+          this.userLoggedIn = false;
           this.loginErrorResponse  = "Username or Password not correct.";
         });
   }
@@ -144,7 +144,7 @@ export class FoodCheckoutComponent implements OnInit {
       .subscribe(
         data => {
           console.error('Signup Successful');
-          this.loginCustomer(signupRequest.email, signupRequest.password);
+          this.loginUser(signupRequest.email, signupRequest.password);
           this.signupErrorResponse = undefined;
         },
         error => {
@@ -176,6 +176,7 @@ export class FoodCheckoutComponent implements OnInit {
       customer: null,
       chef: null,
       serviceMode: "Collection",
+      review:  null
     };
   }
 
@@ -220,9 +221,9 @@ export class FoodCheckoutComponent implements OnInit {
   makePayment() {
     console.log('Creating payment intent');
     var paymentIntentRequest = new PaymentIntentRequest();
-    // paymentIntentRequest.customerEmail = this.customer.email;
-    if ( this.customer !== undefined && this.customer.contact !== undefined){
-      this.foodOrder.customerEmail = this.customer.contact.email;
+    // paymentIntentRequest.userEmail = this.user.email;
+    if ( this.user !== undefined && this.user.contact !== undefined){
+      this.foodOrder.customerEmail = this.user.email;
     }
     paymentIntentRequest.currency = "GBP";
     paymentIntentRequest.subTotal = this.foodOrder.subTotal * 100;
@@ -238,7 +239,9 @@ export class FoodCheckoutComponent implements OnInit {
         this.paymentIntentResponse.clientSecret !== null &&
         this.paymentIntentResponse.clientSecret !== undefined
       ) {
+        console.log('Payment Intent Response: '+ JSON.stringify(this.paymentIntentResponse));
         var stripeElements = (<any>window).getStripeElements();
+        console.log('Calling Stripe.pay()');
         (<any>window).pay(stripeElements.stripe, stripeElements.card, this.paymentIntentResponse.clientSecret, this);
       } else {
         console.log('Unable to collect payment from your card.');
@@ -251,7 +254,7 @@ export class FoodCheckoutComponent implements OnInit {
     if (response !== null && response !== undefined) {
       var paymentIntent = response.paymentIntent;
       var paymentIntentJson = JSON.stringify(paymentIntent, null, 2);
-      console.log('Payment successfull: ' + paymentIntentJson);
+      console.log('Payment confirmed response: ' + paymentIntentJson);
       if (response.error) {
         this.stripeConfirmationError = response.error.message;
         this.hidePaymentSection = false;
@@ -274,12 +277,12 @@ export class FoodCheckoutComponent implements OnInit {
   }
   confirmPurchase() {
     console.log('Confirming order..');
-    console.log('The customer object: '+ JSON.stringify(this.customer))
-    console.log('The customer adress object: '+ JSON.stringify(this.address))
+    console.log('The user object: '+ JSON.stringify(this.user))
+    console.log('The user adress object: '+ JSON.stringify(this.address))
     this.foodOrder.status ="CREATED";
     this.foodOrder.chefId = this.localChef._id;
-    this.foodOrder.customerEmail = this.customer.contact.email;
-    this.foodOrder.customerMobile = this.customer.contact.mobile;
+    this.foodOrder.customerEmail = this.user.email;
+    this.foodOrder.customerMobile = this.user.contact.mobile;
     this.foodOrder.serviceMode = this.serviceMode;
     this.foodOrder.chef = new Chef();
     this.foodOrder.chef.address = this.localChef.address;
@@ -288,7 +291,7 @@ export class FoodCheckoutComponent implements OnInit {
     this.foodOrder.chef.name = this.localChef.name;
     this.foodOrder.chef.image = this.localChef.coverPhoto;
     this.foodOrder.chef.specials = this.localChef.specials;
-    this.foodOrder.customer = this.customer;
+    this.foodOrder.customer = this.user;
     this.foodOrder.customer.address = this.address;
     this.foodOrderService.placeOrder(this.foodOrder).subscribe((result: FoodOrder) => {
       this.confirmedOrder = result;

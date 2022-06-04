@@ -10,7 +10,7 @@
 }
 
 .selected-servicemode {
-    background-color: #41464b;
+    background-color: #ffa601;
     color: #fff;
 }
 
@@ -60,12 +60,11 @@
 }
 
 .stripe-button-old {
-    background: #64676f;
+    background: #ffa601;
     color: #ffffff;
-    border-radius: 4px;
     border: 0;
     padding: 12px 16px;
-    font-size: 16px;
+    font-size: 25px;
     font-weight: 600;
     cursor: pointer;
     display: block;
