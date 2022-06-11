@@ -1,0 +1,16 @@
+<div class="food-card">
+    <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
+      <div class="d-flex flex-start">
+        <img src="/assets/icons/food-item.png" width="100%" height="100%" loading="lazy" alt="{{food.name}}" class="thumbnail-picture">
+        <div class="d-flex flex-column ">
+          <span style="font-weight: bold;padding: 0 5px;font-size: 15px;">{{food.name}}</span>
+          <span style="font-weight: normal;padding: 5px;">{{food.description}}</span>
+        </div>
+      </div>
+      <div class="d-flex flex-start">
+        <span class="food-price">{{food.price | currency: 'GBP'}}</span>
+        <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(content)">Add to order</button> -->
+        <!-- <button class="btn btn-light btn-outline-secondary" style="height: 25px;line-height: 15px;align-self: center;" (click)="openScrollableContent(content)">Add</button> -->
+      </div>
+    </div>
+  </div>

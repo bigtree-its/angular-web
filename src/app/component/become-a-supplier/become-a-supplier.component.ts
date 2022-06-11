@@ -1,10 +1,12 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/helpers/utils';
 import { Address, ChefContact, Contact, User, UserSession } from 'src/app/model/common-models';
-import { Cuisine, LocalArea, LocalChef } from 'src/app/model/localchef';
+import { Calendar, Cuisine, Food, LocalArea, LocalChef } from 'src/app/model/localchef';
 import { AccountService } from 'src/app/service/account.service';
 import { LocalChefService } from 'src/app/service/localchef.service';
+import * as _ from 'underscore';
 
 @Component({
   selector: 'app-become-a-supplier',
@@ -27,8 +29,6 @@ export class BecomeASupplierComponent implements OnInit {
   telephone: string;
 
   newSpecial: string;
-  specials: string[] = [];
-
 
   slots: string[] = [];
   selectedSlots: string[] = [];
@@ -41,9 +41,13 @@ export class BecomeASupplierComponent implements OnInit {
   deliveryDistance: number;
   deliveryCharge: number;
   deliveryMinimum: number;
-  freeDeliveryOver : number;
+  freeDeliveryOver: number;
   delivery: boolean;
-  minimumOrder: boolean;
+  minimumOrder: number;
+
+  itemName: string;
+  itemPrice: number;
+  itemDesc: string;
 
   moduleName: string;
   displayAddressModule: boolean;
@@ -54,6 +58,7 @@ export class BecomeASupplierComponent implements OnInit {
   displaySlotsModule: boolean;
   displayCategoriesModule: boolean;
   displayServiceModeModule: boolean;
+  displayMenuModule: boolean;
 
 
   userSession: UserSession;
@@ -74,8 +79,33 @@ export class BecomeASupplierComponent implements OnInit {
 
   nextButton: string = "Next";
   submissionError: string;
+  selectedCategory: string;
 
-  constructor(private utils: Utils, private accountService: AccountService, private localChefService: LocalChefService, private currencyPipe: CurrencyPipe) { }
+  orderByDate: NgbDate;
+  collectionDate: NgbDate;
+  deliveryDate: NgbDate;
+
+  selectedCategoryForDisplay: string;
+  showItemEditPanel: boolean;
+  allDays: boolean;
+  thisWeek: boolean = true;
+  thisMonth: boolean;
+  showCalendarEditPanel: boolean;
+  calendars: Calendar[];
+
+  public isCollapsed: boolean[] = [];
+  weeklyCals: Calendar[] = [];
+  MonthlyCals: Calendar[] = [];
+  calendarsToDisplay: Calendar[];
+  calendarOnEdit: Calendar;
+  foods: Food[] = [];
+  foodEditPanelTitle: string;
+  foodOnEdit: Food;
+
+  clickMyContainer: Function;
+
+  constructor(private ngbCalendar: NgbCalendar, private utils: Utils, private accountService: AccountService, private localChefService: LocalChefService, private currencyPipe: CurrencyPipe) {
+  }
 
   ngOnInit(): void {
     this.displayAddressModule = true;
@@ -114,10 +144,34 @@ export class BecomeASupplierComponent implements OnInit {
             } else {
               this.selectedCuisines = this.localChef.cuisines;
             }
+            if (this.localChef.specials === null || this.localChef.specials === undefined || this.localChef.specials.length === 0) {
+              this.localChef.specials = [];
+            }
+            if (this.localChef.categories === null || this.localChef.categories === undefined || this.localChef.categories.length === 0) {
+              this.localChef.categories = this.categories;
+            } else {
+              this.categories = this.localChef.categories;
+            }
+            if (this.localChef.slots === null || this.localChef.slots === undefined || this.localChef.slots.length === 0) {
+              this.localChef.slots = this.selectedSlots;
+            } else {
+              this.selectedSlots = this.localChef.slots;
+            }
+            if (this.localChef.delivery) {
+              this.selectedServiceModes.push("Delivery");
+            }
+            this.deliveryMinimum = this.localChef.deliveryMinimum;
+            this.freeDeliveryOver = this.localChef.freeDeliveryOver;
+            this.deliveryCharge = this.localChef.deliveryFee;
+            this.deliveryDistance = this.localChef.deliveryDistance;
+            this.minimumOrder = this.localChef.minimumOrder;
+            this.fetchCalendars();
+            this.fetchFoods();
           }
         }, err => {
           console.log('Error while fetching Chef. ' + JSON.stringify(err));
         });
+
     }
     this.fetchCuisines();
 
@@ -127,6 +181,39 @@ export class BecomeASupplierComponent implements OnInit {
 
     this.serviceModes.push("Collection");
     this.serviceModes.push("Delivery");
+
+  }
+
+  fetchFoods() {
+    this.localChefService.getAllFoods(this.localChef._id).subscribe((foods: Food[]) => {
+      if (!this.utils.isCollectionEmpty(foods)) {
+        this.foods = foods;
+        this.foods.sort((val1: Food, val2: Food) => {
+          return <any>new Date(val1.updatedAt) - <any>new Date(val2.updatedAt);
+        });
+        console.log('Foods for Chef: ' + JSON.stringify(this.foods));
+      }
+    }, err => { });
+  }
+
+
+  fetchCalendars() {
+    this.localChefService.getCalendars(this.localChef._id, false, false).subscribe((calendars: Calendar[]) => {
+      this.calendars = calendars;
+      if (this.utils.isCollectionEmpty(this.calendars)) {
+        this.calendars = [];
+      }
+      this.refreshCalendars();
+    }, err => { });
+  }
+
+  private refreshCalendars() {
+    this.calendars.sort((val1: Calendar, val2: Calendar) => {
+      return <any>new Date(val1.orderBefore) - <any>new Date(val2.orderBefore);
+    });
+    console.log('Calendars for Chef: ' + JSON.stringify(this.calendars));
+    this.groupCalendar();
+    this.selectThisWeek();
   }
 
   createNewChef() {
@@ -136,6 +223,8 @@ export class BecomeASupplierComponent implements OnInit {
     this.localChefService.createNewChef(newChef)
       .subscribe((chef: LocalChef) => {
         this.localChef = chef;
+        this.fetchCalendars();
+        this.fetchFoods();
         console.log('New Chef created. ' + JSON.stringify(this.localChef));
       }, err => {
         console.log('Error while creating new Chef. ' + JSON.stringify(err));
@@ -198,8 +287,8 @@ export class BecomeASupplierComponent implements OnInit {
       }
       this.showSpecialsModule();
     } else if (this.displaySpecialModule === true) {
-      console.log('Selected specials ' + this.specials)
-      if (this.specials.length === 0) {
+      console.log('Selected specials ' + this.localChef.specials)
+      if (this.localChef.specials.length === 0) {
         return;
       }
       this.showSlotsModule();
@@ -245,6 +334,9 @@ export class BecomeASupplierComponent implements OnInit {
     } else if (this.displayServiceModeModule === true) {
       this.showCategoriesModule();
     }
+    else if (this.displayMenuModule === true) {
+      this.showServiceModeModule();
+    }
   }
 
   private showServiceAreaModule() {
@@ -256,6 +348,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = true;
+    this.displayMenuModule = false;
     this.nextButton = "Next";
     this.moduleName = "Select your Service Area";
   }
@@ -269,6 +362,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = true;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.nextButton = "Next";
     this.moduleName = "Select your cuisines";
   }
@@ -282,6 +376,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = true;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.nextButton = "Next";
     this.moduleName = "What is your address?";
   }
@@ -295,6 +390,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.moduleName = "What are your contact details?";
     this.nextButton = "Next";
     this.fetchAllServiceAreas(this.city);
@@ -309,6 +405,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.moduleName = "What are your specials";
     this.nextButton = "Next";
   }
@@ -322,6 +419,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.nextButton = "Next";
     this.moduleName = "What slots you can serve?";
   }
@@ -335,12 +433,14 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
+    this.displayMenuModule = false;
     this.nextButton = "Next";
     this.moduleName = "What categories your foods can be grouped?";
   }
 
   showServiceModeModule() {
     this.displayServiceModeModule = true;
+    this.displayMenuModule = false;
     this.displayCategoriesModule = false;
     this.displaySlotsModule = false;
     this.displaySpecialModule = false;
@@ -348,11 +448,26 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
-    this.nextButton = "Complete";
+    this.nextButton = "Next";
     this.moduleName = "Service Mode";
   }
 
-  onRemoveArea(area: LocalArea){
+  showMenuModule() {
+    this.displayMenuModule = true;
+    this.displayServiceModeModule = false;
+    this.displayCategoriesModule = false;
+    this.displaySlotsModule = false;
+    this.displaySpecialModule = false;
+    this.displayContactModule = false;
+    this.displayCuisinesModule = false;
+    this.displayAddressModule = false;
+    this.displayServiceAreaModule = false;
+    this.nextButton = "Next";
+    this.moduleName = "Your Menu";
+    this.selectedCategoryForDisplay = this.categories[0];
+  }
+
+  onRemoveArea(area: LocalArea) {
     if (this.selectedAreaList.includes(area)) {
       for (var i = 0; i < this.selectedAreaList.length; i++) {
         var item = this.selectedAreaList[i];
@@ -367,7 +482,7 @@ export class BecomeASupplierComponent implements OnInit {
   onSelectArea(area: LocalArea) {
     if (!this.selectedAreaList.includes(area)) {
       this.selectedAreaList.push(area);
-    } 
+    }
   }
 
   addArea() {
@@ -375,12 +490,12 @@ export class BecomeASupplierComponent implements OnInit {
     newArea.name = this.newArea;
     newArea.city = this.localChef.address.city;
     newArea.slug = this.getSlug(newArea.name, newArea.city);
-    if (! this.selectedAreaList.includes(newArea)){
+    if (!this.selectedAreaList.includes(newArea)) {
       this.selectedAreaList.push(newArea);
     }
   }
 
-  onRemoveCuisine(cuisine: Cuisine){
+  onRemoveCuisine(cuisine: Cuisine) {
     if (this.selectedCuisines.includes(cuisine)) {
       for (var i = 0; i < this.selectedCuisines.length; i++) {
         var item = this.selectedCuisines[i];
@@ -395,22 +510,25 @@ export class BecomeASupplierComponent implements OnInit {
   onSelectCuisine(cuisine: Cuisine) {
     if (!this.selectedCuisines.includes(cuisine)) {
       this.selectedCuisines.push(cuisine);
-    } 
+    }
   }
 
   addCuisine() {
     var newCuisine: Cuisine = new Cuisine();
     newCuisine.name = this.newCuisine;
-    if (! this.selectedCuisines.includes(newCuisine)){
+    if (!this.selectedCuisines.includes(newCuisine)) {
       this.selectedCuisines.push(newCuisine);
     }
   }
 
-
-    onSelectSlot(slot: string) {
+  onSelectSlot(slot: string) {
     if (!this.selectedSlots.includes(slot)) {
       this.selectedSlots.push(slot);
-    } else {
+    }
+  }
+
+  onRemoveSlot(slot: string) {
+    if (this.selectedSlots.includes(slot)) {
       for (var i = 0; i < this.selectedSlots.length; i++) {
         var item = this.selectedSlots[i];
         if (item === slot) {
@@ -421,57 +539,57 @@ export class BecomeASupplierComponent implements OnInit {
     }
   }
 
-  selectedSlot(slot: string) {
-    return this.selectedSlots.includes(slot);
+  /** Specials */
+  addSpecial() {
+    if (this.utils.isEmpty(this.newSpecial)) {
+      return;
+    }
+    if (!this.localChef.specials.includes(this.newSpecial)) {
+      this.localChef.specials.push(this.newSpecial);
+      this.newSpecial = "";
+    }
   }
 
+  onRemoveSpecial(special: string) {
+    if (this.localChef.specials.includes(special)) {
+      for (var i = 0; i < this.localChef.specials.length; i++) {
+        var item = this.localChef.specials[i];
+        if (item === special) {
+          console.log(`Removing special ${special}`);
+          this.localChef.specials.splice(i, 1);
+        }
+      }
+    }
+
+  }
+
+  /** categories */
   addCategory() {
     if (this.utils.isEmpty(this.newCategory)) {
       return;
     }
     if (!this.categories.includes(this.newCategory)) {
       this.categories.push(this.newCategory);
+      this.localChef.categories = this.categories;
       this.newCategory = "";
+      console.log('The categories: ' + this.categories);
+      console.log('The categories in chef: ' + this.localChef.categories);
     }
-  }
-
-  selectedCategory(category: string) {
-    return this.categories.includes(category);
   }
 
   onRemoveCategory(category: string) {
-    for (var i = 0; i < this.categories.length; i++) {
-      var item = this.categories[i];
-      if (item === category) {
-        console.log(`Removing category ${category}`);
-        this.categories.splice(i, 1);
+    if (this.categories.includes(category)) {
+      for (var i = 0; i < this.categories.length; i++) {
+        var item = this.categories[i];
+        if (item === category) {
+          console.log(`Removing category ${category}`);
+          this.categories.splice(i, 1);
+          this.localChef.categories = this.categories;
+        }
       }
     }
   }
-  /** Specials */
-  addSpecial() {
-    if (this.utils.isEmpty(this.newSpecial)) {
-      return;
-    }
-    if (!this.specials.includes(this.newSpecial)) {
-      this.specials.push(this.newSpecial);
-      this.newSpecial = "";
-    }
-  }
 
-  selectedSpecial(special: string) {
-    return this.specials.includes(special);
-  }
-
-  onRemoveSpecial(special: string) {
-    for (var i = 0; i < this.specials.length; i++) {
-      var item = this.specials[i];
-      if (item === special) {
-        console.log(`Removing special ${special}`);
-        this.specials.splice(i, 1);
-      }
-    }
-  }
 
   /** Service Mode Questionnaire */
   selectedServiceMode(mode: string) {
@@ -498,13 +616,20 @@ export class BecomeASupplierComponent implements OnInit {
   }
 
   transformDeliveryFee(element) {
-    element.target.value = this.currencyPipe.transform(this.deliveryCharge, 'GBP'); 
+    element.target.value = this.currencyPipe.transform(this.deliveryCharge, 'GBP');
   }
   transformDeliveryMinimum(element) {
-    element.target.value = this.currencyPipe.transform(this.deliveryMinimum, 'GBP'); 
+    element.target.value = this.currencyPipe.transform(this.deliveryMinimum, 'GBP');
   }
   transformFreeDeliveryOver(element) {
-    element.target.value = this.currencyPipe.transform(this.freeDeliveryOver, 'GBP'); 
+    element.target.value = this.currencyPipe.transform(this.freeDeliveryOver, 'GBP');
+  }
+  transformMinimumOrder(element) {
+    element.target.value = this.currencyPipe.transform(this.minimumOrder, 'GBP');
+  }
+
+  transformItemPrice(element) {
+    element.target.value = this.currencyPipe.transform(this.itemPrice, 'GBP');
   }
 
   saveChef() {
@@ -535,7 +660,7 @@ export class BecomeASupplierComponent implements OnInit {
       if (this.localChef.cuisines === null || this.localChef.cuisines === undefined) {
         this.localChef.cuisines = this.selectedCuisines;
       }
-     
+
       if (this.localChef.serviceAreas === null || this.localChef.serviceAreas === undefined || this.localChef.serviceAreas.length === 0) {
         this.localChef.serviceAreas = this.selectedAreaList;
       }
@@ -543,23 +668,21 @@ export class BecomeASupplierComponent implements OnInit {
       if (this.localChef.specials === null || this.localChef.specials === undefined) {
         this.localChef.specials = [];
       }
-      this.localChef.specials.push(...this.specials);
 
       if (this.localChef.categories === null || this.localChef.categories === undefined) {
-        this.localChef.categories = [];
+        this.localChef.categories = this.categories;
       }
-      this.localChef.categories.push(...this.categories);
 
       if (this.localChef.slots === null || this.localChef.slots === undefined) {
-        this.localChef.slots = [];
+        this.localChef.slots = this.selectedSlots;
       }
-      this.localChef.slots.push(...this.selectedSlots);
 
       this.localChef.delivery = this.selectedServiceModes.includes("Delivery");
-      this.localChef.deliveryMinimum = this.deliveryMinimum;
+      this.localChef.deliveryMinimum = +(this.deliveryMinimum);
       this.localChef.minimumOrder = +(this.minimumOrder);
       this.localChef.deliveryFee = +(this.deliveryCharge);
       this.localChef.freeDeliveryOver = +(this.freeDeliveryOver);
+      this.localChef.deliveryDistance = this.deliveryDistance;
 
       console.log('Delivery Minimum: ' + this.deliveryMinimum);
       console.log('Parsed Delivery Minimum: ' + +(+this.deliveryMinimum).toFixed(2));
@@ -567,7 +690,8 @@ export class BecomeASupplierComponent implements OnInit {
       this.localChefService.update(this.localChef).subscribe((res: LocalChef) => {
         if (res !== null && res !== undefined) {
           this.localChef = res;
-          console.error('Update chef completed. ' + JSON.stringify(this.localChef));
+          console.info('Update chef completed. ' + JSON.stringify(this.localChef));
+          this.showMenuModule();
         }
       }, err => {
         console.error('Update chef failed. ' + JSON.stringify(err));
@@ -601,7 +725,7 @@ export class BecomeASupplierComponent implements OnInit {
   }
 
   specialsValid() {
-    if (this.specials.length === 0) {
+    if (this.localChef.specials.length === 0) {
       return false;
     }
     return true;
@@ -619,5 +743,283 @@ export class BecomeASupplierComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+  }
+
+  saveFood() {
+
+    if (this.utils.isEmpty(this.itemName) || this.utils.isEmpty(this.itemDesc) || this.utils.isEmpty(this.selectedCategory) || !this.utils.isValid(this.itemPrice)) {
+      return;
+    }
+    if (this.foodOnEdit !== null && this.foodOnEdit !== undefined) {
+      this.updateFood();
+    } else {
+      this.createNewFood();
+    }
+
+  }
+
+  createNewFood() {
+    if (!this.utils.isCollectionEmpty(this.foods)) {
+      for (var i = 0; i < this.foods.length; i++) {
+        var item = this.foods[i];
+        if (item.name === this.itemName) {
+          return;
+        }
+      }
+    }
+    var food: Food = new Food();
+    food.category = this.selectedCategory;
+    food.name = this.itemName;
+    food.description = this.itemDesc;
+    food.price = this.itemPrice;
+    food.chefId = this.localChef._id;
+    food._uid = Date.now();
+
+    this.localChefService.createNewFood(food).subscribe((food: Food) => {
+      console.log("Food created. " + JSON.stringify(food));
+      this.fetchFoods();
+    }, err => { });
+    this.cancelItemEdit();
+  }
+
+  private updateFood() {
+    this.foodOnEdit.category = this.selectedCategory;
+    this.foodOnEdit.name = this.itemName;
+    this.foodOnEdit.description = this.itemDesc;
+    this.foodOnEdit.price = this.itemPrice;
+
+    this.localChefService.updateFood(this.foodOnEdit).subscribe((food: Food) => {
+      console.log("Food Updated. " + JSON.stringify(food));
+      this.fetchFoods();
+      this.cancelItemEdit();
+    }, err => { });
+  }
+
+  onRemoveFood(foodToDelete: Food) {
+    console.log('Removing food ' + JSON.stringify(foodToDelete));
+    this.localChefService.deleteFood(foodToDelete).subscribe(any => {
+      console.log("Food Deleted. ");
+      this.fetchFoods();
+    }, err => { });
+  }
+
+  onEditFood(foodToEdit: Food) {
+    this.foodOnEdit = foodToEdit;
+    this.showItemEditPanel = true;
+    console.log('Editing food ' + JSON.stringify(foodToEdit));
+    this.foodEditPanelTitle = foodToEdit.name;
+    this.selectedCategory = foodToEdit.category;
+    this.itemName = foodToEdit.name;
+    this.itemDesc = foodToEdit.description;
+    this.itemPrice = foodToEdit.price;
+  }
+
+  selectCategoryForDisplay(cat: string) {
+    console.log('Currently selected: ' + this.selectedCategoryForDisplay);
+    this.selectedCategoryForDisplay = cat;
+    console.log('After selection: ' + this.selectedCategoryForDisplay);
+  }
+
+  isCategorySelected(cat: string) {
+    return this.selectedCategoryForDisplay === cat;
+  }
+
+  onClickAddNewFood() {
+    this.showItemEditPanel = true;
+    this.foodEditPanelTitle = "Create New Food";
+  }
+
+  cancelItemEdit() {
+    this.showItemEditPanel = false;
+    this.itemName = "";
+    this.itemDesc = "";
+    this.itemPrice = 0;
+    this.selectedCategory = "";
+    this.foodOnEdit = null;
+  }
+
+  selectAllDays() {
+    this.allDays = true;
+    this.thisMonth = false;
+    this.thisWeek = false;
+    this.calendarsToDisplay = this.calendars;
+  }
+
+  selectThisWeek() {
+    this.thisWeek = true;
+    this.thisMonth = false;
+    this.allDays = false;
+    this.calendarsToDisplay = this.weeklyCals;
+  }
+
+  isPeriodSelected(period: string) {
+    if (period === 'allDays' && this.allDays) {
+      return true;
+    } else if (period === 'thisWeek' && this.thisWeek) {
+      return true;
+    } else if (period === 'thisMonth' && this.thisMonth) {
+      return true;
+    }
+  }
+
+  selectThisMonth() {
+    this.thisMonth = true;
+    this.thisWeek = false;
+    this.allDays = false;
+    this.calendarsToDisplay = this.MonthlyCals;
+  }
+
+  addDays(theDate: Date, days: number): Date {
+    return new Date(theDate.getTime() + days * 24 * 60 * 60 * 1000);
+  }
+
+  groupCalendar() {
+    this.weeklyCals = [];
+    this.MonthlyCals = [];
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
+
+    let today: Date = new Date();
+    let dayOfWeekNumber: number = today.getDay();
+    let endDays: number = 7 - dayOfWeekNumber;
+    var endDate: Date = this.addDays(today, endDays);
+    for (var i = 0; i < this.calendars.length; i++) {
+      var calendar: Calendar = this.calendars[i];
+      if (calendar !== null && calendar !== undefined) {
+        let calDate: Date = new Date(calendar.orderBefore);
+        if (calDate < endDate && calDate > today) {
+          this.weeklyCals.push(calendar);
+          this.MonthlyCals.push(calendar);
+        } else if (calDate < lastDay && calDate > firstDay) {
+          this.MonthlyCals.push(calendar);
+        }
+      }
+    }
+    console.log('Weekly Cals: ' + JSON.stringify(this.weeklyCals));
+    console.log('Monthly Cals: ' + JSON.stringify(this.MonthlyCals));
+  }
+
+  addNewCalendar() {
+    this.showCalendarEditPanel = true;
+    this.calendarOnEdit = new Calendar();
+    this.calendarOnEdit.foods = [];
+  }
+
+  cancelCalendarEditing() {
+    this.showCalendarEditPanel = false;
+    this.calendarOnEdit = null;
+  }
+
+  sortCalendar(a: Calendar, b: Calendar) {
+    return new Date(a.orderBefore).getTime() - new Date(b.orderBefore).getTime();
+  }
+
+  editCalendar(cal: Calendar) {
+    this.calendarOnEdit = cal;
+    this.showCalendarEditPanel = true;
+    var orderBefore = new Date(this.calendarOnEdit.orderBefore);
+    var collectionBy = new Date(this.calendarOnEdit.collectionStartDate);
+    var deliveryBy = new Date(this.calendarOnEdit.deliveryStartDate);
+
+    console.log('Calendar on edit: ' + JSON.stringify(this.calendarOnEdit))
+    this.orderByDate = NgbDate.from({ year: orderBefore.getUTCFullYear(), month: orderBefore.getMonth(), day: orderBefore.getDay() });
+    this.deliveryDate = new NgbDate(deliveryBy.getFullYear(), deliveryBy.getMonth(), deliveryBy.getDay());
+    this.collectionDate = new NgbDate(collectionBy.getFullYear(), collectionBy.getMonth(), collectionBy.getDay());
+
+  }
+
+  deleteCalendar(calendar: Calendar) {
+    this.localChefService.deleteCalendar(calendar)
+      .subscribe(
+        (any) => {
+          this.fetchCalendars();
+        },
+        err => { });
+  }
+
+  onClickAddFoodToCalendar(food: Food) {
+    if (this.calendarOnEdit !== null && this.calendarOnEdit !== undefined) {
+      var foods: Food[] = this.calendarOnEdit.foods;
+      if (this.utils.isCollectionEmpty(foods)) {
+        foods = [];
+      }
+      for (var i = 0; i < foods.length; i++) {
+        var item = foods[i];
+        if (item.name === food.name) {
+          return;
+        }
+      }
+      foods.push(food);
+      this.calendarOnEdit.foods = foods;
+    }
+  }
+
+  onClickRemoveFoodFromCalendar(food: Food) {
+    if (this.calendarOnEdit !== null && this.calendarOnEdit !== undefined) {
+      var foods: Food[] = this.calendarOnEdit.foods;
+      if (this.utils.isCollectionEmpty(foods)) {
+        foods = [];
+      }
+      for (var i = 0; i < foods.length; i++) {
+        var item = foods[i];
+        if (item.name === food.name) {
+          foods.splice(i, 1);
+          return;
+        }
+      }
+      foods.push(food);
+      this.calendarOnEdit.foods = foods;
+    } 
+  }
+
+  saveCalendar() {
+    let today: Date = new Date();
+    var orderBefore: Date = new Date(this.orderByDate.year, this.orderByDate.month - 1, this.orderByDate.day);
+    var collectionDate: Date = new Date(this.collectionDate.year, this.collectionDate.month - 1, this.collectionDate.day);
+    var deliveryDate: Date = new Date(this.deliveryDate.year, this.deliveryDate.month - 1, this.deliveryDate.day);
+
+    if (this.calendarOnEdit._id === null || this.calendarOnEdit._id === undefined) {
+      if (orderBefore > today && collectionDate > orderBefore && deliveryDate > orderBefore) {
+        if (!this.utils.isCollectionEmpty(this.calendars)) {
+          for (var i = 0; i < this.calendars.length; i++) {
+            var calendar: Calendar = this.calendars[i];
+            if (calendar !== null && calendar !== undefined) {
+              if (new Date(calendar.orderBefore) === orderBefore) {
+                return;
+              }
+            }
+          }
+        }
+      }
+      this.calendarOnEdit.chefId = this.localChef._id;
+      this.calendarOnEdit.orderBefore = orderBefore;
+      this.calendarOnEdit.collectionStartDate = collectionDate;
+      this.calendarOnEdit.collectionEndDate = collectionDate;
+      this.calendarOnEdit.deliveryStartDate = deliveryDate;
+      this.calendarOnEdit.deliveryEndDate = deliveryDate;
+    }
+    if (this.calendarOnEdit._id === null || this.calendarOnEdit._id === undefined) {
+      this.createNewCalendar();
+    } else {
+      this.localChefService.updateCalendar(this.calendarOnEdit)
+        .subscribe(any => {
+          this.fetchCalendars();
+        },
+          err => { });
+    }
+    this.cancelCalendarEditing();
+
+  }
+  createNewCalendar() {
+    this.localChefService.createNewCalendar(this.calendarOnEdit)
+      .subscribe(any => {
+        this.fetchCalendars();
+      },
+        err => { });
   }
 }

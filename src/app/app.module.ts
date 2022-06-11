@@ -62,6 +62,7 @@ import { SupplierProfileComponent } from './component/supplier-profile/supplier-
 import { BecomeASupplierComponent } from './component/become-a-supplier/become-a-supplier.component';
 import { CurrencyPipe } from '@angular/common';
 import { MyCurrencyPipe } from './helpers/my-currency-pipe';
+import { SupplierFoodItemComponent } from './component/supplier-food-item/supplier-food-item.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { MyCurrencyPipe } from './helpers/my-currency-pipe';
     CustomerOrderComponent,
     SupplierOrderComponent,
     BecomeASupplierComponent,
+    SupplierFoodItemComponent,
   ],
   imports: [
     BrowserModule,

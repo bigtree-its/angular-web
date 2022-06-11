@@ -61,7 +61,7 @@ export class ChefHomeComponent implements OnInit {
   }
 
   private fetchCalendars(chefId: string) {
-    this.localChefService.getCalendars(chefId).subscribe((calendars: Calendar[]) => {
+    this.localChefService.getCalendars(chefId, true, false).subscribe((calendars: Calendar[]) => {
       this.calendars = calendars;
       console.log('calendars :' + JSON.stringify(this.calendars));
     });

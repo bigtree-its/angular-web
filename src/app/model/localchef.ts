@@ -32,6 +32,7 @@ export class LocalChef {
     freeDeliveryOver: number;
     deliveryMinimum: number;
     deliveryFee: number;
+    deliveryDistance: number;
 }
 
 export class Cuisine {
@@ -71,6 +72,7 @@ export class Extra {
 
 export class Food {
     _id: string;
+    _uid: number;
     chefId: string;
     category: string;
     image: string;
@@ -82,6 +84,8 @@ export class Food {
     discounted: boolean;
     discountedPrice: number;
     active: boolean;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export class Calendar {

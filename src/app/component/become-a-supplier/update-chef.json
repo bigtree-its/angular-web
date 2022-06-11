@@ -1,0 +1,70 @@
+{
+    "address": {
+        "propertyNumber": "2",
+        "addressLine1": "Main St",
+        "addressLine2": "NY",
+        "city": "Glasgow",
+        "postcode": "G77 5GH",
+        "country": "SCOTLAND",
+        "latitude": 55.7716443,
+        "longitude": -4.314007399999999
+    },
+    "contact": {
+        "email": "nava.arul@gmail.com",
+        "mobile": "07979191176",
+        "telephone": "1415339850",
+        "fullName": "Navaneethakrishnan Kannusamy"
+    },
+    "description": [
+        "Beku Foods are comited to provide quality foos"
+    ],
+    "specials": [
+        "Curries"
+    ],
+    "cuisines": [
+        "346fcea8-af57-4e73-a87d-269f91e3ab6b"
+    ],
+    "gallery": [
+        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/20190503-delish-pineapple-baked-salmon-horizontal-ehg-450-1557771120.jpg",
+        "https://www.refrigeratedfrozenfood.com/ext/resources/NEW_RD_Website/DefaultImages/default-pasta.jpg?1430942591",
+        "http://cdn.cnn.com/cnnnext/dam/assets/140430115517-06-comfort-foods.jpg",
+        "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/foods_for_healthy_supple_skin_slideshow/1800x1200_foods_for_healthy_supple_skin_slideshow.jpg",
+        "https://ychef.files.bbci.co.uk/976x549/p09wrjyz.jpg",
+        "https://www.expatica.com/app/uploads/sites/2/2016/09/spanish-food.jpg"
+    ],
+    "serviceAreas": [
+        "200dfe76-9b80-412f-b0d6-476902adf024",
+        "9ccb28a1-9108-462e-bb0d-ed31af10dccb"
+    ],
+    "categories": [
+        "Burgers"
+    ],
+    "slots": [
+        "Breakfast"
+    ],
+    "_id": "721dc4e3-b87c-4da3-8ff5-8c6b2907614e",
+    "name": "Beku",
+    "displayName": "Beku Foods",
+    "slug": "beku-foods",
+    "rating": 5,
+    "reviews": 300,
+    "coverPhoto": "https://thumbs.dreamstime.com/b/chef-woman-portrait-kitchen-23037212.jpg",
+    "active": true,
+    "preOrder": true,
+    "delivery": true,
+    "takingOrdersNow": true,
+    "collectionOnly": false,
+    "minimumOrder": 10,
+    "collectionEstimate": 15,
+    "deliveryEstimateMin": 35,
+    "deliveryEstimateMax": 55,
+    "noMinimumOrder": true,
+    "createdAt": "2022-03-11T14:22:17.439Z",
+    "updatedAt": "2022-06-06T10:31:37.578Z",
+    "__v": 0,
+    "email": "nava.arul@gmail.com",
+    "deliveryFee": 2,
+    "deliveryMinimum": 2,
+    "freeDeliveryOver": 2,
+    "deliveryDistance": 5
+}

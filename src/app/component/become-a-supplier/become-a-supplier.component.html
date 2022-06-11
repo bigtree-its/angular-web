@@ -1,290 +1,689 @@
-<!-- <app-header></app-header> -->
 <div>
     <div
         style="position: fixed;left: 0;height: 100vh;width: 50%;display: flex;flex-direction: column;max-height: 100% !important;justify-content: center !important;align-items: unset !important;">
-        <div class="d-flex justify-content-center align-items-center"
-            style="height: 100vh;background: linear-gradient(90deg, rgba(131,87,199,0.9962578781512605) 0%, rgba(208,84,254,1) 35%, rgba(0,123,255,1) 100%);">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #343a40;">
             <span
-                style="font-size: 55px;font-weight: 900;align-self: center;text-align: center;color: #fff;">{{moduleName}}</span>
+                style="font-size: 55px;font-weight: 900;align-self: center;text-align: center;color: #fff;height: 100px;line-height: 100px;">{{moduleName}}</span>
         </div>
 
     </div>
     <div
-        style="display: flex;flex-direction: column;justify-content: space-between; left: 50%;position: fixed;height: 100%;width: 50%;overflow-y: auto;">
+        style="display: flex;flex-direction: column;justify-content: space-between; left: 50%;position: fixed;width: 50%;overflow-y: hidden;border: 1px solid #222;height: 100vh;">
 
-        <div *ngIf="displayAddressModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;">
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="addressLine1" id="addressLine1" tabindex="1"
-                        autocomplete="off" value="" [(ngModel)]="addressLine1" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="addressLine1">Address Line1</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="addressLine2" id="addressLine2" tabindex="2"
-                        autocomplete="off" value="" [(ngModel)]="addressLine2" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="addressLine2">Address Line2</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="city" id="city" tabindex="3" autocomplete="off" value=""
-                        [(ngModel)]="city" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="city">City</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off"
-                        value="" [(ngModel)]="postcode" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="postcode">Postcode</label>
+        <div style="height: calc(100vh - 60px) !important;overflow-y: auto;">
+            <div *ngIf="displayAddressModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical"
+                    style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="addressLine1" id="addressLine1" tabindex="1"
+                            autocomplete="off" value="" [(ngModel)]="addressLine1" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P" for="addressLine1">Address Line1</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="addressLine2" id="addressLine2" tabindex="2"
+                            autocomplete="off" value="" [(ngModel)]="addressLine2" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P" for="addressLine2">Address Line2</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="city" id="city" tabindex="3" autocomplete="off" value=""
+                            [(ngModel)]="city" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="city">City</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off"
+                            value="" [(ngModel)]="postcode" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="postcode">Postcode</label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="displayContactModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;">
-                <div class="input-div">
-                    <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value=""
-                        [(ngModel)]="email" #ctrl="ngModel" disabled>
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="email">Email</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="fullName" id="fullName" tabindex="1" autocomplete="off"
-                        value="" [(ngModel)]="fullName" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P" for="fullName">Full Name</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="mobile" id="mobile" tabindex="3" autocomplete="off" value=""
-                        [(ngModel)]="mobile" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="mobile">Mobile</label>
-                </div>
-                <div class="input-div">
-                    <input class="_381fS" type="text" name="telephone" id="telephone" tabindex="4" autocomplete="off"
-                        value="" [(ngModel)]="telephone" #ctrl="ngModel">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="telephone">Telephone</label>
+            <div *ngIf="displayContactModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical"
+                    style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                    <div class="input-div">
+                        <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off"
+                            value="" [(ngModel)]="email" #ctrl="ngModel" disabled>
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P" for="email">Email</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="fullName" id="fullName" tabindex="1" autocomplete="off"
+                            value="" [(ngModel)]="fullName" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P" for="fullName">Full Name</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="mobile" id="mobile" tabindex="3" autocomplete="off"
+                            value="" [(ngModel)]="mobile" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="mobile">Mobile</label>
+                    </div>
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="telephone" id="telephone" tabindex="4"
+                            autocomplete="off" value="" [(ngModel)]="telephone" #ctrl="ngModel">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="telephone">Telephone</label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="displayServiceAreaModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;overflow-y: auto;height: 90%;">
-                <div style="max-height: 300px;overflow-y: auto;"
-                    *ngIf="selectedAreaList !== null && selectedAreaList !== undefined && selectedAreaList.length > 0">
-                    <div
-                        style="display: flex; flex-flow: row wrap;border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px">
-                        <div class="d-flex justify-content-between align-items-center"
-                            *ngFor="let selectedArea of selectedAreaList"
-                            style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
-                            <span>{{ selectedArea.name }} {{ selectedArea.city }}</span>
-                            <div class="icon-close d-flex justify-content-center" (click)="onRemoveArea(selectedArea)"
+            <div *ngIf="displayServiceAreaModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="width: 600px;padding: 0 10px;">
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                            service areas</span>
+                        <div style="max-height: 300px;overflow-y: auto;margin-bottom: 30px;"
+                            *ngIf="selectedAreaList !== null && selectedAreaList !== undefined && selectedAreaList.length > 0">
+                            <div style="display: flex; flex-flow: row wrap;">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    *ngFor="let selectedArea of selectedAreaList"
+                                    style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
+                                    <span>{{ selectedArea.name }} {{ selectedArea.city }}</span>
+                                    <div class="icon-close d-flex justify-content-center"
+                                        (click)="onRemoveArea(selectedArea)" style="margin-left: 20px;">
+                                        <img src="/assets/icons/close.png" height="10px" width="10px"
+                                            (click)="onRemoveArea(selectedArea)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Choose
+                            from the list</span>
+                        <div *ngIf="serviceAreaList !== null && serviceAreaList !== undefined && serviceAreaList.length > 0"
+                            class="vertical" style="margin: 10px 0 20px 0;">
+                            <div style="max-height: 300px;overflow-y: scroll;">
+                                <div class="local-area-option" *ngFor="let serviceArea of serviceAreaList"
+                                    (click)="onSelectArea(serviceArea)">
+                                    <span>{{ serviceArea.name }},{{serviceArea.city}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Not
+                            finding your what you looking
+                            for?</span>
+                        <div style="margin: 10px 0;width: 500px;"
+                            class="d-flex justify-content-between align-items-center">
+                            <div class="input-div">
+                                <input class="_381fS" type="text" name="newArea" id="newArea" tabindex="4"
+                                    autocomplete="off" value="" [(ngModel)]="newArea" #ctrl="ngModel"
+                                    placeholder="Maidenhill etc">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="newArea">What is your are called</label>
+                            </div>
+                            <div class="icon d-flex justify-content-center" (click)="addArea()"
                                 style="margin-left: 20px;">
-                                <img src="/assets/icons/close.png" height="10px" width="10px"
-                                    (click)="onRemoveArea(selectedArea)">
+                                <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addArea()">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div *ngIf="displayCuisinesModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="margin: 10px;width: 600px;padding: 0 10px;">
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                            cuisines</span>
+                        <div style="max-height: 300px;overflow-y: auto;margin-bottom: 30px;"
+                            *ngIf="selectedCuisines !== null && selectedCuisines !== undefined && selectedCuisines.length > 0">
+                            <div style="display: flex; flex-flow: row wrap;">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    *ngFor="let selectedCuisine of selectedCuisines"
+                                    style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
+                                    <span>{{ selectedCuisine.name }}</span>
+                                    <div class="icon-close d-flex justify-content-center"
+                                        (click)="onRemoveCuisine(selectedCuisine)" style="margin-left: 20px;">
+                                        <img src="/assets/icons/close.png" height="10px" width="10px"
+                                            (click)="onRemoveCuisine(selectedCuisine)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Add
+                            more cuisines</span>
+                        <div *ngIf="cuisines !== null && cuisines !== undefined && cuisines.length > 0" class="vertical"
+                            style="margin: 10px 0 40px 0;">
+                            <div style="max-height: 300px;overflow-y: scroll;">
+                                <div class="local-area-option" *ngFor="let cuisine of cuisines"
+                                    (click)="onSelectCuisine(cuisine)">
+                                    <span>{{ cuisine.name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Not
+                            finding your what you looking
+                            for?</span>
+                        <div style="margin: 10px 0;width: 500px;"
+                            class="d-flex justify-content-between align-items-center">
+                            <div class="input-div">
+                                <input class="_381fS" type="text" name="newCuisine" id="newCuisine" tabindex="4"
+                                    autocomplete="off" value="" [(ngModel)]="newCuisine" #ctrl="ngModel"
+                                    placeholder="Chinese, Indian etc">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="newCuisine">What is your are called</label>
+                            </div>
+                            <div class="icon d-flex justify-content-center" (click)="addCuisine()"
+                                style="margin-left: 20px;">
+                                <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCuisine()">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="serviceAreaList !== null && serviceAreaList !== undefined && serviceAreaList.length > 0"
-                    class="d-flex flex-column" style="margin: 10px 0 20px 0;">
-                    <span style="font-size: 20px;padding: 10px 30px 10px 2px;">Select your area</span>
-                    <div style="max-height: 300px;overflow-y: scroll;">
-                        <div class="local-area-option" *ngFor="let serviceArea of serviceAreaList"
-                            (click)="onSelectArea(serviceArea)">
-                            <span>{{ serviceArea.name }},{{serviceArea.city}}</span>
+            </div>
+
+            <div *ngIf="displaySpecialModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="margin: 10px;width: 600px;padding: 0 10px;">
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                            speaciality foods</span>
+                        <div style="max-height: 300px;overflow-y: auto;"
+                            *ngIf="localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
+                            <div style="display: flex; flex-flow: row wrap;">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    *ngFor="let special of localChef.specials"
+                                    style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
+                                    <span>{{ special }}</span>
+                                    <div class="icon-close d-flex justify-content-center"
+                                        (click)="onRemoveSpecial(special)" style="margin-left: 20px;">
+                                        <img src="/assets/icons/close.png" height="10px" width="10px"
+                                            (click)="onRemoveSpecial(special)">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <span style="font-size: 20px;padding: 0 30px 0 2px;margin-top: 10px;">Not finding your what you looking
-                    for?</span>
-                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
-                    <div class="input-div">
-                        <input class="_381fS" type="text" name="newArea" id="newArea" tabindex="4" autocomplete="off"
-                            value="" [(ngModel)]="newArea" #ctrl="ngModel" placeholder="Maidenhill etc">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="newArea">What is your are called</label>
-                    </div>
-                    <div class="icon d-flex justify-content-center" (click)="addArea()" style="margin-left: 20px;">
-                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addArea()">
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div *ngIf="displayCuisinesModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;overflow-y: auto;height: 90%;">
-                <div style="max-height: 300px;overflow-y: auto;"
-                    *ngIf="selectedCuisines !== null && selectedCuisines !== undefined && selectedCuisines.length > 0">
-                    <div
-                        style="display: flex; flex-flow: row wrap;border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px">
-                        <div class="d-flex justify-content-between align-items-center"
-                            *ngFor="let selectedCuisine of selectedCuisines"
-                            style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
-                            <span>{{ selectedCuisine.name }}</span>
-                            <div class="icon-close d-flex justify-content-center"
-                                (click)="onRemoveCuisine(selectedCuisine)" style="margin-left: 20px;">
-                                <img src="/assets/icons/close.png" height="10px" width="10px"
-                                    (click)="onRemoveCuisine(selectedCuisine)">
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Want
+                            to add more speaciality foods</span>
+                        <div style="margin: 10px 0;width: 500px;"
+                            class="d-flex justify-content-between align-items-center">
+                            <div class="input-div">
+                                <input class="_381fS" type="text" name="newSpecial" id="newSpecial" tabindex="4"
+                                    autocomplete="off" value="" [(ngModel)]="newSpecial" #ctrl="ngModel"
+                                    placeholder="Curries, Briyanis etc">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="newSpecial">Your speciality foods</label>
+                            </div>
+                            <div class="icon d-flex justify-content-center" (click)="addSpecial()"
+                                style="margin-left: 20px;">
+                                <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addSpecial()">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="cuisines !== null && cuisines !== undefined && cuisines.length > 0"
-                    class="d-flex flex-column" style="margin: 10px 0 20px 0;">
-                    <span style="font-size: 20px;padding: 10px 30px 10px 2px;">Select your cuisine</span>
-                    <div style="max-height: 300px;overflow-y: scroll;">
-                        <div class="local-area-option" *ngFor="let cuisine of cuisines"
-                            (click)="onSelectCuisine(cuisine)">
-                            <span>{{ cuisine.name }}</span>
-                        </div>
-                    </div>
-                </div>
-                <span style="font-size: 20px;padding: 0 30px 0 2px;margin-top: 10px;">Not finding your what you looking
-                    for?</span>
-                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
-                    <div class="input-div">
-                        <input class="_381fS" type="text" name="newCuisine" id="newCuisine" tabindex="4"
-                            autocomplete="off" value="" [(ngModel)]="newCuisine" #ctrl="ngModel"
-                            placeholder="Chinese, Indian etc">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="newCuisine">What is your are called</label>
-                    </div>
-                    <div class="icon d-flex justify-content-center" (click)="addCuisine()" style="margin-left: 20px;">
-                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCuisine()">
-                    </div>
-                </div>
             </div>
-        </div>
 
-        <div *ngIf="displaySpecialModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;height: 90%;">
+            <div *ngIf="displaySlotsModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="margin: 10px;width: 600px;padding: 0 10px;">
 
-                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
-                    <div class="input-div">
-                        <input class="_381fS" type="text" name="newSpecial" id="newSpecial" tabindex="4"
-                            autocomplete="off" value="" [(ngModel)]="newSpecial" #ctrl="ngModel"
-                            placeholder="Curries, Burgers, Briyani etc">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="newSpecial">What are your specials</label>
-                    </div>
-                    <div class="icon d-flex justify-content-center" (click)="addSpecial()" style="margin-left: 20px;">
-                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addSpecial()">
-                    </div>
-                </div>
-
-                <div style="height: 500px;overflow-y: scroll;"
-                    *ngIf="specials !== null && specials !== undefined && specials.length > 0">
-                    <div class="d-flex justify-content-between align-items-center" *ngFor="let special of specials">
-                        <div class="local-area-option">
-                            <span>{{ special }}</span>
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                            Slots</span>
+                        <div style="max-height: 300px;overflow-y: auto;margin-bottom: 30px;"
+                            *ngIf="selectedSlots !== null && selectedSlots !== undefined && selectedSlots.length > 0">
+                            <div style="display: flex; flex-flow: row wrap;">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    *ngFor="let slot of selectedSlots"
+                                    style="border: 1px solid #e2e2e2;padding: 10px;border-radius: 8px;margin: 5px 10px 5px 0;height: 25px;">
+                                    <span>{{ slot }}</span>
+                                    <div class="icon-close d-flex justify-content-center" (click)="onRemoveSlot(slot)"
+                                        style="margin-left: 20px;">
+                                        <img src="/assets/icons/close.png" height="10px" width="10px"
+                                            (click)="onRemoveSlot(slot)">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="icon d-flex justify-content-center" (click)="onRemoveSpecial(special)"
-                            style="margin-left: 20px;">
-                            <img src="/assets/icons/minus.png" height="15px" width="15px"
-                                (click)="onRemoveSpecial(special)">
+                    </div>
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Pickup
+                            more slot?</span>
+                        <div class="vertical" style="margin: 10px 0 40px 0;">
+                            <div style="max-height: 300px;overflow-y: scroll;">
+                                <div class="local-area-option" *ngFor="let slot of slots" (click)="onSelectSlot(slot)">
+                                    <span>{{ slot }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="displaySlotsModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;height: 90%;"
-                *ngIf="slots !== null && slots !== undefined && slots.length > 0">
-                <div style="height: 500px;overflow-y: scroll;">
-                    <div class="local-area-option" *ngFor="let slot of slots" (click)="onSelectSlot(slot)"
-                        [class.selected]="selectedSlot(slot)">
-                        <span>{{ slot }}</span>
+            <div *ngIf="displayCategoriesModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="margin: 10px;width: 600px;padding: 0 10px;">
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Category</span>
+                        <div style="margin: 10px 0;width: 500px;"
+                            class="d-flex justify-content-between align-items-center">
+                            <div class="input-div">
+                                <input class="_381fS" type="text" name="newCategory" id="newCategory" tabindex="4"
+                                    autocomplete="off" value="" [(ngModel)]="newCategory" #ctrl="ngModel"
+                                    placeholder="Starters, Curries, Burgers, Mains etc">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="newCategory">Add new category</label>
+                            </div>
+                            <div class="icon d-flex justify-content-center" (click)="addCategory()"
+                                style="margin-left: 20px;">
+                                <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCategory()">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 0 0 25px 0;">
+                        <span
+                            style="font-weight: 600;font-size: 18px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                            Categories</span>
+                        <div style="max-height: 500px;overflow-y: scroll;"
+                            *ngIf="categories !== null && categories !== undefined && categories.length > 0">
+                            <div class="d-flex justify-content-between align-items-center"
+                                *ngFor="let category of categories">
+                                <div class="local-area-option">
+                                    <span>{{ category }}</span>
+                                </div>
+                                <div class="icon d-flex justify-content-center" (click)="onRemoveCategory(category)"
+                                    style="margin-left: 20px;">
+                                    <img src="/assets/icons/minus.png" height="15px" width="15px"
+                                        (click)="onRemoveCategory(category)">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="displayCategoriesModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;height: 90%;">
+            <div *ngIf="displayServiceModeModule === true" class="d-flex justify-content-center align-items-center"
+                style="height: 100%;">
+                <div class="vertical" style="margin: 10px;width: 600px;padding: 0 10px;">
 
-                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
-                    <div class="input-div">
-                        <input class="_381fS" type="text" name="newCategory" id="newCategory" tabindex="4"
-                            autocomplete="off" value="" [(ngModel)]="newCategory" #ctrl="ngModel"
-                            placeholder="Starters, Curries, Burgers, Mains etc">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="newCategory">What are your categories</label>
-                    </div>
-                    <div class="icon d-flex justify-content-center" (click)="addCategory()" style="margin-left: 20px;">
-                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCategory()">
-                    </div>
-                </div>
-
-                <div style="height: 500px;overflow-y: scroll;"
-                    *ngIf="categories !== null && categories !== undefined && categories.length > 0">
-                    <div class="d-flex justify-content-between align-items-center" *ngFor="let category of categories">
-                        <div class="local-area-option">
-                            <span>{{ category }}</span>
-                        </div>
-                        <div class="icon d-flex justify-content-center" (click)="onRemoveCategory(category)"
-                            style="margin-left: 20px;">
-                            <img src="/assets/icons/minus.png" height="15px" width="15px"
-                                (click)="onRemoveCategory(category)">
+                    <div *ngIf="serviceModes !== null && serviceModes !== undefined && serviceModes.length > 0">
+                        <div style="padding: 0 30px;"
+                            class="local-area-option d-flex flex-start justify-content-between align-items-center"
+                            *ngFor="let serviceMode of serviceModes" (click)="onSelectServiceMode(serviceMode)">
+                            <span>{{ serviceMode }}</span>
+                            <img src="/assets/icons/tick.png" height="25px" width="25px"
+                                *ngIf="selectedServiceMode(serviceMode)">
                         </div>
                     </div>
+
+                    <div style="background-color: #fcfbfb;padding: 25px; margin: 25px 0;">
+                        <div class="input-div" *ngIf="delivery">
+                            <input class="_381fS" type="text" name="deliveryCharge" id="deliveryCharge" tabindex="4"
+                                autocomplete="off" value="" [(ngModel)]="deliveryCharge" #ctrl="ngModel"
+                                (blur)="transformDeliveryFee($event)" placeholder="£2.00, £0.50 etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="deliveryCharge">Delivery Fee</label>
+                        </div>
+                        <div class="input-div" *ngIf="delivery">
+                            <input class="_381fS" type="text" name="deliveryDistance" id="deliveryDistance" tabindex="4"
+                                autocomplete="off" value="" [(ngModel)]="deliveryDistance" #ctrl="ngModel"
+                                placeholder="2KM, 5Miles etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="deliveryDistance">Delivery Distance</label>
+                        </div>
+                        <div class="input-div" *ngIf="delivery">
+                            <input class="_381fS" type="text" name="deliveryMinimum" id="deliveryMinimum" tabindex="4"
+                                (blur)="transformDeliveryMinimum($event)" autocomplete="off" value=""
+                                [(ngModel)]="deliveryMinimum" #ctrl="ngModel" placeholder="£15 etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="deliveryMinimum">Minimum Order for delivery</label>
+                        </div>
+                        <div class="input-div" *ngIf="delivery">
+                            <input class="_381fS" type="text" name="freeDeliveryOver" id="freeDeliveryOver" tabindex="4"
+                                (blur)="transformFreeDeliveryOver($event)" autocomplete="off" value=""
+                                [(ngModel)]="freeDeliveryOver" #ctrl="ngModel" placeholder="£40 etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="freeDeliveryOver">Free delivery order over</label>
+                        </div>
+                        <div class="input-div">
+                            <input class="_381fS" type="text" name="minimumOrder" id="minimumOrder" tabindex="4"
+                                (blur)="transformMinimumOrder($event)" autocomplete="off" value=""
+                                [(ngModel)]="minimumOrder" #ctrl="ngModel" placeholder="£40 etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="minimumOrder">Minimum Order</label>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
-        </div>
 
-        <div *ngIf="displayServiceModeModule === true" class="d-flex justify-content-center align-items-center"
-            style="height: 100%;">
-            <div class="d-flex flex-column" style="margin: 10px;width: 500px;height: 90%;"
-                *ngIf="serviceModes !== null && serviceModes !== undefined && serviceModes.length > 0">
-                <div class="local-area-option" *ngFor="let serviceMode of serviceModes"
-                    (click)="onSelectServiceMode(serviceMode)" [class.selected]="selectedServiceMode(serviceMode)">
-                    <span>{{ serviceMode }}</span>
+            <div *ngIf="displayMenuModule === true" class="" style="height: 100%;padding: 20px;">
+                <div>
+                    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+                        <li ngbNavItem>
+                            <a ngbNavLink>Items</a>
+                            <ng-template ngbNavContent>
+                                <div class="vertical"
+                                    style="margin: 10px;overflow-y: auto;height: 90%;padding: 0 10px;">
+
+                                    <div *ngIf="showItemEditPanel">
+                                        <span
+                                            style="font-size: 16px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;">{{foodEditPanelTitle}}</span>
+                                        <div class="d-flex flex-start align-items-center" style="margin: 20px 0;">
+                                            <div ngbDropdown class="d-inline-block">
+                                                <button class="btn btn-outline-primary" id="categoryDropDown"
+                                                    ngbDropdownToggle>Category</button>
+                                                <div class="dropdown-menu" aria-labelledby="categoryDropDown"
+                                                    ngbDropdownMenu>
+                                                    <button class="dropdown-item"
+                                                        *ngFor="let category of localChef.categories"
+                                                        (click)="selectCategory(category)">{{category}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <span style="margin-left: 10px;">{{selectedCategory}}</span>
+                                        </div>
+                                        <div class="input-div">
+                                            <input class="_381fS" type="text" name="itemName" id="menuName" tabindex="4"
+                                                autocomplete="off" value="" [(ngModel)]="itemName" #ctrl="ngModel"
+                                                placeholder="Vegetable Biryani">
+                                            <div class="_2EeI1 _26LFr"></div>
+                                            <label class="_1Cvlf _2tL9P " for="itemName">Name</label>
+                                        </div>
+                                        <div class="input-div">
+                                            <input class="_381fS" type="text" name="itemDesc" id="itemDesc" tabindex="4"
+                                                autocomplete="off" value="" [(ngModel)]="itemDesc" #ctrl="ngModel"
+                                                placeholder="Marinated vegetables cooked in closed container with basmati rice. etc">
+                                            <div class="_2EeI1 _26LFr"></div>
+                                            <label class="_1Cvlf _2tL9P " for="itemDesc">Description</label>
+                                        </div>
+                                        <div style="border: 1px solid #c2c2c5;">
+                                            <span style="display: block;padding: 5px 20px;">Price</span>
+                                            <div class="d-flex flex-start align-items-center" style="padding: 0 20px;">
+                                                <input value="" [(ngModel)]="itemPrice" #ctrl="ngModel" placeholder="10"
+                                                    name="itemPrice" id="itemPrice" tabindex="4" autocomplete="off"
+                                                    style="border: none;padding: 2px;margin: 0 0 10px 0;width: 60px;font-size: 25px;">
+                                                <span>GBP</span>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="input-div">
+                                            <input class="_381fS" type="text" name="itemPrice" id="itemPrice"
+                                                tabindex="4" (blur)="transformItemPrice($event)" autocomplete="off"
+                                                value="" [(ngModel)]="itemPrice" #ctrl="ngModel" placeholder="£15 etc">
+                                            <div class="_2EeI1 _26LFr"></div>
+                                            <label class="_1Cvlf _2tL9P " for="itemPrice">Price</label>
+                                        </div> -->
+                                        <div class="d-flex flex-start">
+                                            <button type="button" class="btn-g mr-1" (click)="saveFood()">OK</button>
+                                            <button type="button" class="btn-s mr-1"
+                                                (click)="cancelItemEdit()">Cancel</button>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="vertical" *ngIf="!showItemEditPanel">
+                                        <div class="d-flex justify-content-between align-items-center"
+                                            style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
+                                            <span style="font-size: 14px;font-weight: 900;">Your Foods
+                                                ({{foods.length}})</span>
+                                            <button placement="top" ngbTooltip="Add New Food" type="button"
+                                                class="btn btn-sm btn-outline-primary" style="margin: 0 10px;"
+                                                (click)="onClickAddNewFood()">Add</button>
+                                            <!-- <div class="icon d-flex justify-content-center"
+                                                (click)="onClickAddNewFood()" style="margin-left: 20px;">
+                                                <img src="/assets/icons/plus.png" height="15px" width="15px"
+                                                    (click)="onClickAddNewFood()">
+                                            </div> -->
+                                        </div>
+
+                                        <div class="d-flex flex-start"
+                                            style="background-color: #f8f8f8;margin-bottom: 7px;">
+                                            <span [class.selectedCategory]="isCategorySelected(cat)"
+                                                *ngFor="let cat of categories" class="category"
+                                                (click)="selectCategoryForDisplay(cat)">{{cat}}</span>
+                                        </div>
+                                        <div class="vertical" style="max-height: 800px;overflow-y: auto;"
+                                            *ngIf="foods !== null && foods !== undefined && foods.length > 0">
+                                            <div [class.hidden]="!isCategorySelected(food.category)"
+                                                *ngFor="let food of foods">
+                                                <div class="d-flex flex-start align-items-center supplier-food-item"
+                                                    style="width: 100%;padding-right: 10px;">
+                                                    <div style="width: 95%;">
+                                                        <app-supplier-food-item [food]="food"></app-supplier-food-item>
+                                                    </div>
+                                                    <button style="margin: 0 5px;"
+                                                        class="btn btn-sm btn-outline-primary"
+                                                        (click)="onEditFood(food)" placement="top"
+                                                        ngbTooltip="Make changes">Edit</button>
+                                                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-danger"
+                                                        (click)="onRemoveFood(food)" placement="top"
+                                                        ngbTooltip="Remove food from inventory">Delete</button>
+                                                    <!-- <div class="d-flex justify-content-center" placement="top"
+                                                        ngbTooltip="Remove food from inventory"
+                                                        (click)="onRemoveFood(food)" style="width: 5%;">
+                                                        <img src="/assets/icons/minus.png" height="15px" width="15px"  (click)="onRemoveFood(food)">
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li ngbNavItem>
+                            <a ngbNavLink>Calendar</a>
+                            <ng-template ngbNavContent>
+
+                                <div class="vertical">
+
+                                    <div *ngIf="showCalendarEditPanel">
+                                        <span
+                                            style="font-weight: bold;font-size: 26px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;display: block;">Your
+                                            Calendar</span>
+                                        <div class="vertical" style="padding: 5px;">
+                                            <div class="horizontal" style="background-color: #f4f4f4;border:1px solid #c2c2c5;padding: 0 10px;border-bottom: none;">
+                                                <div class="horizontal justify-content-center align-items-center"
+                                                    style="padding: 1px 0;margin-right: 25px;">
+                                                    <span style="padding: 0 5px;">OrderBy</span>
+                                                    <div class="horizontal"
+                                                        style="border: 1px solid #c2c2c5;border-radius: 5px;">
+                                                        <input placeholder="dd/mm/yyyy" name="orderByDate"
+                                                            #d1="ngbDatepicker" [(ngModel)]="orderByDate" ngbDatepicker
+                                                            #d1="ngbDatepicker"
+                                                            style="width: 80px;border: none;background: transparent;padding: 0 5px;">
+                                                        <div style="padding: 5px;cursor: pointer;">
+                                                            <img src="/assets/icons/calendar.png" height="20px"
+                                                                width="20px" (click)="d1.toggle()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="horizontal justify-content-center align-items-center"
+                                                    style="padding: 7px 0;margin-right: 5px;">
+                                                    <span style="padding: 0 5px;">CollectionBy</span>
+                                                    <div class="horizontal"
+                                                        style="border: 1px solid #c2c2c5;border-radius: 5px;">
+                                                        <input placeholder="dd/mm/yyyy" name="collectionDate"
+                                                            style="width: 80px;border: none;background: transparent;padding: 0 5px;"
+                                                            [(ngModel)]="collectionDate" ngbDatepicker
+                                                            #d2="ngbDatepicker">
+                                                        <div style="padding: 5px;cursor: pointer;">
+                                                            <img src="/assets/icons/calendar.png" height="20px"
+                                                                width="20px" (click)="d2.toggle()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="horizontal justify-content-center align-items-center"
+                                                    style="padding: 7px 0;margin-right: 5px;">
+                                                    <span style="padding: 0 5px;">Delivered by:
+                                                    </span>
+                                                    <div class="horizontal"
+                                                        style="border: 1px solid #c2c2c5;border-radius: 5px;">
+                                                        <input placeholder="dd/mm/yyyy"
+                                                            style="width: 80px;border: none;background: transparent;padding: 0 5px;"
+                                                            name="deliveryDate" [(ngModel)]="deliveryDate" ngbDatepicker
+                                                            #d3="ngbDatepicker">
+                                                        <div style="padding: 5px;cursor: pointer;">
+                                                            <img src="/assets/icons/calendar.png" height="20px"
+                                                                width="20px" (click)="d3.toggle()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="between" style="width: 100%;">
+                                                <div class="vertical"
+                                                    style="border-left: 1px solid #c2c2c5;border-top: 1px solid #c2c2c5;border-bottom: 1px solid #c2c2c5;width: 50%;">
+                                                    <span style="padding: 5px;border-bottom: 1px solid #c2c2c5;">Your
+                                                        Items</span>
+                                                    <div style="height: calc(70vh - 50px) !important;overflow-y: auto;">
+                                                        <div class="d-flex flex-start align-items-center supplier-food-item"
+                                                            style="width: 100%;padding-right: 10px;"
+                                                            *ngFor="let food of foods">
+                                                            <div style="width: 95%;">
+                                                                <app-supplier-food-item [food]="food">
+                                                                </app-supplier-food-item>
+                                                            </div>
+                                                            <button style="margin: 0 5px;"
+                                                                class="btn btn-sm btn-outline-primary"
+                                                                (click)="onClickAddFoodToCalendar(food)" placement="top"
+                                                                ngbTooltip="Add to calendar">Add</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="vertical" style="border: 1px solid #c2c2c5;width: 50%;">
+                                                    <span style="padding:5px;border-bottom: 1px solid #c2c2c5;">Items
+                                                        in this Calendar</span>
+                                                        <div style="height: calc(70vh - 50px) !important;overflow-y: auto;">
+                                                            <div class="d-flex flex-start align-items-center supplier-food-item"
+                                                                style="width: 100%;padding-right: 10px;"
+                                                                *ngFor="let food of calendarOnEdit.foods">
+                                                                <div style="width: 95%;">
+                                                                    <app-supplier-food-item [food]="food">
+                                                                    </app-supplier-food-item>
+                                                                </div>
+                                                                <button style="margin: 0 5px;"
+                                                                    class="btn btn-sm btn-outline-danger"
+                                                                    (click)="onClickRemoveFoodFromCalendar(food)" placement="top"
+                                                                    ngbTooltip="Remove from calendar">Delete</button>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex flex-start" style="margin-top: 10px;">
+                                                <button type="button" class="btn-g mr-1"
+                                                    (click)="saveCalendar()">OK</button>
+                                                <button type="button" class="btn-s mr-1"
+                                                    (click)="cancelCalendarEditing()">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="vertical" *ngIf="!showCalendarEditPanel">
+                                        <div class="d-flex justify-content-between align-items-center"
+                                            style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
+                                            <span style="font-size: 16px;">Your Calendars ({{calendars.length}})</span>
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                style="margin: 0 10px;" (click)="addNewCalendar()">Add</button>
+                                            <!-- <div class="icon d-flex justify-content-center" (click)="addNewCalendar()"
+                                                style="margin-left: 20px;">
+                                                <img src="/assets/icons/plus.png" height="15px" width="15px"
+                                                    (click)="addNewCalendar()">
+                                            </div> -->
+                                        </div>
+                                        <div class="d-flex flex-start"
+                                            style="background-color: #f8f8f8;padding: 8px 5px;">
+                                            <span class="category" (click)="selectThisWeek()"
+                                                [class.selectedCategory]="isPeriodSelected('thisWeek')">This Week</span>
+                                            <span class="category" (click)="selectThisMonth()"
+                                                [class.selectedCategory]="isPeriodSelected('thisMonth')">This
+                                                Month</span>
+                                            <span class="category" (click)="selectAllDays()"
+                                                [class.selectedCategory]="isPeriodSelected('allDays')">All Days</span>
+                                        </div>
+                                        <div class="vertical" style="max-height: 700px;overflow-y: auto;"
+                                            *ngIf="calendarsToDisplay !== null && calendarsToDisplay !== undefined && calendarsToDisplay.length > 0">
+                                            <div *ngFor="let calendar of calendarsToDisplay;  let i = index">
+                                                <div class="d-flex flex-column" style="margin: 10px 0;">
+                                                    <div class="d-flex justify-content-between align-items-center"
+                                                        style="height: 40px; background-color: #f4f4f4;padding: 0 10px;">
+                                                        <span
+                                                            style="font-size: 14px;padding: 10px 0;font-weight: 500;font-weight: bold;">Order
+                                                            by {{ calendar.orderBefore | date : 'EE d
+                                                            LLL'}}</span>
+
+                                                        <div class="d-flex flex-start">
+                                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                                style="margin: 0 10px;"
+                                                                (click)="editCalendar(calendar)">Edit</button>
+                                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                                style="margin: 0 10px;"
+                                                                (click)="deleteCalendar(calendar)">Delete</button>
+                                                            <img src="/assets/icons/down-arrow.png" height="15px"
+                                                                width="15px" (click)="isCollapsed[i] = !isCollapsed[i]"
+                                                                *ngIf="isCollapsed[i]" placement="top"
+                                                                ngbTooltip="Expand">
+                                                            <img src="/assets/icons/up-arrow.png" height="15px"
+                                                                width="15px" (click)="isCollapsed[i] = !isCollapsed[i]"
+                                                                *ngIf="!isCollapsed[i]" placement="top"
+                                                                ngbTooltip="Collapse">
+                                                        </div>
+
+                                                    </div>
+                                                    <div [ngbCollapse]="isCollapsed[i]">
+                                                        <div class="d-flex flex-column">
+                                                            <app-supplier-food-item [food]="food"
+                                                                *ngFor="let food of calendar.foods">
+                                                            </app-supplier-food-item>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav"></div>
                 </div>
-                <div class="input-div" *ngIf="delivery">
-                    <input class="_381fS" type="text" name="deliveryCharge" id="deliveryCharge" tabindex="4"
-                        autocomplete="off" value="" [(ngModel)]="deliveryCharge" #ctrl="ngModel"
-                        (blur)="transformDeliveryFee($event)" placeholder="£2.00, £0.50 etc">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="deliveryCharge">Delivery Fee</label>
-                </div>
-                <div class="input-div" *ngIf="delivery">
-                    <input class="_381fS" type="text" name="deliveryDistance" id="deliveryDistance" tabindex="4"
-                        autocomplete="off" value="" [(ngModel)]="deliveryDistance" #ctrl="ngModel"
-                        placeholder="2KM, 5Miles etc">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="deliveryDistance">Delivery Distance</label>
-                </div>
-                <div class="input-div" *ngIf="delivery">
-                    <input class="_381fS" type="text" name="deliveryMinimum" id="deliveryMinimum" tabindex="4"
-                        (blur)="transformDeliveryMinimum($event)" autocomplete="off" value=""
-                        [(ngModel)]="deliveryMinimum" #ctrl="ngModel" placeholder="£15 etc">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="deliveryMinimum">Minimum Order for delivery</label>
-                </div>
-                <div class="input-div" *ngIf="delivery">
-                    <input class="_381fS" type="text" name="freeDeliveryOver" id="freeDeliveryOver" tabindex="4"
-                        (blur)="transformFreeDeliveryOver($event)" autocomplete="off" value=""
-                        [(ngModel)]="freeDeliveryOver" #ctrl="ngModel" placeholder="£40 etc">
-                    <div class="_2EeI1 _26LFr"></div>
-                    <label class="_1Cvlf _2tL9P " for="freeDeliveryOver">Free delivery order over</label>
-                </div>
+
             </div>
         </div>
 
         <div
-            style="height: 100px;background-color: transparent;display: flex;justify-content: space-between;align-items: center;margin-bottom: 70px;border-top: 1px solid #e3e3e3;">
+            style="height: 50px;background-color: transparent;display: flex;justify-content: space-between;align-items: center;border-top: 1px solid #e3e3e3;">
             <span class="back-btn" (click)="back()">Back</span>
-            <span class="back-btn" (click)="next()">{{nextButton}}</span>
+            <span class="back-btn" (click)="next()" *ngIf="!displayMenuModule">{{nextButton}}</span>
         </div>
     </div>
 </div>

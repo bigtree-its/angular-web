@@ -145,14 +145,20 @@ export class LocalChefService {
     return this.http.get<Food[]>(url, { params });
   }
 
-  getCalendars(chefId: string): Observable<Calendar[]> {
+  getCalendars(chefId: string, thisWeek: boolean, thisMonth: boolean): Observable<Calendar[]> {
 
     var url = this.URL + this.BASEPATH + this.CALENDARS_URI;
     var params = new HttpParams();
     if (chefId !== undefined && chefId !== null) {
       params = params.set('chef', chefId);
+    }
+    if (thisWeek !== undefined && thisWeek) {
       params = params.set('thisweek', 'true');
     }
+    if (thisMonth !== undefined && thisMonth) {
+      params = params.set('thisMonth', 'true');
+    }
+
     console.log('Fetch calendars for : ' + params)
     return this.http.get<Calendar[]>(url, { params });
   }
@@ -163,10 +169,47 @@ export class LocalChefService {
     return this.http.post<LocalChef>(url, chef);
   }
 
+  createNewCalendar(calendar: Calendar): Observable<Calendar> {
+    var url = this.URL + this.BASEPATH + this.CALENDARS_URI;
+    console.log('Creating new Calendar : ' + url + ", " + JSON.stringify(calendar));
+    return this.http.post<Calendar>(url, calendar);
+  }
+
+  deleteCalendar(calendar: Calendar): Observable<any> {
+    var url = this.URL + this.BASEPATH + this.CALENDARS_URI;
+    var url = this.URL + this.BASEPATH + this.CALENDARS_URI + "/" + calendar._id;
+    console.log('Deleting calendar : ' + url );
+    return this.http.delete<Calendar>(url);
+  }
+
+  createNewFood(food: Food): Observable<Food> {
+    var url = this.URL + this.BASEPATH + this.FOODS_URI;
+    console.log('Creating new Food : ' + url + ", " + JSON.stringify(food));
+    return this.http.post<Food>(url, food);
+  }
+
+  updateFood(food: Food): Observable<Food> {
+    var url = this.URL + this.BASEPATH + this.FOODS_URI + "/" + food._id;;
+    console.log('Updating Food : ' + url + ", " + JSON.stringify(food));
+    return this.http.put<Food>(url, food);
+  }
+
+  deleteFood(food: Food): Observable<any> {
+    var url = this.URL + this.BASEPATH + this.FOODS_URI + "/" + food._id;;
+    console.log('Deleting Food : ' + url + ", " + JSON.stringify(food));
+    return this.http.delete<Food>(url);
+  }
+ 
   update(chef: LocalChef): Observable<LocalChef> {
     var url = this.URL + this.BASEPATH + this.LOCALCHEFS_URI + "/" + chef._id;
     console.log('Updating chef : ' + url + ", " + JSON.stringify(chef));
     return this.http.put<LocalChef>(url, chef);
+  }
+
+  updateCalendar(calendar: Calendar): Observable<Calendar> {
+    var url = this.URL + this.BASEPATH + this.CALENDARS_URI + "/" + calendar._id;
+    console.log('Updating calendar : ' + url + ", " + JSON.stringify(calendar));
+    return this.http.put<Calendar>(url, calendar);
   }
 
   placeOrder(localChef: LocalChef) {
