@@ -1,31 +1,24 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Amita&display=swap');
+</style>
 <app-header></app-header>
-<!-- <app-nav-bar></app-nav-bar> -->
-<script>
-    var firstTabEl = document.querySelector('#myTab li:last-child a')
-    var firstTab = new bootstrap.Tab(firstTabEl)
+<div class="d-flex justify-content-between" style="overflow-y: hidden;" *ngIf="localChef !== undefined && localChef !== null">
 
-    firstTab.show()
-</script>
-<div class="d-flex justify-content-between" *ngIf="localChef !== undefined && localChef !== null">
 
-    <div style="width:15%;" class="d-flex flex-column">
-        <div style="margin-bottom:20px;line-height:40px;height: 40px;"
-            class="d-flex flex-start align-items-center">
-            <div class="icon-div" style="width: 10%;">
-                <img src="/assets/icons/left-arrow-long.png" height="20px" width="20px" (click)="back()">
+    <div style="width:15%;margin: 5px;padding: 10px;" class="d-flex flex-column">
+        <div class="vertical align-items-center" style="padding: 10px 0;border-bottom: 1px solid #ededf4;">
+            <div class="icon d-flex justify-content-center" style="margin-bottom: 5px;">
+                <span style="font-size: 80px;font-family: 'Amita', cursive;">{{localChef.name.substr(0,1)}}</span>
             </div>
-
-            <span style="font-weight: 500;font-size:25px;">About Me</span>
-        </div>
-        <div class="chef-home-img-div d-flex flex-column">
-            <img width="100%" height="100%" src="{{localChef.coverPhoto}}" alt="..." class="chef-home-img">
-            <span style="font-weight: 900;font-size: 15px;padding: 5px 10px;">{{localChef.name}}</span>
-            <div class="d-flex flex-start" style="padding: 10px;">
-                <img [src]="starSelected" style="width: 15px;height: 15px;">
+            <span style="font-size: 25px;padding: 10px;font-family: 'Amita', cursive;">{{localChef.displayName}}</span>
+            <span style="font-weight: 400;display: block;font-size: 12px;" class="wrap">{{getAddress()}}</span>
+            <div class="d-flex flex-start">
+                <img [src]="starSelected" style="width: 15px;height: 15px;margin-top: 5px;">
                 <span> . </span>
                 <span>{{localChef.reviews}} reviews</span>
             </div>
         </div>
+
         <div class="d-flex flex-column"
             style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
             *ngIf="localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
@@ -61,8 +54,8 @@
                 class="wrap">{{getAddress()}}</span>
         </div>
     </div>
-    <div style="width:60%;" class="d-flex flex-column">
-        <span style="font-weight: 900;font-size: 18px;">This Week</span>
+    <div style="width:65%;" class="vertical">
+        <span style="font-weight: 900;font-size: 18px;padding: 10px 0;">This Week</span>
         <div class="d-flex flex-column" style="margin: 10px 0;" *ngFor="let cal of calendars">
             <span style="font-size: 17px;padding: 10px 0;font-weight: 500;">Order by {{ cal.orderBefore | date : 'EE d
                 LLL'}}</span>

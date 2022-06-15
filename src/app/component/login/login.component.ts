@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.submitted = false;
     this.successful = false;
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
   }
 
 
@@ -60,7 +60,16 @@ export class LoginComponent implements OnInit {
       .subscribe(
         res => {
           console.log(res);
-          this.router.navigate([this.returnUrl]);
+          if ( res !== null && res !== undefined && res.success){
+            if ( this.returnUrl !== null && this.returnUrl !== undefined){
+              this.router.navigate([this.returnUrl]);
+            }
+            else if ( res.user.role === 'Supplier'){
+              this.router.navigate(['/supplier-profile']);
+            }else{
+              this.router.navigate(['/']);
+            }
+          }
         },
         err => {
           console.error('Error during login: ' + JSON.stringify(err));

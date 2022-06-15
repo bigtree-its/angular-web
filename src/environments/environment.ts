@@ -13,11 +13,10 @@ export const environment = {
   AD_SERVICE_URL: window["env"]["adServiceUrl"] || "http://localhost:8083",
   OPENCHEF_ORDERS_HOST: window["env"]["openChefServiceUrl"] || "http://localhost:8085",
   
-  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8082/orders/v1",
-  BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8082/orders/v1/baskets",
-  INVENTORY_SERVICE_URL: window["env"]["inventoryServiceUrl"] || "http://localhost:8082/orders/v1/inventory",
+  ORDER_SERVICE_URL: window["env"]["orderServiceUrl"] || "http://localhost:8085/openchef/v1/orders",
+  BASKET_SERVICE_URL: window["env"]["basketServiceUrl"] || "http://localhost:8085/openchef/v1/orders/baskets",
 
-  ACCOUNT_SERVICE_URL: window["env"]["customerServiceUrl"] || "http://localhost:8081/urchef/v1/customers",
+  ACCOUNT_SERVICE_URL: window["env"]["customerServiceUrl"] || "http://localhost:8081/r2c/v1/users",
   RESET_PASSWORD_INITIATE: window["env"]["customerServiceUrl"] + '/password-reset/initiate',
   RESET_PASSWORD_SUBMIT: window["env"]["customerServiceUrl"] + '/password-reset/submit',
   CHANGE_PASSWORD: window["env"]["customerServiceUrl"] + '/password-reset/change',
@@ -27,6 +26,7 @@ export const environment = {
   /** Base Paths */
    AUTH_LOGIN_PATH: '/login',
    AUTH_REGISTER_PATH: '/signup',
+   AUTH_SESSIONS_PATH: '/sessions',
    AUTH_LOGOUT_PATH: '/logout',
    USERS: '/users',
    ORDERS: '/orders',

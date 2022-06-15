@@ -5,8 +5,8 @@
     window["env"]["productServiceUrl"] = "http://localhost:8081/products/v1";
     window["env"]["reviewServiceUrl"] = "http://localhost:8081/reviews/v1";
     window["env"]["userServiceUrl"] = "http://localhost:8080/users/v1";
-    window["env"]["orderServiceUrl"] = "http://localhost:8082/orders/v1";
-    window["env"]["basketServiceUrl"] = "http://localhost:8082/orders/v1/baskets";
+    window["env"]["orderServiceUrl"] = "http://localhost:8085/openchef/v1/orders";
+    window["env"]["basketServiceUrl"] = "http://localhost:8085/openchef/v1/orders/baskets";
     window["env"]["adServiceUrl"] = "http://localhost:8083";
 
     window["env"]["apiKeyGetAddressIO"] = "VoEYLOWRyECPuAIwDnocAQ30109";

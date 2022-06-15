@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Utils } from 'src/app/helpers/utils';
 import { Address, ChefContact, Contact, User, UserSession } from 'src/app/model/common-models';
@@ -104,7 +105,7 @@ export class BecomeASupplierComponent implements OnInit {
 
   clickMyContainer: Function;
 
-  constructor(private ngbCalendar: NgbCalendar, private utils: Utils, private accountService: AccountService, private localChefService: LocalChefService, private currencyPipe: CurrencyPipe) {
+  constructor( private router: Router, private ngbCalendar: NgbCalendar, private utils: Utils, private accountService: AccountService, private localChefService: LocalChefService, private currencyPipe: CurrencyPipe) {
   }
 
   ngOnInit(): void {
@@ -310,6 +311,8 @@ export class BecomeASupplierComponent implements OnInit {
         return;
       }
       this.saveChef();
+    }else if (this.displayMenuModule === true) {
+      this.router.navigate(['/supplier-profile']);
     }
   }
 
@@ -462,7 +465,7 @@ export class BecomeASupplierComponent implements OnInit {
     this.displayCuisinesModule = false;
     this.displayAddressModule = false;
     this.displayServiceAreaModule = false;
-    this.nextButton = "Next";
+    this.nextButton = "Complete";
     this.moduleName = "Your Menu";
     this.selectedCategoryForDisplay = this.categories[0];
   }

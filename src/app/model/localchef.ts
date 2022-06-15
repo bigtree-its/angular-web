@@ -171,6 +171,24 @@ export class CustomerOrder {
     notes: string;
 }
 
+export class SupplierOrders{
+    orders: FoodOrder[];
+}
+
+export class SupplierSummary{
+    totalOrdersWeekly: number;
+    totalOrdersMonthly: number;
+    totalOrdersYearly: number;
+    
+    totalRevenueWeekly: number;
+    totalRevenueMonthly: number;
+    totalRevenueYearly: number;
+   
+    ordersWeekly: FoodOrder[];
+    ordersMonthly: FoodOrder[];
+    ordersYearly: FoodOrder[];
+}
+
 export class OrderSearchQuery {
     reference: string;
     customerEmail: string;

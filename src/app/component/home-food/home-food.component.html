@@ -1,1 +1,40 @@
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2EeQ7NRUPra6LjcoX3t374dyJZ7IVMeQ&region=GB&callback=initMap&libraries=&v=weekly"
+  async></script>
 <app-header></app-header>
+<!-- <app-nav-bar></app-nav-bar> -->
+<div class="container d-flex flex-column" style="overflow-y: hidden;">
+
+  <div class="d-flex flext-start" style="margin-top: 100px;">
+    <div style="width: 50%;margin-top: 100px;" class="d-flex flex-column">
+
+      <div class="lookup-container d-flex flex-column">
+        <h2 style="font-size: 3rem;
+        letter-spacing: 1px;
+        margin-bottom: 1.25rem;
+        font-weight: 900;
+        line-height: 3rem;">Find your next food</h2>
+        <div
+          style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
+          <input class="_381fS" type="text" name="serviceArea" id="serviceArea" tabindex="1" autocomplete="off" value=""
+            placeholder="Local area, city" [(ngModel)]="localAreaSearchText" #ctrl="ngModel" (keyup.enter)="onEnter()">
+          <!-- <div class="_2EeI1 _26LFr"></div> -->
+          <label class="_1Cvlf _2tL9P " for="mobile">LOCATION</label>
+        </div>
+
+        <div *ngIf="displayAreaSelectionContainer" style="width: 100%;">
+          <div style="overflow-y: auto;height: 300px;padding:10px 0;">
+            <div class="local-area-option" *ngFor="let la of serviceAreaList" (click)="onSelectLocalArea(la)">
+              <span>{{ la.name }},{{la.city}}</span> <img src="/assets/icons/right-arrow-long.png" height="15px"
+                width="15px" style="margin-top: 9px;margin: 0 10px;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="width: 50%;max-height: 600px;">
+      <img src="/assets/images/cooking.svg" style="max-height: 600px;">
+    </div>
+  </div>
+  <div class="bottom-placeholder"></div>
+</div>

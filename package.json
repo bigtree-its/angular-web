@@ -34,7 +34,6 @@
     "bootstrap": "^4.5.3",
     "http-status-codes": "^2.1.4",
     "nanoid": "^3.1.22",
-    "ngx-cookie": "^5.0.2",
     "rxjs": "~6.6.3",
     "tslib": "^2.1.0",
     "underscore": "^1.12.0",

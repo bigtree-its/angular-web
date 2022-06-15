@@ -47,6 +47,11 @@
     width: 32px;
     align-items: center;
 }
+.icon:hover {
+    cursor: pointer;
+    border: 1px solid #222;
+    background-color: #e3e3e3;
+}
 
 .icon-close {
     border-radius: 50%;
@@ -62,11 +67,7 @@
     background-color: #e3e3e3;
 }
 
-.icon:hover {
-    cursor: pointer;
-    border: 1px solid #222;
-    background-color: #e3e3e3;
-}
+
 
 .selected {
     background-color: rgb(255, 255, 255);

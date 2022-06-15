@@ -1,19 +1,13 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Marcellus&display=swap');
-</style>
-<div class="d-flex justify-content-between"
-  style="height: 65px;line-height: 65px;font-family: WPRoobert Light, Roobert Light, SF Pro, Noto Sans Regular, Roboto, Helvetica, Arial;border-bottom: 1px solid #e3e3e3;margin-bottom: 13px;">
-  <div class="d-flex flex-start justify-content-center"
-    style="padding: 0 10px;height: 40px;align-self: center;line-height: 40px;cursor: pointer;" (click)="home()">
-    <span class="align-self-center"
-      style="height: 30px;width: 30px;border:2px solid #6911dd;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;">W</span>
-    <span
-      style="font-weight: 900;font-size: 27px;font-family: 'Marcellus', serif;color: #6911dd;letter-spacing: 2px;">Workplace</span>
-  </div>
+  @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+  </style>
+<div class="d-flex justify-content-between align-items-center" style="height: 65px;line-height: 65px;border-bottom: 1px solid #ededf4;">
+  <span style="font-weight: 900;font-size: 30px;font-family: 'Bungee Shade', cursive;height: 20px;line-height: 20px;cursor: pointer;" (click)="home()">Heavenly Delicious</span>
+  
   <div class="d-flex justify-content-end align-items-center">
     <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
     <span class="align-self-center" *ngIf="isUserLoggedIn() == true"
-      style="height: 30px;width: 30px;border:2px solid #6911dd;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;margin: 0 5px;">{{userName.substr(0,1)}}</span>
+      style="height: 30px;width: 30px;border:2px solid #766df4;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;margin: 0 5px;">{{userName.substr(0,1)}}</span>
     <span *ngIf="isUserLoggedIn() == true">{{userName}}</span>
     <span style="margin: 0 10px;cursor: pointer;" (click)="becomeChef()" *ngIf="isUserLoggedIn() == false || role == 'Customer' ">Become a chef</span>
     <span style="margin: 0 10px;cursor: pointer;" (click)="login()" *ngIf="isUserLoggedIn() == false">Sign In</span>

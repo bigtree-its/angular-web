@@ -1,0 +1,61 @@
+.icon {
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    align-items: center;
+}
+
+.icon:hover {
+    cursor: pointer;
+    background-color: rgb(173, 173, 173)
+}
+
+.navItem {
+    font-size: 18px;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.navItem:hover {
+    background-color: #e8eaee;
+    cursor: pointer;
+}
+
+.panel {
+    padding: 10px;
+    width: 300px;
+    border-radius: 8px;
+    border: 1px solid #ededf4;
+    margin: 0 20px;
+}
+
+.supplier-food-item{
+    background-color: #f9f9f9;
+}
+.supplier-food-item:hover{
+    background-color: #f1f1f1;
+}
+
+.selected {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #222;
+}
+
+.category {
+    padding: 0 10px;
+    height: 100%;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.selectedCategory {
+    background-color: #5f5f5f;
+    color: #fff;
+}
+
+.hidden {
+    display: none;
+}

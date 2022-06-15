@@ -11,7 +11,6 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { map, retry, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie';
 import { environment } from '../../environments/environment';
 import {
   ReasonPhrases,
@@ -22,6 +21,8 @@ import {
 
 import { AlertService } from './alert.service';
 import { BooleanResponse, LogoutRequest, ResetPasswordRequest, SignupRequest, User, UserSession } from '../model/common-models';
+import { CookieService } from './cookie.service';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -41,6 +42,7 @@ export class AccountService {
   LOGIN_URL = this.SERVER_URL + environment.AUTH_LOGIN_PATH;
   LOGOUT_URL = this.SERVER_URL + environment.AUTH_LOGOUT_PATH;
   REGISTER_URL = this.SERVER_URL + environment.AUTH_REGISTER_PATH;
+  SESSIONS_URL = this.SERVER_URL + environment.AUTH_SESSIONS_PATH;
   RESET_PASSWORD_INITIATE = environment.RESET_PASSWORD_INITIATE;
   RESET_PASSWORD_SUBMIT = environment.RESET_PASSWORD_SUBMIT;
   CHANGE_PASSWORD = environment.CHANGE_PASSWORD;
@@ -50,9 +52,9 @@ export class AccountService {
   jwtHelper = new JwtHelperService();
 
   constructor(
+    private alertService: AlertService,
     private router: Router,
     private http: HttpClient,
-    private alertService: AlertService,
     private cookieService: CookieService
   ) {
     var userSession: UserSession = this.getUserSession();
@@ -61,8 +63,8 @@ export class AccountService {
   }
 
   public isAuthenticated(): boolean {
-    var userSession = this.getUserSession();
-    if (userSession === null || userSession === undefined) {
+    var userSession: UserSession = this.getUserSession();
+    if (userSession === null || userSession === undefined || !userSession.success) {
       console.log('User not authenticated.');
       return false;
     } else {
@@ -80,7 +82,7 @@ export class AccountService {
       })
       .pipe(
         map((response) => {
-          if (response.success === false) {
+          if (response === null || response === undefined || response.success === false) {
             this.removeUserSession();
             throwError;
           } else {
@@ -95,20 +97,43 @@ export class AccountService {
 
   storeUserSession(session: UserSession) {
     this.userSessionSubject$.next({ ...session });
-    return this.cookieService.putObject(this.OBJECT_USER_SESSION, session);
+    this.cookieService.setCookie({
+      name: this.OBJECT_USER_SESSION,
+      value: session.session.id,
+      session: true,
+    });
+
   }
 
   removeUserSession() {
-    this.cookieService.remove(this.OBJECT_USER_SESSION);
+    this.cookieService.deleteCookie(this.OBJECT_USER_SESSION);
     var userSession = null;
     this.userSessionSubject$.next({ ...userSession });
   }
 
   getUserSession(): any {
-    if (this.userSessionSubject$ !== null && this.userSessionSubject$ !== undefined){
+    if (this.userSessionSubject$ !== null && this.userSessionSubject$ !== undefined) {
       return this.userSessionSubject$.value;
-    }else{
-      return this.cookieService.getObject(this.OBJECT_USER_SESSION);
+    }
+    return null;
+  }
+
+  retrieveSession() {
+    var sessionId: string = this.cookieService.getCookie(this.OBJECT_USER_SESSION);
+    if (sessionId !== null && sessionId !== undefined) {
+      let headers = new HttpHeaders();
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('Access-Control-Allow-Origin', '*');
+
+      this.http.get<UserSession>(this.SESSIONS_URL + "/" + sessionId, { headers: headers }).subscribe( (data: UserSession) => {
+        if (data === null || data === undefined || data.success === false) {
+          this.removeUserSession();
+          throwError;
+        } else {
+          console.log('The login response ' + JSON.stringify(data))
+          this.storeUserSession(data);
+        }
+      }, err=>{});
     }
   }
 
@@ -121,13 +146,13 @@ export class AccountService {
   }
 
   register(signupRequest: SignupRequest): Observable<any> {
-    console.log('Signup User: URL: ' + this.REGISTER_URL +", Req: "+ JSON.stringify(signupRequest));
+    console.log('Signup User: URL: ' + this.REGISTER_URL + ", Req: " + JSON.stringify(signupRequest));
 
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
     headers = headers.append('Access-Control-Allow-Origin', '*');
 
-    return this.http.post<any>(this.REGISTER_URL, signupRequest, {headers: headers});
+    return this.http.post<any>(this.REGISTER_URL, signupRequest, { headers: headers });
     // .pipe(
     //   map(res => {
     //     console.log('response: '+ res)
@@ -137,16 +162,16 @@ export class AccountService {
     //       return {}
     //     }
     //   }));
-      // .subscribe({
-      //   next: data => {
-      //     var response = JSON.stringify(data);
-      //     console.log('Signup Response: ' + response);
-      //   },
-      //   error: e => { 
-      //     console.error('Error during Signup: ' + JSON.stringify(e)) ;
-      //     // return e.error;
-      //   }
-      // });
+    // .subscribe({
+    //   next: data => {
+    //     var response = JSON.stringify(data);
+    //     console.log('Signup Response: ' + response);
+    //   },
+    //   error: e => { 
+    //     console.error('Error during Signup: ' + JSON.stringify(e)) ;
+    //     // return e.error;
+    //   }
+    // });
 
     // return this.http.post<any>(this.REGISTER_URL, signupRequest).pipe(
     //   map((response) => {

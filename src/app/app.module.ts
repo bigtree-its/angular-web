@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TreeModule } from 'angular-tree-component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { CookieModule } from 'ngx-cookie';
 
 
 /** Components */
@@ -63,6 +62,7 @@ import { BecomeASupplierComponent } from './component/become-a-supplier/become-a
 import { CurrencyPipe } from '@angular/common';
 import { MyCurrencyPipe } from './helpers/my-currency-pipe';
 import { SupplierFoodItemComponent } from './component/supplier-food-item/supplier-food-item.component';
+import { CookieService } from './service/cookie.service';
 
 @NgModule({
   declarations: [
@@ -124,10 +124,9 @@ import { SupplierFoodItemComponent } from './component/supplier-food-item/suppli
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbModule,
-    CookieModule.forRoot(),
     TreeModule.forRoot()
   ],
-  providers: [AppToastService, CurrencyPipe, MyCurrencyPipe],
+  providers: [AppToastService, CurrencyPipe, MyCurrencyPipe, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

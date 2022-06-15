@@ -11,8 +11,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Padauk', sans-serif;
-  font-size: 14px;
+  font-family: 'Expletus Sans', cursive;
+  font-size: 15px;
   line-height: 26px;
   /* font-weight: 400; */
   letter-spacing: 0;
@@ -175,7 +175,7 @@ body {
 */
 .input-div {
   width: 100%;
-  border: 1px solid #eee5e5;
+  border: 1px solid #ededf4;
   /* box-shadow: rgb(34 34 34) 0px 0px 0px 2px !important; */
   padding: 0;
   display: block;
@@ -200,7 +200,6 @@ body {
   outline: none;
   height: 70px;
   width: 100%;
-  font-size: 15px;
   margin: 0;
   padding: 0 20px;
   padding-top: 22px;
@@ -211,6 +210,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   border: none;
+  font-size: 18px;
 }
 
 ._26LFr {
@@ -229,7 +229,6 @@ body {
 }
 
 ._2tL9P {
-  font-size: 12px;
   font-weight: 500;
   color: #7e808c;
   -ms-transform: translateY(-70%);
@@ -242,7 +241,6 @@ body {
   bottom: 24px;
   padding-left: 20px;
   line-height: 20px;
-  font-size: 15px;
   cursor: text;
   transition: .2s ease;
   width: 100%;
@@ -257,7 +255,6 @@ body {
   position: absolute;
   right: 20px;
   bottom: 26px;
-  font-size: 14px;
   font-weight: 500;
   color: #5d8ed5;
   transform: translateZ(0);
@@ -274,7 +271,6 @@ body {
   text-align: center;
   border: none;
   line-height: 40px;
-  font-size: 14px;
   font-weight: 600;
   height: 40px;
   padding: 0 2rem;

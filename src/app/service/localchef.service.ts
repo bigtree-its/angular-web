@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { LocalContextService } from './localcontext.service';
-import { LocalChef, Cuisine, LocalChefSearchQuery, LocalAreaSearchResponse, LocalArea, Food, Calendar } from '../model/localchef';
+import { LocalChef, Cuisine, LocalChefSearchQuery, LocalAreaSearchResponse, LocalArea, Food, Calendar, FoodOrder } from '../model/localchef';
 
 @Injectable({
   providedIn: 'root'

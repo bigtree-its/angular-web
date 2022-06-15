@@ -80,12 +80,6 @@ export class ProfileComponent implements OnInit {
         this.hideAddressSection = false;
         this.hideAddressForm = true;
       }
-
-      this.orderService.getOrders(this.customer.email).subscribe(data => {
-        this.orders = data;
-        console.log('Orders: ' + JSON.stringify(this.orders));
-        console.log('Retrieved ' + this.orders.length + " orders for this customer");
-      });
     }
   }
 
@@ -116,10 +110,7 @@ export class ProfileComponent implements OnInit {
         this.hideAddressForm = true;
       }
 
-      this.orderService.getOrders(this.customer.email).subscribe(data => {
-        this.orders = data;
-        console.log('Retrieved ' + this.orders.length + " orders for this customer");
-      });
+     
     }
   }
 

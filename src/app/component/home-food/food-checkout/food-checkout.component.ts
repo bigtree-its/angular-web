@@ -9,6 +9,7 @@ import { Chef, FoodOrder, LocalChef } from 'src/app/model/localchef';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Address, User, UserSession, SignupRequest } from 'src/app/model/common-models';
+import { times } from 'underscore';
 
 @Component({
   selector: 'app-food-checkout',
@@ -72,6 +73,9 @@ export class FoodCheckoutComponent implements OnInit {
     console.log('ChefOrder on Storage: '+ JSON.stringify(this.foodOrder));
     console.log('Chef on Storage: '+ JSON.stringify(this.localChef));
     console.log('User on Storage: '+ JSON.stringify(this.userSession));
+    if ( this.foodOrder === null || this.foodOrder === undefined){
+      this.router.navigateByUrl("/");
+    }
   }
 
   ngAfterViewInit(): void {
@@ -115,12 +119,13 @@ export class FoodCheckoutComponent implements OnInit {
             if( userSession.success){
               this.userLoggedIn = true;
               this.loginErrorResponse = undefined;
+              this.userSession = userSession;
+              this.user = this.userSession.user;
             }else{
               this.loginErrorResponse = userSession.message;
             }
           }
-          // this.router.navigate([this.returnUrl]);
-         
+        
         },
         error => {
           this.userLoggedIn = false;

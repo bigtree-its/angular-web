@@ -9,6 +9,7 @@ import { unescapeIdentifier } from '@angular/compiler';
 import { LocalContextService } from './localcontext.service';
 import { AccountService } from './account.service';
 import { ActionResponse } from '../model/action-response';
+import { FoodOrder, SupplierOrders, SupplierSummary } from '../model/localchef';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class OrderService {
   
 
   private SERVER_URL = environment.ORDER_SERVICE_URL;
-  private ORDERS = environment.ORDERS;
   private CREATE_PAYMENT_INTENT = environment.CREATE_PAYMENT_INTENT;
 
   order: Order;
@@ -26,21 +26,18 @@ export class OrderService {
     private http: HttpClient,
     private router: Router,
     private basketService: BasketService,
-    private localContextService: LocalContextService,
     private acccountService: AccountService
   ) { 
   }
 
-  getOrders(email: string): Observable<Order[]> {
+  getSupplierSummary(chefId: string): Observable<SupplierSummary> {
 
-    var url = this.SERVER_URL + this.ORDERS;
-    var params = new HttpParams();
-    params = params.set('email', email);
-    return this.http.get<Order[]>(url, {params: params});
+    var url = this.SERVER_URL+ "/profile/chef/"+ chefId;
+    return this.http.get<SupplierSummary>(url);
   }
 
   placeOrder(order: Order) {
-    var url = this.SERVER_URL + this.ORDERS;
+    var url = this.SERVER_URL;
     console.log('Confirming order: ' + url + ", " + JSON.stringify(order));
     this.http.post<Order>(url, order)
       .subscribe({
@@ -67,7 +64,7 @@ export class OrderService {
 
 
   cancelItem(order:Order, item: OrderItem) : Observable<ActionResponse>{ 
-    var url = this.SERVER_URL + this.ORDERS + "/"+ order.id+"/items/"+ item.id+"/cancellation";
+    var url = this.SERVER_URL + "/"+ order.id+"/items/"+ item.id+"/cancellation";
     var params = new HttpParams();
     params = params.set('id', item.id);
 

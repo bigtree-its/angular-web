@@ -98,7 +98,7 @@ const routes: Routes = [
     path: 'customer-profile', component: CustomerProfileComponent
   },
   {
-    path: 'supplier-profile', component: SupplierProfileComponent
+    path: 'supplier-profile', component: SupplierProfileComponent , canActivate: [AuthGuard]
   },
   {
     path: 'become-a-supplier', component: BecomeASupplierComponent
