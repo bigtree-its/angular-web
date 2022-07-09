@@ -1,17 +1,31 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
-  </style>
-<div class="d-flex justify-content-between align-items-center" style="height: 65px;line-height: 65px;border-bottom: 1px solid #ededf4;">
-  <span style="font-weight: 900;font-size: 30px;font-family: 'Bungee Shade', cursive;height: 20px;line-height: 20px;cursor: pointer;" (click)="home()">Heavenly Delicious</span>
-  
-  <div class="d-flex justify-content-end align-items-center">
+  @import url('https://fonts.googleapis.com/css2?family=Megrim&display=swap');
+</style>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&display=swap');
+</style>
+<div class="between align-items-center" style="height: 65px;line-height: 65px;border-bottom: 1px solid #ededf4;">
+
+  <h1 class="brand-name" (click)="home()">zoobear</h1>
+  <!-- <div class="horizontal">
+    <h1 class="brand-name" (click)="home()">Z</h1>
+    <h1 class="brand-name" (click)="home()">O</h1>
+    <h1 class="brand-name" (click)="home()">O</h1>
+    <h1 class="brand-name" (click)="home()">B</h1>
+    <h1 class="brand-name" (click)="home()">E</h1>
+    <h1 class="brand-name" (click)="home()">A</h1>
+    <h1 class="brand-name" (click)="home()">R</h1>
+  </div> -->
+
+
+  <div class="horizontal">
     <img src="/assets/icons/united-kingdom.png" class="united-kingdom-icon" />
     <span class="align-self-center" *ngIf="isUserLoggedIn() == true"
       style="height: 30px;width: 30px;border:2px solid #766df4;line-height: 30px;border-radius: 50%;justify-content: center; align-items: center; display: flex;margin: 0 5px;">{{userName.substr(0,1)}}</span>
-    <span *ngIf="isUserLoggedIn() == true">{{userName}}</span>
-    <span style="margin: 0 10px;cursor: pointer;" (click)="becomeChef()" *ngIf="isUserLoggedIn() == false || role == 'Customer' ">Become a chef</span>
-    <span style="margin: 0 10px;cursor: pointer;" (click)="login()" *ngIf="isUserLoggedIn() == false">Sign In</span>
-    <span style="margin: 0 10px;cursor: pointer;" (click)="register()" *ngIf="isUserLoggedIn() == false">Sign Up</span>
+    <span class="user-name" *ngIf="isUserLoggedIn() == true" (click)="viewProfile()">{{userName}}</span>
+    <span class="nav-item" (click)="becomeChef()" *ngIf="isUserLoggedIn() == false || role == 'Customer' ">New Business</span>
+    <span class="nav-item" (click)="login()" *ngIf="isUserLoggedIn() == false">Sign In</span>
+    <span class="nav-item" (click)="register()" *ngIf="isUserLoggedIn() == false">Sign Up</span>
     <img src="/assets/icons/logout.png" class="united-kingdom-icon" *ngIf="isUserLoggedIn() == true"
       (click)="logout()" />
   </div>

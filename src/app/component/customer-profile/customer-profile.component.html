@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="container-fluid">
   <div class="flex-start">
-    <div class="nav-section d-flex flex-column">
+    <div class="nav-section vertical">
       <span class="nabvar-heading">Your Account</span>
       <div class="p-3" style="width: 280px;border: 1px solid #fff;">
         <!-- <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
@@ -38,10 +38,10 @@
       </div>
     </div>
     <div class="detail-section">
-      <span class="detail-section-header">{{moduleName}}</span>
+      <span style="font-weight: 600;font-size: 17px;">{{moduleName}}</span>
       <div class="border-top my-3"></div>
       <div *ngIf="displayAboutYouModule === true" style="width: 400px;">
-        <div class="d-flex flex-column" style="margin: 10px 0;">
+        <div class="vertical" style="margin: 10px 0;">
           <div class="input-div">
             <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off" value=""
               [(ngModel)]="customer.email" #ctrl="ngModel" disabled>
@@ -66,23 +66,20 @@
             <div class="_2EeI1 _26LFr"></div>
             <label class="_1Cvlf _2tL9P " for="telephone">Telephone</label>
           </div>
-          <div class="_25qBi _2-hTu" (click)="onSubmitPersonalDetails()">
-            <a class="_2REYC" style="color: #fff;">
-              <input type="submit" style="display: none;">Submit
-            </a>
-          </div>
+          <button type="button" class="btn btn-md btn-success py-3" (click)="onSubmitPersonalDetails()">Submit</button>
         </div>
       </div>
       <div *ngIf="displaySecurityModule === true" style="width: 400px;">
         <div class="" *ngIf="!otpGenerated">
-          To change your password, Click here to send one-time passcode to your email address. Once you received your one-time passcode please submit with your new password
+          To change your password, Click here to send one-time passcode to your email address. Once you received your
+          one-time passcode please submit with your new password
           <div class="_25qBi _2-hTu" (click)="generateOtp()">
             <a class="_2REYC" style="color: #fff;">
               <input type="submit" style="display: none;">Generate OTP
             </a>
           </div>
         </div>
-        <div class="d-flex flex-column" style="margin: 10px 0;" *ngIf="otpGenerated">
+        <div class="vertical" style="margin: 10px 0;" *ngIf="otpGenerated">
           <span style="margin: 10px 0;">Check your email for one-time passcode. <a>Resend</a></span>
           <div class="input-div">
             <input class="_381fS" type="text" name="otp" id="otp" tabindex="1" autocomplete="off" value=""
@@ -107,17 +104,19 @@
               <input type="submit" style="display: none;">Submit
             </a>
           </div>
-          <div *ngIf="isSuccess" class="alert alert-success d-flex flex-start justify-content-center align-items-center" role="alert" style="margin-top: 20px;">
-            <img src="/assets/icons/check-mark.png"  alt="" style="width: 30px;height: 30px;"> {{message}}
+          <div *ngIf="isSuccess" class="alert alert-success d-flex flex-start justify-content-center align-items-center"
+            role="alert" style="margin-top: 20px;">
+            <img src="/assets/icons/check-mark.png" alt="" style="width: 30px;height: 30px;"> {{message}}
           </div>
-          <div *ngIf="isError" class="alert alert-warning h-flex justify-content-between wrap" role="alert" style="margin-top: 20px;">
-           {{message}}
+          <div *ngIf="isError" class="alert alert-warning h-flex justify-content-between wrap" role="alert"
+            style="margin-top: 20px;">
+            {{message}}
           </div>
         </div>
       </div>
       <div *ngIf="displayAddressModule === true" style="width: 500px;">
         <div *ngIf="editAddress">
-          <div class="d-flex flex-column" style="margin: 10px 0;">
+          <div class="vertical" style="margin: 10px 0;">
             <div class="input-div">
               <input class="_381fS" type="text" name="addressLine1" id="addressLine1" tabindex="1" autocomplete="off"
                 value="" [(ngModel)]="addressLine1" #ctrl="ngModel">
@@ -142,11 +141,7 @@
               <div class="_2EeI1 _26LFr"></div>
               <label class="_1Cvlf _2tL9P " for="postcode">Postcode</label>
             </div>
-            <div class="_25qBi _2-hTu" (click)="onSubmitAddress()">
-              <a class="_2REYC" style="color: #fff;">
-                <input type="submit" style="display: none;">Submit
-              </a>
-            </div>
+            <button type="button" class="btn btn-md btn-success py-3" (click)="onSubmitAddress()">Submit</button>
           </div>
         </div>
 
@@ -157,17 +152,17 @@
           <span>{{ address.country }}</span>
           <span>{{ address.postcode }}</span>
           <div class="h-flex align-items-start wrap my-2">
-            <button type="button" class="btn-g mr-1" (click)="editThisAddress()">Edit this
+            <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="editThisAddress()">Edit this
               address</button>
-            <button type="button" class="btn-s mr-1" (click)="removeAddress()">Remove this</button>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeAddress()">Remove this</button>
           </div>
         </div>
       </div>
 
       <div *ngIf="displayOrdersModule === true">
         <ng-container *ngIf="ordersArray === null || ordersArray === undefined || ordersArray.length === 0; then thenBlock;
-                else
-                elseBlock">
+                  else
+                  elseBlock">
         </ng-container>
         <ng-template #thenBlock>
           <span class="basket-no-items">
@@ -184,5 +179,6 @@
         </ng-template>
       </div>
     </div>
+
   </div>
 </div>

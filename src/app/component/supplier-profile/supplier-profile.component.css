@@ -1,47 +1,84 @@
-.icon {
+.brand-icon {
     border-radius: 50%;
     height: 120px;
     width: 120px;
     align-items: center;
 }
 
-.icon:hover {
+.brand-icon:hover {
     cursor: pointer;
-    background-color: rgb(173, 173, 173)
 }
 
 .navItem {
-    font-size: 18px;
-    height: 50px;
-    line-height: 50px;
     display: block;
-    padding: 0 20px;
-    text-align: center;
+    text-align: left;
+    border-radius: 7px;
+    padding: 5px;
+    margin: 5px 0;
 }
 
 .navItem:hover {
-    background-color: #e8eaee;
+    background-color: #d2f4ea;
     cursor: pointer;
 }
 
 .panel {
+    min-height: 150px;
     padding: 10px;
     width: 300px;
     border-radius: 8px;
-    border: 1px solid #ededf4;
-    margin: 0 20px;
+    border: 1px solid #f1f1f1;
+    margin: 0 20px 20px 0;
 }
 
-.supplier-food-item{
-    background-color: #f9f9f9;
+.panel:hover {
+    cursor: pointer;
+    background-color: #f1f1f1;
 }
-.supplier-food-item:hover{
+
+.date-field {
+    margin-right: 50px;
+    border-bottom: 1px solid #ededf4;
+    width: 120px;
+    padding: 0 10px;
+}
+
+.date-field:hover {
+    background-color: #e3e3e3;
+    cursor: pointer;
+    color: #007bff;
+}
+
+.date-input {
+    width: 110px;
+    border: none;
+    background: transparent;
+    font-size: 17px;
+}
+
+.supplier-food-item {
+    background-color: #fffcfc;
+    margin: 2px 0;
+}
+
+.supplier-food-item:hover {
     background-color: #f1f1f1;
 }
 
 .selected {
-    background-color: rgb(255, 255, 255);
-    border: 1px solid #222;
+    background-color: #fffcfc;
+    border: 1px solid #465ab2;
+}
+
+.spice {
+    opacity: 0.5;
+    height: 25px;
+    width: 25px;
+}
+
+.spice:hover {
+    opacity: 1.0;
+    cursor: pointer;
 }
 
 .category {
@@ -52,10 +89,152 @@
 }
 
 .selectedCategory {
-    background-color: #5f5f5f;
+    background-color: #465ab2;
     color: #fff;
+}
+
+.selectedSpice {
+    opacity: 1.0;
 }
 
 .hidden {
     display: none;
+}
+
+.x-checked {
+    background-color: #fff;
+    border: 2px solid #465ab2;
+}
+
+.x-checkbox {
+    background-color: #fff;
+    border: 2px solid #465ab2;
+}
+
+.icon {
+    border-radius: 50%;
+    border: 1px solid #fffcfc;
+    height: 30px;
+    width: 32px;
+    align-items: center;
+}
+
+.icon:hover {
+    cursor: pointer;
+    border: 1px solid #465ab2;
+    background-color: #fffcfc;
+}
+
+.icon-close {
+    border-radius: 50%;
+    border: 1px solid #fffcfc;
+    height: 20px;
+    width: 22px;
+    align-items: center;
+}
+
+.icon-close:hover {
+    cursor: pointer;
+    border: 1px solid #465ab2;
+    background-color: #fffcfc;
+}
+
+.completed-order, .open-order {
+    height: 35px;
+    line-height: 35px;
+    font-size: 13px;
+    padding: 0 5px;
+    margin-bottom: 5px;
+}
+
+.open-order {
+    color: #111;
+}
+
+.completed-order:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.open-order:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.calendar-item {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 600;
+    margin: 2px;
+    width: 100px;
+    background-color: #7dcc84;
+    color: #fff;
+}
+
+.calendar-item:hover {
+    background-color: #68be6f;
+
+    cursor: pointer;
+}
+
+
+/** Collapsible **/
+.btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    font-weight: 600;
+    font-size: 15px;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
+    border: 0;
+}
+
+.btn-toggle:hover,
+.btn-toggle:focus {
+    color: rgba(0, 0, 0, .85);
+    background-color: #d2f4ea;
+}
+
+.btn-toggle::before {
+    width: 1.25em;
+    line-height: 0;
+    content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgba%280,0,0,.5%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+    transition: transform .35s ease;
+    transform-origin: .5em 50%;
+}
+
+.btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
+}
+
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
+}
+
+.btn-toggle-nav a {
+    display: inline-flex;
+    padding: .1875rem .5rem;
+    margin-top: .125rem;
+    margin-left: 1.25rem;
+    text-decoration: none;
+}
+
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+    background-color: #d2f4ea;
+}
+
+.scrollarea {
+    overflow-y: auto;
+}
+
+.fw-semibold {
+    font-weight: 600;
+}
+
+.lh-tight {
+    line-height: 1.25;
 }

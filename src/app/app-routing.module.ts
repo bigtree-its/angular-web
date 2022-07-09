@@ -24,6 +24,8 @@ import { ChefConfirmComponent } from './component/home-food/chef-confirm/chef-co
 import { CustomerProfileComponent } from './component/customer-profile/customer-profile.component';
 import { SupplierProfileComponent } from './component/supplier-profile/supplier-profile.component';
 import { BecomeASupplierComponent } from './component/become-a-supplier/become-a-supplier.component';
+import { SupplierOrderComponent } from './component/supplier-profile/supplier-order/supplier-order.component';
+import { SupplierAuthGuard } from './helpers/supplier-auth-guard';
 
 
 const routes: Routes = [
@@ -80,7 +82,7 @@ const routes: Routes = [
     path: 'chef/:id', component: ChefHomeComponent
   },
   {
-    path: 'food-checkout', component: FoodCheckoutComponent
+    path: 'checkout', component: FoodCheckoutComponent
   },
   {
     path: 'city', component: CityComponent
@@ -102,6 +104,9 @@ const routes: Routes = [
   },
   {
     path: 'become-a-supplier', component: BecomeASupplierComponent
+  },
+  {
+    path: 'supplier/order', component: SupplierOrderComponent , canActivate: [SupplierAuthGuard]
   }
 ];
 

@@ -9,7 +9,7 @@ export class CookieService {
 
   public getCookie(name: string) {
     let ca: Array<string> = document.cookie.split(';');
-    console.log(document.cookie);
+    console.log('Document.Cookie: '+ca);
     let caLen: number = ca.length;
     let cookieName = `${name}=`;
     let c: string;

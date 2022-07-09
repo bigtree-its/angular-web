@@ -2,286 +2,303 @@
     @import url('assets/js/client.js');
 </style>
 <app-header></app-header>
-<div class="d-flex flex-column container" style="margin-top: 10px;">
-    <div class="food-checkout-component-header">
-        <span style="font-size: 30px;font-weight: 100;">Secure Checkout</span>
-    </div>
-    <div class="d-flex flex-start wrap">
+<div class="d-flex justify-content-center" style="margin-top: 10px;">
 
-        <!-- LEFT  Container -->
-        <div class="d-flex flex-column" style="min-width: 45%;">
+    <div class="vertical" style="width: 1200px;">
 
-            <!-- Account Login -->
-            <div class="d-flex flex-column"
-                style="min-width: 49%;margin: 0 1px 10px 1px;border: 1px solid #e3e3e3;padding: 20px;"
-                *ngIf="!userLoggedIn">
-                <span style="font-size: 32px;">Account</span>
-                <span class="muted" style="font-size: 13px;color: #686b78;padding: 10px 0;font-weight: 300;">To place
-                    your order now, log in to your existing account or sign up.</span>
-                <div class="d-flex flex-start">
-                    <div class="d-flex flex-column login-button" (click)="actionLogin()">
-                        <span style="font-size: 13px;font-weight: 100;">Have an account?</span>
-                        <span style="font-weight: 600;font-size: 14px;">LOG IN</span>
+        <div class="horizontal" style="height: 80px;padding: 10px 0;">
+            <div class="icon-div" (click)="back()">
+                <img src="/assets/icons/left-arrow-long.png" height="20px" width="20px" >
+              </div>
+            <span style="font-size: 30px;font-weight: 900;">Secure Checkout</span>
+        </div>
+        <div class="float">
+            <!-- LEFT  Container -->
+            <div class="vertical" style="width: 60%;">
+    
+                <!-- Account Login -->
+                <div class="vertical"
+                    style="margin: 0 1px 10px 1px;border: 1px solid #e3e3e3;padding: 20px;"
+                    *ngIf="!userLoggedIn">
+                    <span style="font-size: 32px;">Account</span>
+                    <span class="muted" style="color: #686b78;padding: 10px 0;font-weight: 300;">To place
+                        your order now, log in to your existing account or sign up.</span>
+                    <div class="horizontal">
+                        <div class="vertical login-button" (click)="actionLogin()">
+                            <span style="font-weight: 100;">Have an account?</span>
+                            <span style="font-weight: 600;font-size: 14px;">LOG IN</span>
+                        </div>
+                        <div class="vertical signup-button" (click)="actionSignup()">
+                            <span style="font-weight: 100;">New to Zoobear?</span>
+                            <span style="font-weight: 600;font-size: 14px;">SIGN UP</span>
+                        </div>
+                        <div class="vertical signup-button" (click)="actionForgotPassword()">
+                            <span style="font-weight: 100;">Forgot Password?</span>
+                            <span style="font-weight: 600;font-size: 14px;">RESET</span>
+                        </div>
                     </div>
-                    <div class="d-flex flex-column signup-button" (click)="actionSignup()">
-                        <span style="font-size: 13px;font-weight: 100;">New to LocalChef?</span>
-                        <span style="font-weight: 600;font-size: 14px;">SIGN UP</span>
+                    <div class="vertical" style="margin: 20px 0;" *ngIf="action === 'login'">
+                        <form>
+                            <div
+                                style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
+                                <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off"
+                                    value="" [(ngModel)]="loginEmail" #ctrl="ngModel">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="mobile">Email Address</label>
+                            </div>
+                            <div
+                                style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+                                <input class="_381fS" type="password" name="password" id="password" tabindex="1"
+                                    autocomplete="off" value="" [(ngModel)]="loginPassword" #ctrl="ngModel">
+                                <div class="_2EeI1 _26LFr"></div>
+                                <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
+                            </div>
+                            <div class="_25qBi _2-hTu" (click)="doLoginSubmit()">
+                                <a class="_2REYC" style="color: #fff;">
+                                    <input type="submit" style="display: none;">Login
+                                </a>
+                            </div>
+                            <div *ngIf="loginErrorResponse !== undefined"
+                                style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
+                                <p>{{loginErrorResponse}}</p>
+                            </div>
+                        </form>
                     </div>
-                    <div class="d-flex flex-column signup-button" (click)="actionForgotPassword()">
-                        <span style="font-size: 13px;font-weight: 100;">Forgot Password?</span>
-                        <span style="font-weight: 600;font-size: 14px;">RESET</span>
-                    </div>
-                </div>
-                <div class="d-flex flex-column" style="margin: 10px 0;" *ngIf="action === 'login'">
-                    <form>
+                    <div class="vertical" style="margin: 10px 0;" *ngIf="action === 'signup'">
                         <div
                             style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
+                            <input class="_381fS" type="tel" name="mobile" id="mobile" tabindex="1" autocomplete="off"
+                                value="" [(ngModel)]="signupMobile" #ctrl="ngModel">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="mobile">Mobile Number</label>
+                        </div>
+                        <div
+                            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
                             <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off"
-                                value="" [(ngModel)]="loginEmail" #ctrl="ngModel">
+                                value="" [(ngModel)]="signupEmail" #ctrl="ngModel">
                             <div class="_2EeI1 _26LFr"></div>
                             <label class="_1Cvlf _2tL9P " for="mobile">Email Address</label>
                         </div>
                         <div
                             style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
+                            <input class="_381fS" type="text" name="fullname" id="fullname" tabindex="1" autocomplete="off"
+                                value="" [(ngModel)]="signupFullname" #ctrl="ngModel">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="mobile">Your Name</label>
+                        </div>
+                        <div
+                            style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
                             <input class="_381fS" type="password" name="password" id="password" tabindex="1"
-                                autocomplete="off" value="" [(ngModel)]="loginPassword" #ctrl="ngModel">
+                                autocomplete="off" value="" [(ngModel)]="signupPassword" #ctrl="ngModel">
                             <div class="_2EeI1 _26LFr"></div>
                             <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
                         </div>
-                        <div class="_25qBi _2-hTu" (click)="doLoginSubmit()">
+                        <div class="_25qBi _2-hTu" (click)="doSignupSubmit()">
                             <a class="_2REYC" style="color: #fff;">
-                                <input type="submit" style="display: none;">Login
+                                <input type="submit" style="display: none;">SIGN UP
                             </a>
                         </div>
-                        <div *ngIf="loginErrorResponse !== undefined"
+                        <div *ngIf="signupErrorResponse !== undefined"
                             style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
-                            <p>{{loginErrorResponse}}</p>
-                        </div>
-                    </form>
-                </div>
-                <div class="d-flex flex-column" style="margin: 10px 0;" *ngIf="action === 'signup'">
-                    <div
-                        style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);">
-                        <input class="_381fS" type="tel" name="mobile" id="mobile" tabindex="1" autocomplete="off"
-                            value="" [(ngModel)]="signupMobile" #ctrl="ngModel">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="mobile">Mobile Number</label>
-                    </div>
-                    <div
-                        style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
-                        <input class="_381fS" type="email" name="email" id="email" tabindex="1" autocomplete="off"
-                            value="" [(ngModel)]="signupEmail" #ctrl="ngModel">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="mobile">Email Address</label>
-                    </div>
-                    <div
-                        style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
-                        <input class="_381fS" type="text" name="fullname" id="fullname" tabindex="1" autocomplete="off"
-                            value="" [(ngModel)]="signupFullname" #ctrl="ngModel">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="mobile">Your Name</label>
-                    </div>
-                    <div
-                        style="width: 100%;border: 1px solid #d4d5d9;padding: 0;display: block; position: relative;transform: translateZ(0);border-top: none;">
-                        <input class="_381fS" type="password" name="password" id="password" tabindex="1"
-                            autocomplete="off" value="" [(ngModel)]="signupPassword" #ctrl="ngModel">
-                        <div class="_2EeI1 _26LFr"></div>
-                        <label class="_1Cvlf _2tL9P " for="mobile">Password</label>
-                    </div>
-                    <div class="_25qBi _2-hTu" (click)="doSignupSubmit()">
-                        <a class="_2REYC" style="color: #fff;">
-                            <input type="submit" style="display: none;">SIGN UP
-                        </a>
-                    </div>
-                    <div *ngIf="signupErrorResponse !== undefined"
-                        style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
-                        <p>{{signupErrorResponse}}</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Delivery Address -->
-            <div *ngIf="userLoggedIn">
-                <div *ngIf="serviceMode === 'Delivery'" style="border: 1px solid #e3e3e3;margin-bottom: 10px;">
-                    <h4 class="mb-3" style="font-weight: bolder; padding: 10px;">Where should we send your
-                        order?</h4>
-                    <div *ngIf="address !== undefined && address !== null">
-                        <div class="d-flex flex-column" style="margin-left: 10px;">
-                            <span *ngIf="address.addressLine1 !== undefined &&  address.addressLine1.length > 0">{{
-                                address.addressLine1
-                                }}</span>
-                            <span *ngIf="address.addressLine2 !== undefined &&  address.addressLine2.length > 0">{{
-                                address.addressLine2
-                                }}</span>
-                            <span *ngIf="address.city !== undefined &&  address.city.length > 0">{{
-                                address.city
-                                }}</span>
-                            <span *ngIf="address.country !== undefined &&  address.country.length > 0">{{
-                                address.country }}</span>
+                            <p>{{signupErrorResponse}}</p>
                         </div>
                     </div>
-                    <div style="padding: 10px;">
-                        <form #postcodeLoookupForm="ngForm" (ngSubmit)=(onSubmitPostcodeLookup(postcodeLoookupForm))>
-                            <div class="d-flex justify-content-between">
-                                <div style="width: 100%;">
-                                    <input type="text" class="form-control" id="postcode" required
-                                        [(ngModel)]="addressLookup.postcode" name="postcode">
-                                    <!-- <input type="text" class="form-control ob-text-field"  style="font-weight: bold;" id="postcode"
-                                        placeholder="Enter your postcode" [(ngModel)]="addressLookup.postcode"> -->
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn-normal mb-1 ml-1"
-                                        [disabled]="!postcodeLoookupForm.form.valid">Search</button>
-                                </div>
-                            </div>
-                            <!-- <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0"
-                                class="d-flex justify-content-start mt-3">
-                                <div style="width: 100%;">
-                                    <select style="border:1px solid #cacaca"
-                                        [ngModel]="rapidApiByPostcodeResponseSummary"
-                                        (ngModelChange)="onSelectDeliveryAddress($event)" name="sel3"
-                                        style="width: 100%; height: 30px;">
-                                        <option [ngValue]="i" *ngFor="let i of postcodeAddressList">
-                                            {{i.StreetAddress }}, {{i.Place}}</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                            <div
-                                *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0 && !addressSelected">
-                                <div style="border:1px solid #e0e0e0;overflow-y: auto;height: 150px;">
-                                    <div class="address-item" *ngFor="let add of postcodeAddressList"
-                                        (click)="onSelectDeliveryAddress(add)">
-                                        <span> {{add.StreetAddress }}, {{add.Place}}</span>
+    
+                </div>
+    
+                <!-- Delivery Address -->
+                <div *ngIf="userLoggedIn">
+                    <div *ngIf="serviceMode === 'Delivery'" style="border: 1px solid #f1f1f1;margin-bottom: 10px;padding: 10px;">
+                        <h4 class="mb-3" style="font-weight: 500; padding: 10px;">Where should we send your
+                            order?</h4>
+                            
+                        <div *ngIf="address !== undefined && address !== null">
+                            <div class="between">
+                                <div style="margin:0 10px;width: 80%;height: 100px;">
+                                    <div class="vertical" style="background-color: #f1f1f1;padding: 10px;border-radius: 8px;">
+                                        <span *ngIf="address.addressLine1 !== undefined &&  address.addressLine1.length > 0">{{
+                                            address.addressLine1
+                                            }}</span>
+                                        <span *ngIf="address.addressLine2 !== undefined &&  address.addressLine2.length > 0">{{
+                                            address.addressLine2
+                                            }}</span>
+                                        <span *ngIf="address.city !== undefined &&  address.city.length > 0">{{
+                                            address.city
+                                            }}</span>
+                                        <span *ngIf="address.country !== undefined &&  address.country.length > 0">{{
+                                            address.country }}</span>
                                     </div>
                                 </div>
+                                <div style="width: 20%;margin: 0 10px 0 5px;">
+                                    <button class="btn btn-md btn-warning" (click)="showAddressLookup()">Change</button>
+                                </div>
                             </div>
-                            <div class="mt-3">
-                                <small class="mt-2"> (This address will used for delivery)</small>
+                        </div>
+                        <div style="padding: 10px;" *ngIf="lookupAddress">
+                            <div class="between justify-content-center align-items-center">
+                                <div style="width: 78%;">
+                                    <div class="input-div" >
+                                        <input class="_381fS" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off"
+                                            value="" [(ngModel)]="addressLookup.postcode" #ctrl="ngModel" placeholder="Enter your postcode">
+                                        <div class="_2EeI1 _26LFr"></div>
+                                        <label class="_1Cvlf _2tL9P " for="postcode">Postcode</label>
+                                    </div>
+                                </div>
+                                <div class="horizontal" style="width: 20%;height: 50px;margin: 0 10px 0 5px;">
+                                    <button class="btn btn-md btn-outline-primary" (click)="findAddress()" style="margin-right: 8px;">Find</button>
+                                    <button class="btn btn-md btn-outline-danger" (click)="cancelAddressLookup()">Cancel</button>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Card -->
-            <div style="border: 1px solid #afafaf;" [class.hidden]="!userLoggedIn || hidePaymentSection">
-                <h4 class="mb-3" style="font-weight: bolder; padding: 10px;">How do you want to pay us?
-                </h4>
-                <!-- Display a payment form -->
-                <form id="payment-form" class="stripe-payment-form">
-                    <div id="card-element">
-                        <!--Stripe.js injects the Card Element-->
-                    </div>
-                    <button id="paywithCardButton" class="stripe-button-old d-flex flex-start justify-content-center"
-                        *ngIf="userLoggedIn" (click)="makePayment()" [disabled]="foodOrder === null || foodOrder === undefined || foodOrder.total === 0">
-                        <div class="spinner-grow text-warning hidden" role="status" id="spinner"
-                            style="margin-right: 10px;">
-                            <span class="visually-hidden"></span>
-                        </div>
-                        <div style="margin-top: 3px;">
-                            <span id="button-text">Pay</span><span class="px-3">{{foodOrder.total |
-                                currency: 'GBP'}}</span>
-                        </div>
-                    </button>
-                    <small class="text-muted">By selecting this button, you agree to the Terms of
-                        Sale.</small>
-                </form>
-                <div id="payment-result-section" class="payment-result-section hidden">
-                    <span id="payment-result-message"></span>
-                </div>
-                <div class="my-5">
-                    <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo" />
-                </div>
-            </div>
-
-            <div *ngIf="showOrderConfirmation" class="d-flex flex-column">
-                <div class="chef-card-img-div">
-                    <img width="100%" height="100%" src="{{localChef.coverPhoto}}" alt="..." (click)="selectChef()">
-                </div>
-                <span class="checf-card-name">{{localChef.displayName}}</span>
-                <div style="padding: 10px 0;">
-                    Your order has been placed <span class="checf-card-name">{{confirmedOrder.reference}}</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- RIGHT Container -->
-        <div class="d-flex flex-column" style="min-width: 45%;">
-            <div style="margin: 0 10px 10px 10px" class="d-flex flex-column">
-                <span style="padding: 10px; text-align: center;font-size: 20px;">Your
-                    Order</span>
-                <div class="d-flex flex-column">
-                    <span style="font-size: 15px;padding: 0 15px;opacity: 0.5;">Prepared By</span>
-                    <div class="d-flex flex-start" (click)="selectChef()">
-                        <img src="/assets/icons/coffee-cup.png" style="width: 20px; height: 20px;margin: 20px;"
-                            alt="{{localChef.displayName}}">
-                        <div class="d-flex flex-column">
-                            <span
-                                style="font-size: 17px;color: #282c3f;font-weight: 500;text-overflow: ellipsis;overflow: hidden; white-space: nowrap;padding: 10px 0 2px 0;">{{localChef.displayName}}</span>
-                            <span
-                                style="font-size: 13px;font-weight: 380;padding: 1px 0;color: #686b78;">{{getChefAddress()}}</span>
+                            
+                                <!-- <div *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0"
+                                    class="d-flex justify-content-start mt-3">
+                                    <div style="width: 100%;">
+                                        <select style="border:1px solid #cacaca"
+                                            [ngModel]="rapidApiByPostcodeResponseSummary"
+                                            (ngModelChange)="onSelectDeliveryAddress($event)" name="sel3"
+                                            style="width: 100%; height: 30px;">
+                                            <option [ngValue]="i" *ngFor="let i of postcodeAddressList">
+                                                {{i.StreetAddress }}, {{i.Place}}</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <div
+                                    *ngIf="postcodeAddressList !== undefined && postcodeAddressList.length > 0 && !addressSelected">
+                                    <div style="border:1px solid #e0e0e0;overflow-y: auto;height: 150px;">
+                                        <div class="address-item" *ngFor="let add of postcodeAddressList"
+                                            (click)="onSelectDeliveryAddress(add)">
+                                            <span> {{add.StreetAddress }}, {{add.Place}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <small class="mt-2"> (This address will used for delivery)</small>
+                                </div>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
-
+    
+                <!-- Payment Card -->
+                <div style="border: 1px solid #f1f1f1;" [class.hidden]="!userLoggedIn || hidePaymentSection">
+                    <h4 class="mb-3" style="font-weight: 500; padding: 10px;">How do you want to pay us?
+                    </h4>
+                    <!-- Display a payment form -->
+                    <form id="payment-form" class="stripe-payment-form">
+                        <div id="card-element">
+                            <!--Stripe.js injects the Card Element-->
+                        </div>
+                        <button id="paywithCardButton" class="stripe-button-old horizontal justify-content-center"
+                            *ngIf="userLoggedIn" (click)="makePayment()" [disabled]="foodOrder === null || foodOrder === undefined || foodOrder.total === 0">
+                            <div class="spinner-grow text-warning hidden" role="status" id="spinner"
+                                style="margin-right: 10px;">
+                                <span class="visually-hidden"></span>
+                            </div>
+                            <div style="margin-top: 3px;">
+                                <span id="button-text">Pay</span><span class="px-3">{{foodOrder.total |
+                                    currency: 'GBP'}}</span>
+                            </div>
+                        </button>
+                        <small class="text-muted">By selecting this button, you agree to the Terms of
+                            Sale.</small>
+                    </form>
+                    <div id="payment-result-section" class="payment-result-section hidden">
+                        <span id="payment-result-message"></span>
+                    </div>
+                    <div class="my-5">
+                        <img src="/assets/icons/secure-stripe-payment-logo.png" class="stripe-logo" />
+                    </div>
+                </div>
+    
+                <div *ngIf="showOrderConfirmation" class="vertical">
+                    <div class="chef-card-img-div">
+                        <img width="100%" height="100%" src="{{localChef.coverPhoto}}" alt="..." (click)="selectChef()">
+                    </div>
+                    <span class="checf-card-name">{{localChef !== null && localChef !== undefined ? localChef.displayName : ''}}</span>
+                    <div style="padding: 10px 0;">
+                        Your order has been placed <span class="checf-card-name">{{confirmedOrder.reference}}</span>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center btn-group"
-                style="padding:3px 10px;font-weight: 300;" role="group" *ngIf="localChef.delivery">
-                <button type="button" class="btn-normal py-3" (click)="selectPickup()"
-                    [class.selected-servicemode]="serviceMode==='Collection'">I want to collect</button>
-                <button type="button" class="btn-normal py-3" (click)="selectDelivery()"
-                    [class.selected-servicemode]="serviceMode==='Delivery'">I want delivery</button>
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center btn-group btn-group-toggle"
-                style="padding:3px 10px;font-weight: 300;" class="btn-group" rdata-toggle="buttons"
-                *ngIf="!localChef.delivery">
-                <button class="btn btn-block btn-outline-dark">Collection</button>
-            </div>
-            <div style="margin: 10px;padding: 10px;" class="d-flex flex-start">
-                <img src="/assets/icons/time.png" height="20px" width="20px" style="margin-top: 9px;margin-right: 2px;">
-                <span style="font-weight: 500;font-size: 13px;color: #282c3f;padding: 10px;"><b>{{serviceMode
-                        ==='Delivery' ? 'Delivery time' : 'Pick-up time'}} </b><small>ASAP (45 minutes)</small></span>
-            </div>
-            <div *ngIf="foodOrder !== undefined" class="order-content-section" style="overflow-y: auto;margin: 0 10px;">
-                <div>
-                    <app-food-order-item [item]="item" *ngFor="let item of foodOrder.items"></app-food-order-item>
+            
+            <!-- RIGHT Container -->
+            <div class="vertical" style="width: 38%;margin-left: 10px;">
+                <div style="margin: 0 10px 10px 10px" class="vertical">
+                    <span style="padding: 10px; text-align: center;font-size: 25px;font-weight: 900;">Your Order</span>
+                    <div class="vertical" style="background-color: #f1f1f1;padding: 10px; border-radius: 8px;margin-bottom: 20px;">
+                        <span style="font-size: 15px;padding: 0 15px;opacity: 0.5;">Prepared By</span>
+                        <div class="horizontal" (click)="selectChef()">
+                            <img src="/assets/icons/coffee-cup.png" style="width: 20px; height: 20px;margin: 20px;"
+                                alt="{{localChef.displayName}}">
+                            <div class="vertical">
+                                <span
+                                    style="font-size: 17px;color: #282c3f;font-weight: 500;text-overflow: ellipsis;overflow: hidden; white-space: nowrap;padding: 10px 0 2px 0;">{{localChef.displayName}}</span>
+                                <span
+                                    style="font-weight: 380;padding: 1px 0;color: #686b78;">{{getChefAddress()}}</span>
+                            </div>
+                        </div>
+                    </div>
+    
                 </div>
-
-                <div style="margin: 10px 0;">
-                    <span style="font-weight: 500;font-size: 13px;color: #282c3f;padding: 10px;">Bill Details</span>
+                <div class="d-flex justify-content-between align-items-center btn-group px-2" role="group" *ngIf="localChef.delivery">
+                    <button class="btn-normal py-3 mr-1" (click)="selectPickup()"
+                        [class.btn-selected]="serviceMode==='Collection'">I want to collect</button>
+                    <button class="btn-normal py-3" (click)="selectDelivery()"
+                        [class.btn-selected]="serviceMode==='Delivery'">I want delivery</button>
                 </div>
-                <div class="d-flex justify-content-between align-items-center"
-                    style="padding:3px 10px;font-weight: 300;">
-                    <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Item Total</span>
-                    <span
-                        style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.subTotal
-                        | currency: 'GBP'}}</span>
+    
+                <div class="d-flex justify-content-between align-items-center btn-group btn-group-toggle"
+                    style="padding:3px 10px;font-weight: 300;" class="btn-group" rdata-toggle="buttons"
+                    *ngIf="!localChef.delivery">
+                    <button class="btn btn-block btn-outline-dark">Collection</button>
                 </div>
-                <div class="d-flex justify-content-between align-items-center"
-                    style="padding:3px  10px;font-weight: 300;">
-                    <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Delivery Fee</span>
-                    <span
-                        style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.deliveryFee
-                        | currency: 'GBP'}}</span>
+                <div style="margin: 10px;padding: 10px;" class="horizontal">
+                    <img src="/assets/icons/time.png" height="20px" width="20px" style="margin-top: 9px;margin-right: 2px;">
+                    <span style="font-weight: 500;color: #282c3f;padding: 10px;"><b>{{serviceMode
+                            ==='Delivery' ? 'Delivery time' : 'Pick-up time'}} </b><small>ASAP (45 minutes)</small></span>
                 </div>
-                <div class="d-flex justify-content-between align-items-center"
-                    style="border-top: 1px solid #e3e3e3;padding:6px  10px;font-weight: 300;">
-                    <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Taxes and Charges</span>
-                    <span
-                        style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.saleTax
-                        | currency: 'GBP'}}</span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center"
-                    style="border-top: 1px solid #e3e3e3;padding: 10px;">
-                    <span style="vertical-align: middle;font-size: 14px;">TO PAY</span>
-                    <span
-                        style="font-size: 13px;align-self: center;vertical-align: middle;font-weight: 360;">{{foodOrder.total
-                        | currency: 'GBP'}}</span>
+                <div *ngIf="foodOrder !== undefined" class="order-content-section" style="overflow-y: auto;margin: 0 10px;">
+                    <div>
+                        <app-food-order-item [item]="item" *ngFor="let item of foodOrder.items"></app-food-order-item>
+                    </div>
+    
+                    <div style="margin: 10px 0;">
+                        <span style="font-weight: 500;color: #282c3f;padding: 10px;">Bill Details</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center"
+                        style="padding: 3px 0 3px 10px;">
+                        <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Item Total</span>
+                        <span
+                            style="align-self: center;vertical-align: middle;font-weight: 500;">{{foodOrder.subTotal
+                            | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center"
+                        style="padding: 3px 0 3px 10px;">
+                        <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Delivery Fee</span>
+                        <span
+                            style="align-self: center;vertical-align: middle;">{{foodOrder.deliveryFee
+                            | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center"
+                        style="border-top: 1px solid #e3e3e3;padding: 3px 0 3px 10px;">
+                        <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Taxes and Charges</span>
+                        <span
+                            style="align-self: center;vertical-align: middle;">{{foodOrder.saleTax
+                            | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center"
+                        style="border-top: 1px solid #e3e3e3;padding: 3px 0 3px 10px;font-weight: 600;">
+                        <span style="vertical-align: middle;font-size: 14px;">TO PAY</span>
+                        <span
+                            style="align-self: center;vertical-align: middle;font-size: 15px;">{{foodOrder.total
+                            | currency: 'GBP'}}</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+   
+
     <div style="height: 200px;"></div>
 </div>

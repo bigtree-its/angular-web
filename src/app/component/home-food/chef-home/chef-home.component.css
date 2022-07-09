@@ -275,18 +275,24 @@
 }
 
 .category {
-    font-size: 16px;
-    border-left: 3px solid #fff;
+    font-weight: 900;
+    border-right: 3px solid #fff;
     display: block;
-    padding: 5px;
-    margin: 2px 0;
-    font-weight: 350;
+    margin-bottom: 2px;
+    padding-right: 10px;
+    text-align: right;
 }
 
 .category:hover {
     cursor: pointer;
-    border-left: 3px solid #fd7e14;
-    color: #fd7e14;
+    border-right: 3px solid rgb(239, 79, 95);
+    color: rgb(239, 79, 95);
+}
+
+.selectedCategory{
+    cursor: pointer;
+    border-right: 3px solid rgb(239, 79, 95);
+    color: rgb(239, 79, 95);
 }
 
 .section-header {
@@ -294,10 +300,28 @@
     color: gainsboro;
 }
 
+.menuType {
+    margin: 5px 0;
+    font-weight: 900;
+    background-color: #f9f9f9;
+    border-radius: 20px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.menuType:hover{
+    background-color: #e1e1e1;
+    cursor: pointer;
+}
+
 .selected-category {
     font-size: 20px;
     padding: 15px 0;
     letter-spacing: 2.5px;
+}
+
+.selected {
+    color: rgb(239, 79, 95);
 }
 
 .chef-name {
@@ -359,12 +383,10 @@
 }
 
 .order-confirm-button {
-    color: #ffa601;
     padding: 10px;
     font-weight: bold;
-    background-color: #292929;
+    border:1px solid #091F92;
     width: 50%;
-    border: none;
     transition: 0.5s ease-in-out;
     align-self: center;
 }
@@ -372,7 +394,7 @@
 .order-confirm-button:hover {
     cursor: pointer;
     color: #fff;
-    background-color: #fd7e14;
+    background-color: #091F92;
     transform: scale(1.01);
 }
 

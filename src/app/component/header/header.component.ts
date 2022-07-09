@@ -53,17 +53,15 @@ export class HeaderComponent implements OnInit {
 
     this.accountService.userSessionSubject$.subscribe(userSession => {
       this.userSession = userSession;
-      console.log('UserSession : ' + JSON.stringify(this.userSession));
       if (userSession !== null && userSession.user !== null && userSession.user !== undefined) {
         this.user = this.userSession.user;
         this.role = this.user.role;
         this.userName = this.user.fullName;
-        console.log('The logged in user: '+ JSON.stringify(this.user))
         if (this.user.address !== undefined && this.user.address !== null ) {
           this.userPostcode = this.user.address.postcode;
         }
       } else {
-        this.userName = "Hello"
+        this.accountService.retrieveSession();
       }
     })
 
@@ -121,5 +119,15 @@ export class HeaderComponent implements OnInit {
       return;
     }
     this.router.navigate(['/product-finder', this.searchText]).then();
+  }
+
+  viewProfile(){
+    if ( this.userSession !== null && this.userSession !== undefined && this.userSession.user !== null && this.userSession.user !== undefined){
+      if ( this.userSession.user.role === "Supplier"){
+        this.router.navigate(['/supplier-profile']);
+      }else{
+        this.router.navigate(['/customer-profile']);
+      }
+    }
   }
 }

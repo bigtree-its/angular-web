@@ -24,11 +24,20 @@
 }
 
 .food-price {
-    font-weight: bold;
+    font-weight: 900;
     padding: 5px;
     align-items: center;
     align-self: center;
     text-align: center;
+}
+
+.spice{
+    opacity: 0.5;
+    height: 15px;
+    width: 15px;
+}
+.selectedSpice{
+    opacity: 1.0;
 }
 
 .add-button {

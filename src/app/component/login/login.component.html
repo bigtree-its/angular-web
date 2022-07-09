@@ -1,9 +1,7 @@
 <app-header></app-header>
 <div style="width: 400px;height: 400px;" class="centered">
     <div class="d-flex justify-content-center">
-        <a href="#">
-            <span style="font-weight: 900;font-size: 30px;height: 20px;line-height: 20px;cursor: pointer;">Login</span>
-        </a>
+        <span style="font-weight: 900;font-size: 30px;height: 20px;line-height: 20px;cursor: pointer;">Login</span>
     </div>
     <div class="d-flex flex-column" style="margin: 10px 0;">
         <div class="input-div">
@@ -19,14 +17,14 @@
             <label class="_1Cvlf _2tL9P" for="password">Password</label>
         </div>
         <div class="between">
-            <button class="btn btn-outline-primary btn-lg" style="display: block;"  (click)="submit()">Submit</button>
+            <button class="btn btn-outline-primary btn-md" style="display: block;" (click)="submit()">Submit</button>
             <div style="font-weight: normal;">
-                New user? <span (click)="joinUs()" style="font-size: 16px;cursor: pointer;">Join Us</span>
+                New user? <span (click)="joinUs()" style="cursor: pointer;">Join Us</span>
             </div>
         </div>
     </div>
     <div *ngIf="error !== undefined"
-        style="font-weight: normal;font-size: 16px;;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
+        style="font-weight: normal;text-align: center;display: block;background-color: rgb(241, 215, 215);height: 45px;line-height: 45px;color: #bc3737;">
         <p>{{error}}</p>
     </div>
 

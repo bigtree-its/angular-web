@@ -1,0 +1,178 @@
+{
+    "address": {
+        "propertyNumber": "2",
+        "addressLine1": "18 Glaston Avenue",
+        "addressLine2": "Newton Mearns",
+        "city": "Glasgow",
+        "postcode": "G775SF",
+        "country": "SCOTLAND",
+        "latitude": 55.7716443,
+        "longitude": -4.314007399999999
+    },
+    "contact": {
+        "email": "nava.arul@gmail.com",
+        "mobile": "07979191176",
+        "telephone": "1415339850",
+        "fullName": "Navaneethakrishnan Kannusamy"
+    },
+    "description": [
+        "Beku Foods are comited to provide quality foos"
+    ],
+    "specials": [
+        "Curries",
+        "Briyanis"
+    ],
+    "cuisines": [
+        {
+            "_id": "82d5a813-bd8a-440d-b280-b9aa0bb235da",
+            "name": "Indian",
+            "slug": "indian",
+            "createdAt": "2022-03-07T16:06:11.973Z",
+            "updatedAt": "2022-03-07T16:06:11.973Z",
+            "__v": 0
+        },
+        {
+            "_id": "0f2e59c0-a7e1-4189-a65c-fe3f97729a28",
+            "name": "Chinese",
+            "slug": "chinese",
+            "createdAt": "2022-03-08T17:16:20.253Z",
+            "updatedAt": "2022-03-08T17:16:20.253Z",
+            "__v": 0
+        },
+        {
+            "_id": "a1cb82ca-24f2-4911-b4b7-2f3ce97519b9",
+            "name": "Parsi",
+            "slug": "parsi",
+            "createdAt": "2022-05-22T09:11:45.561Z",
+            "updatedAt": "2022-05-22T09:11:45.561Z",
+            "__v": 0
+        },
+        {
+            "_id": "17b0b0a0-5309-4646-b2d5-21ee29a6a31a",
+            "name": "Bengali",
+            "slug": "bengali",
+            "createdAt": "2022-05-22T09:11:50.857Z",
+            "updatedAt": "2022-05-22T09:11:50.857Z",
+            "__v": 0
+        },
+        {
+            "_id": "346fcea8-af57-4e73-a87d-269f91e3ab6b",
+            "name": "Tamil",
+            "slug": "tamil",
+            "createdAt": "2022-05-22T09:11:56.565Z",
+            "updatedAt": "2022-05-22T09:11:56.565Z",
+            "__v": 0
+        },
+        {
+            "_id": "b74c6a17-659b-417e-9868-2ba5249e2452",
+            "name": "Andra",
+            "slug": "andra",
+            "createdAt": "2022-05-22T09:12:01.361Z",
+            "updatedAt": "2022-05-22T09:12:01.361Z",
+            "__v": 0
+        },
+        {
+            "_id": "753f4d3c-c8c9-42e2-b998-951fbea06fcc",
+            "name": "Kerala",
+            "slug": "kerala",
+            "createdAt": "2022-05-22T09:12:07.993Z",
+            "updatedAt": "2022-05-22T09:12:07.993Z",
+            "__v": 0
+        },
+        {
+            "_id": "2450e692-f7cd-409b-af25-a449e9facbd0",
+            "name": "Punjabi",
+            "slug": "punjabi",
+            "createdAt": "2022-05-22T09:12:12.452Z",
+            "updatedAt": "2022-05-22T09:12:12.452Z",
+            "__v": 0
+        },
+        {
+            "_id": "d10a8402-02ae-40c8-aa4f-b5d63f998bb9",
+            "name": "Pakistani",
+            "slug": "pakistani",
+            "createdAt": "2022-05-22T09:12:18.123Z",
+            "updatedAt": "2022-05-22T09:12:18.123Z",
+            "__v": 0
+        },
+        {
+            "_id": "908591ac-b42d-48c7-bcd5-6e08ad74451d",
+            "name": "North Indian",
+            "slug": "north-indian",
+            "createdAt": "2022-05-22T09:12:24.479Z",
+            "updatedAt": "2022-05-22T09:12:24.479Z",
+            "__v": 0
+        },
+        {
+            "_id": "9fe987f3-7b35-4dc4-9f06-2135d9e45da5",
+            "name": "South Indian",
+            "slug": "south-indian",
+            "createdAt": "2022-05-22T09:12:30.789Z",
+            "updatedAt": "2022-05-22T09:12:30.789Z",
+            "__v": 0
+        }
+    ],
+    "gallery": [
+        "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/20190503-delish-pineapple-baked-salmon-horizontal-ehg-450-1557771120.jpg",
+        "https://www.refrigeratedfrozenfood.com/ext/resources/NEW_RD_Website/DefaultImages/default-pasta.jpg?1430942591",
+        "http://cdn.cnn.com/cnnnext/dam/assets/140430115517-06-comfort-foods.jpg",
+        "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/foods_for_healthy_supple_skin_slideshow/1800x1200_foods_for_healthy_supple_skin_slideshow.jpg",
+        "https://ychef.files.bbci.co.uk/976x549/p09wrjyz.jpg",
+        "https://www.expatica.com/app/uploads/sites/2/2016/09/spanish-food.jpg"
+    ],
+    "serviceAreas": [
+        {
+            "_id": "200dfe76-9b80-412f-b0d6-476902adf024",
+            "name": "Newton Mearns",
+            "city": "Glasgow",
+            "country": "Scotland",
+            "slug": "newton-mearns-glasgow",
+            "createdAt": "2022-03-08T20:12:56.565Z",
+            "updatedAt": "2022-03-08T20:12:56.565Z",
+            "__v": 0
+        },
+        {
+            "_id": "9ccb28a1-9108-462e-bb0d-ed31af10dccb",
+            "name": "Eaglesham",
+            "city": "Glasgow",
+            "country": "Scotland",
+            "slug": "eaglesham-glasgow",
+            "createdAt": "2022-03-08T20:13:19.955Z",
+            "updatedAt": "2022-03-08T20:13:19.955Z",
+            "__v": 0
+        }
+    ],
+    "categories": [
+        "Starter",
+        "Mains",
+        "Curries"
+    ],
+    "slots": [
+        "Breakfast"
+    ],
+    "_id": "721dc4e3-b87c-4da3-8ff5-8c6b2907614e",
+    "name": "Beku",
+    "displayName": "Beku Foods",
+    "slug": "beku-foods",
+    "rating": 5,
+    "reviews": 300,
+    "coverPhoto": "https://thumbs.dreamstime.com/b/chef-woman-portrait-kitchen-23037212.jpg",
+    "active": true,
+    "preOrder": true,
+    "delivery": true,
+    "takingOrdersNow": true,
+    "collectionOnly": false,
+    "minimumOrder": 10,
+    "collectionEstimate": 15,
+    "deliveryEstimateMin": 35,
+    "deliveryEstimateMax": 55,
+    "noMinimumOrder": true,
+    "createdAt": "2022-03-11T14:22:17.439Z",
+    "updatedAt": "2022-06-18T23:01:27.167Z",
+    "__v": 0,
+    "email": "nava.arul@gmail.com",
+    "deliveryFee": 2,
+    "deliveryMinimum": 2,
+    "freeDeliveryOver": 2,
+    "deliveryDistance": 5
+}

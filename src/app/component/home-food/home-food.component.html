@@ -25,15 +25,14 @@
         <div *ngIf="displayAreaSelectionContainer" style="width: 100%;">
           <div style="overflow-y: auto;height: 300px;padding:10px 0;">
             <div class="local-area-option" *ngFor="let la of serviceAreaList" (click)="onSelectLocalArea(la)">
-              <span>{{ la.name }},{{la.city}}</span> <img src="/assets/icons/right-arrow-long.png" height="15px"
-                width="15px" style="margin-top: 9px;margin: 0 10px;">
+              <span>{{ la.name }}, {{la.city}}</span>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div style="width: 50%;max-height: 600px;">
-      <img src="/assets/images/cooking.svg" style="max-height: 600px;">
+      <img src="/assets/images/homepage-pic-1.avif" style="max-height: 600px;border-radius: 15px;box-sizing: border-box;">
     </div>
   </div>
   <div class="bottom-placeholder"></div>

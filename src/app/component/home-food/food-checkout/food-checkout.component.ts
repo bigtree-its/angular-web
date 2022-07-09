@@ -7,9 +7,11 @@ import { FoodOrderservice } from 'src/app/service/food-order.service';
 import { RapidApiService } from 'src/app/service/rapid-api.service';
 import { Chef, FoodOrder, LocalChef } from 'src/app/model/localchef';
 import { first } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Address, User, UserSession, SignupRequest } from 'src/app/model/common-models';
 import { times } from 'underscore';
+import { LocalChefService } from 'src/app/service/localchef.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-food-checkout',
@@ -48,6 +50,7 @@ export class FoodCheckoutComponent implements OnInit {
   orderConfirmationMessage: string;
   hidePaymentSection: boolean;
   showOrderConfirmation: boolean;
+  lookupAddress: boolean;
 
   constructor(
     private router: Router,
@@ -55,25 +58,36 @@ export class FoodCheckoutComponent implements OnInit {
     private rapidApiService: RapidApiService,
     private accountService: AccountService,
     private orderService: FoodOrderservice,
+    private supplierService: LocalChefService,
+    private activatedRoute: ActivatedRoute,
+    private _location: Location
   ) { }
 
   ngOnInit(): void {
 
-    this.isLoggedIn();
-    this.userSession = this.accountService.getUserSession();
-    if (this.userSession !== undefined && this.userSession !== null && this.userSession.user !== null && this.userSession.user !== undefined) {
-      this.user = this.userSession.user;
-      this.address = this.user.address;
-      console.log('The user : '+ JSON.stringify(this.user));
-    }else{
-      this.userLoggedIn = false;
-    }
-    this.localChef = this.foodOrderService.getChef();
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      const chef = params.get("s");
+      this.supplierService.getLocalChef(chef).subscribe((resp: LocalChef) => {
+        this.localChef = resp;
+      }, err => { });
+    });
+
+    this.accountService.userSessionSubject$.subscribe(userSession => {
+      this.userSession = userSession;
+      console.log('UserSession : ' + JSON.stringify(this.userSession));
+      if (userSession !== null && userSession.user !== null && userSession.user !== undefined) {
+        this.user = this.userSession.user;
+        this.userLoggedIn  = this.userSession.success;
+        if (this.user.address !== undefined && this.user.address !== null ) {
+          this.address = this.user.address;
+        }
+      }else{
+        this.userLoggedIn = false;
+      }
+    })
+   
     this.foodOrder = this.foodOrderService.getOrder();
-    console.log('ChefOrder on Storage: '+ JSON.stringify(this.foodOrder));
-    console.log('Chef on Storage: '+ JSON.stringify(this.localChef));
-    console.log('User on Storage: '+ JSON.stringify(this.userSession));
-    if ( this.foodOrder === null || this.foodOrder === undefined){
+    if (this.foodOrder === null || this.foodOrder === undefined) {
       this.router.navigateByUrl("/");
     }
   }
@@ -93,7 +107,7 @@ export class FoodCheckoutComponent implements OnInit {
   actionSignup() {
     this.action = "signup";
   }
-  actionForgotPassword(){
+  actionForgotPassword() {
     this.action = "forgotPassword";
     this.router.navigate(['/forgot-password']).then();
   }
@@ -111,25 +125,25 @@ export class FoodCheckoutComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          if ( data === null || data === undefined){
+          if (data === null || data === undefined) {
             this.userLoggedIn = false;
-            this.loginErrorResponse  = "Username or Password not correct.";
-          }else{
+            this.loginErrorResponse = "Username or Password not correct.";
+          } else {
             var userSession: UserSession = data;
-            if( userSession.success){
+            if (userSession.success) {
               this.userLoggedIn = true;
               this.loginErrorResponse = undefined;
               this.userSession = userSession;
               this.user = this.userSession.user;
-            }else{
+            } else {
               this.loginErrorResponse = userSession.message;
             }
           }
-        
+
         },
         error => {
           this.userLoggedIn = false;
-          this.loginErrorResponse  = "Username or Password not correct.";
+          this.loginErrorResponse = "Username or Password not correct.";
         });
   }
 
@@ -153,13 +167,14 @@ export class FoodCheckoutComponent implements OnInit {
           this.signupErrorResponse = undefined;
         },
         error => {
-          console.error('Signup Unsuccessful. '+ JSON.stringify(error));
+          console.error('Signup Unsuccessful. ' + JSON.stringify(error));
           this.signupErrorResponse = error.error.detail + ". Please login.";
-          console.error('Signup Error: '+ this.signupErrorResponse);
+          console.error('Signup Error: ' + this.signupErrorResponse);
         });
   }
   private createOrder(): FoodOrder {
     return {
+      id: "",
       items: [],
       chefId: "",
       currency: "",
@@ -181,7 +196,7 @@ export class FoodCheckoutComponent implements OnInit {
       customer: null,
       chef: null,
       serviceMode: "Collection",
-      review:  null
+      review: null
     };
   }
 
@@ -203,6 +218,7 @@ export class FoodCheckoutComponent implements OnInit {
         (data: RapidApiByPostcodeResponse) => {
           this.postcodeAddressList = data.Summaries;
           this.addressSelected = false;
+          console.log('Address Lookup response '+ JSON.stringify(this.postcodeAddressList))
         },
         (error) => {
           console.log('Address Lookup resulted an error.' + JSON.stringify(error));
@@ -221,13 +237,14 @@ export class FoodCheckoutComponent implements OnInit {
     this.address.country = "UK"
     this.address.postcode = this.addressLookup.postcode;
     this.addressSelected = true;
+    this.lookupAddress = false;
   }
 
   makePayment() {
     console.log('Creating payment intent');
     var paymentIntentRequest = new PaymentIntentRequest();
     // paymentIntentRequest.userEmail = this.user.email;
-    if ( this.user !== undefined && this.user.contact !== undefined){
+    if (this.user !== undefined && this.user.contact !== undefined) {
       this.foodOrder.customerEmail = this.user.email;
     }
     paymentIntentRequest.currency = "GBP";
@@ -244,7 +261,7 @@ export class FoodCheckoutComponent implements OnInit {
         this.paymentIntentResponse.clientSecret !== null &&
         this.paymentIntentResponse.clientSecret !== undefined
       ) {
-        console.log('Payment Intent Response: '+ JSON.stringify(this.paymentIntentResponse));
+        console.log('Payment Intent Response: ' + JSON.stringify(this.paymentIntentResponse));
         var stripeElements = (<any>window).getStripeElements();
         console.log('Calling Stripe.pay()');
         (<any>window).pay(stripeElements.stripe, stripeElements.card, this.paymentIntentResponse.clientSecret, this);
@@ -268,7 +285,7 @@ export class FoodCheckoutComponent implements OnInit {
         this.foodOrder.paymentReference = paymentIntent.id;
         this.confirmPurchase();
       }
-    }else{
+    } else {
       this.hidePaymentSection = false;
     }
   }
@@ -282,9 +299,9 @@ export class FoodCheckoutComponent implements OnInit {
   }
   confirmPurchase() {
     console.log('Confirming order..');
-    console.log('The user object: '+ JSON.stringify(this.user))
-    console.log('The user adress object: '+ JSON.stringify(this.address))
-    this.foodOrder.status ="CREATED";
+    console.log('The user object: ' + JSON.stringify(this.user))
+    console.log('The user adress object: ' + JSON.stringify(this.address))
+    this.foodOrder.status = "CREATED";
     this.foodOrder.chefId = this.localChef._id;
     this.foodOrder.customerEmail = this.user.email;
     this.foodOrder.customerMobile = this.user.contact.mobile;
@@ -348,4 +365,21 @@ export class FoodCheckoutComponent implements OnInit {
     return address;
   }
 
+  showAddressLookup(){
+    this.lookupAddress = true;
+  }
+
+  findAddress(){
+    if ( this.addressLookup.postcode !== null && this.addressLookup.postcode !== undefined && this.addressLookup.postcode.length > 2){
+      this.doPostcodeLookup(this.addressLookup.postcode);
+    }
+  }
+
+  cancelAddressLookup(){
+    this.lookupAddress = false;
+  }
+
+  back() {
+    this._location.back();
+  }
 }

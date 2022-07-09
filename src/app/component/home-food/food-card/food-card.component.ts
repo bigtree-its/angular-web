@@ -80,7 +80,7 @@ export class FoodCardComponent implements OnInit {
     console.log('Add to Order: ');
     var foodOrderItem: FoodOrderItem = {
       _tempId: Date.now(),
-      profuctId: this.food._id,
+      productId: this.food._id,
       image: this.food.image,
       name: this.food.name,
       quantity: this.quantity,

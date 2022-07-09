@@ -60,9 +60,9 @@ import { CustomerProfileComponent } from './component/customer-profile/customer-
 import { SupplierProfileComponent } from './component/supplier-profile/supplier-profile.component';
 import { BecomeASupplierComponent } from './component/become-a-supplier/become-a-supplier.component';
 import { CurrencyPipe } from '@angular/common';
-import { MyCurrencyPipe } from './helpers/my-currency-pipe';
 import { SupplierFoodItemComponent } from './component/supplier-food-item/supplier-food-item.component';
 import { CookieService } from './service/cookie.service';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -124,9 +124,10 @@ import { CookieService } from './service/cookie.service';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbModule,
+    ChartsModule,
     TreeModule.forRoot()
   ],
-  providers: [AppToastService, CurrencyPipe, MyCurrencyPipe, CookieService],
+  providers: [AppToastService, CurrencyPipe, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

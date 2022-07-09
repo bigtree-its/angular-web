@@ -16,23 +16,18 @@ export class LocalChef {
     gallery: string[];
     rating: number;
     reviews: number;
-    minimumOrder: number;
-    packagingFee: number;
-    collectionPolicy: string;
-    deliveryPolicy: string;
     address: Address;
     contact: ChefContact;
-    noMinimumOrder: boolean;
-    delivery: boolean;
-    takingOrdersNow: boolean;
-    preOrder: boolean;
-    allDays: boolean;
     active: boolean;
-
+    minimumOrder: number;
+    packagingFee: number;
+    delivery: boolean;
+    partyOrders: boolean;
     freeDeliveryOver: number;
     deliveryMinimum: number;
     deliveryFee: number;
     deliveryDistance: number;
+    minimumPartyOrder: number;
 }
 
 export class Cuisine {
@@ -76,6 +71,8 @@ export class Food {
     chefId: string;
     category: string;
     image: string;
+    vegetarian: boolean;
+    spice: number;
     extras: Extra[];
     choices: Extra[];
     description: string;
@@ -91,7 +88,7 @@ export class Food {
 export class Calendar {
     _id: string;
     chefId: string;
-    description: string;
+    description: string[];
     orderBefore: Date;
     foods: Food[];
     collectionStartDate: Date;
@@ -114,6 +111,7 @@ export class LocalChefSearchQuery {
 }
 
 export class FoodOrder {
+    id: string;
     chefId: string;
     customerEmail: string;
     customerMobile: string;
@@ -136,6 +134,40 @@ export class FoodOrder {
     chef: Chef;
     review: Review;
     serviceMode: string;
+}
+
+export class SupplierOrder{
+    id: string;
+    chefId: string;
+    customerEmail: string;
+    customerMobile: string;
+    reference: string;
+    currency: string;
+    serviceMode: string;
+    paymentReference: string;
+    status: string;
+    items: FoodOrderItem[];
+    subTotal: number;
+    total: number;
+    deliveryFee: number;
+    packagingFee: number;
+    saleTax: number;
+    dateCreated: Date;
+    dateUpdated: Date;
+    dateDeleted: Date;
+    orderCreated: Date;
+    orderAccepted: Date;
+    orderCollected: Date;
+    orderDelivered: Date;
+    orderRejected: Date;
+    delivery: boolean;
+    pickup: boolean;
+    pickupTime: Date;
+    deliveryTime: Date;
+    customer: User;
+    chef: Chef;
+    review: Review;
+    notes: string;
 }
 
 export class CustomerOrder {
@@ -171,10 +203,6 @@ export class CustomerOrder {
     notes: string;
 }
 
-export class SupplierOrders{
-    orders: FoodOrder[];
-}
-
 export class SupplierSummary{
     totalOrdersWeekly: number;
     totalOrdersMonthly: number;
@@ -187,6 +215,10 @@ export class SupplierSummary{
     ordersWeekly: FoodOrder[];
     ordersMonthly: FoodOrder[];
     ordersYearly: FoodOrder[];
+
+    weeklyGrouping: Map<Date, number>;
+    monthlyGrouping: Map<Date, number>;
+    yearlyGrouping: Map<string, number>;
 }
 
 export class OrderSearchQuery {
@@ -196,6 +228,7 @@ export class OrderSearchQuery {
     thisMonth: boolean;
     thisYear: boolean;
     all: boolean;
+    orderId: string;
 }
 
 export class OrderUpdateRequest {
@@ -232,9 +265,15 @@ export class Orders {
     orders: FoodOrder[]
 }
 
+export class SupplierOrders{
+    orders: SupplierOrder[]
+}
+
 export class Chef {
     chefId: string;
+    email: string;
     name: string;
+    displayName: string;
     image: string;
     specials: string[];
     address: Address;
@@ -243,7 +282,7 @@ export class Chef {
 
 export class FoodOrderItem {
     _tempId: number;
-    profuctId: string;
+    productId: string;
     image: string;
     name: string;
     quantity: number;

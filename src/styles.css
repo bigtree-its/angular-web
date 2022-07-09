@@ -1,22 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-
-/* @import url('https://unpkg.com/bootstrap@4.5.0/dist/css/bootstrap.min.css'); */
-
-
-/* @import '~angular-tree-component/dist/angular-tree-component.css'; */
-
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Expletus Sans', cursive;
-  font-size: 15px;
-  line-height: 26px;
-  /* font-weight: 400; */
-  letter-spacing: 0;
-  color: #262633;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 *:focus {
@@ -30,20 +21,38 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.vertical{
+.vertical {
   display: flex;
   flex-direction: column;
 }
 
-.horizontal{
+.horizontal {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-.between{
+
+.between {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.float {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.f-bolder {
+  font-weight: 900;
+}
+
+.f-bold {
+  font-weight: 600;
+}
+
+.f-light {
+  font-weight: 400;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -56,7 +65,7 @@ body {
   height: 100px;
 }
 
-.bg-two{
+.bg-two {
   background-color: #f9f0e9;
 }
 
@@ -158,40 +167,20 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* text Box 
+/* text Box */
 .input-div {
   width: 100%;
-  border: 1px solid transparent;
-  box-shadow: rgb(34 34 34) 0px 0px 0px 2px !important;
+  border: 1px solid #ececec;
   padding: 0;
   display: block;
   position: relative;
   transform: translateZ(0);
   margin: 5px 0;
-  border-radius: 12px;
-  cursor: pointer;
-  animation-delay: 400ms;
-}
-*/
-.input-div {
-  width: 100%;
-  border: 1px solid #ededf4;
-  /* box-shadow: rgb(34 34 34) 0px 0px 0px 2px !important; */
-  padding: 0;
-  display: block;
-  position: relative;
-  transform: translateZ(0);
-  margin: 5px 0;
-  /* border-radius: 12px; */
-  cursor: pointer;
-  -webkit-animation-delay: 400ms;
-  animation-delay: 400ms;
-  background: white;
+  border-radius: 6px;
 }
 
 .input-div:hover {
-  cursor: pointer;
-  border: 1px solid #212529;
+  background-color: #ececec;
 }
 
 ._381fS {
@@ -200,6 +189,7 @@ body {
   outline: none;
   height: 70px;
   width: 100%;
+  font-size: 15px;
   margin: 0;
   padding: 0 20px;
   padding-top: 22px;
@@ -209,8 +199,8 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
   border: none;
-  font-size: 18px;
 }
 
 ._26LFr {
@@ -229,6 +219,7 @@ body {
 }
 
 ._2tL9P {
+  font-size: 12px;
   font-weight: 500;
   color: #7e808c;
   -ms-transform: translateY(-70%);
@@ -241,20 +232,21 @@ body {
   bottom: 24px;
   padding-left: 20px;
   line-height: 20px;
+  font-size: 15px;
   cursor: text;
   transition: .2s ease;
   width: 100%;
-  color: rgb(90, 90, 90);
+  color: #93959f;
   will-change: transform, color, font-size;
   pointer-events: none;
   font-weight: 400;
-  cursor: pointer;
 }
 
 ._2EeI1 {
   position: absolute;
   right: 20px;
   bottom: 26px;
+  font-size: 14px;
   font-weight: 500;
   color: #5d8ed5;
   transform: translateZ(0);
@@ -271,40 +263,102 @@ body {
   text-align: center;
   border: none;
   line-height: 40px;
+  font-size: 14px;
   font-weight: 600;
   height: 40px;
   padding: 0 2rem;
   letter-spacing: 0;
   color: #fff;
-  background-color: #595461;
+  background-color: #465ab2;
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 12%);
   border-radius: 6px;
 }
 
+.removable-item {
+  border: 1px solid #465ab2;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 5px 10px 5px 0;
+  height: 25px;
+  background-color: #f1f1f1;
+}
+
+.selectable-item {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  vertical-align: middle;
+  font-weight: 600;
+  margin: 2px 0;
+  width: 100px;
+  background-color: #f1f1f1;
+  border: 1px solid #fffcfc;
+  border-radius: 5px;
+}
+
+.selectable-item:hover {
+  border: 1px solid #465ab2;
+  background-color: #465ab2;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-accept {
+  padding: 0 20px;
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+}
+
+.btn-accept:hover {
+  background-color: #3eb45a;
+  cursor: pointer;
+}
+
+.btn-deny {
+  padding: 0 20px;
+  background-color: rgb(247, 134, 105);
+  color: #fff;
+  border: none;
+}
+
+.btn-deny {
+  background-color: rgb(248, 73, 29);
+  cursor: pointer;
+}
 
 .btn-normal {
-  border: 2px solid #fff;
-  color: #111;
+  background-color: #d2d3d6;
+  border-radius: 8px;
+  color: #222;
   display: inline-block;
   width: 100%;
   height: 100%;
+  font-weight: 400;
+  border: none;
 }
 
 .btn-normal:hover {
-  border: 2px solid #ffa601;
-  color: #111;
+  background-color: #2f43a7;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-selected {
+  background-color: #2f43a7;
+  color: #fff;
   cursor: pointer;
 }
 
 .btn-ok {
-  border: 1px solid #ffa601;
+  border: 1px solid #091F92;
   color: #111;
   display: inline-block;
   padding: 5px 9px;
 }
 
 .btn-ok:hover {
-  background-color: #ffa601;
+  background-color: #091F92;
   color: #111;
   cursor: pointer;
 }
@@ -322,8 +376,8 @@ body {
   cursor: pointer;
 }
 
-.btn-normal-selected {
-  background-color: #ffa601;
+.-selected {
+  background-color: #007bff;
   color: #fff;
 }
 
@@ -332,7 +386,7 @@ body {
   margin-right: 20px;
   height: 40px;
   line-height: 40px;
-  max-width: 40px;
+  width: 40px;
   align-items: center;
   display: flex;
   justify-content: center;
@@ -340,7 +394,7 @@ body {
 
 .icon-div:hover {
   cursor: pointer;
-  background-color: #ffa601;
+  background-color: #f1f1f1;
 }
 
 .cursor-pointer {

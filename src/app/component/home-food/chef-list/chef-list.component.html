@@ -1,50 +1,53 @@
 <app-header></app-header>
-<div class="container d-flex flex-column">
+<div class="d-flex justify-content-center"
+  *ngIf="localArea !== null && localArea !== undefined && suppliers !== null && suppliers !== undefined">
 
-  <div style="margin-bottom:20px;margin-top:20px;line-height:40px;height: 40px;"
-    class="d-flex flex-start align-items-center">
-    <div class="icon-div" style="width: 10%;">
-      <img src="/assets/icons/left-arrow-long.png" height="20px" width="20px" (click)="back()">
+  <div class="vertical" style="width: 70%;">
+    <div style="margin-bottom:20px;margin-top:20px;line-height:40px;height: 40px;"
+      class="d-flex flex-start align-items-center">
+      <div class="icon-div" style="width: 10%;">
+        <img src="/assets/icons/left-arrow-long.png" height="20px" width="20px" (click)="back()">
+      </div>
+
+      <div style="width: 90%;display: flex;justify-content: center;">
+        <span style="font-weight: 500;font-size:35px;">Your Chefs</span>
+      </div>
     </div>
+    <div style="width: 100%;display: flex; flex-direction: row;">
+      <div class="vertical" style="width: 15%;padding: 10px;margin-right: 10px;">
 
-    <div  style="width: 90%;width: 90%;display: flex;justify-content: center;">
-      <span style="font-weight: 500;font-size:35px;">Your Chefs</span>
+        <div class="horizontal" style="padding:1px 10px;background-color: #f5f3f1;border-radius: 50rem;">
+          <img src="/assets/icons/pin.png" height="15px" width="15px">
+          <div style="margin-left: 30px;">
+            <span style="font-weight: 900;display: block;height: 17px;">{{localArea.name}}</span>
+            <span style="font-weight: 900;display: block;">{{localArea.city}}</span>
+          </div>
+        </div>
+        <div class="between" style="margin: 20px 0 5px 0;border-bottom:1px solid #f5f3f1;padding: 5px 0;">
+          <strong style="font-weight: 900;font-size: 17px;">Flavours</strong>
+          <button class="btn btn-xs btn-outline-secondary" (click)="clearCuisines()">Clear</button>
+        </div>
+        <span class="filter-div" *ngFor="let cuisine of cuisines" [class.selected-filter]="isCusineSelected(cuisine)" (click)="selectCuisine(cuisine)">{{cuisine.name}}</span>
+        <div class="between" style="margin: 20px 0;border-bottom:1px solid #f5f3f1;padding: 5px 0;">
+          <strong style="font-weight: 900;font-size: 17px;">Slots</strong>
+          <button class="btn btn-xs btn-outline-secondary" (click)="clearSlots()">Clear</button>
+        </div>
+        <div class="horizontal align-items-center" *ngFor="let slot of slots">
+          <span
+            style="border: 1px solid #444;height: 16px;width: 16px;margin-right: 7px;margin-bottom: 5px;border-radius: 4px;"
+            (click)="selectSlot(slot)" [class.selected]="isSlotSelected(slot)">
+          </span>
+          <label>{{slot}}</label>
+        </div>
+      </div>
+      <div class="float" style="width: 85%;padding: 10px;margin-left: 10px;"
+        *ngIf="suppliersFiltered !== null && suppliersFiltered !== undefined && suppliersFiltered.length > 0">
+        <div *ngFor="let chef of suppliersFiltered" style="margin: 0 0 50px 0;">
+          <app-chef-card [chef]="chef"></app-chef-card>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="d-flex justify-content-center" style="margin: 40px 0;">
-    <div ngbDropdown class="d-inline-block" style="margin: 10px;">
-      <span id="dropdownBasic1" ngbDropdownToggle><span style="font-size: 17px;">FILTER</span></span>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">HIGHLY RATED</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">NEW</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">OFFERS</button>
-      </div>
-    </div>
-    <div ngbDropdown class="d-inline-block" style="margin: 10px;">
-      <span id="dropdownBasic1" ngbDropdownToggle><span style="font-size: 17px;">CUISINE</span></span>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">South Indian</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Punjabi</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">North Indian</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Marati</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Bengali</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Kerala</button>
-      </div>
-    </div>
-    <div ngbDropdown class="d-inline-block" style="margin: 10px;">
-      <span id="dropdownBasic1" ngbDropdownToggle><span style="font-size: 17px;">SLOTS</span></span>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Breakfast</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Lunch</button>
-        <button ngbDropdownItem style="height: 25px;line-height: 25px;">Dinner</button>
-      </div>
-    </div>
-  </div>
 
-  <div class="d-flex flex-start wrap" *ngIf="localChefs !== null && localChefs !== undefined && localChefs.length > 0">
-    <div *ngFor="let chef of localChefs" style="margin: 0 0 50px 0;">
-      <app-chef-card [chef]="chef"></app-chef-card>
-    </div>
-  </div>
 </div>

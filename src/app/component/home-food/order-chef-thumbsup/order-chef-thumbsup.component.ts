@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FoodOrder } from 'src/app/model/localchef';
+import { SupplierOrder } from 'src/app/model/localchef';
 import { FoodOrderservice } from 'src/app/service/food-order.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { FoodOrderservice } from 'src/app/service/food-order.service';
 })
 export class OrderChefThumbsupComponent implements OnInit {
   
-  foodOrder: FoodOrder;
+  foodOrder: SupplierOrder;
 
   constructor(private activatedRoute: ActivatedRoute,
     private foodOrderService: FoodOrderservice
@@ -20,7 +20,7 @@ export class OrderChefThumbsupComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const orderId = params['id'];
       console.log(`OrderId: ${params['id']}`);
-      this.foodOrderService.retrieveOrder(orderId).subscribe((foodOrder: FoodOrder) => {
+      this.foodOrderService.retrieveOrder(orderId).subscribe((foodOrder: SupplierOrder) => {
         this.foodOrder = foodOrder;
         console.log('The OpenChef Order: '+ JSON.stringify(this.foodOrder))
       });

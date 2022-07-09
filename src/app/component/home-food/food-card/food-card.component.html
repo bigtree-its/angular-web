@@ -1,16 +1,31 @@
 <div class="food-card">
-  <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
-    <div class="d-flex flex-start">
-      <img src={{food.image}} width="100%" height="100%" loading="lazy" alt="{{food.name}}" class="thumbnail-picture">
-      <div class="d-flex flex-column ">
-        <span style="font-weight: bold;padding: 0 5px;font-size: 15px;">{{food.name}}</span>
-        <span style="font-weight: normal;padding: 5px;">{{food.description}}</span>
+  <div style="width: 100%;clear: both;" class="between">
+    <div class="horizontal">
+      <img src="/assets/icons/food-item.png" width="100%" height="100%" loading="lazy" alt="{{food.name}}" class="thumbnail-picture">
+      <div class="vertical">
+        <div class="horizontal">
+          <span style="font-weight: 500;padding: 0 5px;font-size: 15px;margin-right: 10px;">{{food.name}}</span>
+          <div class="d-flex justify-content-center align-items-center"
+            style="height: 17px;width: 17px;border: 1px solid #46bb4c;" *ngIf="food.vegetarian">
+            <span style="height: 8px;width: 8px;border-radius: 50%;background-color: #46bb4c;"></span>
+          </div>
+          <div style="margin-left: 15px;" class="horizontal">
+            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="food.spice > 0" class="spice" placement="top"
+              ngbTooltip="Mild">
+            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="food.spice > 1" class="spice" placement="top"
+              ngbTooltip="Hot">
+            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="food.spice > 2" class="spice" placement="top"
+              ngbTooltip="Extra Hot">
+          </div>
+        </div>
+        <span style="padding: 5px;font-weight: 360;">{{food.description}}</span>
       </div>
     </div>
-    <div class="d-flex flex-start">
+    <div class="horizontal">
       <span class="food-price">{{food.price | currency: 'GBP'}}</span>
       <!-- <button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(content)">Add to order</button> -->
-      <button class="btn btn-light btn-outline-secondary" style="height: 25px;line-height: 15px;align-self: center;" (click)="openScrollableContent(content)">Add</button>
+      <button class="btn btn-sm btn-outline-success" style="align-self: center;"
+        (click)="openScrollableContent(content)">Add</button>
     </div>
   </div>
 </div>
@@ -83,11 +98,10 @@
       <span class="qty-value">{{quantity}}</span>
       <button class="btn btn-light btn-outline-success" (click)="increaseQuantity()">+</button>
     </div>
-
+    <span class="model-price">{{price | currency: 'GBP'}}</span>
     <div class="model-button-section">
-      <span class="model-price">{{price | currency: 'GBP'}}</span>
-      <button type="button" style="margin-right: 5px;" class="btn-ok" (click)="addToOrder()">OK</button>
-      <button type="button" class="btn-cancel" (click)="modal.close('Close click')">Close</button>
+      <button style="margin-right: 5px;" class="btn btn-sm btn-outline-success" (click)="addToOrder()">OK</button>
+      <button class="btn btn-sm btn-outline-danger" (click)="modal.close('Close click')">Close</button>
     </div>
   </div>
 </ng-template>

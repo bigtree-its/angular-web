@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
-import { CustomerOrderList, FoodOrder, FoodOrderItem, LocalChef, Orders, OrderSearchQuery, OrderUpdateRequest } from '../model/localchef';
+import { CustomerOrderList, FoodOrder, FoodOrderItem, LocalChef, Orders, OrderSearchQuery, OrderUpdateRequest, SupplierOrder, SupplierOrders } from '../model/localchef';
 import { AccountService } from './account.service';
 import { PaymentIntentRequest, PaymentIntentResponse } from '../model/order';
 import { UserSession } from '../model/common-models';
@@ -55,10 +55,38 @@ export class FoodOrderservice {
     }
   }
 
-  retrieveOrder(orderId: string): Observable<FoodOrder> {
+  retrieveOrder(orderId: string): Observable<SupplierOrder> {
     var url = this.HOST + this.OPENCHEF_ORDERS_URI + "/" + orderId;
-    return this.http.get<FoodOrder>(url);
+    return this.http.get<SupplierOrder>(url);
   }
+
+  getSupplierOrders(orderSearchQuery: OrderSearchQuery): Observable<SupplierOrders> {
+    var params = new HttpParams();
+    if ( orderSearchQuery.reference !== null && orderSearchQuery.reference !== undefined){
+      params = params.set('reference', orderSearchQuery.reference);
+    }
+    if ( orderSearchQuery.customerEmail !== null && orderSearchQuery.customerEmail !== undefined){
+      params = params.set('customerEmail', orderSearchQuery.customerEmail);
+    }
+    if ( orderSearchQuery.chefId !== null && orderSearchQuery.chefId !== undefined){
+      params = params.set('chefId', orderSearchQuery.chefId);
+    }
+    if ( orderSearchQuery.orderId !== null && orderSearchQuery.orderId !== undefined){
+      params = params.set('orderId', orderSearchQuery.orderId);
+    }
+    if ( orderSearchQuery.thisMonth){
+      params = params.set('thisMonth', "true");
+    }
+    if ( orderSearchQuery.thisYear){
+      params = params.set('thisYear', "true");
+    }
+    if ( orderSearchQuery.all){
+      params = params.set('all', "true");
+    }
+    var url = this.HOST + this.OPENCHEF_ORDERS_URI + "/search";
+    return this.http.get<SupplierOrders>(url, { params });
+  }
+
 
   getOrders(orderSearchQuery: OrderSearchQuery): Observable<Orders> {
     var params = new HttpParams();
@@ -70,6 +98,9 @@ export class FoodOrderservice {
     }
     if ( orderSearchQuery.chefId !== null && orderSearchQuery.chefId !== undefined){
       params = params.set('chefId', orderSearchQuery.chefId);
+    }
+    if ( orderSearchQuery.orderId !== null && orderSearchQuery.orderId !== undefined){
+      params = params.set('orderId', orderSearchQuery.orderId);
     }
     if ( orderSearchQuery.thisMonth){
       params = params.set('thisMonth', "true");
@@ -184,6 +215,7 @@ export class FoodOrderservice {
 
   private createOrder(): FoodOrder {
     return {
+      id:"",
       items: [],
       chefId: "",
       customerEmail: "",

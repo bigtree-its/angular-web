@@ -1,1 +1,78 @@
-<p>supplier-order works!</p>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Amita&display=swap');
+</style>
+<app-header></app-header>
+<div *ngIf="supplier !== null && supplier !== undefined && order !== null && order !== undefined">
+    <div class="supplier-order vertical justify-content-center align-items-center" style="font-size: 13px;">
+
+        <div class="vertical vertical justify-content-center align-items-center" style="background-color: #ededf4;width: 600px;margin: 10px 0;padding: 10px;">
+            <div class="brand-icon d-flex justify-content-center">
+                <span style="font-size: 80px;font-family: 'Amita', cursive;">{{supplier.name.substr(0,1)}}</span>
+            </div>
+            <span style="font-size: 25px;padding: 10px;font-family: 'Amita', cursive;">{{supplier.displayName}}</span>
+            <span style="font-weight: 400;display: block;font-size: 12px;word-break: break-all;text-align: center;"
+                class="wrap">{{getAddress()}}</span>
+        </div>
+        
+        <div class="horizontal">
+            <div class="vertical" style="border: 1px solid #ededf4;width: 300px;padding: 10px 20px;margin: 15px 10px 15px 0;">
+                <div class="between">
+                    <span style="width: 50%;">ORDER REFERENCE</span>
+                    <span style="width: 50%;text-align: right;">{{order.reference}}</span>
+                </div>
+                <div class="between">
+                    <span style="width: 50%;">ORDER DATE</span>
+                    <span style="width: 50%;text-align: right;">{{order.dateCreated}}</span>
+                </div>
+                <div class="between">
+                    <span style="width: 50%;">ORDER TOTAL</span>
+                    <span style="width: 50%;text-align: right;">{{order.total | currency: 'GBP'}}</span>
+                </div>
+                <div class="between">
+                    <span style="width: 50%;">DELIVERY MODE</span>
+                    <span style="width: 50%;text-align: right;">{{order.serviceMode | titlecase}}</span>
+                </div>
+            </div>
+            <div class="vertical " style="border: 1px solid #ededf4;width: 300px;padding: 10px 20px;margin: 15px 0 15px 0;">
+                <div class="between" *ngIf="order.serviceMode === 'COLLECTION'">
+                    <span style="width: 50%;">COLLECTION DAY</span>
+                    <!-- <span style="width: 50%;text-align: right;">{{order.expectedPickupDate}}</span> -->
+                </div>
+            </div>
+        </div>
+
+        <span style="font-size: 30px;">{{order.total | currency: 'GBP'}}</span>
+
+        <div class="between" style="margin: 15px 0;width: 600px;">
+            <button class="btn btn-lg btn-outline-primary" style="width: 50%;margin-right: 10px;">ACCEPT</button>
+            <button class="btn btn-lg btn-outline-danger" style="width: 50%;">REJECT</button>
+        </div>
+        <div class="d-flex flex-column" style="margin: 15px 0;width: 600px;">
+            <app-food-order-item [item]="item" [displayImage]="false" [displayDeleteOption]="false"
+                *ngFor="let item of order.items"></app-food-order-item>
+        </div>
+        <div class="d-flex flex-column" style="height: auto; width: 100%;background-color: aliceblue;"
+            *ngIf="writeReview">
+            <textarea class="form-control" id="reviewComment" rows="3" value="" [(ngModel)]="reviewComment"
+                #ctrl="ngModel"></textarea>
+            <div class="d-flex flex-start" style="padding: 10px 10px 0 10px;">
+                <img [src]="rating > 0 ? starSelected : star" class="star" (click)="overallRating(1)">
+                <img [src]="rating > 1 ? starSelected : star" class="star" (click)="overallRating(2)">
+                <img [src]="rating > 2 ? starSelected : star" class="star" (click)="overallRating(3)">
+                <img [src]="rating > 3 ? starSelected : star" class="star" (click)="overallRating(4)">
+                <img [src]="rating > 4 ? starSelected : star" class="star" (click)="overallRating(5)">
+            </div>
+        </div>
+        <div class="d-flex flex-column" style="height: auto; width: 100%;background-color: aliceblue;padding: 10px;"
+            *ngIf="readReview">
+            <span>{{review.comments}}</span>
+            <div class="d-flex flex-start" style="padding: 10px 0;">
+                <img [src]="review.rating > 0 ? starSelected : star" class="star">
+                <img [src]="review.rating > 1 ? starSelected : star" class="star">
+                <img [src]="review.rating > 2 ? starSelected : star" class="star">
+                <img [src]="review.rating > 3 ? starSelected : star" class="star">
+                <img [src]="review.rating > 4 ? starSelected : star" class="star">
+            </div>
+        </div>
+    </div>
+</div>

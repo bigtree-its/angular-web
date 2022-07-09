@@ -78,12 +78,10 @@ export class CustomerProfileComponent implements OnInit {
     private orderService: FoodOrderservice,
     private utils: Utils
   ) {
-    this.userSession = this.accountService.getUserSession();
+    this.userSession = this.accountService.retrieveSession();
     if (this.userSession !== undefined && this.userSession !== null) {
       this.customer = this.userSession.user;
-
-      console.log('customer ' + JSON.stringify(this.customer));
-      if (this.customer.address !== null && this.customer.address !== undefined) {
+      if (this.customer !== null && this.customer !== undefined && this.customer.address !== null && this.customer.address !== undefined) {
         this.address = this.customer.address;
         this.editAddress = false;
         this.viewAddress = true;
@@ -117,12 +115,10 @@ export class CustomerProfileComponent implements OnInit {
       }
       var query: OrderSearchQuery = new OrderSearchQuery();
       query.customerEmail = this.customer.email;
-      console.log('Fetching customer orders..')
       this.orderService.getCustomerOrders(query).subscribe((orders: CustomerOrderList) => {
         this.orders = orders;
         if (orders !== null && orders !== undefined) {
           this.ordersArray = orders.orders;
-          console.log('Customer orders: ' + JSON.stringify(this.ordersArray));
         }
       });
     }
@@ -175,7 +171,6 @@ export class CustomerProfileComponent implements OnInit {
   generateOtp(){
     this.accountService.resetPasswordInitiate(this.customer.email).subscribe(res=>{
       var booleanResp: BooleanResponse = res;
-      console.log('Generate otp : '+ JSON.stringify(booleanResp));
       if ( booleanResp.value){
         this.otpGenerated = true;
       }

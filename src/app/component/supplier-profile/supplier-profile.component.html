@@ -1,34 +1,46 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Amita&display=swap');
-    </style>
 <app-header></app-header>
 <div class="horizontal">
-    <div style="width: 15%;height: 100vh;border: 1px solid #ededf4;margin: 10px;border-radius: 12px;padding: 10px;"
+    <div style="width: 15%;height: 100vh;border: 1px solid #8bc197;margin: 10px;"
         *ngIf="supplier !== null && supplier !== undefined">
         <div class="vertical">
-            <div class="vertical align-items-center" style="padding: 10px 0;border-bottom: 1px solid #ededf4;">
-                <div class="icon d-flex justify-content-center">
-                    <span style="font-size: 80px;font-family: 'Amita', cursive;">{{supplier.name.substr(0,1)}}</span>
+            <div class="vertical align-items-center" style="padding: 10px 0;background-color:#8bc197;">
+                <div class="brand-icon d-flex justify-content-center">
+                    <span style="font-size: 80px;font-weight: 900;">{{supplier.name.substr(0,1)}}</span>
                 </div>
-                <span style="font-size: 25px;padding: 10px;font-family: 'Amita', cursive;">{{supplier.displayName}}</span>
+                <span
+                    style="font-size: 25px;padding: 10px;">{{supplier.displayName}}</span>
             </div>
-            <ul>
-                <li>
-                    <span class="navItem">Dashboard</span>
-                </li>
-                <li>
-                    <span class="navItem">Profile</span>
-                </li>
-                <li (click)="showOrders()">
-                    <span class="navItem" (click)="showOrders()">Orders</span>
-                <li>
-                    <span class="navItem" (click)="showMenus()">Menu</span>
-                </li>
-            </ul>
+            <div class="vertical" style="padding: 20px;border: none;">
+                <span class="navItem" (click)="showDashboard()">Dashboard</span>
+                <span class="navItem" (click)="showProfile()">Profile</span>
+                <div>
+                    <ul class="list-unstyled ps-0">
+                        <li class="mb-1">
+                            <button class="btn btn-toggle align-items-center rounded collapsed"
+                                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"
+                                style="height: 15px;">
+                                Orders
+                            </button>
+                            <div class="collapse show" id="home-collapse">
+                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ml-1">
+                                    <li><a class="link-dark rounded nav-item" (click)="showOpenOrders()">Open
+                                            Orders</a>
+                                    </li>
+                                    <li><a class="link-dark rounded nav-item" (click)="showCompletedOrders()">Completed
+                                            Orders</a></li>
+                                    <li><a class="link-dark rounded nav-item" (click)="showOrderCalendar()">Calendar</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <span class="navItem" (click)="showMenus()">Menu</span>
+            </div>
         </div>
     </div>
-    <div style="width: 85%;height: 100vh;">
-        <div *ngIf="displayOrders">
+    <div style="width: 55%;height: 100vh;">
+        <div *ngIf="displayDashboard" class="vertical">
             <div class="horizontal">
                 <div class="panel vertical">
                     <span style="font-size: 20px;display: block;text-align: center;padding: 15px 0;">This Week</span>
@@ -64,6 +76,181 @@
                     </div>
                 </div>
             </div>
+            <div class="horizontal">
+                <div class="panel">
+                    <canvas baseChart [datasets]="monthlyData" [labels]="monthLabels" [options]="barChartOptions"
+                        [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                </div>
+                <div class="panel vertical justify-content-center align-items-center" (click)="editFoods()">
+                    <span style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Your
+                        Foods</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{foods.length}}</span>
+                            <span style="display: inline;">Foods</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel vertical justify-content-center align-items-center" (click)="editLocations()">
+                    <span
+                        style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Locations</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span style="font-size: 13px;display: block;text-align: center;">You're serving </span>
+                            <span
+                                style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{selectedAreas.length}}</span>
+                            <span style="display: inline;">Locations</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal">
+                <div class="panel vertical justify-content-center align-items-center" (click)="editSlots()">
+                    <span style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Your
+                        Slots</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span
+                                style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{selectedSlots.length}}</span>
+                            <span style="display: inline;">slots</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel vertical justify-content-center align-items-center" (click)="editCategories()">
+                    <span
+                        style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Categories</span>
+                    <span style="font-size: 12px;display: block;text-align: center;">Your foods are categorised
+                        in</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span
+                                style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{categories.length}}</span>
+                            <span style="display: inline;">categories</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel vertical justify-content-center align-items-center" (click)="editCuisines()">
+                    <span style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Cuisines</span>
+                    <span style="font-size: 12px;display: block;text-align: center;">You serve</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span
+                                style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{selectedCuisines.length}}</span>
+                            <span style="display: inline;">cusines</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="horizontal">
+                <div class="panel vertical justify-content-center align-items-center" (click)="editSpecials()">
+                    <span style="font-size: 20px;display: block;text-align: center;padding: 0 0 15px 0;">Your
+                        Specials</span>
+                    <span style="font-size: 12px;display: block;text-align: center;">You are specialsied in</span>
+                    <div class="justify-content-center align-items-center" style="margin: 5px 0;">
+                        <div>
+                            <span
+                                style="font-size: 50px;padding: 0 5px 0 20px;display: inline;">{{specials.length}}</span>
+                            <span style="display: inline;">foods</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="displayProfile" style="display: flex; flex-flow: row; flex-wrap: wrap;">
+            <div class="panel vertical">
+                <span style="font-size: 20px;display: block;padding: 15px 0;">Personal</span>
+                <div class="between" style="margin: 5px 0;">
+                    <span style="font-weight: normal;">Email</span><span>{{supplier.email}}</span>
+                </div>
+                <div class="between" style="margin: 5px 0;">
+                    <span>Mobile</span><span>{{supplier.contact.mobile}}</span>
+                </div>
+                <div class="between" style="margin: 5px 0;">
+                    <span>Name</span><span>{{supplier.name}}</span>
+                </div>
+                <div class="between" style="margin: 5px 0;">
+                    <span>Display Name</span><span>{{supplier.displayName}}</span>
+                </div>
+            </div>
+            <div class="panel vertical">
+                <div class="between" style="margin: 0 0 0 10px;">
+                    <span style="font-size: 20px;display: block;padding: 15px 0;">Address</span>
+                    <button class="btn btn-outline-primary btn-sm" (click)="showAdderssEditPanel()">Edit</button>
+                </div>
+
+                <div style="padding: 0 20px;">
+                    <span style="display: block;">{{supplier.address.addressLine1}}</span>
+                    <span style="display: block;">{{supplier.address.addressLine2}}</span>
+                    <span style="display: block;">{{supplier.address.city}}</span>
+                    <span style="display: block;">{{supplier.address.postcode}}</span>
+                </div>
+            </div>
+            <div class="panel vertical" (click)="editSettings()">
+                <span style="font-size: 20px;display: block;padding: 15px 0;">Settings</span>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Minimum Order</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{minimumOrder}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">I take party orders</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{partyOrders}}</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Minimum Party Order</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{minimumPartyOrder}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">I can deliver</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{delivery}}</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Delivery Fee</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{deliveryFee}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Package Fee</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{packagingFee}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Delivery Distance</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{deliveryDistance}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">Miles</span>
+                    </div>
+                </div>
+                <div class="horizontal"
+                    style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                    <span style="width:70%;">Free Delivery Order Over</span>
+                    <div class="horizontal" style="width:30%;">
+                        <span>{{freeDeliveryOver}}</span>
+                        <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div *ngIf="displayMenus === true" style="height: 100%;padding: 20px;">
             <div>
@@ -73,9 +260,9 @@
                         <ng-template ngbNavContent>
                             <div class="vertical" style="overflow-y: auto;height: 90%;">
 
-                                <div *ngIf="showItemEditPanel">
+                                <div *ngIf="displayEditFoodItem">
                                     <span
-                                        style="font-size: 16px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;">{{foodEditPanelTitle}}</span>
+                                        style="margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;">{{foodEditPanelTitle}}</span>
                                     <div class="d-flex flex-start align-items-center" style="margin: 20px 0;">
                                         <div ngbDropdown class="d-inline-block">
                                             <button class="btn btn-outline-primary" id="categoryDropDown"
@@ -83,7 +270,7 @@
                                             <div class="dropdown-menu" aria-labelledby="categoryDropDown"
                                                 ngbDropdownMenu>
                                                 <button class="dropdown-item"
-                                                    *ngFor="let category of localChef.categories"
+                                                    *ngFor="let category of supplier.categories"
                                                     (click)="selectCategory(category)">{{category}}
                                                 </button>
                                             </div>
@@ -104,6 +291,29 @@
                                         <div class="_2EeI1 _26LFr"></div>
                                         <label class="_1Cvlf _2tL9P " for="itemDesc">Description</label>
                                     </div>
+                                    <div class="horizontal justify-content-center align-items-center"
+                                        style="margin: 5px 0;width: 100%;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                                        <span style="width:70%;padding: 0 10px;">Vegetarian</span>
+                                        <div style="width:30%;">
+                                            <input id="check" type="checkbox" (change)="handleVegetarian($event)"
+                                                checked="{{vegetarian}}" style="height: 20px;width: 20px;">
+                                        </div>
+                                    </div>
+                                    <div class="horizontal justify-content-center align-items-center"
+                                        style="margin: 5px 0;width: 100%;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                                        <span style="width:70%;padding: 0 10px;">Spice</span>
+                                        <div style="width:30%;" class="horizontal">
+                                            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 0"
+                                                class="spice" placement="top" ngbTooltip="Mild"
+                                                (click)="selectSpiceLevel(1)">
+                                            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 1"
+                                                class="spice" placement="top" ngbTooltip="Hot"
+                                                (click)="selectSpiceLevel(2)">
+                                            <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 2"
+                                                class="spice" placement="top" ngbTooltip="Extra Hot"
+                                                (click)="selectSpiceLevel(3)">
+                                        </div>
+                                    </div>
                                     <div style="border: 1px solid #ededf4;">
                                         <span style="display: block;padding: 5px 20px;">Price</span>
                                         <div class="d-flex flex-start align-items-center" style="padding: 0 20px;">
@@ -113,18 +323,19 @@
                                             <span>GBP</span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-start">
-                                        <button type="button" class="btn-g mr-1" (click)="saveFood()">OK</button>
-                                        <button type="button" class="btn-s mr-1"
+                                    <div class="d-flex flex-start" style="margin-top: 30px;">
+                                        <button type="button" class="btn btn-sm btn-success mr-1"
+                                            (click)="saveFood()">OK</button>
+                                        <button type="button" class="btn btn-sm btn-secondary mr-1"
                                             (click)="cancelItemEdit()">Cancel</button>
                                     </div>
 
                                 </div>
 
-                                <div class="vertical" *ngIf="!showItemEditPanel">
+                                <div class="vertical" *ngIf="!displayEditFoodItem">
                                     <div class="d-flex justify-content-between align-items-center"
                                         style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
-                                        <span style="font-size: 14px;font-weight: 900;">Your Foods
+                                        <span style="font-size: 18px;font-weight: 900;">Your Foods
                                             ({{foods.length}})</span>
                                         <button placement="top" ngbTooltip="Add New Food" type="button"
                                             class="btn btn-sm btn-outline-primary" style="margin: 0 10px;"
@@ -164,163 +375,144 @@
                     <li ngbNavItem>
                         <a ngbNavLink>Calendar</a>
                         <ng-template ngbNavContent>
+                            <div *ngIf="showCalendarEditPanel">
 
-                            <div class="vertical">
+                                <div class="between">
+                                    <span
+                                        style="font-weight: bold;font-size: 26px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;display: block;">Your
+                                        Calendar</span>
+                                    <div class="horizontal">
+                                        <button class="btn-s mr-1" (click)="saveCalendar()">OK</button>
+                                        <button class="btn-g mr-1" (click)="cancelCalendarEditing()">Cancel</button>
+                                    </div>
+                                </div>
 
-                                <div *ngIf="showCalendarEditPanel">
-
-                                    <div class="between">
-                                        <span
-                                            style="font-weight: bold;font-size: 26px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;display: block;">Your
-                                            Calendar</span>
-                                        <div class="horizontal">
-                                            <button type="button" class="btn-g mr-1"
-                                                (click)="saveCalendar()">OK</button>
-                                            <button type="button" class="btn-s mr-1"
-                                                (click)="cancelCalendarEditing()">Cancel</button>
+                                <div class="vertical" style="padding: 5px;">
+                                    <div class="horizontal" style="padding: 10px 0;">
+                                        <div class="date-field" (click)="d1.toggle()">
+                                            <span
+                                                style="display: block;color: #848484;height: 21px;font-size: 13px;">Order
+                                                By</span>
+                                            <input placeholder="{{orderByDate}}" name="orderByDate"
+                                                class="date-input ngb-dp-today" #d1="ngbDatepicker"
+                                                [(ngModel)]="orderByDate" ngbDatepicker #d1="ngbDatepicker">
+                                        </div>
+                                        <div class="date-field" (click)="d2.toggle()">
+                                            <span
+                                                style="display: block;color: #848484;height: 21px;font-size: 13px;">Collection
+                                                By</span>
+                                            <input placeholder="{{collectionDate}}" name="collectionDate"
+                                                class="date-input" #d2="ngbDatepicker" [(ngModel)]="collectionDate"
+                                                ngbDatepicker #d2="ngbDatepicker">
+                                        </div>
+                                        <div class="date-field" (click)="d3.toggle()">
+                                            <span
+                                                style="display: block;color: #848484;height: 21px;font-size: 13px;">Delivery
+                                                By</span>
+                                            <input placeholder="{{deliveryDate}}" name="deliveryDate" class="date-input"
+                                                #d3="ngbDatepicker" [(ngModel)]="deliveryDate" ngbDatepicker
+                                                #d3="ngbDatepicker">
                                         </div>
                                     </div>
-
-                                    <div class="vertical" style="padding: 5px;">
-                                        <div class="horizontal"
-                                            style="background-color: #f4f4f4;border:1px solid #ededf4;padding: 10px;border-bottom: none;">
-                                            <div class="horizontal justify-content-center align-items-center" style="margin-right: 25px;border: 1px solid #ededf4;border-radius: 9px;height: 30px;">
-                                                <span style="padding: 0 5px;background-color:#ededf4 ;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">OrderBy</span>
-                                                <div class="horizontal">
-                                                    <input placeholder="dd/mm/yyyy" name="orderByDate" class="form-control"
-                                                        #d1="ngbDatepicker" [(ngModel)]="orderByDate" ngbDatepicker
-                                                        #d1="ngbDatepicker"
-                                                        style="width: 80px;border: none;background: transparent;padding: 0 5px;">
-                                                    <div style="padding: 5px;cursor: pointer;">
-                                                        <img src="/assets/icons/calendar.png" height="20px" width="20px"
-                                                            (click)="d1.toggle()">
+                                    <div class="between" style="width: 100%;">
+                                        <div class="vertical"
+                                            style="border-left: 1px solid #ededf4;border-top: 1px solid #ededf4;border-bottom: 1px solid #ededf4;width: 50%;">
+                                            <span style="padding: 5px;border-bottom: 1px solid #ededf4;">Your
+                                                Items</span>
+                                            <div
+                                                style="height: calc(70vh - 50px) !important;overflow-y: auto;padding: 5px;">
+                                                <div class="d-flex flex-start align-items-center supplier-food-item"
+                                                    style="width: 100%;padding-right: 10px;margin: 1px 0;"
+                                                    *ngFor="let food of foods">
+                                                    <div style="width: 95%;">
+                                                        <app-supplier-food-item [food]="food">
+                                                        </app-supplier-food-item>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="horizontal justify-content-center align-items-center" style="margin-right: 25px;border: 1px solid #ededf4;border-radius: 9px;height: 30px;">
-                                                <span style="padding: 0 5px;background-color:#ededf4 ;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">Collect By</span>
-                                                <div class="horizontal">
-                                                    <input placeholder="dd/mm/yyyy" name="collectionDate"  class="form-control"
-                                                        style="width: 80px;border: none;background: transparent;padding: 0 5px;"
-                                                        [(ngModel)]="collectionDate" ngbDatepicker #d2="ngbDatepicker">
-                                                    <div style="padding: 5px;cursor: pointer;">
-                                                        <img src="/assets/icons/calendar.png" height="20px" width="20px"
-                                                            (click)="d2.toggle()">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="horizontal justify-content-center align-items-center" style="margin-right: 25px;border: 1px solid #ededf4;border-radius: 9px;height: 30px;">
-                                                <span style="padding: 0 5px;background-color:#ededf4 ;border-top-left-radius: 8px;border-bottom-left-radius: 8px;">Delivery By</span>
-                                                <div class="horizontal">
-                                                    <input placeholder="dd/mm/yyyy"  class="form-control"
-                                                        style="width: 80px;border: none;background: transparent;padding: 0 5px;"
-                                                        name="deliveryDate" [(ngModel)]="deliveryDate" ngbDatepicker
-                                                        #d3="ngbDatepicker">
-                                                    <div style="padding: 5px;cursor: pointer;">
-                                                        <img src="/assets/icons/calendar.png" height="20px" width="20px"
-                                                            (click)="d3.toggle()">
-                                                    </div>
+                                                    <button style="margin: 0 5px;"
+                                                        class="btn btn-sm btn-outline-primary"
+                                                        (click)="onClickAddFoodToCalendar(food)" placement="top"
+                                                        ngbTooltip="Add to calendar">Add</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="between" style="width: 100%;">
-                                            <div class="vertical"
-                                                style="border-left: 1px solid #ededf4;border-top: 1px solid #ededf4;border-bottom: 1px solid #ededf4;width: 50%;">
-                                                <span style="padding: 5px;border-bottom: 1px solid #ededf4;">Your
-                                                    Items</span>
-                                                <div style="height: calc(70vh - 50px) !important;overflow-y: auto;">
-                                                    <div class="d-flex flex-start align-items-center supplier-food-item"
-                                                        style="width: 100%;padding-right: 10px;"
-                                                        *ngFor="let food of foods">
-                                                        <div style="width: 95%;">
-                                                            <app-supplier-food-item [food]="food">
-                                                            </app-supplier-food-item>
-                                                        </div>
-                                                        <button style="margin: 0 5px;"
-                                                            class="btn btn-sm btn-outline-primary"
-                                                            (click)="onClickAddFoodToCalendar(food)" placement="top"
-                                                            ngbTooltip="Add to calendar">Add</button>
+                                        <div class="vertical" style="border: 1px solid #ededf4;width: 50%;">
+                                            <span style="padding:5px;border-bottom: 1px solid #ededf4;">Items
+                                                in this Calendar</span>
+                                            <div
+                                                style="height: calc(70vh - 50px) !important;overflow-y: auto;padding: 5px;">
+                                                <div class="d-flex flex-start align-items-center supplier-food-item"
+                                                    style="width: 100%;padding-right: 10px;margin: 1px 0;"
+                                                    *ngFor="let food of calendarOnEdit.foods">
+                                                    <div style="width: 95%;">
+                                                        <app-supplier-food-item [food]="food">
+                                                        </app-supplier-food-item>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="vertical" style="border: 1px solid #ededf4;width: 50%;">
-                                                <span style="padding:5px;border-bottom: 1px solid #ededf4;">Items
-                                                    in this Calendar</span>
-                                                <div style="height: calc(70vh - 50px) !important;overflow-y: auto;">
-                                                    <div class="d-flex flex-start align-items-center supplier-food-item"
-                                                        style="width: 100%;padding-right: 10px;"
-                                                        *ngFor="let food of calendarOnEdit.foods">
-                                                        <div style="width: 95%;">
-                                                            <app-supplier-food-item [food]="food">
-                                                            </app-supplier-food-item>
-                                                        </div>
-                                                        <button style="margin: 0 5px;"
-                                                            class="btn btn-sm btn-outline-danger"
-                                                            (click)="onClickRemoveFoodFromCalendar(food)"
-                                                            placement="top"
-                                                            ngbTooltip="Remove from calendar">Delete</button>
-                                                    </div>
+                                                    <button style="margin: 0 5px;" class="btn btn-sm btn-outline-danger"
+                                                        (click)="onClickRemoveFoodFromCalendar(food)" placement="top"
+                                                        ngbTooltip="Remove from calendar">Delete</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="vertical" *ngIf="!showCalendarEditPanel">
-                                    <div class="d-flex justify-content-between align-items-center"
-                                        style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
-                                        <span style="font-size: 16px;">Your Calendars ({{calendars.length}})</span>
-                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                            style="margin: 0 10px;" (click)="addNewCalendar()">Add</button>
-                                        <!-- <div class="icon d-flex justify-content-center" (click)="addNewCalendar()"
+                            <div class="vertical" *ngIf="!showCalendarEditPanel">
+                                <div class="d-flex justify-content-between align-items-center"
+                                    style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
+                                    <span style="font-size: 16px;">Your Calendars ({{calendars.length}})</span>
+                                    <button type="button" class="btn btn-sm btn-outline-primary" style="margin: 0 10px;"
+                                        (click)="addNewCalendar()">Add</button>
+                                    <!-- <div class="icon d-flex justify-content-center" (click)="addNewCalendar()"
                                             style="margin-left: 20px;">
                                             <img src="/assets/icons/plus.png" height="15px" width="15px"
                                                 (click)="addNewCalendar()">
                                         </div> -->
-                                    </div>
-                                    <div class="d-flex flex-start" style="background-color: #f8f8f8;padding: 8px 5px;">
-                                        <span class="category" (click)="selectThisWeek()"
-                                            [class.selectedCategory]="isPeriodSelected('thisWeek')">This Week</span>
-                                        <span class="category" (click)="selectThisMonth()"
-                                            [class.selectedCategory]="isPeriodSelected('thisMonth')">This
-                                            Month</span>
-                                        <span class="category" (click)="selectAllDays()"
-                                            [class.selectedCategory]="isPeriodSelected('allDays')">All Days</span>
-                                    </div>
-                                    <div class="vertical" style="max-height: 700px;overflow-y: auto;"
-                                        *ngIf="calendarsToDisplay !== null && calendarsToDisplay !== undefined && calendarsToDisplay.length > 0">
-                                        <div *ngFor="let calendar of calendarsToDisplay;  let i = index">
-                                            <div class="d-flex flex-column" style="margin: 10px 0;">
-                                                <div class="d-flex justify-content-between align-items-center"
-                                                    style="height: 40px; background-color: #f4f4f4;padding: 0 10px;">
-                                                    <span
-                                                        style="font-size: 14px;padding: 10px 0;font-weight: 500;font-weight: bold;">Order
-                                                        by {{ calendar.orderBefore | date : 'EE d
-                                                        LLL'}}</span>
+                                </div>
+                                <div class="d-flex flex-start" style="background-color: #f8f8f8;padding: 8px 5px;">
+                                    <span class="category" (click)="selectThisWeek()"
+                                        [class.selectedCategory]="isPeriodSelected('thisWeek')">This Week</span>
+                                    <span class="category" (click)="selectThisMonth()"
+                                        [class.selectedCategory]="isPeriodSelected('thisMonth')">This
+                                        Month</span>
+                                    <span class="category" (click)="selectAllDays()"
+                                        [class.selectedCategory]="isPeriodSelected('allDays')">All Days</span>
+                                </div>
+                                <div class="vertical" style="max-height: 700px;overflow-y: auto;"
+                                    *ngIf="calendarsToDisplay !== null && calendarsToDisplay !== undefined && calendarsToDisplay.length > 0">
+                                    <div *ngFor="let calendar of calendarsToDisplay;  let i = index">
+                                        <div class="d-flex flex-column" style="margin: 10px 0;">
+                                            <div class="d-flex justify-content-between align-items-center"
+                                                style="height: 40px; background-color: aliceblue;padding: 0 10px;">
+                                                <span
+                                                    style="font-size: 18px;padding: 10px 0;font-weight: 500;font-weight: bold;">Order
+                                                    by {{ calendar.orderBefore | date : 'EE d
+                                                    LLL'}}</span>
 
-                                                    <div class="d-flex flex-start align-items-center">
-                                                        <button type="button" class="btn btn-sm btn-outline-primary"
-                                                            style="margin: 0 10px;"
-                                                            (click)="editCalendar(calendar)">Edit</button>
-                                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            style="margin: 0 10px;"
-                                                            (click)="deleteCalendar(calendar)">Delete</button>
-                                                        <img src="/assets/icons/down-arrow.png" height="15px"
-                                                            width="15px" (click)="isCollapsed[i] = !isCollapsed[i]"
-                                                            *ngIf="isCollapsed[i]" placement="top" ngbTooltip="Expand">
-                                                        <img src="/assets/icons/up-arrow.png" height="15px" width="15px"
-                                                            (click)="isCollapsed[i] = !isCollapsed[i]"
-                                                            *ngIf="!isCollapsed[i]" placement="top"
-                                                            ngbTooltip="Collapse">
-                                                    </div>
-
+                                                <div class="d-flex flex-start align-items-center">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        style="margin: 0 10px;"
+                                                        (click)="editCalendar(calendar)">Edit</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary"
+                                                        style="margin: 0 10px;"
+                                                        (click)="copyCalendar(calendar)">Copy</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        style="margin: 0 10px;"
+                                                        (click)="deleteCalendar(calendar)">Delete</button>
+                                                    <img src="/assets/icons/down-arrow.png" height="15px" width="15px"
+                                                        (click)="isCollapsed[i] = !isCollapsed[i]"
+                                                        *ngIf="isCollapsed[i]" placement="top" ngbTooltip="Expand">
+                                                    <img src="/assets/icons/up-arrow.png" height="15px" width="15px"
+                                                        (click)="isCollapsed[i] = !isCollapsed[i]"
+                                                        *ngIf="!isCollapsed[i]" placement="top" ngbTooltip="Collapse">
                                                 </div>
-                                                <div [ngbCollapse]="isCollapsed[i]">
-                                                    <div class="d-flex flex-column">
-                                                        <app-supplier-food-item [food]="food"
-                                                            *ngFor="let food of calendar.foods">
-                                                        </app-supplier-food-item>
-                                                    </div>
+
+                                            </div>
+                                            <div [ngbCollapse]="isCollapsed[i]">
+                                                <div class="vertical">
+                                                    <app-supplier-food-item [food]="food"
+                                                        *ngFor="let food of calendar.foods" class="supplier-food-item">
+                                                    </app-supplier-food-item>
                                                 </div>
                                             </div>
                                         </div>
@@ -332,7 +524,655 @@
                 </ul>
                 <div [ngbNavOutlet]="nav"></div>
             </div>
+        </div>
+        <div *ngIf="displayOrders" class="vertical" style="height: fit-content;">
+            <div style="width:800px;min-height: 350px;padding: 20px;background-color: #f9f9f9;"
+                *ngIf="displayOpenOrders">
+                <span style="font-size: 20px;display: block;font-weight: 900;margin-bottom: 20px;">Open Orders</span>
+                <div class="between"
+                    style="border-bottom: 2px solid #111;font-weight: 600;margin-bottom: 10px;height: 30px;line-height: 30px;">
+                    <div class="horizontal">
+                        <span style="width: 130px;">Order Date</span>
+                        <span style="width: 150px;">Order Reference</span>
+                        <span style="width: 50px;">Items</span>
+                        <span style="width: 50px;">Total</span>
+                    </div>
+                    <div class="horizontal">
+                        <!-- <button class="btn-accept" style="margin-right: 10px;">Accept</button> -->
+                        <!-- <button class="btn-deny" style="margin-right: 10px;">Deny</button> -->
+                    </div>
+                </div>
+                <div *ngFor="let order of openOrders" class="between open-order" (click)="selectOrder(order)">
+                    <div class="horizontal">
+                        <span style="width: 130px;">{{order.dateCreated}}</span>
+                        <span style="width: 150px;">{{order.reference}}</span>
+                        <div style="width: 50px;">
+                            <div class="d-flex justify-content-center" style="background-color: gold;height: 30px;width: 30px;border-radius: 50%;">
+                                <span>{{order.items.length}}</span>
+                            </div>
+                        </div>
+                        <span style="width: 50px;">{{order.total | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="horizontal">
+                        <button class="btn-accept" style="margin-right: 10px;">Accept</button>
+                        <button class="btn-deny" style="margin-right: 10px;">Deny</button>
+                    </div>
+                </div>
+            </div>
+            <div style="width:800px;min-height: 350px;padding: 20px;background-color: #f9f9f9;"
+                *ngIf="displayCompletedOrders">
+                <span style="font-size: 20px;display: block;font-weight: 900;margin-bottom: 20px;">Completed
+                    Orders</span>
+                <div class="between"
+                    style="border-bottom: 2px solid #111;font-weight: 600;margin-bottom: 10px;height: 30px;line-height: 30px;">
+                    <div class="horizontal">
+                        <span style="margin-right: 20px;width: 130px;">Order Date</span>
+                        <span style="margin-right: 20px;width: 150px;">Order Reference</span>
+                        <span style="margin-right: 20px;width: 30px;">Items</span>
+                        <span style="margin-right: 20px;width: 50px;">Total</span>
+                    </div>
+                    <div class="horizontal">
+                        <!-- <button class="btn-accept" style="margin-right: 10px;">Accept</button> -->
+                        <!-- <button class="btn-deny" style="margin-right: 10px;">Deny</button> -->
+                    </div>
+                </div>
+                <div *ngFor="let order of completedOrders" class="horizontal open-order" (click)="selectOrder(order)">
+                    <span style="margin-right: 20px;width: 130px;">{{order.dateCreated}}</span>
+                    <span style="margin-right: 20px;width: 150px;">{{order.reference}}</span>
+                    <span style="margin-right: 20px;width: 30px;">{{order.items.length}}</span>
+                    <span style="margin-right: 20px;width: 50px;">{{order.total | currency: 'GBP'}}</span>
+                </div>
+            </div>
+            <div class="vertical"
+                style="width:800px;min-height: 350px;padding: 20px;background-color: rgb(62, 170, 103);"
+                *ngIf="displayOrderCalendar">
+                <span
+                    style="font-size: 20px;display: block;font-weight: 900;color: #fff;margin-bottom: 20px;">Calendar</span>
+                <div class="float">
+                    <span class="calendar-item">JAN</span>
+                    <span class="calendar-item">FEB</span>
+                    <span class="calendar-item">MAR</span>
+                    <span class="calendar-item">APR</span>
+                    <span class="calendar-item">MAY</span>
+                    <span class="calendar-item">JUN</span>
+                    <span class="calendar-item">JUL</span>
+                    <span class="calendar-item">AUG</span>
+                    <span class="calendar-item">SEP</span>
+                    <span class="calendar-item">OCT</span>
+                    <span class="calendar-item">NOV</span>
+                    <span class="calendar-item">DEV</span>
+                </div>
 
+            </div>
+            <div style="height: 100px;"></div>
+        </div>
+    </div>
+    <div style="width: 30px;height: 100vh;border-left: 1px solid #e2e2e2;" *ngIf="displayEditPanel">
+        <div class="vertical" *ngIf="editAddress"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Update your address</span>
+            <div class="input-div">
+                <input class="_381fS" type="text" name="addressLine1" id="addressLine1" tabindex="1" autocomplete="off"
+                    value="" [(ngModel)]="addressLine1" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P" for="addressLine1">Address Line1</label>
+            </div>
+            <div class="input-div">
+                <input class="_381fS" type="text" name="addressLine2" id="addressLine2" tabindex="2" autocomplete="off"
+                    value="" [(ngModel)]="addressLine2" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P" for="addressLine2">Address Line2</label>
+            </div>
+            <div class="input-div">
+                <input class="_381fS" type="text" name="city" id="city" tabindex="3" autocomplete="off" value=""
+                    [(ngModel)]="city" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P " for="city">City</label>
+            </div>
+            <div class="input-div">
+                <input class="_381fS" type="text" name="postcode" id="postcode" tabindex="4" autocomplete="off" value=""
+                    [(ngModel)]="postcode" #ctrl="ngModel">
+                <div class="_2EeI1 _26LFr"></div>
+                <label class="_1Cvlf _2tL9P " for="postcode">Postcode</label>
+            </div>
+            <div class="horizontal" style="margin-top: 10px;">
+                <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="saveAddress()">OK</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="cancelEditPanel()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Settings  -->
+        <div class="vertical" *ngIf="displayEditSettings"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Your settings</span>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Minimum Order</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="minimumOrder" id="minimumOrder" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="minimumOrder"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">I take party orders</span>
+                <div style="width:30%;">
+                    <input id="check" type="checkbox" (change)="handlePartyOrders($event)" checked="{{partyOrders}}"
+                        style="height: 20px;width: 20px;">
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Minimum Party Order</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="minimumPartyOrder" id="minimumPartyOrder" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="minimumPartyOrder"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">I can deliver</span>
+                <div style="width:30%;">
+                    <input id="delivery" type="checkbox" (change)="handleDelivery($event)" checked="{{delivery}}"
+                        style="height: 20px;width: 20px;">
+                </div>
+
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Delivery Fee</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="deliveryFee" id="deliveryFee" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="deliveryFee"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Package Fee</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="packagingFee" id="packagingFee" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="packagingFee"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Delivery Distance</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="deliveryDistance" id="deliveryDistance" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="deliveryDistance"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">Miles</span>
+                </div>
+            </div>
+            <div class="horizontal justify-content-center align-items-center"
+                style="margin: 5px 0;width: 100%;border-bottom: 1px solid #ededf4;padding: 5px 0;">
+                <span style="width:70%;">Free Delivery Order Over</span>
+                <div class="horizontal" style="width:30%;">
+                    <input type="text" name="freeDeliveryOver" id="freeDeliveryOver" tabindex="4"
+                        style="height: 30px;width: 50px;" autocomplete="off" value="" [(ngModel)]="freeDeliveryOver"
+                        #ctrl="ngModel">
+                    <span style="margin-left: 3px;font-size: 12px;">GBP</span>
+                </div>
+            </div>
+            <div class="horizontal" style="margin-top: 20px;">
+                <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="saveSettings()">OK</button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="cancelEditPanel()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Specials  -->
+        <div class="vertical" *ngIf="displayEditSpecials"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Update your specials</span>
+            <div class="vertical">
+                <span style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin: 30px 0;">Your
+                    speaciality foods</span>
+                <div style="max-height: 300px;overflow-y: auto;"
+                    *ngIf="specials !== null && specials !== undefined && specials.length > 0">
+                    <div style="display: flex; flex-flow: row wrap;">
+                        <div class="d-flex justify-content-between align-items-center removable-item"
+                            *ngFor="let special of specials">
+                            <span>{{ special }}</span>
+                            <div class="icon-close d-flex justify-content-center" (click)="onRemoveSpecial(special)"
+                                placement="top" ngbTooltip="Remove" style="margin-left: 20px;">
+                                <img src="/assets/icons/close.png" height="10px" width="10px"
+                                    (click)="onRemoveSpecial(special)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin: 30px 0;">Want
+                    to add more speaciality foods</span>
+                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="newSpecial" id="newSpecial" tabindex="4"
+                            autocomplete="off" value="" [(ngModel)]="newSpecial" #ctrl="ngModel"
+                            placeholder="Curries, Briyanis etc">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="newSpecial">Your speciality foods</label>
+                    </div>
+                    <div class="icon d-flex justify-content-center" (click)="addSpecial()" style="margin-left: 20px;">
+                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addSpecial()">
+                    </div>
+                </div>
+                <div class="horizontal" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1"
+                        (click)="saveSpecials()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="cancelEditPanel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu  -->
+        <div class="vertical" *ngIf="displayEditFoods"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Your Foods</span>
+            <div *ngIf="displayEditFoodItem">
+                <span
+                    style="font-size: 20px;margin: 10px 0;padding: 5px 0;border-bottom: 1px solid #e2e2e2;font-weight: 900;">{{foodEditPanelTitle}}</span>
+                <div class="d-flex flex-start align-items-center" style="margin: 20px 0;">
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="categoryDropDown"
+                            ngbDropdownToggle>Category</button>
+                        <div class="dropdown-menu" aria-labelledby="categoryDropDown" ngbDropdownMenu>
+                            <button class="dropdown-item" *ngFor="let category of supplier.categories"
+                                (click)="selectCategory(category)">{{category}}
+                            </button>
+                        </div>
+                    </div>
+                    <span style="margin-left: 10px;">{{selectedCategory}}</span>
+                </div>
+                <div class="input-div">
+                    <input class="_381fS" type="text" name="itemName" id="menuName" tabindex="4" autocomplete="off"
+                        value="" [(ngModel)]="itemName" #ctrl="ngModel" placeholder="Vegetable Biryani">
+                    <div class="_2EeI1 _26LFr"></div>
+                    <label class="_1Cvlf _2tL9P " for="itemName">Name</label>
+                </div>
+                <div class="horizontal justify-content-center align-items-center"
+                    style="margin: 5px 0;width: 100%;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="width:70%;padding: 0 10px;">Vegetarian</span>
+                    <div style="width:30%;">
+                        <input id="check" type="checkbox" (change)="handleVegetarian($event)" checked="{{vegetarian}}"
+                            style="height: 20px;width: 20px;">
+                    </div>
+                </div>
+                <div class="horizontal justify-content-center align-items-center"
+                    style="margin: 5px 0;width: 100%;padding: 5px 0;border: 1px solid #ececec;padding: 10px;border-radius: 6px;">
+                    <span style="width:70%;padding: 0 10px;">Spice</span>
+                    <div style="width:30%;" class="horizontal">
+                        <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 0" class="spice"
+                            placement="top" ngbTooltip="Mild" (click)="selectSpiceLevel(1)">
+                        <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 1" class="spice"
+                            placement="top" ngbTooltip="Hot" (click)="selectSpiceLevel(2)">
+                        <img src="/assets/icons/jalapeno.png" [class.selectedSpice]="spice > 2" class="spice"
+                            placement="top" ngbTooltip="Extra Hot" (click)="selectSpiceLevel(3)">
+                    </div>
+                </div>
+                <div class="input-div">
+                    <input class="_381fS" type="text" name="itemDesc" id="itemDesc" tabindex="4" autocomplete="off"
+                        value="" [(ngModel)]="itemDesc" #ctrl="ngModel"
+                        placeholder="Marinated vegetables cooked in closed container with basmati rice. etc">
+                    <div class="_2EeI1 _26LFr"></div>
+                    <label class="_1Cvlf _2tL9P " for="itemDesc">Description</label>
+                </div>
+                <div style="border: 1px solid #ededf4;">
+                    <span style="display: block;padding: 5px 20px;">Price</span>
+                    <div class="d-flex flex-start align-items-center" style="padding: 0 20px;">
+                        <input value="" [(ngModel)]="itemPrice" #ctrl="ngModel" placeholder="10" name="itemPrice"
+                            id="itemPrice" tabindex="4" autocomplete="off"
+                            style="border: none;padding: 2px;margin: 0 0 10px 0;width: 60px;font-size: 25px;">
+                        <span>GBP</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-start" style="margin-top: 20px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="saveFood()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary mr-1"
+                        (click)="clearFoodEdit()">Clear</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger mr-1"
+                        (click)="cancelItemEdit()">Cancel</button>
+                </div>
+
+            </div>
+            <div class="vertical" *ngIf="!displayEditFoodItem">
+                <div class="d-flex justify-content-between align-items-center"
+                    style="margin: 5px 0 0 0;background-color: #f8f8f8;padding: 8px 5px;">
+                    <span style="font-size: 15px;font-weight: 900;">Your Foods
+                        ({{foods.length}})</span>
+                    <button placement="top" ngbTooltip="Add New Food" type="button"
+                        class="btn btn-sm btn-outline-primary" style="margin: 0 10px;"
+                        (click)="onClickAddNewFood()">Add</button>
+                </div>
+
+                <div class="d-flex flex-start" style="background-color: #f8f8f8;margin-bottom: 7px;">
+                    <span [class.selectedCategory]="isCategorySelected(cat)" *ngFor="let cat of categories"
+                        class="category" (click)="selectCategoryForDisplay(cat)">{{cat}}</span>
+                </div>
+                <div class="vertical" style="max-height: 800px;overflow-y: auto;"
+                    *ngIf="foods !== null && foods !== undefined && foods.length > 0">
+                    <div [class.hidden]="!isCategorySelected(food.category)" *ngFor="let food of foods">
+                        <div class="d-flex flex-start align-items-center supplier-food-item"
+                            style="width: 100%;padding-right: 10px;">
+                            <div style="width: 95%;">
+                                <app-supplier-food-item [food]="food"></app-supplier-food-item>
+                            </div>
+                            <button style="margin: 0 5px;" class="btn btn-sm btn-outline-primary"
+                                (click)="onEditFood(food)" placement="top" ngbTooltip="Make changes">Edit</button>
+                            <button style="margin: 0 5px;" class="btn btn-sm btn-outline-danger"
+                                (click)="onRemoveFood(food)" placement="top"
+                                ngbTooltip="Remove food from inventory">Delete</button>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Cuisines  -->
+
+        <div class="vertical" *ngIf="displayEditCuisines"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Update your cuisines</span>
+            <div class="vertical">
+                <div style="margin: 10px 0;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Your
+                        cuisines</span>
+                    <div
+                        *ngIf="selectedCuisines !== null && selectedCuisines !== undefined && selectedCuisines.length > 0">
+                        <div style="display: flex; flex-flow: row wrap;">
+                            <div class="d-flex justify-content-between align-items-center removable-item"
+                                *ngFor="let selectedCuisine of selectedCuisines">
+                                <span>{{ selectedCuisine.name }}</span>
+                                <div class="icon-close d-flex justify-content-center" placement="top"
+                                    ngbTooltip="Remove" (click)="onRemoveCuisine(selectedCuisine)"
+                                    style="margin-left: 20px;">
+                                    <img src="/assets/icons/close.png" height="10px" width="10px"
+                                        (click)="onRemoveCuisine(selectedCuisine)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 10px 0;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Add
+                        more cuisines</span>
+                    <div *ngIf="cuisines !== null && cuisines !== undefined && cuisines.length > 0">
+                        <div style="display: flex; flex-flow: row wrap;">
+                            <span class="selectable-item" *ngFor="let cuisine of cuisines"
+                                (click)="onSelectCuisine(cuisine)">{{ cuisine.name }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 10px 0;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Not
+                        finding your what you looking
+                        for?</span>
+                    <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
+                        <div class="input-div">
+                            <input class="_381fS" type="text" name="newCuisine" id="newCuisine" tabindex="4"
+                                autocomplete="off" value="" [(ngModel)]="newCuisine" #ctrl="ngModel"
+                                placeholder="Chinese, Indian etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="newCuisine">What is your are called</label>
+                        </div>
+                        <div class="icon d-flex justify-content-center" (click)="addCuisine()"
+                            style="margin-left: 20px;">
+                            <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCuisine()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1"
+                        (click)="saveCuisines()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="cancelEditPanel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Locations  -->
+
+        <div class="vertical" *ngIf="displayEditLocations" style="width: 600px;overflow-y: auto;height: 90%;">
+            <span
+                style="display: block;font-size: 25px;padding: 0 10px;height: 40px;line-height: 40px;border-bottom:1px solid #e2e2e2;">Your
+                Locations</span>
+            <div class="vertical">
+                <div style="margin: 15px;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">You
+                        are listed in these locations</span>
+                    <div style="max-height: 300px;overflow-y: auto;margin-bottom: 30px;"
+                        *ngIf="selectedAreas !== null && selectedAreas !== undefined && selectedAreas.length > 0">
+                        <div style="display: flex; flex-flow: row wrap;">
+                            <div class="d-flex justify-content-between align-items-center removable-item"
+                                *ngFor="let selectedArea of selectedAreas">
+                                <span>{{ selectedArea.name }}, {{ selectedArea.city }}</span>
+                                <div class="icon-close d-flex justify-content-center" placement="top"
+                                    ngbTooltip="Remove" (click)="onRemoveArea(selectedArea)" style="margin-left: 20px;">
+                                    <img src="/assets/icons/close.png" height="10px" width="10px"
+                                        (click)="onRemoveArea(selectedArea)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 15px;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Add
+                        more locations</span>
+                    <div *ngIf="serviceAreas !== null && serviceAreas !== undefined && serviceAreas.length > 0"
+                        class="vertical" style="margin: 10px 0 20px 0;">
+                        <div style="max-height: 300px;overflow-y: scroll;">
+                            <div class="selectable-item" *ngFor="let serviceArea of serviceAreas"
+                                (click)="onSelectArea(serviceArea)">
+                                <span>{{ serviceArea.name }}, {{serviceArea.city}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 15px;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Not
+                        finding your what you looking
+                        for?</span>
+                    <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
+                        <div class="input-div">
+                            <input class="_381fS" type="text" name="newLocation" id="newLocation" tabindex="4"
+                                autocomplete="off" value="" [(ngModel)]="newLocation" #ctrl="ngModel"
+                                placeholder="Maidenhill etc">
+                            <div class="_2EeI1 _26LFr"></div>
+                            <label class="_1Cvlf _2tL9P " for="newLocation">What is your are called</label>
+                        </div>
+                        <div class="icon d-flex justify-content-center" (click)="addLocation()"
+                            style="margin-left: 20px;">
+                            <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addLocation()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal" style="margin: 15px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1"
+                        (click)="saveLocations()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="cancelEditPanel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slots  -->
+
+        <div class="vertical" *ngIf="displayEditSlots"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Your slots</span>
+            <div class="vertical">
+                <div style="margin: 30px 0;">
+                    <div style="max-height: 300px;overflow-y: auto;margin-bottom: 30px;"
+                        *ngIf="selectedSlots !== null && selectedSlots !== undefined && selectedSlots.length > 0">
+                        <div style="display: flex; flex-flow: row wrap;">
+                            <div class="d-flex justify-content-between align-items-center removable-item"
+                                *ngFor="let selectedSlot of selectedSlots">
+                                <span>{{ selectedSlot }}</span>
+                                <div class="icon-close d-flex justify-content-center" placement="top"
+                                    ngbTooltip="Remove" (click)="onRemoveSlot(selectedSlot)" style="margin-left: 20px;">
+                                    <img src="/assets/icons/close.png" height="10px" width="10px"
+                                        (click)="onRemoveSlot(selectedSlot)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 30px 0;">
+                    <span
+                        style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin-bottom: 24px;">Add
+                        more slots</span>
+                    <div style="display: flex; flex-flow: row;flex-wrap: wrap;padding: 5px;"
+                        *ngIf="cuisines !== null && cuisines !== undefined && cuisines.length > 0">
+                        <span class="selectable-item" *ngFor="let slot of slots" (click)="onSelectSlot(slot)">{{ slot
+                            }}</span>
+                    </div>
+                </div>
+
+                <div class="horizontal" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1" (click)="saveSlots()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="cancelEditPanel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories  -->
+        <div class="vertical" *ngIf="displayEditCategories"
+            style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <span style="display: block;font-size: 25px;padding: 20px 0;">Update your categories</span>
+            <div class="vertical">
+                <span style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin: 30px 0;">Your
+                    categories</span>
+                <div style="max-height: 300px;overflow-y: auto;"
+                    *ngIf="categories !== null && categories !== undefined && categories.length > 0">
+                    <div style="display: flex; flex-flow: row wrap;">
+                        <div class="d-flex justify-content-between align-items-center removable-item"
+                            *ngFor="let category of categories">
+                            <span>{{ category }}</span>
+                            <div class="icon-close d-flex justify-content-center" (click)="onRemoveCategory(category)"
+                                placement="top" ngbTooltip="Remove" style="margin-left: 20px;">
+                                <img src="/assets/icons/close.png" height="10px" width="10px"
+                                    (click)="onRemoveCategory(category)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span style="font-weight: 600;font-size: 15px;line-height: 24px; display: block ;margin: 30px 0;">Want
+                    to add more category</span>
+                <div style="margin: 10px 0;width: 500px;" class="d-flex justify-content-between align-items-center">
+                    <div class="input-div">
+                        <input class="_381fS" type="text" name="newCategory" id="newCategory" tabindex="4"
+                            autocomplete="off" value="" [(ngModel)]="newCategory" #ctrl="ngModel"
+                            placeholder="Starter, Mains etc">
+                        <div class="_2EeI1 _26LFr"></div>
+                        <label class="_1Cvlf _2tL9P " for="newCategory">Category</label>
+                    </div>
+                    <div class="icon d-flex justify-content-center" (click)="addCategory()" style="margin-left: 20px;">
+                        <img src="/assets/icons/plus.png" height="15px" width="15px" (click)="addCategory()">
+                    </div>
+                </div>
+                <div class="horizontal" style="margin-top: 10px;">
+                    <button type="button" class="btn btn-sm btn-outline-primary mr-1"
+                        (click)="saveCategories()">OK</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger"
+                        (click)="cancelEditPanel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="vertical" *ngIf="displayViewOrder" style="width: 600px;overflow-y: auto;height: 90%;padding: 0 10px;background-color: #fefefe;padding: 25px; margin: 0 0 25px 0;">
+            <div class="between" style="margin-bottom: 20px;background-color: #ededf4;padding: 10px;border-top:3px solid #2d3741;">
+                <div class="vertical">
+                    <span style="font-weight: 900;">Order Reference</span>
+                    <span>{{orderInView.reference}}</span>
+                </div>
+                <div class="vertical">
+                    <span style="font-weight: 900;">Order Date</span>
+                    <span>{{orderInView.dateCreated}}</span>
+                </div>
+                <div class="vertical">
+                    <span style="font-weight: 900;">Order Total</span>
+                    <span style="font-weight: 900;font-size: 16px;">{{orderInView.total | currency: 'GBP'}}</span>
+                </div>
+            </div>
+            <div class="between" style="margin-bottom: 20px;background-color: #ededf4;padding: 10px;">
+                <div class="vertical" *ngIf="orderInView.serviceMode === 'DELIVERY'">
+                    <span style="font-weight: 900;">Deliver To</span>
+                    <span>{{orderInView.customer.fullName}}</span>
+                    <span>{{orderInView.customerMobile}}</span>
+                    <span>{{orderInView.customer.address.addressLine1}}</span>
+                    <span>{{orderInView.customer.address.addressLine2}}</span>
+                    <span>{{orderInView.customer.address.city}}</span>
+                    <span>{{orderInView.customer.address.postcode}}</span>
+                </div>
+                <div class="vertical" *ngIf="orderInView.serviceMode === 'COLLECTION'">
+                    <span style="font-weight: 900;">Pickup From</span>
+                    <span>{{orderInView.chef.name}}</span>
+                    <span>{{orderInView.chef.address.addressLine1}}</span>
+                    <span>{{orderInView.chef.address.addressLine2}}</span>
+                    <span>{{orderInView.chef.address.city}}</span>
+                    <span>{{orderInView.chef.address.postcode}}</span>
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <app-food-order-item [item]="item" *ngFor="let item of orderInView.items"></app-food-order-item>
+            </div>
+
+            <div style="margin: 10px 0;">
+                <span style="font-weight: 500;color: #282c3f;padding: 10px;">Bill Details</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="padding: 3px 0 3px 10px;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Item Total</span>
+                <span
+                    style="align-self: center;vertical-align: middle;font-weight: 500;">{{orderInView.subTotal
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="padding: 3px 0 3px 10px;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Delivery Fee</span>
+                <span
+                    style="align-self: center;vertical-align: middle;">{{orderInView.deliveryFee
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="border-top: 1px solid #e3e3e3;padding: 3px 0 3px 10px;">
+                <span style="vertical-align: middle;font-size: 12px; color: #686b78;">Taxes and Charges</span>
+                <span
+                    style="align-self: center;vertical-align: middle;">{{orderInView.saleTax
+                    | currency: 'GBP'}}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center"
+                style="border-top: 1px solid #e3e3e3;padding: 3px 0 3px 10px;font-weight: 600;">
+                <span style="vertical-align: middle;font-size: 14px;">TO RECEIVE</span>
+                <span
+                    style="align-self: center;vertical-align: middle;font-size: 15px;">{{orderInView.total
+                    | currency: 'GBP'}}</span>
+            </div>
         </div>
     </div>
 </div>

@@ -24,10 +24,10 @@ export const environment = {
   debug: window["env"]["debug"] || false,
 
   /** Base Paths */
-   AUTH_LOGIN_PATH: '/login',
-   AUTH_REGISTER_PATH: '/signup',
+   AUTH_LOGIN_PATH: '/users/login',
+   AUTH_REGISTER_PATH: '/users/signup',
    AUTH_SESSIONS_PATH: '/sessions',
-   AUTH_LOGOUT_PATH: '/logout',
+   AUTH_LOGOUT_PATH: '/users/logout',
    USERS: '/users',
    ORDERS: '/orders',
    CREATE_PAYMENT_INTENT: '/openchef/v1/create-payment-intent',

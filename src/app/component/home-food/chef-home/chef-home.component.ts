@@ -23,12 +23,13 @@ export class ChefHomeComponent implements OnInit {
   starSelected: string = "/assets/icons/star-selected.png";
   star: string = "/assets/icons/star.png";
   @ViewChild('widgetsContent') widgetsContent: ElementRef;
-  foods: Food[];
+  foods: Food[] = [];
   foods_to_display: Food[];
   categoriesMap = new Map();
   categories: string[];
   foodOrder: FoodOrder;
   calendars: Calendar[];
+  selectedMenu: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private localChefService: LocalChefService,
@@ -56,21 +57,20 @@ export class ChefHomeComponent implements OnInit {
 
     this.foodOrderService.foodOrderRx$.subscribe(foodOrder => {
       this.foodOrder = foodOrder;
-      console.log('Food Order :' + JSON.stringify(this.foodOrder));
     });
+
+    this.selectedMenu = "allTime";
   }
 
   private fetchCalendars(chefId: string) {
     this.localChefService.getCalendars(chefId, true, false).subscribe((calendars: Calendar[]) => {
       this.calendars = calendars;
-      console.log('calendars :' + JSON.stringify(this.calendars));
     });
   }
 
   private fetchFoods(chefId: string) {
     this.localChefService.getAllFoods(chefId).subscribe((foods: Food[]) => {
       this.foods = foods;
-      console.log('Foods :' + JSON.stringify(this.foods));
       var category = this.localChef.categories[0];
       this.filterFoodsByCat(category);
     });
@@ -78,15 +78,13 @@ export class ChefHomeComponent implements OnInit {
 
   filterFoodsByCat(category: string) {
     this.selectedCategory = category;
-    var foodsToDisplay: Food[] = [];
-    this.foods_to_display = foodsToDisplay;
+    this.foods_to_display = [];
     this.foods
       .filter((f) => f.category === category)
-      .forEach((item) => foodsToDisplay.push(item));
-
-    this.foods_to_display = foodsToDisplay;
+      .forEach((item) => this.foods_to_display.push(item));
 
   }
+
   increaseQuantity(item: FoodOrderItem) {
     if (item.quantity < 10) {
       item.quantity = item.quantity + 1;
@@ -107,7 +105,7 @@ export class ChefHomeComponent implements OnInit {
   }
 
   confirmOrder() {
-    this.router.navigate(['/food-checkout']).then();
+    this.router.navigate(['/checkout'], { queryParams: { s: this.localChef._id }});
   }
 
   backToResults() {
@@ -118,16 +116,19 @@ export class ChefHomeComponent implements OnInit {
     this.display_picture = url;
   }
 
-  selectCategory(event, category: string) {
+  onSelectCategory(event, category: string) {
     this.filterFoodsByCat(category);
-    event.target.style = "border-left: 3px solid #fd7e14; color: #fd7e14;";
-    this.categoriesMap.set(category, event.target);
-    this.categoriesMap.forEach((value: any, key: string) => {
-      if (key !== category) {
-        value.style = "border-left: 3px solid #fff; color: #666869;";
-      }
-    });
+    this.selectedCategory = category;
+    // // event.target.style = "border-right: 3px solid #766df4;color: #766df4;text-align: right;";
+    // this.categoriesMap.set(category, event.target);
+    // this.categoriesMap.forEach((key: string, value: any) => {
+    //   if (key !== category) {
+    //     value.style = "font-weight: 900;border-right: 3px solid #fff;display: block; margin-bottom: 2px;padding-right: 10px;text-align: right;";
+    //   }
+    // });
   }
+
+  
 
   getAddress(): string {
     var address: string = ""
@@ -172,4 +173,22 @@ export class ChefHomeComponent implements OnInit {
     this.navigationService.back();
   }
 
+  isSelectedCategory(category: string){
+    if ( this.selectedCategory === category){
+      return true;
+    }
+    return false;
+  }
+
+
+  isSelected(menuType: string){
+    if ( this.selectedMenu === menuType){
+      return true;
+    }
+    return false;
+  }
+
+  select(menuType: string){
+    this.selectedMenu = menuType;
+  }
 }

@@ -1,35 +1,21 @@
-<div class="d-flex flex-column chef-card" [style.background-image]="'url(chef.coverPhoto)'" (click)="selectChef()">
-    <!-- <div class="chef-card-img-div">
-        <img width="100%" height="100%" src="{{chef.coverPhoto}}" alt="..." (click)="selectChef()"
-            class="chef-card-img">
-    </div> -->
+<div class="vertical chef-card" (click)="selectChef()">
     <div class="chef-box">
-        <img width="100%" height="100%" src="{{chef.coverPhoto}}" alt="..." (click)="selectChef()"
-            class="chef-card-img">
+        <img width="100%" height="100%" src="{{chef.coverPhoto}}" alt="..." (click)="selectChef()" class="chef-card-img">
     </div>
-    <div class="d-flex flex-column align-items-center" style="padding: 10px">
-        <span class="chef-card-name">{{chef.name}}</span>
-        <div class="d-flex justify-content-between" style="margin-top: 5px;">
-            <div class="d-flex flex-start">
-                <div class="ratings-div">
-                    <img [src]="chef.rating > 0 ? starSelected : star" style="width: 10px;height: 10px;">
-                    <img [src]="chef.rating > 1 ? starSelected : star" style="width: 10px;height: 10px;">
-                    <img [src]="chef.rating > 2 ? starSelected : star" style="width: 10px;height: 10px;">
-                    <img [src]="chef.rating > 3 ? starSelected : star" style="width: 10px;height: 10px;">
-                    <img [src]="chef.rating > 4 ? starSelected : star" style="width: 10px;height: 10px;">
-                </div>
-                <span>({{chef.reviews}})</span>
+    <div class="between" style="margin: 10px 0">
+        <span style="font-weight: 500;font-size: 16px;">{{chef.name}}</span>
+        <div class="horizontal">
+            <div class="ratings-div">
+                <img [src]="chef.rating > 0 ? starSelected : star" style="width: 10px;height: 10px;">
+                <img [src]="chef.rating > 1 ? starSelected : star" style="width: 10px;height: 10px;">
+                <img [src]="chef.rating > 2 ? starSelected : star" style="width: 10px;height: 10px;">
+                <img [src]="chef.rating > 3 ? starSelected : star" style="width: 10px;height: 10px;">
+                <img [src]="chef.rating > 4 ? starSelected : star" style="width: 10px;height: 10px;">
             </div>
+            <span>({{chef.reviews}})</span>
         </div>
-        <!-- <div class="d-flex flex-start">
-            <div class="space-around" *ngFor="let special of chef.specials">
-                <span >{{special}} .</span>
-            </div>
-        </div>
-        
-        <div class="d-flex flex-start">
-            <span *ngIf="chef.delivery" style="margin-right: 10px;">Delivery</span>
-            <span *ngIf="chef.preOrder" style="margin-right: 10px;">PreOrder</span>
-        </div> -->
+    </div>
+    <div class="float">
+        <span *ngFor="let spl of chef.specials" style="padding: 0 10px 0 0;">{{spl}}</span>
     </div>
 </div>

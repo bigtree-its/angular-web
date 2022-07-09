@@ -1,29 +1,28 @@
-<div class="d-flex flex-start" style="width: 100%;padding: 5px 0;">
-    <button style="color: #fc1b01; border: 1px solid #e0e0e0;border-radius: 50%;width: 30px;height: 25px;" (click)="deleteItem()" *ngIf="displayDeleteOption">X</button>
+<div class="horizontal justify-content-center" style="width: 100%;padding: 5px 0;">
+    <img  src="/assets/icons/delete.png" style="height:15px;width:15px;cursor: pointer;" (click)="deleteItem()" *ngIf="displayDeleteOption">
     <div *ngIf="displayImage" style="min-width: 30px;">
         <img src={{item.image}} width="100%" height="100%" loading="lazy"
         style="width: 30px; height: 30px;margin-left: 4px;" >
     </div>
     <span style="margin: 0 10px;">{{item.quantity}}</span>
-    <div class="d-flex flex-column" style="width: 100%;">
+    <div class="vertical" style="width: 100%;">
         <div
             style="width: 100%;clear: both; display: flex; justify-content: space-between;">
-            <span style="font-weight: 600;">{{item.name}}</span>
-            <span style="font-weight: 300;">{{item.price | currency: 'GBP'}}</span>
+            <span style="font-weight: 500;">{{item.name}}</span>
+            <span>{{item.price | currency: 'GBP'}}</span>
         </div>
         <div *ngIf="item.choice !== null && item.choice !== undefined">
             <div style="width: 100%;clear: both; display: flex; justify-content: space-between;">
-                <span style="font-weight: 300;font-style: italic;">({{item.choice.name}})</span>
-                <span style="font-weight: 300;">{{item.choice.price | currency: 'GBP'}}</span>
+                <span style="font-style: italic;">({{item.choice.name}})</span>
+                <span>{{item.choice.price | currency: 'GBP'}}</span>
             </div>
         </div>
         <div *ngIf="item.extras !== null && item.extras !== undefined && item.extras.length > 0">
             <div style="width: 100%;clear: both; display: flex; justify-content: space-between;"
                 *ngFor="let extra of item.extras">
-                <span style="font-weight: 300;">{{extra.name}}</span>
-                <span style="font-weight: 300;">{{extra.price | currency: 'GBP'}}</span>
+                <span>{{extra.name}}</span>
+                <span>{{extra.price | currency: 'GBP'}}</span>
             </div>
         </div>
-        
     </div>
 </div>

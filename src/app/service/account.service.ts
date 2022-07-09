@@ -38,8 +38,9 @@ export class AccountService {
 
   public errorMessage: String;
 
-  SERVER_URL = "http://localhost:8081/r2c/v1/users";
+  SERVER_URL = "http://localhost:8081/r2c/v1";
   LOGIN_URL = this.SERVER_URL + environment.AUTH_LOGIN_PATH;
+  USERS_URL = this.SERVER_URL + environment.USERS;
   LOGOUT_URL = this.SERVER_URL + environment.AUTH_LOGOUT_PATH;
   REGISTER_URL = this.SERVER_URL + environment.AUTH_REGISTER_PATH;
   SESSIONS_URL = this.SERVER_URL + environment.AUTH_SESSIONS_PATH;
@@ -63,13 +64,31 @@ export class AccountService {
   }
 
   public isAuthenticated(): boolean {
-    var userSession: UserSession = this.getUserSession();
-    if (userSession === null || userSession === undefined || !userSession.success) {
-      console.log('User not authenticated.');
-      return false;
-    } else {
-      console.log('User Authenticated');
+    console.log('Looking for session ' + JSON.stringify(this.userSessionSubject$.value));
+    if (this.userSessionSubject$ !== null && this.userSessionSubject$ !== undefined && this.userSessionSubject$.value !== null && this.userSessionSubject$.value !== undefined && this.userSessionSubject$.value.success) {
       return true;
+    }
+    console.log('Looking for session in Cookie: ');
+    var sessionId: string = this.cookieService.getCookie(this.OBJECT_USER_SESSION);
+    console.log('Seesion Id found in Cookie: ' + sessionId);
+    if (sessionId !== null && sessionId !== undefined) {
+      let headers = new HttpHeaders();
+      headers = headers.append('Content-Type', 'application/json');
+      headers = headers.append('Access-Control-Allow-Origin', '*');
+
+      this.http.get<UserSession>(this.SESSIONS_URL + "/" + sessionId, { headers: headers }).subscribe((data: UserSession) => {
+        if (data === null || data === undefined || data.success === false) {
+          this.removeUserSession();
+          console.log('User session not authenticated.');
+          return false;
+        } else {
+          console.log('The login response ' + JSON.stringify(data))
+          this.storeUserSession(data);
+          return true;
+        }
+      }, err => { });
+    } else {
+      return false;
     }
   }
 
@@ -96,45 +115,56 @@ export class AccountService {
   }
 
   storeUserSession(session: UserSession) {
+    console.log('Storing User session')
     this.userSessionSubject$.next({ ...session });
     this.cookieService.setCookie({
       name: this.OBJECT_USER_SESSION,
-      value: session.session.id,
+      value: JSON.stringify(session),
       session: true,
     });
 
   }
 
   removeUserSession() {
+    console.log('Removing User session')
     this.cookieService.deleteCookie(this.OBJECT_USER_SESSION);
     var userSession = null;
     this.userSessionSubject$.next({ ...userSession });
   }
 
-  getUserSession(): any {
+  getUserSession(): UserSession {
     if (this.userSessionSubject$ !== null && this.userSessionSubject$ !== undefined) {
       return this.userSessionSubject$.value;
     }
     return null;
   }
 
-  retrieveSession() {
-    var sessionId: string = this.cookieService.getCookie(this.OBJECT_USER_SESSION);
-    if (sessionId !== null && sessionId !== undefined) {
-      let headers = new HttpHeaders();
-      headers = headers.append('Content-Type', 'application/json');
-      headers = headers.append('Access-Control-Allow-Origin', '*');
-
-      this.http.get<UserSession>(this.SESSIONS_URL + "/" + sessionId, { headers: headers }).subscribe( (data: UserSession) => {
-        if (data === null || data === undefined || data.success === false) {
-          this.removeUserSession();
-          throwError;
-        } else {
-          console.log('The login response ' + JSON.stringify(data))
-          this.storeUserSession(data);
-        }
-      }, err=>{});
+  retrieveSession(): UserSession {
+    var session: string = this.cookieService.getCookie(this.OBJECT_USER_SESSION);
+    console.log('Session found in Cookie: ' + session);
+    if (session !== null && session !== undefined) {
+      var sessionObj: UserSession = JSON.parse(session);
+      this.storeUserSession(sessionObj);
+      // this.verifySession(sessionObj);
+    } else {
+      return null;
     }
+  }
+
+  private verifySession(sessionObj: UserSession) {
+    let headers = new HttpHeaders();
+    headers = headers.append('Content-Type', 'application/json');
+    headers = headers.append('Access-Control-Allow-Origin', '*');
+    this.http.get<UserSession>(this.SESSIONS_URL + "/" + sessionObj.session.id, { headers: headers }).subscribe((data: UserSession) => {
+      if (data === null || data === undefined || data.success === false) {
+        this.removeUserSession();
+        throwError;
+      } else {
+        console.log('The login response ' + JSON.stringify(data));
+        this.storeUserSession(data);
+        return data;
+      }
+    }, err => { });
   }
 
   getUserEmail(): string {
@@ -205,7 +235,7 @@ export class AccountService {
 
     var params = new HttpParams();
     params = params.set('session', userSession.session.id);
-    const apiURL = this.SERVER_URL + "/" + user.id;
+    const apiURL = this.USERS_URL + "/" + user.id;
     return this.http.put<User>(apiURL, user, { params }).pipe(
       map((response) => {
         var user: User = response;
@@ -228,7 +258,7 @@ export class AccountService {
       userSession.session.accessToken
     );
     var user: User = userSession.user;
-    const apiURL = this.SERVER_URL + "/" + user.id;
+    const apiURL = this.USERS_URL + "/" + user.id;
     console.log('Updating User: ' + JSON.stringify(user));
     return this.http.put<User>(apiURL, user, httpOptions).pipe(
       map((response) => {

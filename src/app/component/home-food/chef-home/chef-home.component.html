@@ -2,104 +2,141 @@
     @import url('https://fonts.googleapis.com/css2?family=Amita&display=swap');
 </style>
 <app-header></app-header>
-<div class="d-flex justify-content-between" style="overflow-y: hidden;" *ngIf="localChef !== undefined && localChef !== null">
+<div class="d-flex justify-content-center" style="overflow-y: hidden;">
 
-
-    <div style="width:15%;margin: 5px;padding: 10px;" class="d-flex flex-column">
-        <div class="vertical align-items-center" style="padding: 10px 0;border-bottom: 1px solid #ededf4;">
-            <div class="icon d-flex justify-content-center" style="margin-bottom: 5px;">
-                <span style="font-size: 80px;font-family: 'Amita', cursive;">{{localChef.name.substr(0,1)}}</span>
-            </div>
-            <span style="font-size: 25px;padding: 10px;font-family: 'Amita', cursive;">{{localChef.displayName}}</span>
-            <span style="font-weight: 400;display: block;font-size: 12px;" class="wrap">{{getAddress()}}</span>
-            <div class="d-flex flex-start">
-                <img [src]="starSelected" style="width: 15px;height: 15px;margin-top: 5px;">
-                <span> . </span>
-                <span>{{localChef.reviews}} reviews</span>
-            </div>
-        </div>
-
-        <div class="d-flex flex-column"
-            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
-            *ngIf="localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
-            <span style="font-weight: 400;font-size: 18px;">My Specials</span>
-            <div class="d-flex flex-start" style="margin: 10px 0;">
-                <span *ngFor="let special of localChef.specials"
-                    style="font-weight: 400;font-size: 12px;padding: 0 10px 0 0;">{{special}}</span>
-            </div>
-        </div>
-        <div class="d-flex flex-column"
-            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
-            *ngIf="localChef.slots !== null && localChef.slots !== undefined && localChef.slots.length > 0">
-            <span style="font-weight: 400;font-size: 18px;">I Serve</span>
-            <div class="d-flex flex-start" style="margin: 10px 0;">
-                <span *ngFor="let slot of localChef.slots"
-                    style="font-weight: 400;font-size: 12px;padding: 0 10px 0 0;">{{slot}}</span>
-            </div>
-        </div>
-        <div class="d-flex flex-column"
-            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;"
-            *ngIf="localChef.delivery">
-            <span style="font-weight: 400;font-size: 18px;">Delivery Areas</span>
-            <div class="d-flex flex-column" style="margin: 10px 0;">
-                <span *ngFor="let serviceArea of localChef.serviceAreas"
-                    style="font-weight: 400;font-size: 12px;padding: 0;">{{serviceArea.name}},
-                    {{serviceArea.city}}</span>
-            </div>
-        </div>
-        <div class="d-flex flex-column"
-            style="width: 100%;margin-top: 12px; background-color: #fff;padding: 10px; border-radius: 12px;">
-            <span style="font-weight: 400;font-size: 18px;">Collect At</span>
-            <span style="font-weight: 400;display: block;font-size: 12px;  padding:10px 0;"
-                class="wrap">{{getAddress()}}</span>
-        </div>
-    </div>
-    <div style="width:65%;" class="vertical">
-        <span style="font-weight: 900;font-size: 18px;padding: 10px 0;">This Week</span>
-        <div class="d-flex flex-column" style="margin: 10px 0;" *ngFor="let cal of calendars">
-            <span style="font-size: 17px;padding: 10px 0;font-weight: 500;">Order by {{ cal.orderBefore | date : 'EE d
-                LLL'}}</span>
-            <div class="d-flex flex-column">
-                <app-food-card [food]="food" *ngFor="let food of cal.foods"></app-food-card>
-            </div>
-        </div>
-    </div>
-    <div style="width: 20%;border-left:1px solid #e3e3e3;padding: 10px;">
-        <div
-            *ngIf="(foodOrder === undefined || foodOrder.items === null || foodOrder.items === undefined || foodOrder.items.length === 0); then thenBlock else elseBlock">
-        </div>
-        <ng-template #thenBlock>
-            <div class="d-flex flex-column" style="padding: 10px 4px;">
-                <span style="align-self: center;font-size: 30px;padding: 10px 0;display: block;text-align: center;">Cart
-                    Empty</span>
-                <span style="color: #535665;font-weight: 400;">Good food is always cooking! Go ahead, order some
-                    yummy items from the menu</span>
-            </div>
-        </ng-template>
-        <ng-template #elseBlock>
-            <!-- <div class="d-flex flex-column" style="padding: 10px 0;"> -->
-            <div>
-                <span
-                    style="font-size: 30px;align-self: center;text-align: center;display: block;padding: 18px 0;border-bottom: 1px solid #e3e3e3;">Your
-                    Order</span>
-                <div *ngIf="foodOrder !== undefined" style="overflow-y: auto; padding: 5px;display: block;">
-                    <app-food-order-item [item]="item" [displayImage]="false" [displayDeleteOption]="true"
-                        *ngFor="let item of foodOrder.items"></app-food-order-item>
-                    <div class="d-flex flex-between align-items-center my-3">
-                        <span style="font-weight: bold;font-size: 13px;">Subtotal <br><span class="small">Additional
-                                charges may apply</span></span>
-                        <span
-                            style="font-size: 14px;padding: 10px;align-self: center;vertical-align: middle;font-weight: bold;">{{foodOrder.subTotal
-                            | currency: 'GBP'}}</span>
+    <div class="between" style="width: 80%;">
+        <div style="width: 80%;height: 100vh;" class="vertical">
+            <div class="horizontal" style="background-color: #f1f1f1;">
+                <div class="vertical align-items-center"
+                    style="padding:25px 10px; width: 40%;">
+                    <img src="/assets/icons/shop.png" style="height: 20px;width: 20px;">
+                    <span  class="f-bolder" style="font-size: 20px;padding: 10px 0 10px 0;">{{localChef !== null && localChef !== undefined ? localChef.displayName: ''}}</span>
+                    <span
+                        style="font-weight: 400;display: block;font-size: 12px;word-break: break-all;text-align: center;"
+                        class="wrap">{{localChef !== null && localChef !== undefined ? getAddress(): ''}}</span>
+                    <div class="d-flex flex-start">
+                        <img [src]="starSelected" style="width: 15px;height: 15px;margin-top: 5px;">
+                        <span> . </span>
+                        <span>{{localChef !== null && localChef !== undefined ? localChef.reviews : 0}} reviews</span>
                     </div>
                 </div>
-                <div style="padding: 10px 0;" class="d-flex justify-content-center ">
-                    <button type="button" ngbAutofocus class="order-confirm-button"
-                        (click)="confirmOrder()">CHECKOUT</button>
+                <div class="vertical" style="padding: 10px; width: 30%;">
+                    <div class="vertical" style="width: 100%;padding: 10px; border-bottom: 1px solid #f2f2f2;">
+                        <strong style="font-size: 17px;">Specials</strong>
+                        <div
+                            *ngIf="localChef !== null && localChef !== undefined && localChef.specials !== null && localChef.specials !== undefined && localChef.specials.length > 0">
+                            <span *ngFor="let special of localChef.specials"
+                                style="padding: 0 10px 0 0;font-weight: 300;">{{special}}</span>
+                        </div>
+                    </div>
+                    <div class="vertical" style="width: 100%;padding: 10px; border-bottom: 1px solid #f2f2f2;">
+                        <strong style="font-size: 17px;">Slots</strong>
+                        <div
+                            *ngIf="localChef !== null && localChef !== undefined  && localChef.slots !== null && localChef.slots !== undefined && localChef.slots.length > 0">
+                            <span *ngFor="let slot of localChef.slots" style="padding: 0 10px 0 0;">{{slot}}</span>
+                        </div>
+                    </div>
+                    <div class="vertical" style="width: 100%;padding: 10px; border-bottom: 1px solid #f2f2f2;" *ngIf="localChef !== null && localChef !== undefined">
+                        <strong style="font-size: 17px;">Service areas</strong>
+                        <span *ngFor="let serviceArea of localChef.serviceAreas"
+                            style="padding: 0;margin-right: 10px;">{{serviceArea.name}},
+                            {{serviceArea.city}}</span>
+                    </div>
+                </div>
+                <div class="vertical" style="padding: 10px;margin:0 30px 0 10px;border: 1px solid #222;padding: 15px; width: 30%;" *ngIf="localChef !== null && localChef !== undefined">
+                    <div class="between">
+                        <span>FREE DELIVERY<small style="margin-left: 5px;">over</small></span>
+                        <span>{{localChef.freeDeliveryOver | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="between">
+                        <span>MINIMUM ORDER<small style="margin:0 5px;">for</small>DELIVERY</span>
+                        <span>{{localChef.deliveryMinimum | currency: 'GBP'}}</span>
+                    </div>
+                    <div class="horizontal" *ngIf="localChef.minimumOrder === 0">
+                        <img src="/assets/icons/percentage.png" style="width: 15px;height: 15px;margin-right: 5px;">
+                        <span>NO MINIMUM ORDER</span>
+                    </div>
+                    <div class="horizontal" *ngIf="localChef.partyOrders">
+                        <img src="/assets/icons/percentage.png" style="width: 15px;height: 15px;margin-right: 5px;">
+                        <span>TAKING PARTY ORDERS</span>
+                    </div>
                 </div>
             </div>
+            <div class="horizontal" *ngIf="localChef !== null && localChef !== undefined">
+                <div class="vertical"
+                    style="width: 20%;margin-right: 10px;height: 100vh;border-right: 1px solid #f2f2f2;">
+                    <div class="vertical" style="margin:10px;border-bottom: 1px solid #f2f2f2;margin-bottom: 30px;">
+                        <span class="menuType" (click)="select('thisWeek')" [class.selected]="isSelected('thisWeek')"
+                            style="margin-bottom: 10px;">This Week</span>
+                        <span class="menuType" (click)="select('allTime')" [class.selected]="isSelected('allTime')">All
+                            Time</span>
+                    </div>
+                    <span style="text-align: right;display: block;" *ngFor="let category of localChef.categories"
+                        class="category" (click)="onSelectCategory($event, category)"
+                        [class.selectedCategory]="isSelectedCategory(category)">{{category}}</span>
+                </div>
+                <div style="width: 80%;height: 100vh;" class="vertical">
+                    <div *ngIf="selectedMenu === 'thisWeek'">
+                        <div class="d-flex flex-column" style="margin: 10px 0;" *ngFor="let cal of calendars">
+                            <span style="font-size: 17px;padding: 10px 0;font-weight: 500;">Order by {{ cal.orderBefore
+                                |
+                                date : 'EE
+                                d
+                                LLL'}}</span>
+                            <p>
+                                {{cal.description}}
+                            </p>
+                            <div class="d-flex flex-column">
+                                <app-food-card [food]="food" *ngFor="let food of cal.foods"></app-food-card>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedMenu === 'allTime'">
+                        <div class="vertical">
+                            <app-food-card [food]="food" *ngFor="let food of foods_to_display"></app-food-card>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 400px;"></div>
+            </div>
+        </div>
+        <div style="width: 20%;padding: 10px;height: 100vh;">
+            <div
+                *ngIf="(foodOrder === null || foodOrder === undefined || foodOrder.items === null || foodOrder.items === undefined || foodOrder.items.length === 0); then thenBlock else elseBlock">
+            </div>
+            <ng-template #thenBlock>
+                <div class="d-flex flex-column" style="padding: 10px 4px;">
+                    <span class="f-bolder"
+                        style="align-self: center;font-size: 30px;padding: 10px 0;display: block;text-align: center;">Cart
+                        Empty</span>
+                    <span style="color: #535665;font-weight: 400;">What are you waitin for?! Go ahead, order some
+                        yummy items from the menu</span>
+                </div>
+            </ng-template>
+            <ng-template #elseBlock>
+                <!-- <div class="d-flex flex-column" style="padding: 10px 0;"> -->
+                <div class="vertical">
+                    <span class="f-bolder"
+                        style="font-size: 30px;align-self: center;text-align: center;display: block;padding: 18px 0;border-bottom: 1px solid #e3e3e3;">Your
+                        Order</span>
+                    <div *ngIf="foodOrder !== undefined" style="overflow-y: auto; padding: 5px;display: block;">
+                        <app-food-order-item [item]="item" [displayImage]="false" [displayDeleteOption]="true"
+                            *ngFor="let item of foodOrder.items"></app-food-order-item>
+                        <div class="d-flex flex-between align-items-center my-3">
+                            <span style="font-weight: bold;font-size: 13px;">Subtotal <br><span class="small">Additional
+                                    charges may apply</span></span>
+                            <span
+                                style="font-size: 14px;align-self: center;vertical-align: middle;font-weight: bold;">{{foodOrder.subTotal
+                                | currency: 'GBP'}}</span>
+                        </div>
+                    </div>
+                    <button ngbAutofocus class="btn btn-md btn-primary" (click)="confirmOrder()">CHECKOUT</button>
+                </div>
 
-        </ng-template>
+            </ng-template>
+        </div>
     </div>
+
+
 </div>
 <div style="height: 400px;"></div>

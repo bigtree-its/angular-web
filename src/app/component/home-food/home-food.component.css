@@ -7,7 +7,7 @@
 .ad-container {
   height: 298px;
   /* background-color: #171a29; */
-  background-color: #5bb096;
+  background-color: #8bc197;
   padding: 20px;
 }
 
@@ -152,18 +152,16 @@
 
 .local-area-option {
   height: 40px;
-  padding: 10px;
-  align-items: flex-start;
-  vertical-align: middle;
-  font-weight: 800;
-  color: #535665;
-  font-size: 14px;
-  border: 2px solid #6911dd;
+  line-height: 40px;
+  font-weight: 400;
+  font-size: 16px;
+  border-bottom: 1px solid rgb(245, 245, 245);
+  padding: 0 5px;
+  margin: 5px 0;
 }
 
 .local-area-option:hover {
-  background-color: #6911dd;
-  color: #fff;
+  color: #001b94;
   cursor: pointer;
 }
 
